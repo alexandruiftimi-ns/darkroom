@@ -12,8 +12,9 @@ const MIME = {
   '.glb': 'model/gltf-binary', '.txt': 'text/plain', '.ico': 'image/x-icon', '.map': 'application/json',
 };
 
-// target: http(s)/file URL (returned as is), a directory, or an html file. Returns { url, root, close }.
-export async function resolveTarget(target) {
+// target: http(s)/file URL (returned as is), a directory, or an html file. Returns { url, root, port, close }.
+// host/port default to 127.0.0.1 and a free port; `darkroom preview` passes 0.0.0.0 to reach phones on the same Wi-Fi.
+export async function resolveTarget(target, { host = '127.0.0.1', port = 0 } = {}) {
   if (/^(https?|file):/i.test(target)) return { url: target, root: null, close: async () => {} };
   const abs = path.resolve(target);
   if (!fs.existsSync(abs)) throw new Error(`not found: ${target}`);
@@ -25,6 +26,7 @@ export async function resolveTarget(target) {
     let file = path.join(root, p);
     if (!file.startsWith(root)) { res.writeHead(403).end(); return; }
     if (fs.existsSync(file) && fs.statSync(file).isDirectory()) file = path.join(file, 'index.html');
+    if (!fs.existsSync(file) && !path.extname(file) && fs.existsSync(file + '.html')) file += '.html'; // /about → about.html, as static hosts do
     if (!fs.existsSync(file)) { res.writeHead(404).end('not found'); return; }
     const size = fs.statSync(file).size;
     const type = MIME[path.extname(file).toLowerCase()] ?? 'application/octet-stream';
@@ -39,9 +41,9 @@ export async function resolveTarget(target) {
       fs.createReadStream(file).pipe(res);
     }
   });
-  await new Promise((r) => server.listen(0, '127.0.0.1', r));
-  const port = server.address().port;
-  return { url: `http://127.0.0.1:${port}${first}`, root, close: () => new Promise((r) => server.close(r)) };
+  await new Promise((r, j) => { server.once('error', j); server.listen(Number(port), host, r); });
+  const bound = server.address().port;
+  return { url: `http://127.0.0.1:${bound}${first}`, root, port: bound, close: () => new Promise((r) => server.close(r)) };
 }
 
 // Fingerprint of the files a page is made of (path + size + mtime). Changes whenever the build changes, so QA evidence

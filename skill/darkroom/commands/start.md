@@ -8,7 +8,8 @@ Goal: a confirmed `.darkroom/BRIEF.md` in **at most two question rounds**, then 
 
 1. `node <skill>/scripts/darkroom.mjs init` (creates `.darkroom/` and `project.json`; adopts an existing `PROJECT_BLUEPRINT.md` / `DESIGN.md`; never overwrites).
 2. `darkroom state` to see whether this is a resume.
-3. Read everything the user already gave: brief text, `CLAUDE.md`, any blueprint, existing code (`package.json`, stack), the assets folder (`darkroom media inspect <dir>`), reference images (open each: a filename is not an inspection), copy documents. Extract answers before asking anything.
+3. If the request names their current site (a URL or a folder), follow `commands/import.md` (ownership, what to bring over, which pages) and read `.darkroom/import/CONTENT.md` before anything else.
+4. Read everything the user already gave: brief text, `CLAUDE.md`, any blueprint, existing code (`package.json`, stack), the assets folder (`darkroom media inspect <dir>`), reference images (open each: a filename is not an inspection), copy documents. Extract answers before asking anything.
 
 ## 2. Classify (decide these yourself; state them in one line each)
 

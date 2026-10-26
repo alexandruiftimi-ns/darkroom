@@ -26,6 +26,8 @@ Round 1, the page, as one `AskUserQuestion` round of at most four, each with a r
 - **Colours?** "I have a palette" / "Suggest some" (recommended if they have none) / "Classic and calm (60-30-10)" / "Creative, anything goes" (`references/color.md`, "Asking about colour").
 - **Pictures and video?** "I have my own" / "Write me prompts for an image or video tool (ChatGPT, Kling, Seedance, Veo…)" / "A mix" / "Neither, build without" (`references/asset-tools.md`). If they want prompts, ask which tools they use in round 2.
 
+If the message points at their **current site** (a URL or a folder path), round 1 also asks: is it theirs, and bring over "texts and images" (recommended) / "only texts" / "only images" / "nothing, just look". Run `darkroom import … --list` first; round 2 then asks which pages (`commands/import.md`). Skip "Pictures and video?" if their site already has them; ask instead whether to keep them.
+
 Round 2, only what is still open (at most four): the platform profile's "Ask before building" questions (e.g. Shopify: new theme or restyle, store ready?; WooCommerce: own theme or the default one, what they sell, payments), what the visitor should do at the end (buy, book, contact, sign up, just look), which image or video tools they use, and **how much checking**: "Quick check (home page, desktop + phone; recommended, uses less of your plan)" / "Full check (every page, every screen size, motion on and off)". Record: `darkroom state --set platform=…,palette=…,verify=quick|full`.
 
 **Place the request in a mode before you ask anything** (`references/modes.md`): the platform, the look (a style pack, or "like <brand>") and the motion level (calm / animated / one hero effect / scroll story). Say it back in one line: "So: a Shopify theme with a Cartier-like look, and things appear as you scroll. No scroll story." If they named a brand, answer with the look-alike opening in `commands/lookalike.md` (what you will and won't take). If they asked for scroll storytelling, give them the story asset plan from `references/modes.md` as their `NEEDS.md`, with the tool class and cost of each item (`references/motion-toolkit.md`).
@@ -52,6 +54,10 @@ Follow `SKILL.md`: direction, slice, QA loop. Do not report process. Report **re
 - Direction: two coded previews of the first screen. "Which feels more like you?"
 - Slice: a working preview of the top of the page and its one big effect, on desktop and phone.
 - Final: the whole page and a plain list of what is real, what is a placeholder, and what you could not measure.
+
+At the first checkpoint, offer once: "Want to open it on your phone? Same Wi-Fi, nothing to install (recommended) / A link you can send someone (needs a yes) / Screenshots are fine" (`commands/preview.md`).
+
+When they say they added files: run `darkroom assets intake`, look at each picture, and reply with one line per file and its suggestion, then "Continue with these, or replace any first?" Never reject a file.
 
 At each checkpoint ask one question with three answers: "Yes, continue" / "Change X" / "Start over". Record the answer with `darkroom state --approve`; never record an approval the user did not give.
 

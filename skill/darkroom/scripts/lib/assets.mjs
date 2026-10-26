@@ -112,7 +112,9 @@ export async function assets(pos, opt) {
   if (sub === 'search') return search(rest.join(' '), opt);
   if (sub === 'get') return download(rest.flatMap((r) => r.split(',')), opt);
   if (sub === 'credits') return credits();
-  console.log(`darkroom assets <command>   (network; no API keys)
+  if (sub === 'intake') { const { intake } = await import('./intake.mjs'); return intake(rest[0], opt); }
+  console.log(`darkroom assets <command>   (search and get use the network; no API keys)
+  intake [assets/raw] [--needs NEEDS.md]                                   match arrived files to NEEDS.md, measure them, suggest (never reject); updates its Status column
   search "<query>" [--source commons,met,openverse] [--min-width 1200] [--orientation landscape|portrait] [--limit 8] [--video] [--licence safe|all]
   get <ref>[,<ref>] [--to assets/found] [--width 1920] [--name file]     downloads and records provenance in .darkroom/ASSETS.json
   credits                                                                  credit lines for assets whose licence requires them`);

@@ -2,10 +2,12 @@
 
 Updated: <date>. Everything not listed here I can do myself. Nothing below is urgent unless it says **Blocks**.
 
-| # | I need | Why | Blocks? | How to make or get it | Put it in | If it never arrives |
-|---|---|---|---|---|---|---|
-| 1 | <e.g. a 6 s video of the product turning, locked camera, plain background> | <the scroll animation in the hero> | <Blocks the hero / Improves> | <your phone on a tripod, a render, or I give you a prompt for an image or video tool: `prompts/video-clip.md`> | `assets/raw/hero-turn.mp4` | <the hero becomes a still image with a light reveal> |
-| 2 | <e.g. your logo as SVG> | <header and footer> | <Improves> | <your designer, or send a PNG and I redraw it> | `assets/raw/logo.svg` | <a text wordmark> |
+| # | I need | Why | Blocks? | How to make or get it | Put it in | If it never arrives | Status |
+|---|---|---|---|---|---|---|---|
+| 1 | <e.g. a 6 s video of the product turning, locked camera, plain background> | <the scroll animation in the hero> | <Blocks the hero / Improves> | <your phone on a tripod, a render, or a ready-to-paste prompt for your image or video tool> | `assets/raw/hero-turn.mp4` | <the hero becomes a still image with a light reveal> | waiting |
+| 2 | <e.g. your logo as SVG> | <header and footer> | <Improves> | <your designer, or send a PNG and I redraw it> | `assets/raw/logo.svg` | <a text wordmark> | waiting |
+
+When you drop files in, just say so ("I added the photos"). I check each one, tell you what could be even better, and ask whether to continue with what you sent. Nothing is ever rejected.
 
 ## Facts only you know
 - <e.g. price, address, opening hours, legal name>

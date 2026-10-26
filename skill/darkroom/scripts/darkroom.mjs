@@ -24,10 +24,15 @@ const USAGE = `darkroom <command>
   audit <url|dir|file> [--bible file] [--fonts 3] [--mode disciplined|expressive|monochrome] [--json out.json] [--dismiss]
   study <url> [--out dir]      capture + audit of someone else's page (rejects cookies only inside a recognised consent dialog)
   checks [--md]                the audit's check registry: id, severity, basis, limits
+  import <url|folder> [--list] [--pages /,/about] [--take text,images] [--max 40] [--out .darkroom/import]
+                               the user's existing site: texts in reading order, navigation, contacts, images with sizes,
+                               suggestions; --list only lists the pages (ask which to bring over first)
+  preview <folder|http://127.0.0.1:port> [--port 8800] [--host 0.0.0.0]
+                               open the site on a phone on the same Wi-Fi (relays a dev server); runs until stopped
   platform list | scaffold <id> [--out dir] [--name "Site name"] | check [dir] [--platform id] [--json out.json]
                                the platforms Darkroom builds for, a starter per platform, and an offline structure check
   media inspect|derive|frames|check …   probe, derive, frame sequences (see: darkroom media)
-  assets search|get|credits …           find openly licensed images with provenance (network; see: darkroom assets)
+  assets search|get|credits|intake …    openly licensed images with provenance; intake = check what the user dropped in
 viewports: ${Object.keys(VIEWPORTS).join(', ')}
 local dirs and html files are served over http://127.0.0.1 (file:// breaks modules, fetch and video seeking).`;
 
@@ -62,6 +67,8 @@ try {
     if (opt.md) { console.log('| Check | Severity | Basis | What | Limits |\n|---|---|---|---|---|'); CHECKS.forEach((c) => console.log(`| \`${c.id}\` | ${c.sev} | ${c.basis} | ${c.what} | ${c.limits || '—'} |`)); }
     else CHECKS.forEach((c) => console.log(`${c.id.padEnd(15)} ${c.sev.padEnd(7)} ${c.basis.padEnd(10)} ${c.what}`));
   } else if (cmd === 'assets') { const { assets } = await import('./lib/assets.mjs'); await assets(pos, opt); }
+  else if (cmd === 'import') { const { importSite } = await import('./lib/importsite.mjs'); await importSite(pos[0], opt); }
+  else if (cmd === 'preview') { const { preview } = await import('./lib/preview.mjs'); await preview(pos[0], opt); }
   else if (cmd === 'platform') { const { platform } = await import('./lib/platforms.mjs'); await platform(pos, opt, SKILL_DIR); }
   else if (cmd === 'media') { const { media } = await import('./lib/media.mjs'); await media(pos, opt); }
   else { console.log(USAGE); process.exitCode = cmd ? 1 : 0; }

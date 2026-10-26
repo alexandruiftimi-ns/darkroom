@@ -78,7 +78,7 @@ function listMedia(target) {
 
 export async function inspect(target, opt) {
   const files = listMedia(target);
-  if (!files.length) { console.log('no images or videos found'); return []; }
+  if (!files.length) { if (!opt?.quiet) console.log('no images or videos found'); return []; }
   const eng = engines();
   const browserInfo = await probeInBrowser(files).catch((e) => ({ _error: e.message }));
   const rows = files.map((f) => {
@@ -97,7 +97,7 @@ export async function inspect(target, opt) {
     if (row.width && row.width < 1600 && row.kind === 'image') row.note = (row.note ? row.note + '; ' : '') + 'under 1600 px wide: will soften as a full-bleed hero on large screens';
     return row;
   });
-  console.log(JSON.stringify({ engines: { ffmpeg: eng.ffmpeg ? { version: eng.ffmpeg.version, encoders: Object.entries(eng.ffmpeg.encoders).filter(([, v]) => v).map(([k]) => k) } : 'not found', ffprobe: !!eng.ffprobe, sharp: eng.sharp, chromium: true }, files: rows }, null, 2));
+  if (!opt?.quiet) console.log(JSON.stringify({ engines: { ffmpeg: eng.ffmpeg ? { version: eng.ffmpeg.version, encoders: Object.entries(eng.ffmpeg.encoders).filter(([, v]) => v).map(([k]) => k) } : 'not found', ffprobe: !!eng.ffprobe, sharp: eng.sharp, chromium: true }, files: rows }, null, 2));
   return rows;
 }
 

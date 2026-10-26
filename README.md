@@ -10,13 +10,14 @@
   <a href="LICENSE"><img alt="MIT licence" src="https://img.shields.io/badge/licence-MIT-ff7a3d?style=for-the-badge&labelColor=121110"></a>
   <img alt="Claude Code skill" src="https://img.shields.io/badge/Claude%20Code-skill-ece6dc?style=for-the-badge&logo=anthropic&logoColor=ece6dc&labelColor=121110">
   <img alt="10 platforms" src="https://img.shields.io/badge/platforms-10-ff7a3d?style=for-the-badge&labelColor=121110">
-  <img alt="49 automated checks" src="https://img.shields.io/badge/tests-49%20passing-7ab55c?style=for-the-badge&labelColor=121110">
+  <img alt="55 automated checks" src="https://img.shields.io/badge/tests-55%20passing-7ab55c?style=for-the-badge&labelColor=121110">
   <img alt="Node 18+" src="https://img.shields.io/badge/node-18%2B-ece6dc?style=for-the-badge&logo=nodedotjs&logoColor=ece6dc&labelColor=121110">
 </p>
 
 <p align="center">
   <a href="#see-it">🎬 <b>See it</b></a> &nbsp;·&nbsp;
   <a href="#platforms">🧱 <b>Platforms</b></a> &nbsp;·&nbsp;
+  <a href="#redesign">♻️ <b>Redesign</b></a> &nbsp;·&nbsp;
   <a href="#questions">💬 <b>How it asks</b></a> &nbsp;·&nbsp;
   <a href="#looks">✨ <b>Looks & motion</b></a> &nbsp;·&nbsp;
   <a href="#prompts">🗣️ <b>Prompts</b></a> &nbsp;·&nbsp;
@@ -124,6 +125,26 @@ Those are closed editors: no tool can import a theme into them as code. Darkroom
 
 ---
 
+<a id="redesign"></a>
+
+## ♻️ Start from your current site
+
+Already have a site? Give Darkroom its **address** or its **folder on your computer**, right in the first message:
+
+```text
+/darkroom redesign https://mybakery.com as a Shopify store, warm and handmade
+```
+```text
+/darkroom here is my current site: D:\sites\bakery. Make it a WordPress theme I can edit.
+```
+
+It asks whether the site is yours and what to bring over (**texts and images**, only texts, or only images), lists your pages so you can pick, then imports them: every text in reading order, your menu, phone, email and social links, and every picture **with its real size**. You get a plain list of what could be sharper (*"900 px wide: fine where it was, soft as a full-width hero"*), never a rejection. It also keeps a list of your old page addresses, so your Google ranking survives the move. Plain HTML, PHP and Markdown folders work; a theme folder (WordPress, Shopify) holds no content, so it asks for the live address instead.
+
+- 📱 **See it on your phone.** At the first preview, Darkroom offers to open the site on your phone over **the same Wi-Fi**: nothing to install, nothing public. Want to send it to someone? It can make a shareable link too, after it asks.
+- 📥 **Drop your files in.** Put your photos and clips in the folder and say so. Darkroom checks each one against what it asked for, tells you what could be even better, and asks *"continue with these, or replace any first?"*. **Nothing gets rejected.**
+
+---
+
 <a id="questions"></a>
 
 ## 💬 It asks before it builds
@@ -226,6 +247,18 @@ Open Claude Code in an empty folder (or your project) and type one. Click a grou
 </details>
 
 <details>
+<summary>♻️ <b>Redesign what you have</b></summary>
+
+```text
+/darkroom redesign https://mybakery.com. Keep my texts, make it feel like a Lisbon pastry shop. Same platform.
+```
+```text
+/darkroom my old site is in ./old-site (plain HTML). Move it to Astro on Cloudflare and make it modern.
+```
+**What happens:** it asks whether the site is yours and what to bring over, lists your pages, imports them, and tells you which photos could be sharper. Then it shows two new directions using your own words.
+</details>
+
+<details>
 <summary>📝 <b>Sites you edit yourself, blogs and newsletters</b></summary>
 
 ```text
@@ -311,7 +344,7 @@ Every starter theme was run through **the platform's own tools**, not just Darkr
 | <picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/ghost-light.svg"><img src="assets/icons/ghost.svg" width="16" alt=""></picture> Ghost | gscan | **compatible with Ghost 6.x** |
 | <img src="assets/icons/wordpress.svg" width="16" alt=""> WordPress | a real WordPress (Playground), Site Editor block validation | **renders; 0 invalid blocks** in every template |
 | <img src="assets/icons/woocommerce.svg" width="30" alt=""> WooCommerce | WordPress + WooCommerce from wordpress.org, sample products | **shop and product pages render; 0 invalid blocks** |
-| All ten | Darkroom's structure check + **49 automated tests** | passing locally; CI runs them on every push |
+| All ten | Darkroom's structure check + **55 automated tests** | passing locally; CI runs them on every push |
 
 That run found real problems before you could: WooCommerce blocks that look self-closing but save HTML (the editor would have called them broken), missing side padding on phones, and new WooCommerce stores hiding behind "Coming soon". All fixed, and the checks now catch them.
 
@@ -321,6 +354,9 @@ That run found real problems before you could: WooCommerce blocks that look self
 | | |
 |---|---|
 | 🎨 **Art direction** | 13 style packs and brand look-alikes measured from the live site. |
+| ♻️ **Redesign** | imports your current site (URL or folder): texts, menu, contacts, images with sizes, old addresses. |
+| 📱 **Phone preview** | your site on your phone over the same Wi-Fi, or a shareable link when you say yes. |
+| 📥 **Asset check** | measures what you drop in, suggests improvements, never rejects. |
 | 🧱 **Ten platforms** | dated profiles with the official docs to re-check, starters, a structure check, deploy steps. |
 | 🌊 **Scroll and motion** | tested recipes: reveals, scroll-scrubbed video, frame sequences, pinned scenes. Every one has a reduced-motion fallback. |
 | 📷 **Real-browser QA** | Playwright captures at several screen sizes, contact sheets and crops, motion on and off; each run records the build it was taken from. |
@@ -337,7 +373,7 @@ That run found real problems before you could: WooCommerce blocks that look self
 
 ## 📚 Where the knowledge comes from
 
-<p align="center"><img src="assets/knowledge.svg" alt="84 real sites studied (66 good, 18 bad), 24 cross-site lessons with 10 promoted to rules, 32 research sources, 6 design tools studied, 49 automated checks, one human art director" width="100%"></p>
+<p align="center"><img src="assets/knowledge.svg" alt="84 real sites studied (66 good, 18 bad), 24 cross-site lessons with 10 promoted to rules, 32 research sources, 6 design tools studied, 55 automated checks, one human art director" width="100%"></p>
 
 Darkroom is **not a trained model**. It is written knowledge that Claude reads while it works, in plain files you can check: **84 real websites studied** (kept as written notes, never screenshots or copied code), **24 lessons** of which **10 became rules** after the author approved them, **32 research sources** (Nielsen Norman Group, WCAG 2.2, the European Accessibility Act, EU cookie and price rules, the AI Act), the **official docs of all ten platforms**, and the author's own taste calls.
 
@@ -387,7 +423,7 @@ Only `skill/darkroom/` is installed. Tests, the example and CI stay in the repos
 
 ```bash
 npm install && npx playwright install chromium
-npm test        # 49 checks against skill/darkroom; keep it green
+npm test        # 55 checks against skill/darkroom; keep it green
 npm run pack    # dist/darkroom-skill.zip
 ```
 

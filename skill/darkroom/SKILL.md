@@ -1,6 +1,6 @@
 ---
 name: darkroom
-description: "Art-directed websites on the platform you need: landing pages, portfolios, shops, blogs. Shopify and WooCommerce themes, WordPress block themes, Astro on Cloudflare, Next.js on Vercel, Hugo, Jekyll, Ghost, PHP, or plain HTML for free hosting. Claude decides the design, builds it, looks at the real browser output and fixes it; you supply facts, assets and taste. Any look (13 style packs, or 'like apple.com / Rolex / Cartier'), any motion level (calm, animated on scroll, one hero effect, scroll story). Asks about colours (your palette, suggestions, 60-30-10 or creative) and assets (yours, or prompts for ChatGPT, Kling, Seedance, Veo). Type /darkroom followed by what you want."
+description: "Art-directed websites on the platform you need: landing pages, portfolios, shops, blogs. Shopify and WooCommerce themes, WordPress block themes, Astro on Cloudflare, Next.js on Vercel, Hugo, Jekyll, Ghost, PHP, or plain HTML for free hosting. Start from scratch or from your current site (a URL or a folder). Claude decides the design, builds it, looks at the real browser output and fixes it, and you can open it on your phone; you supply facts, assets and taste. Any look (13 style packs, or 'like apple.com / Rolex / Cartier'), any motion level (calm, animated on scroll, one hero effect, scroll story). Asks about colours (your palette, suggestions, 60-30-10 or creative) and assets (yours, or prompts for ChatGPT, Kling, Seedance, Veo). Type /darkroom followed by what you want."
 user-invocable: true
 disable-model-invocation: true
 argument-hint: "[describe the site, e.g. a Shopify store for my ceramics that feels like Cartier, with animations on scroll]"
@@ -57,7 +57,9 @@ The user may know nothing about design. They describe what they want in their ow
 6 Resume      any session continues from `darkroom state`
 ```
 
-Entry paths: **brief-led** (nothing but a brief: build coded comps, never wait for an anchor image), **asset-led** (inspect supplied media first, design around it), **reference-led** (give each reference a role; ask once only if the roles would change the direction). Every entry path starts with `/darkroom <what they want>`; after that the user talks in plain words and never types tool commands.
+Entry paths: **brief-led** (nothing but a brief: build coded comps, never wait for an anchor image), **asset-led** (inspect supplied media first, design around it), **site-led** (the user's current site, as a live URL or a local folder: ask whether it is theirs and what to bring over, then `darkroom import`; `commands/import.md`), **reference-led** (give each reference a role; ask once only if the roles would change the direction).
+
+At the first checkpoint where something runs, offer once to open it on the user's phone (same Wi-Fi, nothing needed) or as a shareable link (needs a yes and sometimes an install): `commands/preview.md`. When the user drops in files, run `darkroom assets intake`: it suggests, it never rejects; ask "continue with these, or replace any first?" (`references/asset-tools.md`, "When files arrive"). Every entry path starts with `/darkroom <what they want>`; after that the user talks in plain words and never types tool commands.
 
 ## When to ask the user, and when not
 
@@ -85,12 +87,15 @@ If the project already has `PROJECT_BLUEPRINT.md` / `DESIGN.md` / a `CLAUDE.md` 
 | `init`, `state` | project files; stage, approvals, stale evidence, next action | `commands/status.md` |
 | `capture <url\|dir\|file>` | named states, real wheel input, scene progress, motion + reduced-motion, contact sheets, crops, manifest | `commands/shoot.md` |
 | `audit <…>` | measured / heuristic / manual checks, per viewport (`darkroom checks` lists them) | `commands/audit.md` |
+| `import <url\|folder>` | the user's current site: texts in reading order, navigation, contacts, images with sizes, old addresses | `commands/import.md` |
+| `preview <folder\|url>` | open it on a phone on the same Wi-Fi (relays dev servers) | `commands/preview.md` |
+| `assets intake` | match arrived files to NEEDS.md, measure, suggest (never reject), update its Status column | `references/asset-tools.md` |
 | `platform list\|scaffold\|check` | the ten platforms; a starter per platform; offline structure check (then the platform's own validator) | `commands/platform.md` |
 | `media inspect\|derive\|frames\|check` | probe media, make responsive stills, video → frame sequence + manifest, validate | `recipes/README.md` |
 | `study <url>` | capture + audit of a reference page | `commands/study.md` |
 | `compare <ref> <capture>` | reference over capture for composition review | `commands/shoot.md` |
 
-Playbooks (`commands/*.md`) are how-to guides for each stage, loaded when you reach it: `concierge` (how to talk to the user), `start`, `style`, `lookalike` ("like <brand>"), `platform` (build on Shopify, WordPress…), `bible`, `storyboard`, `plates`, `imagine`, `refs`, `build`, `critique`, `comply`, `study`, `handoff`, `learn` (maintainer). Knowledge lives in `references/` (load what the playbook points to), `platforms/` (one dated profile per platform), `styles/` (packs and switches), `recipes/` (tested scroll/motion code), `library/` (observations from real sites: evidence, never templates), `prompts/` (image/video model templates).
+Playbooks (`commands/*.md`) are how-to guides for each stage, loaded when you reach it: `concierge` (how to talk to the user), `start`, `style`, `lookalike` ("like <brand>"), `platform` (build on Shopify, WordPress…), `import` (start from their current site), `preview` (on their phone), `bible`, `storyboard`, `plates`, `imagine`, `refs`, `build`, `critique`, `comply`, `study`, `handoff`, `learn` (maintainer). Knowledge lives in `references/` (load what the playbook points to), `platforms/` (one dated profile per platform), `styles/` (packs and switches), `recipes/` (tested scroll/motion code), `library/` (observations from real sites: evidence, never templates), `prompts/` (image/video model templates).
 
 ## Self-containment
 

@@ -141,6 +141,127 @@ async function platformCases() {
   return results;
 }
 
+// A small "old site" the user owns: three pages, a robots-blocked page, a cookie banner, images of different sizes.
+function writeOldSite(dir) {
+  fs.mkdirSync(path.join(dir, 'img'), { recursive: true });
+  const svg = (w, h) => `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}"><rect width="100%" height="100%" fill="#c96"/></svg>`;
+  fs.writeFileSync(path.join(dir, 'img/hero.svg'), svg(900, 500));
+  fs.writeFileSync(path.join(dir, 'img/oven.svg'), svg(2600, 1400));
+  fs.writeFileSync(path.join(dir, 'index.html'), '<!doctype html><html lang="en"><head><title>Forno Bakery</title><meta name="description" content="Wood-fired bread since 1987."></head><body><header><nav><a href="/">Home</a> <a href="about.html">About</a> <a href="menu.html">Menu</a></nav></header><div id="cookie-banner" role="dialog"><p>We use cookies for tracking.</p><button>Reject all</button></div><main><h1>Bread baked in a wood oven</h1><p>Every loaf starts at 4 am.</p><img src="img/hero.svg" alt="" style="width:1200px"><div><span>Open Tuesday to Sunday</span></div></main><footer><a href="mailto:ola@forno.pt">ola@forno.pt</a> <a href="tel:+351210000000">Call</a> <a href="https://instagram.com/forno">Instagram</a></footer></body></html>');
+  fs.writeFileSync(path.join(dir, 'about.html'), '<!doctype html><html><head><title>About</title></head><body><main><h1>Three generations</h1><img src="img/oven.svg" alt="The oven" style="width:800px"><a href="private.html">staff</a><a href="http://PLACEHOLDER/menu.html">menu</a></main></body></html>');
+  fs.writeFileSync(path.join(dir, 'menu.html'), '<!doctype html><html><head><title>Menu</title></head><body><main><h1>Menu</h1><table><tr><td>Sourdough</td><td>4.50 €</td></tr></table><form><label>Name <input name="n"></label></form></main></body></html>');
+  fs.writeFileSync(path.join(dir, 'private.html'), '<!doctype html><title>Private</title><main><h1>Staff only</h1></main>');
+  fs.writeFileSync(path.join(dir, 'robots.txt'), 'User-agent: *\nDisallow: /private\n');
+}
+
+const pngOf = async (page, w, h, file) => {
+  const b64 = await page.evaluate(({ w, h }) => { const c = document.createElement('canvas'); c.width = w; c.height = h; const x = c.getContext('2d'); x.fillStyle = '#c96'; x.fillRect(0, 0, w, h); return c.toDataURL('image/png').split(',')[1]; }, { w, h });
+  fs.writeFileSync(file, Buffer.from(b64, 'base64'));
+};
+
+async function siteCases() {
+  const results = [];
+  const read = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8') : '');
+  const base = path.join(work, 'import'); const site = path.join(base, 'site'); writeOldSite(site);
+
+  // folder → served and crawled; texts in order, banner ignored, table row kept, images measured with suggestions
+  let fails = [];
+  let r = await run(['import', site, '--out', path.join(base, 'o1')], base);
+  const content = read(path.join(base, 'o1', 'CONTENT.md'));
+  for (const k of ['Bread baked in a wood oven', 'Every loaf starts at 4 am.', 'Open Tuesday to Sunday', 'Sourdough · 4.50 €', 'ola@forno.pt', '+351210000000', 'instagram.com/forno', 'Three generations']) if (!content.includes(k)) fails.push(`CONTENT.md lacks "${k}"`);
+  if (content.includes('We use cookies')) fails.push('cookie banner text was imported');
+  if (/^Name$/m.test(content)) fails.push('form label imported as page text');
+  const imgs = fs.existsSync(path.join(base, 'o1', 'images.json')) ? JSON.parse(read(path.join(base, 'o1', 'images.json'))) : [];
+  const hero = imgs.find((i) => /hero/.test(i.saved ?? ''));
+  if (!hero || hero.width !== 900 || !hero.notes.some((n) => /2400/.test(n))) fails.push(`hero image not measured or not given the full-width suggestion: ${JSON.stringify(hero)?.slice(0, 160)}`);
+  if (imgs.find((i) => /oven/.test(i.saved ?? ''))?.notes.length) fails.push('a sharp, described image got a suggestion');
+  if (!fs.existsSync(path.join(base, 'o1', 'images', 'hero.svg'))) fails.push('images not saved');
+  if (!read(path.join(base, 'o1', 'url-map.json')).includes('/about.html')) fails.push('url-map lacks /about.html');
+  if (r.code !== 0) fails.push(`exit ${r.code}: ${r.out.slice(0, 160)}`);
+  results.push({ name: 'import of a local site folder: texts in reading order, cookie banner and form labels left out, contacts found, images saved and measured with a suggestion (never a rejection), old addresses listed', fails });
+
+  // live URL → robots.txt respected; --list saves nothing; --pages home,menu.html selects (Git Bash-safe)
+  fails = [];
+  const { resolveTarget } = await import(pathToFileURL(path.join(skill, 'scripts', 'lib', 'serve.mjs')).href);
+  const served = await resolveTarget(site);
+  try {
+    const origin = new URL(served.url).origin;
+    r = await run(['import', origin + '/', '--list', '--out', path.join(base, 'o2')], base);
+    if (!/3 page\(s\) found/.test(r.out)) fails.push(`--list did not find 3 pages: ${r.out.slice(0, 200)}`);
+    if (!/private\.html: robots\.txt disallows it/.test(r.out)) fails.push('robots.txt Disallow: /private was not respected');
+    if (fs.existsSync(path.join(base, 'o2', 'CONTENT.md'))) fails.push('--list wrote CONTENT.md');
+    r = await run(['import', origin + '/', '--pages', 'home,menu.html', '--take', 'text', '--out', path.join(base, 'o3')], base);
+    const pages = fs.existsSync(path.join(base, 'o3', 'content.json')) ? JSON.parse(read(path.join(base, 'o3', 'content.json'))).pages.map((p) => p.path) : [];
+    if (pages.join(',') !== '/,/menu.html') fails.push(`--pages home,menu.html imported ${pages.join(',') || 'nothing'}`);
+    if (fs.existsSync(path.join(base, 'o3', 'images'))) fails.push('--take text saved images');
+  } finally { await served.close(); }
+  results.push({ name: 'import of a live URL: robots.txt respected, --list only lists, --pages home,menu.html picks exactly those pages, --take text saves no images', fails });
+
+  // PHP source → read, not run; included parts are not pages; theme folders point to the live site
+  fails = [];
+  const php = path.join(base, 'php'); fs.mkdirSync(path.join(php, 'photos'), { recursive: true });
+  fs.writeFileSync(path.join(php, 'index.php'), "<?php include 'header.php'; ?>\n<h1>Welcome to Casa Lu</h1><p>Rooms by the river.</p><?php echo date('Y'); ?><img src=\"photos/room.svg\" alt=\"A room\">");
+  fs.writeFileSync(path.join(php, 'header.php'), "<nav><a href='/'>Home</a></nav>");
+  fs.writeFileSync(path.join(php, 'photos/room.svg'), '<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="700"><rect width="100%" height="100%"/></svg>');
+  r = await run(['import', php, '--out', path.join(base, 'o4')], base);
+  const phpContent = read(path.join(base, 'o4', 'CONTENT.md'));
+  if (!phpContent.includes('Welcome to Casa Lu') || !phpContent.includes('Read from the files, not run')) fails.push(`PHP texts or the "not run" note missing: ${r.out.slice(0, 160)}`);
+  if (phpContent.includes('header.php')) fails.push('header.php (an included part) was listed as a page');
+  if (!/1000×700/.test(phpContent)) fails.push('local image not measured');
+  const theme = path.join(base, 'wp'); await run(['platform', 'scaffold', 'wordpress', '--out', theme, '--name', 'T'], base);
+  r = await run(['import', theme, '--out', path.join(base, 'o5')], base);
+  if (r.code !== 2 || !/database/.test(r.out)) fails.push(`a WordPress theme folder was not redirected to the live site (exit ${r.code})`);
+  results.push({ name: 'import of PHP sources reads without running, skips included parts, measures local images; a theme folder asks for the live URL instead', fails });
+
+  // preview: serve a folder and relay a dev server, rewriting its address; a busy port gives a plain message
+  fails = [];
+  const start = (args) => new Promise((resolve) => {
+    const p = spawn(process.execPath, [cli, 'preview', ...args, '--host', '127.0.0.1'], { cwd: base, env });
+    let out = ''; const done = () => resolve({ p, out, port: Number(out.match(/this computer: http:\/\/127\.0\.0\.1:(\d+)/)?.[1]) });
+    p.stdout.on('data', (d) => { out += d; if (/preview ready[\s\S]*this computer/.test(out)) done(); });
+    p.stderr.on('data', (d) => { out += d; }); p.on('close', done); setTimeout(done, 8000);
+  });
+  const a = await start([site, '--port', '0']);
+  try {
+    if (!a.port) fails.push(`preview did not start: ${a.out.slice(0, 160)}`);
+    else {
+      fs.writeFileSync(path.join(site, 'abs.html'), `<a href="http://127.0.0.1:${a.port}/about.html">x</a><script>var u="http:\\/\\/127.0.0.1:${a.port}\\/menu.html"</script>`);
+      if ((await fetch(`http://127.0.0.1:${a.port}/about`)).status !== 200) fails.push('/about did not resolve to about.html');
+      const b = await start([`http://127.0.0.1:${a.port}`, '--port', '0']);
+      try {
+        const body = await (await fetch(`http://127.0.0.1:${b.port}/abs.html`)).text();
+        if (!body.includes(`http://127.0.0.1:${b.port}/about.html`) || !body.includes(`http:\\/\\/127.0.0.1:${b.port}\\/menu.html`)) fails.push(`relay did not rewrite the dev server address: ${body.slice(0, 160)}`);
+      } finally { b.p.kill(); }
+      const busy = await start([site, '--port', String(a.port)]);
+      if (!/busy/.test(busy.out)) fails.push(`a busy port gave: ${busy.out.slice(0, 120)}`);
+      busy.p.kill();
+    }
+  } finally { a.p.kill(); }
+  results.push({ name: 'preview serves a folder, relays a dev server with its address rewritten (plain and JSON-escaped), and explains a busy port', fails });
+
+  // assets intake: matches NEEDS.md, suggests, never rejects, fills the Status column
+  fails = [];
+  const proj = path.join(base, 'proj'); fs.mkdirSync(path.join(proj, 'assets/raw'), { recursive: true });
+  const { launch } = await import(pathToFileURL(path.join(skill, 'scripts', 'lib', 'browser.mjs')).href);
+  const browser = await launch();
+  try { const pg = await browser.newPage(); await pngOf(pg, 1400, 900, path.join(proj, 'assets/raw/hero.png')); await pngOf(pg, 600, 200, path.join(proj, 'assets/raw/logo.png')); await pngOf(pg, 3000, 1800, path.join(proj, 'assets/raw/big.png')); await pngOf(pg, 500, 500, path.join(proj, 'assets/raw/extra.png')); } finally { await browser.close(); }
+  fs.writeFileSync(path.join(proj, 'NEEDS.md'), '# Needs\n\n| # | I need | Why | Blocks? | How | Put it in | If it never arrives |\n|---|---|---|---|---|---|---|\n| 1 | a wide hero photo | first screen | Improves | phone | `assets/raw/hero.png` | drawn |\n| 2 | your logo | header | Improves | designer | `assets/raw/logo.png` | wordmark |\n| 3 | a big wide banner | about | Improves | phone | `assets/raw/big.png` | none |\n| 4 | a phone photo | phone hero | Improves | phone | `assets/raw/phone.png` | crop |\n');
+  r = await run(['assets', 'intake'], proj);
+  const needs = read(path.join(proj, 'NEEDS.md'));
+  const intake = fs.existsSync(path.join(proj, '.darkroom/intake.json')) ? JSON.parse(read(path.join(proj, '.darkroom/intake.json'))) : null;
+  if (r.code !== 0) fails.push(`exit ${r.code}: ${r.out.slice(0, 160)}`);
+  if (!/\| Status \|/.test(needs)) fails.push('NEEDS.md got no Status column');
+  if (!/hero\.png` \| drawn \| ✅ arrived · could be better: 1400 px/.test(needs)) fails.push('hero row not marked arrived with its suggestion');
+  if (!/logo\.png` \| wordmark \| ✅ arrived · could be better: a logo as SVG/.test(needs)) fails.push('logo row lacks the SVG suggestion');
+  if (!/big\.png` \| none \| ✅ arrived \|/.test(needs)) fails.push('a large wide image got a suggestion or was not marked arrived');
+  if (!/phone\.png` \| crop \| waiting \|/.test(needs)) fails.push('missing file not marked waiting');
+  if (/reject/i.test(needs) || intake?.needs.some((n) => /reject/i.test(n.status))) fails.push('something was rejected');
+  if (intake?.extras.length !== 1) fails.push(`extras: ${intake?.extras.length}`);
+  if (!/Continue with these, or replace any of them first\?/.test(r.out)) fails.push('no "continue with these?" question');
+  results.push({ name: 'assets intake matches NEEDS.md, suggests instead of rejecting, lists extras, fills the Status column and asks whether to continue', fails });
+  return results;
+}
+
 function docChecks() {
   const results = [];
   const audit = fs.readFileSync(path.join(skill, 'commands', 'audit.md'), 'utf8');
@@ -202,7 +323,9 @@ function docChecks() {
     results.push({ name: 'no file of the skill is git-ignored (so everything the playbooks mention is published)', fails: ignored.map((f) => `ignored: ${path.relative(skill, f.replace(/^"|"$/g, ''))}`) });
     const linked = [...new Set([...skillMd.matchAll(/`((?:commands|references|platforms|templates|recipes)\/[\w./-]+\.(?:md|js|json))`/g)].map((m) => m[1]))];
     results.push({ name: 'every file SKILL.md names exists', fails: linked.filter((l) => !fs.existsSync(path.join(skill, l))).map((l) => `missing ${l}`) });
-    const wired = ['commands/platform.md', 'platforms/README.md', 'platforms/builders.md', 'references/asset-tools.md', 'references/modes.md', 'commands/lookalike.md', 'references/looks.md', 'references/motion-toolkit.md', 'recipes/reveal.js'];
+    const flagDocs = [['commands/import.md', ['--list', '--pages', '--take', '--max', '--out']], ['commands/preview.md', ['--port', '--host']], ['references/asset-tools.md', ['assets intake', '--needs']]];
+    results.push({ name: 'every flag of import, preview and assets intake is documented in its playbook', fails: flagDocs.flatMap(([f, flags]) => flags.filter((k) => !read(f).includes(k)).map((k) => `${f} lacks ${k}`)) });
+    const wired = ['commands/import.md', 'commands/preview.md', 'commands/platform.md', 'platforms/README.md', 'platforms/builders.md', 'references/asset-tools.md', 'references/modes.md', 'commands/lookalike.md', 'references/looks.md', 'references/motion-toolkit.md', 'recipes/reveal.js'];
     results.push({ name: 'SKILL.md links the platform playbook and profiles, asset tools, modes, look-alike, looks, motion toolkit and reveal recipe', fails: wired.filter((l) => !fs.existsSync(path.join(skill, l)) || !skillMd.includes(l)).map((l) => `missing or unlinked: ${l}`) });
     return results;
   });
@@ -270,7 +393,7 @@ const cases =spec.cases.filter((c) => !only || c.name.includes(only) || c.fixtur
 const results = [];
 let next = 0;
 await Promise.all(Array.from({ length: 3 }, async () => { while (next < cases.length) { const i = next++; results[i] = await fileCase(cases[i], i); } }));
-if (!only) { results.push(...await projectCases()); results.push(...await platformCases()); results.push(...await docChecks()); results.push(...await recipeChecks()); }
+if (!only) { results.push(...await projectCases()); results.push(...await platformCases()); results.push(...await siteCases()); results.push(...await docChecks()); results.push(...await recipeChecks()); }
 let bad = 0;
 for (const r of results) { const ok = !r.fails.length; if (!ok) bad++; console.log(`${ok ? 'PASS' : 'FAIL'}  ${r.name}${ok ? '' : '\n      - ' + r.fails.join('\n      - ')}`); }
 console.log(`\n${results.length - bad}/${results.length} passed`);

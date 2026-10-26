@@ -45,6 +45,20 @@ Save as: assets/raw/<name>.mp4
 
 Video for scroll scrubbing needs a locked or perfectly smooth camera and clean start and end frames (`prompts/video-clip.md`). Before ordering a batch, the user generates **the hardest shot once**; Darkroom inspects it frame by frame (`darkroom media inspect`, `media frames`) before the rest are made.
 
+## When files arrive
+
+When the user says they added files (or you see new files in `assets/raw/`):
+
+```
+darkroom assets intake [assets/raw] [--needs NEEDS.md]
+```
+
+It matches each file to its row in `NEEDS.md`, measures it (size, shape, length, frame rate, sound), and fills the Status column (`✅ arrived`, `✅ arrived · could be better: …`, `waiting`). Files nobody asked for are listed as extra. **Nothing is ever rejected.** Then:
+
+1. Open each picture yourself (you can see images): text or logos baked in, subject cut off at an edge, a different product than the brief. Add what you see to the suggestions; the script cannot see content.
+2. Tell the user in one short message, one line per file, suggestions phrased as options ("the hero is 1400 px wide: it works; a 2400 px version would be sharper on big screens"), then ask once: **"Continue with these, or replace any first?"** Recommended: continue.
+3. Continue means use them now: `darkroom media derive` for responsive images, `media frames` for scroll sequences, and update `.darkroom/ASSETS.json`. A replacement later simply goes through intake again.
+
 ## Rights
 
 Record tool, plan and date in `.darkroom/ASSETS.json`. The output licence depends on the tool and the user's plan; some markets require labelling AI-generated imagery (`references/compliance.md`). Never generate a real person, a brand's product or logo the user does not own, or a competitor's look.
