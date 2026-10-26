@@ -59,10 +59,21 @@ function extractPage() {
   const social = [...new Set([...document.querySelectorAll('a[href]')].map((a) => a.href).filter((h) => /(instagram|facebook|tiktok|youtube|linkedin|twitter|x\.com|pinterest|threads|behance|dribbble)\./i.test(h)))];
   const forms = [...document.querySelectorAll('form')].map((f) => ({ action: f.getAttribute('action') ?? '', fields: [...f.querySelectorAll('input,select,textarea')].filter((x) => x.type !== 'hidden').map((x) => clean(x.labels?.[0]?.innerText) || x.name || x.placeholder || x.type) }));
   const links = [...document.querySelectorAll('a[href]')].map((a) => a.href);
+  // what the site is built with: platform, theme, page builder, translation plugin (signs in the HTML; a lead, not proof)
+  // elements on the page and the files it loads, never stylesheet text (themes style other builders' class names)
+  const gen = meta('generator');
+  const files = [...document.querySelectorAll('script[src],link[href]')].map((e) => e.src || e.href).join(' ');
+  const el = (sel) => !!document.querySelector(sel);
+  const platform = /wordpress/i.test(gen) || /\/wp-content\//.test(files) ? (/\/plugins\/woocommerce\//.test(files) ? 'woocommerce' : 'wordpress')
+    : /cdn\.shopify\.com/.test(files) || !!window.Shopify ? 'shopify' : /ghost/i.test(gen) ? 'ghost'
+    : /wixstatic\.com|parastorage\.com/.test(files) ? 'wix' : /squarespace(-cdn)?\.com/.test(files) ? 'squarespace' : el('html[data-wf-site]') ? 'webflow' : /framerusercontent\.com/.test(files) ? 'framer' : null;
+  const builders = [['.elementor-section,.elementor-element,[data-elementor-type]', 'Elementor'], ['.et_pb_section', 'Divi'], ['[class*="wp-block-kadence"],[class*="kb-row-layout"]', 'Kadence Blocks'], ['.fl-builder-content', 'Beaver Builder'], ['.vc_row,.wpb_row', 'WPBakery'], ['[class*="brxe-"]', 'Bricks'], ['[class*="ct-section"],.oxy-header', 'Oxygen'], ['[class*="wp-block-"]', 'block editor (Gutenberg)']].filter(([sel]) => el(sel)).map(([, n]) => n);
+  const translation = [[/\/translatepress/, '[class*="trp-"]', 'TranslatePress'], [/\/sitepress-multilingual/, '.wpml-ls', 'WPML'], [/\/polylang/, '.lang-item', 'Polylang'], [/weglot/, '.weglot-container', 'Weglot']].filter(([re, sel]) => re.test(files) || el(sel)).map(([, , n]) => n);
+  const stack = { platform, generator: gen, theme: /\/wp-content\/themes\/([\w-]+)/.exec(files)?.[1] ?? window.Shopify?.theme?.name ?? null, builders, translation };
   return {
     title: document.title, description: meta('description'), ogImage: meta('og:image'), lang: document.documentElement.lang,
     canonical: document.querySelector('link[rel=canonical]')?.href ?? '', blocks, footer, nav, images, backgrounds, videos,
-    contacts: { emails, phones }, social, forms, links, words: (main ?? document.body).innerText.split(/\s+/).filter(Boolean).length,
+    contacts: { emails, phones }, social, forms, links, stack, words: (main ?? document.body).innerText.split(/\s+/).filter(Boolean).length,
   };
 }
 
@@ -211,6 +222,15 @@ async function saveImages(all, dir) {
   }
 }
 
+// the signs from every page together; a sentence for people
+function stackOf(pages) {
+  const all = pages.map((p) => p.stack).filter(Boolean);
+  if (!all.length) return null;
+  const uniq = (k) => [...new Set(all.flatMap((x) => x[k] ?? []))];
+  return { platform: all.find((x) => x.platform)?.platform ?? null, generator: all.find((x) => x.generator)?.generator || null, theme: all.find((x) => x.theme)?.theme ?? null, builders: uniq('builders'), translation: uniq('translation') };
+}
+const stackLine = (st) => !st ? '' : [st.platform ? `platform: ${st.platform}${st.generator ? ` (${st.generator})` : ''}` : 'platform: not recognised', st.theme && `theme: ${st.theme}`, `page builder: ${st.builders.length ? st.builders.join(', ') : 'none seen'}`, st.translation.length && `translation: ${st.translation.join(', ')}`].filter(Boolean).join(' · ');
+
 function writeOutputs(out, src, pages, opts, extra) {
   mkdirp(out);
   const images = []; const byKey = new Map();
@@ -223,13 +243,14 @@ function writeOutputs(out, src, pages, opts, extra) {
   const navAll = pages[0]?.nav ?? [];
   const contacts = { emails: [...new Set(pages.flatMap((p) => p.contacts.emails))], phones: [...new Set(pages.flatMap((p) => p.contacts.phones))], social: [...new Set(pages.flatMap((p) => p.social))] };
   const urlMap = pages.map((p) => ({ old: p.path, new: p.path, title: p.title }));
-  fs.writeFileSync(path.join(out, 'content.json'), JSON.stringify({ schema: 'darkroom-import-v1', source: src, importedAt: new Date().toISOString(), mode: extra.mode, take: opts.take, pages: pages.map(({ links, ...p }) => p), contacts, skipped: extra.skipped, notCrawled: extra.notCrawled }, null, 2));
+  fs.writeFileSync(path.join(out, 'content.json'), JSON.stringify({ schema: 'darkroom-import-v1', source: src, importedAt: new Date().toISOString(), mode: extra.mode, take: opts.take, stack: stackOf(pages), pages: pages.map(({ links, stack, ...p }) => p), contacts, skipped: extra.skipped, notCrawled: extra.notCrawled }, null, 2));
   fs.writeFileSync(path.join(out, 'images.json'), JSON.stringify(images, null, 2));
   fs.writeFileSync(path.join(out, 'url-map.json'), JSON.stringify({ note: 'Keep these addresses on the new site, or redirect each old one to its new address, so search rankings and shared links survive (commands/import.md).', pages: urlMap }, null, 2));
   const L = [];
   L.push(`# Content imported from ${src}`, '', `Imported ${new Date().toISOString().slice(0, 10)} · ${pages.length} page(s) · texts: ${opts.take.includes('text') ? 'yes' : 'no'} · images: ${opts.take.includes('images') ? `yes (${images.filter((i) => i.saved).length} saved in images/)` : 'listed, not saved'}`);
   if (extra.mode === 'source') L.push('', '> Read from the files, not run: anything the server or a database adds (prices, posts, opening hours from a plugin) is missing.');
   L.push('', 'These are the owner\'s words. Keep them; propose edits, never replace them silently.', '');
+  if (stackOf(pages)) L.push('## Built with', '', stackLine(stackOf(pages)) + ' (signs in the HTML: confirm with the user; commands/import.md)', '');
   if (navAll.length) { L.push('## Navigation', ''); for (const n of navAll) L.push(`- ${n.text} → ${n.href.replace(/^https?:\/\/[^/]+/, '')}`); L.push(''); }
   if (contacts.emails.length || contacts.phones.length || contacts.social.length) { L.push('## Contact details found', ''); for (const e of contacts.emails) L.push(`- email: ${e}`); for (const p of contacts.phones) L.push(`- phone: ${p}`); for (const s of contacts.social) L.push(`- ${s}`); L.push(''); }
   for (const p of pages) {
@@ -252,8 +273,14 @@ function writeOutputs(out, src, pages, opts, extra) {
   return { images, contacts };
 }
 
+// Never let an empty import turn into a one-page build: say why and what to do.
+function nothingFound(skipped) {
+  if (skipped.some((s) => /robots\.txt/.test(s.why))) return "nothing imported: the site's robots.txt blocks crawlers like this one (often everyone except Google and Bing). If it is the user's own site, ask, then re-run with --ignore-robots. Do not build from the home page alone.";
+  return 'nothing imported: no page could be read (see "skipped" above). Tell the user why and ask for another way in (a folder, an export, the page texts). Do not build from the home page alone.';
+}
+
 export async function importSite(src, opt) {
-  if (!src) throw new Error('darkroom import <url|folder> [--list] [--pages /,/about] [--take text,images] [--max 40] [--out .darkroom/import]');
+  if (!src) throw new Error('darkroom import <url|folder> [--list] [--pages /,/about] [--take text,images] [--max 40] [--ignore-robots] [--out .darkroom/import]');
   const out = opt.out && opt.out !== true ? String(opt.out) : '.darkroom/import';
   const max = Number(opt.max ?? 40);
   const take = String(opt.take && opt.take !== true ? opt.take : 'text,images').split(',').map((s) => s.trim());
@@ -264,7 +291,8 @@ export async function importSite(src, opt) {
   let pages; let extra = { skipped: [], notCrawled: 0, mode: 'crawl' }; let label = src; let platform = null;
 
   if (/^https?:\/\//i.test(src)) {
-    const r = await crawl(src, { max, only, respectRobots: true });
+    // --ignore-robots: only for the user's own site, after they said so (commands/import.md)
+    const r = await crawl(src, { max, only, respectRobots: !opt['ignore-robots'] });
     pages = r.pages; extra = { ...extra, skipped: r.skipped, notCrawled: r.notCrawled };
   } else {
     const root = path.resolve(src);
@@ -295,12 +323,15 @@ export async function importSite(src, opt) {
   if (opt.list) {
     mkdirp(out);
     const list = pages.map((p) => ({ path: p.path, title: p.title, words: p.words, images: p.images.length + p.backgrounds.length }));
-    fs.writeFileSync(path.join(out, 'pages.json'), JSON.stringify({ source: src, mode: extra.mode, platform, pages: list, notCrawled: extra.notCrawled, skipped: extra.skipped }, null, 2));
+    fs.writeFileSync(path.join(out, 'pages.json'), JSON.stringify({ source: src, mode: extra.mode, platform, stack: stackOf(pages), pages: list, notCrawled: extra.notCrawled, skipped: extra.skipped }, null, 2));
     console.log(`${list.length} page(s) found in ${label}${platform ? ` (${platform})` : ''}${extra.notCrawled ? `; ${extra.notCrawled} more not visited (raise --max)` : ''}:`);
     for (const p of list) console.log(`  ${p.path.padEnd(32)} ${String(p.words).padStart(5)} words  ${String(p.images).padStart(3)} images  ${p.title}`);
     for (const s of extra.skipped) console.log(`  skipped ${s.url}: ${s.why}`);
+    if (stackOf(pages)) console.log(`built with: ${stackLine(stackOf(pages))}`);
+    if (!list.length) console.log(nothingFound(extra.skipped));
     return list;
   }
+  if (!pages.length) throw new Error(nothingFound(extra.skipped));
 
   if (take.includes('images')) {
     const all = pages.flatMap((p) => [...p.images, ...p.backgrounds]);
@@ -309,6 +340,7 @@ export async function importSite(src, opt) {
   const { images, contacts } = writeOutputs(out, src, pages, { take }, extra);
   console.log(`imported ${pages.length} page(s) from ${label}${extra.mode === 'source' ? ' (read from the files, not run)' : ''} → ${path.join(out, 'CONTENT.md')}`);
   console.log(`  texts: ${take.includes('text') ? pages.reduce((s, p) => s + p.blocks.length, 0) + ' blocks' : 'not imported'} · images: ${images.length} (${images.filter((i) => i.saved).length} saved) · ${images.filter((i) => i.notes.length).length} with suggestions`);
+  if (stackOf(pages)) console.log(`  built with: ${stackLine(stackOf(pages))}`);
   console.log(`  contact details: ${contacts.emails.length} email, ${contacts.phones.length} phone, ${contacts.social.length} social link(s)`);
   if (extra.notCrawled) console.log(`  ${extra.notCrawled} more page(s) not visited: raise --max or pass --pages`);
   return { pages, images };

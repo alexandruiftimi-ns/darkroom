@@ -2,7 +2,7 @@
 
 Assemble `.darkroom/HANDOFF.md` from evidence that matches the **current build revision** (`darkroom state` lists stale captures; re-capture first):
 
-1. What exists and works: sections, interactions, with capture paths (the sheets for desktop / phone / reduced motion, and any film strip).
+1. What exists and works: sections, interactions, with capture paths (the sheets for desktop / phone / reduced motion, and any film strip). For a site: the page list, each page marked built, merged or left out, against the old site's addresses when it was imported.
 2. Audit: date, URL, remaining highs and mediums with reasons; which findings were **measured**, **heuristic** or **manual**, and what the manual ones still need.
 3. Compliance (`commands/comply.md`): status, items for a lawyer. Disclosures present.
 4. Assets: production vs `TEMP`, rights and credits (`darkroom assets credits`), pending generations, the open asks.

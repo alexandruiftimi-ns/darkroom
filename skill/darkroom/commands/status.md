@@ -13,6 +13,8 @@ darkroom state --close hero-clean-plate
 darkroom state --root site                                 # the folder the build revision is computed from
 ```
 
-Stages: `intake → direction → slice → build → verify → review → done`. Modes: `calm`, `animated`, `hero-effect`, `story`. Looks: `pack:<style pack>` or `like:<brand>`. `approvals`, `open`, `schema` and `createdAt` cannot be changed with `--set`. If `.darkroom/` does not exist, run `darkroom init` (or `study` first, to learn from a reference page).
+`darkroom version` prints the installed version (major.minor.patch, from the skill's `VERSION` file). Name it when a user reports a problem.
+
+Stages: `intake → direction → slice → build → verify → review → done`. Modes: `calm`, `animated`, `hero-effect`, `story`. Looks: `pack:<style pack>` or `like:<brand>`. Scope: `home`, `page:/<path>` or `all` (how much to build before the user approves the look). `approvals`, `open`, `schema` and `createdAt` cannot be changed with `--set`. If `.darkroom/` does not exist, run `darkroom init` (or `study` first, to learn from a reference page).
 
 Rules: never cite a stale capture or a stale approval as proof; re-capture. A blocking open item is worked around with a marked placeholder when possible, otherwise raised with the user once, together with the other pending asks.

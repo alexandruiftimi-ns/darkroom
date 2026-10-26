@@ -26,9 +26,19 @@ Round 1, the page, as one `AskUserQuestion` round of at most four, each with a r
 - **Colours?** "I have a palette" / "Suggest some" (recommended if they have none) / "Classic and calm (60-30-10)" / "Creative, anything goes" (`references/color.md`, "Asking about colour").
 - **Pictures and video?** "I have my own" / "Write me prompts for an image or video tool (ChatGPT, Kling, Seedance, Veo…)" / "A mix" / "Neither, build without" (`references/asset-tools.md`). If they want prompts, ask which tools they use in round 2.
 
-If the message points at their **current site** (a URL or a folder path), round 1 also asks: is it theirs, and bring over "texts and images" (recommended) / "only texts" / "only images" / "nothing, just look". Run `darkroom import … --list` first; round 2 then asks which pages (`commands/import.md`). Skip "Pictures and video?" if their site already has them; ask instead whether to keep them.
+If the message points at their **current site** (a URL or a folder path), run `darkroom import … --list` **before asking anything**: the listing answers questions so the user doesn't have to. Round 1 then stays at four:
+- **Is it yours, and what comes over?** One question: "Yes: bring my texts and images (recommended)" / "Yes: only the texts" / "Yes: only the images" / "It isn't mine: just look at it" (then `commands/study.md`).
+- **Where will it live?** becomes one line when the listing says "built with": "It runs on WordPress with the Kadence theme; I'll keep it there, so your posts and rankings stay." Ask only when nothing was detected or they said they want to move (`platforms/README.md`, "Picking the platform").
+- **How should it feel?** and **Colours?** as above, with "Keep my current colours" as an option.
+- **Pictures and video?** drops out when the site has them: say "I'll use the 40 photos from your site" and ask in round 2 only if some are weak.
 
-Round 2, only what is still open (at most four): the platform profile's "Ask before building" questions (e.g. Shopify: new theme or restyle, store ready?; WooCommerce: own theme or the default one, what they sell, payments), what the visitor should do at the end (buy, book, contact, sign up, just look), which image or video tools they use, and **how much checking**: "Quick check (home page, desktop + phone; recommended, uses less of your plan)" / "Full check (every page, every screen size, motion on and off)". Record: `darkroom state --set platform=…,palette=…,verify=quick|full`.
+Round 2 then asks which pages (`commands/import.md`), the build scope, the check depth, and the platform's questions that the listing did not answer (on WordPress the page builder is asked only when it was not detected, always with "I don't know: check for me").
+
+Round 2, only what is still open (at most four): the platform profile's "Ask before building" questions (e.g. Shopify: new theme or restyle, store ready?; WooCommerce: own theme or the default one, what they sell, payments), what the visitor should do at the end (buy, book, contact, sign up, just look), which image or video tools they use, **how much to build first** and **how much checking**:
+- **How much to build first** (sites with more than one page; a one-page site is `scope=all` without asking): "The home page first: you approve the look, then I build the rest (recommended, saves your usage if the look needs changing)" / "One page first: tell me which (e.g. pricing)" / "The whole site now, in the look we agree on". Name the pages: "Your site has home, services, news, pricing and contact."
+- **How much checking**: "Quick check (I look at the home page and the page that earns you money, e.g. pricing, contact or a product, on desktop + phone; recommended, uses less of your plan)" / "Full check (I look at every page, every screen size, motion on and off)". This is about checking only: every page in scope is built either way. Say so.
+
+Record: `darkroom state --set platform=…,palette=…,verify=quick|full,scope=home|page:/pricing|all`.
 
 **Place the request in a mode before you ask anything** (`references/modes.md`): the platform, the look (a style pack, or "like <brand>") and the motion level (calm / animated / one hero effect / scroll story). Say it back in one line: "So: a Shopify theme with a Cartier-like look, and things appear as you scroll. No scroll story." If they named a brand, answer with the look-alike opening in `commands/lookalike.md` (what you will and won't take). If they asked for scroll storytelling, give them the story asset plan from `references/modes.md` as their `NEEDS.md`, with the tool class and cost of each item (`references/motion-toolkit.md`).
 
@@ -50,10 +60,11 @@ Write `NEEDS.md` from `templates/NEEDS.md` in the project and show the user a sh
 **4. Build, look, fix (silent)**
 Follow `SKILL.md`: direction, slice, QA loop. Do not report process. Report **results the user can look at**.
 
-**5. Taste checkpoints (only these three)**
+**5. Taste checkpoints (only these three, plus one question when the build scope was `home` or one page)**
 - Direction: two coded previews of the first screen. "Which feels more like you?"
 - Slice: a working preview of the top of the page and its one big effect, on desktop and phone.
-- Final: the whole page and a plain list of what is real, what is a placeholder, and what you could not measure.
+- Final: the whole page and a plain list of what is real, what is a placeholder, and what you could not measure. For a site: which pages are built, merged or left out.
+- **Scope `home` or `page:…`:** when that page is approved, ask once: "Build the other pages in this look now? (services, news, pricing, contact)" / "Change something first" / "Stop here". On yes: `darkroom state --set scope=all,stage=build` and build them; never end the project with pages silently missing.
 
 At the first checkpoint, offer once: "Want to open it on your phone? Same Wi-Fi, nothing to install (recommended) / A link you can send someone (needs a yes) / Screenshots are fine" (`commands/preview.md`).
 

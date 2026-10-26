@@ -23,11 +23,11 @@ The user may know nothing about design. They describe what they want in their ow
 
 ## Every project is three choices: the platform, the look and the motion level (`references/modes.md`)
 
-- **Platform:** where it will live (`platforms/README.md`; playbook `commands/platform.md`). Read the platform's profile, check its official docs live before building (the live docs win), ask its "Ask before building" questions, and start from `darkroom platform scaffold <id>` or the official generator.
+- **Platform:** where it will live (`platforms/README.md`; playbook `commands/platform.md`). A current site's platform is the default ("built with" from `darkroom import`); move only for a reason the user gives. Read the platform's profile, re-check its official docs when the profile is more than 30 days old (the live docs win), ask its "Ask before building" questions, decide where the first design is built (in the theme, in the platform, or an HTML preview first: `commands/platform.md` §3, say the cost), and start from `darkroom platform scaffold <id>` or the official generator.
 - **Look:** a style pack (`styles/README.md`), or a reference look when the user says "like apple.com / Rolex / Cartier" (`commands/lookalike.md`, starting profiles in `references/looks.md`): the brand's design language measured from the live site, never its identity.
 - **Motion level:** `calm` (nothing moves by itself) · `animated` (headings, text, images and cards reveal as they scroll in: `recipes/reveal.js`) · `hero-effect` (one memorable moment) · `story` (scroll storytelling in chapters, with an asset plan per chapter).
 - Decide all three at intake, say them back in one line, record them (`darkroom state --set platform=shopify,mode=animated,look=like:cartier`). Which library or asset tool fits which job: `references/motion-toolkit.md`.
-- Also ask at intake (same rounds): **colours** (own palette, suggested palettes, 60-30-10, creative; `references/color.md`), **assets** (their own, or prompts for image and video tools such as ChatGPT, Kling, Seedance, Veo; `references/asset-tools.md`), and **check depth** (`quick` or `full`, their usage, `commands/platform.md`).
+- Also ask at intake (same rounds): **colours** (own palette, suggested palettes, 60-30-10, creative; `references/color.md`), **assets** (their own, or prompts for image and video tools such as ChatGPT, Kling, Seedance, Veo; `references/asset-tools.md`), **build scope** for multi-page sites (`home` first and approve, one page first, or `all`; their usage, `commands/concierge.md`) and **check depth** (`quick` or `full`, their usage, `commands/platform.md`). Quick limits the checking, never the building: every page in scope gets built.
 
 ## The laws
 
@@ -57,7 +57,7 @@ The user may know nothing about design. They describe what they want in their ow
 6 Resume      any session continues from `darkroom state`
 ```
 
-Entry paths: **brief-led** (nothing but a brief: build coded comps, never wait for an anchor image), **asset-led** (inspect supplied media first, design around it), **site-led** (the user's current site, as a live URL or a local folder: ask whether it is theirs and what to bring over, then `darkroom import`; `commands/import.md`), **reference-led** (give each reference a role; ask once only if the roles would change the direction).
+Entry paths: **brief-led** (nothing but a brief: build coded comps, never wait for an anchor image), **asset-led** (inspect supplied media first, design around it), **site-led** (the user's current site, as a live URL or a local folder: ask whether it is theirs and what to bring over, then `darkroom import`; an empty or short import stops and is explained, never turned into a home-page-only build; `commands/import.md`), **reference-led** (give each reference a role; ask once only if the roles would change the direction).
 
 At the first checkpoint where something runs, offer once to open it on the user's phone (same Wi-Fi, nothing needed) or as a shareable link (needs a yes and sometimes an install): `commands/preview.md`. When the user drops in files, run `darkroom assets intake`: it suggests, it never rejects; ask "continue with these, or replace any first?" (`references/asset-tools.md`, "When files arrive"). Every entry path starts with `/darkroom <what they want>`; after that the user talks in plain words and never types tool commands.
 
@@ -84,7 +84,7 @@ If the project already has `PROJECT_BLUEPRINT.md` / `DESIGN.md` / a `CLAUDE.md` 
 
 | Command | Use | Playbook |
 |---|---|---|
-| `init`, `state` | project files; stage, approvals, stale evidence, next action | `commands/status.md` |
+| `init`, `state`, `version` | project files; stage, approvals, stale evidence, next action; the installed Darkroom version | `commands/status.md` |
 | `capture <url\|dir\|file>` | named states, real wheel input, scene progress, motion + reduced-motion, contact sheets, crops, manifest | `commands/shoot.md` |
 | `audit <…>` | measured / heuristic / manual checks, per viewport (`darkroom checks` lists them) | `commands/audit.md` |
 | `import <url\|folder>` | the user's current site: texts in reading order, navigation, contacts, images with sizes, old addresses | `commands/import.md` |

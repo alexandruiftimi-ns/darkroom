@@ -14,7 +14,7 @@ Write: **"On this page, [something that belongs to the subject] becomes [the lay
 
 ## 3. Build two comps in code
 
-Two genuinely different directions (different idea and composition, not different colours), each a single HTML file in `.darkroom/comps/`: the real hero with real copy, real fonts (self-hosted OFL), the palette, the first-frame composition, the CTA, at 1440 and 390 (`darkroom capture .darkroom/comps/a.html --viewports desktop-1440,mobile-390 --reduce`). Placeholders for missing imagery are flat fields with the focal object's position marked `TEMP`. A coded comp tests type, spacing, responsiveness and legibility, which a generated mockup cannot.
+Two genuinely different directions (different idea and composition, not different colours), built where `commands/platform.md` §3 says (HTML comps in `.darkroom/comps/` only when the table says HTML; otherwise two front-page variants in the theme or project): the real hero with real copy, real fonts (self-hosted OFL), the palette, the first-frame composition, the CTA, at 1440 and 390 (`darkroom capture .darkroom/comps/a.html --viewports desktop-1440,mobile-390 --reduce`). Placeholders for missing imagery are flat fields with the focal object's position marked `TEMP`. A coded comp tests type, spacing, responsiveness and legibility, which a generated mockup cannot.
 
 Use a generated image only to settle imagery you cannot code: write one prompt (`commands/imagine.md`), ask the user to generate it, and continue with the rest meanwhile.
 

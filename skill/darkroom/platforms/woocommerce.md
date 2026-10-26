@@ -12,7 +12,7 @@ A shop on WordPress: the client already runs WordPress, wants no monthly platfor
 - everything in `platforms/wordpress.md`
 
 ## Ask before building (in addition to WordPress's questions)
-- **Own block theme or the default theme?** WooCommerce works with WordPress's default theme out of the box. Options: (A) Darkroom's own block theme with shop templates (recommended), (B) a child of the default theme, restyled through `theme.json`, Woo's templates untouched.
+- **Own block theme, the default theme, or their current one?** WooCommerce works with WordPress's default theme out of the box. Options: (A) Darkroom's own block theme with shop templates (recommended for a new shop or block-editor pages), (B) a child of the default theme, restyled through `theme.json`, Woo's templates untouched, (C) restyle their current theme (recommended when a page builder owns their pages: WordPress's "What are the pages built with?").
 - What do they sell: how many products, variations (size, colour), physical or digital, subscriptions?
 - Payments (WooPayments, Stripe, PayPal: each has its own fees and sign-up), shipping zones, taxes, currency, markets. Darkroom designs for them; the user signs up.
 - Which shop pages get a custom design: product, shop/category, cart, checkout? Only override what is redesigned.

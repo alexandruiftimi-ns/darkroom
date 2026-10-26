@@ -11,9 +11,11 @@ import { capture, compare } from './lib/capture.mjs';
 const SKILL_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const { cmd, pos, opt } = parseArgs(process.argv.slice(2));
 
-const USAGE = `darkroom <command>
+const VERSION = fs.readFileSync(path.join(SKILL_DIR, 'VERSION'), 'utf8').trim();
+const USAGE = `darkroom <command>   (Darkroom ${VERSION})
+  version                      print the installed version (major.minor.patch; CHANGELOG.md in the repository)
   init                         create .darkroom/ (never overwrites); adopts PROJECT_BLUEPRINT.md / DESIGN.md as the design document
-  state [--set stage=slice,mode=animated,look=like:apple,platform=shopify,verify=quick,palette=60-30-10]
+  state [--set stage=slice,mode=animated,look=like:apple,platform=shopify,verify=quick,scope=home,palette=60-30-10]
         [--approve id --note "…"] [--open type:id[:blocking]] [--close id] [--root dir]
                                where the project is, what is approved against which build revision, which evidence is stale
   capture <url|dir|file> [--out dir] [--label x] [--viewports desktop-1440,mobile-390] [--scroll 0,.25,.5,.75,1]
@@ -24,7 +26,7 @@ const USAGE = `darkroom <command>
   audit <url|dir|file> [--bible file] [--fonts 3] [--mode disciplined|expressive|monochrome] [--json out.json] [--dismiss]
   study <url> [--out dir]      capture + audit of someone else's page (rejects cookies only inside a recognised consent dialog)
   checks [--md]                the audit's check registry: id, severity, basis, limits
-  import <url|folder> [--list] [--pages /,/about] [--take text,images] [--max 40] [--out .darkroom/import]
+  import <url|folder> [--list] [--pages /,/about] [--take text,images] [--max 40] [--ignore-robots] [--out .darkroom/import]
                                the user's existing site: texts in reading order, navigation, contacts, images with sizes,
                                suggestions; --list only lists the pages (ask which to bring over first)
   preview <folder|http://127.0.0.1:port> [--port 8800] [--host 0.0.0.0]
@@ -56,7 +58,8 @@ async function study(target) {
 }
 
 try {
-  if (cmd === 'init') init(SKILL_DIR);
+  if (cmd === 'version' || cmd === '--version') console.log(VERSION);
+  else if (cmd === 'init') init(SKILL_DIR);
   else if (cmd === 'state') state(opt);
   else if (cmd === 'capture') { if (!pos[0]) { console.error(USAGE); process.exit(1); } await capture(pos[0], opt); }
   else if (cmd === 'shoot') { if (!pos[0]) { console.error(USAGE); process.exit(1); } await capture(pos[0], { ...opt, label: opt.label ?? 'shoot', out: opt.out ?? '.darkroom/qa/shots', 'no-sheet': true }, { defaultModes: opt.motion ? ['no-preference'] : ['reduce'] }); }

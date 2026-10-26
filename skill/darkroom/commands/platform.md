@@ -5,7 +5,7 @@ Every project has a platform, chosen at intake (`platforms/README.md`, "Picking 
 ## 1. Before the first line of code
 
 1. `darkroom state --set platform=<id>`.
-2. **Live-docs check** (`platforms/README.md`): open every "Official docs to check" link in the profile; follow the live docs where they differ; note changes under "Platform notes" in `.darkroom/BRIEF.md` with the date.
+2. **Live-docs check** (`platforms/README.md`, "The live-docs check"): when the profile's "Checked on" date is more than 30 days old, or the build needs something the profile does not cover, open its "Official docs to check" links; follow the live docs where they differ; note changes under "Platform notes" in `.darkroom/BRIEF.md` with the date. Otherwise build from the profile and say "platform notes checked on <date>" in the handoff.
 3. Ask the profile's "Ask before building" questions that the brief does not already answer, in the same round as the other intake questions (`commands/concierge.md`), never in a separate interrogation. Each question has a recommended answer.
 4. Name the cost and the catch once: hosting cost, paid plans, the user's sign-ups (Shopify store, payment provider, host), terms that matter (Vercel Hobby and GitHub Pages are non-commercial).
 
@@ -17,9 +17,20 @@ Every project has a platform, chosen at intake (`platforms/README.md`, "Picking 
 
 ## 3. Design once, map to the platform
 
-- The direction comps and the slice are built **in the platform** when it can be previewed locally (static, php with PHP installed, astro, nextjs, hugo, jekyll, WordPress / WooCommerce through Playground, Shopify through `shopify theme dev`, Ghost with a local install). Otherwise build the comps as static HTML with the same tokens, and port the approved slice.
+**Where to build the first design (decide, then say it in one line with its cost).** An HTML preview is cheap to start but is thrown away and rebuilt on a CMS; building in the platform costs setup but nothing is redone.
+
+| Situation | Build the comps and slice | Why |
+|---|---|---|
+| Restyling the theme they already have (Shopify "restyle", WordPress "keep my theme") | **in their theme** from the start: `shopify theme pull` / a copy of their theme or a child theme | an HTML version would be rebuilt inside the theme anyway, and their settings, apps and blocks only show there |
+| A new theme on WordPress, WooCommerce, Shopify or Ghost, and the platform runs locally (Playground, `shopify theme dev` with a store, local Ghost) | **in the platform**, with their real content loaded (`platforms/wordpress.md`, "Preview with your real content") | editability, real posts and products, the platform's markup limits show at the first checkpoint |
+| A new theme, but it cannot run here yet (no store, no Node 20, no yes to the free download) | **HTML comps** with the same tokens, then port the approved slice; say the catch: "I'll show you an HTML preview first and rebuild it in <platform> after you approve" | cheapest way to settle taste without a setup |
+| static, php, astro, nextjs, hugo, jekyll | **in the project** itself | the preview is the product |
+
+Ask only when it changes the user's effort (e.g. they must create a Shopify development store). Otherwise decide.
+
+- **Motion versus editing.** On a CMS where the client edits the page (WordPress, WooCommerce, Shopify, Ghost), a `story` or `hero-effect` section is choreographed to fixed content: build it as one locked pattern or section whose texts and images stay editable, not as free blocks. Say the trade-off when they pick that motion level: "the scroll story stays in place; you can change its words and pictures, not its order".
 - Tokens go where the client can change them (`platforms/README.md`, "The same design on every platform"). Every colour, font and size in code reads a token.
-- Multi-page sites: list the templates in the bible (home, product, collection, post, page, cart, 404…) with one line each: its job, its sections, its one action. Templates share the system; design the home page and one inner template at the slice, the rest at build-out.
+- Multi-page sites: list the templates in the bible (home, product, collection, post, page, cart, 404…) with one line each: its job, its sections, its one action. Templates share the system; design the home page and one inner template at the slice, the rest at build-out. The page list (every page the user kept, from the import or the brief) is in the bible; build-out builds all of it once `scope` is `all`.
 - Content the client will write (posts, products): design for the longest and the shortest real case, empty states and missing images.
 
 ## 4. Check: quick or full (the user chose at intake: `verify`)
@@ -27,11 +38,11 @@ Every project has a platform, chosen at intake (`platforms/README.md`, "Picking 
 | | Quick (default: cheaper) | Full |
 |---|---|---|
 | Structure | `darkroom platform check` | `darkroom platform check` + the platform's own validator (Theme Check, gscan, `php -l`, a Playground run) |
-| Captures | home page: desktop-1440 + mobile-390, reduced motion | every template: desktop-1440, tablet-1024, mobile-390, motion + reduced motion |
-| Audit | home page | every template |
+| Captures | home page + the page that earns money (product for shops; pricing, booking or contact for services): desktop-1440 + mobile-390, reduced motion | every template: desktop-1440, tablet-1024, mobile-390, motion + reduced motion |
+| Audit | those two pages | every template |
 | States | none | hover/focus on the main action, menu open on phone, cart with an item (shops) |
 
-Say which one ran in the handoff. A full check on a large site costs real time and tokens: that is why the user picks it. Never claim a template is checked when only the home page was captured.
+Say which one ran in the handoff. A full check on a large site costs real time and tokens: that is why the user picks it. Never claim a template is checked when only the quick pages were captured. Quick limits the checking, not the building: every page in scope is built either way.
 
 ## 5. Hand over
 

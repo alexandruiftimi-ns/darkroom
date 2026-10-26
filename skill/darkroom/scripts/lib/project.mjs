@@ -11,6 +11,7 @@ const MODES = ['calm', 'animated', 'hero-effect', 'story']; // motion level, ref
 const LOOK = /^(pack|like):[\w.-]+$/; // pack:luxury or like:apple
 const PLATFORM_IDS = Object.keys(PLATFORMS); // platforms/<id>.md
 const VERIFY = ['quick', 'full']; // how much checking the user pays for (commands/platform.md)
+const SCOPE = /^(home|all|page:\S+)$/; // how much to build before the user approves the look (commands/concierge.md)
 const PALETTE = ['own', 'suggested', '60-30-10', 'creative', 'monochrome']; // references/color.md, "Asking about colour"
 const PROTECTED =new Set(['approvals', 'open', 'schema', 'createdAt']); // changed only through --approve / --open / --close
 const DEFAULT_SETTINGS = { fontBudget: 3, colorMode: 'disciplined', surface: 'landing', markets: ['EU'], disclosure: '', currency: 'EUR', wordBudgets: { hero: 30, feature: 45, proof: 60, closing: 30 }, maxZones: 3 };
@@ -89,8 +90,10 @@ export function state(opt) {
       if (k === 'look' && !LOOK.test(val)) { console.error('look must be pack:<style pack> or like:<brand>, e.g. pack:luxury, like:apple'); process.exit(1); }
       if (k === 'platform' && !PLATFORM_IDS.includes(val)) { console.error(`platform must be one of ${PLATFORM_IDS.join(', ')} (darkroom platform list)`); process.exit(1); }
       if (k === 'verify' && !VERIFY.includes(val)) { console.error(`verify must be quick or full`); process.exit(1); }
+      if (k === 'scope' && !SCOPE.test(val)) { console.error('scope must be home, page:/<path> (e.g. page:/pricing) or all'); process.exit(1); }
       if (k === 'palette' && !PALETTE.includes(val)) { console.error(`palette must be one of ${PALETTE.join(', ')}`); process.exit(1); }
-      p[k] = val; changed = true;
+      // page:pricing → page:/pricing; Git Bash may turn "/pricing" into "C:/Program Files/Git/pricing": undo it
+      p[k] = k === 'scope' && val.startsWith('page:') ? 'page:/' + val.slice(5).replace(/^[A-Za-z]:[\\/].*?[\\/]Git(?=[\\/]|$)/i, '').replace(/\\/g, '/').replace(/^\/+/, '') : val; changed = true;
     }
   }
   const runs = qaRuns();
@@ -106,17 +109,17 @@ export function state(opt) {
   const blocking = p.open.filter((o) => o.blocking);
   const lastApproval = p.approvals.at(-1);
   const approvalStale = lastApproval?.revision && revision && lastApproval.revision !== revision;
-  const missing = [!(p.mode && p.look) && 'look + motion level (--set mode=…,look=…)', !p.platform && 'platform (--set platform=…)', !p.palette && 'colour choice (--set palette=…)', !p.verify && 'check depth (--set verify=quick|full)'].filter(Boolean);
+  const missing = [!(p.mode && p.look) && 'look + motion level (--set mode=…,look=…)', !p.platform && 'platform (--set platform=…)', !p.palette && 'colour choice (--set palette=…)', !p.verify && 'check depth (--set verify=quick|full)', !p.scope && 'build scope (--set scope=home|page:/<path>|all)'].filter(Boolean);
   const next = !fs.existsSync('.darkroom/BRIEF.md') || p.stage === 'intake' ? `finish intake: brief, surface, asset tier${missing.length ? ', ' + missing.join(', ') : ''}; then set stage=direction`
     : blocking.length ? `blocking item: ${blocking[0].type} ${blocking[0].id}. Work around it with a marked placeholder or ask the user`
     : !latest ? 'no captures yet: run darkroom capture <page>'
     : stale.includes(latest.run) ? 'latest capture is stale (the build changed): re-capture before claiming anything'
     : p.stage === 'direction' ? 'show the direction comps and record approval of "direction"'
     : p.stage === 'slice' ? 'auto-QA the slice, then show it and record approval of "slice"'
-    : p.stage === 'build' ? 'finish remaining sections, then run audit and capture --both'
+    : p.stage === 'build' ? (p.scope && p.scope !== 'all' ? `finish the ${p.scope === 'home' ? 'home page' : p.scope.slice(5)} only, then show it and ask whether to build the other pages (scope=all)` : 'build every page in the page list (bible; .darkroom/import/url-map.json when imported), then run audit and capture --both')
     : p.stage === 'verify' ? 'run audit + capture --both + media check; fix highs; then stage=review'
-    : p.stage === 'review' ? 'present evidence and open gaps; wait for the final approval' : 'nothing pending';
-  const out = { name: p.name, surface: p.surface, autonomy: p.autonomy, stage: p.stage, look: p.look ?? null, mode: p.mode ?? null, platform: p.platform ?? null, verify: p.verify ?? null, palette: p.palette ?? null, design_doc: p.design_doc, config: p.config, root, currentRevision: revision,
+    : p.stage === 'review' ? (p.scope && p.scope !== 'all' ? `present the ${p.scope === 'home' ? 'home page' : p.scope.slice(5)}; ask whether to build the other pages in this look (--set scope=all,stage=build)` : 'present evidence, the list of pages built and any not built, and open gaps; wait for the final approval') : 'nothing pending';
+  const out = { name: p.name, surface: p.surface, autonomy: p.autonomy, stage: p.stage, look: p.look ?? null, mode: p.mode ?? null, platform: p.platform ?? null, verify: p.verify ?? null, scope: p.scope ?? null, palette: p.palette ?? null, design_doc: p.design_doc, config: p.config, root, currentRevision: revision,
     lastApproval: lastApproval ?? null, approvalIsStale: !!approvalStale, captures: runs.length, latestCapture: latest, staleCaptures: stale, open: p.open, next };
   console.log(JSON.stringify(out, null, 2));
 }

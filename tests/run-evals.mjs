@@ -83,9 +83,13 @@ async function projectCases() {
   results.push({ name: 'state records mode and look, and rejects unknown modes, malformed looks and direct writes to approvals', fails });
   const pf = [];
   r = await run(['state', '--set', 'platform=shopify,verify=quick,palette=60-30-10'], dir);
-  try { const s = JSON.parse(r.out); if (s.platform !== 'shopify' || s.verify !== 'quick' || s.palette !== '60-30-10') pf.push(`state shows platform=${s.platform} verify=${s.verify} palette=${s.palette}`); } catch { pf.push(`state output not JSON: ${r.out.slice(0, 120)}`); }
-  for (const bad of ['platform=wix', 'verify=some', 'palette=rainbow']) { r = await run(['state', '--set', bad], dir); if (r.code === 0) pf.push(`--set ${bad} was accepted`); }
-  results.push({ name: 'state records platform, check depth and colour choice, and rejects unknown values', fails: pf });
+  try { const s = JSON.parse(r.out); if (s.platform !== 'shopify' || s.verify !== 'quick' || s.palette !== '60-30-10') pf.push(`state shows platform=${s.platform} verify=${s.verify} palette=${s.palette}`); if (!/build scope/.test(s.next)) pf.push(`intake does not ask for the build scope: "${s.next}"`); } catch { pf.push(`state output not JSON: ${r.out.slice(0, 120)}`); }
+  for (const bad of ['platform=wix', 'verify=some', 'palette=rainbow', 'scope=some']) { r = await run(['state', '--set', bad], dir); if (r.code === 0) pf.push(`--set ${bad} was accepted`); }
+  r = await run(['state', '--set', 'scope=page:pricing'], dir);
+  try { const s = JSON.parse(r.out); if (s.scope !== 'page:/pricing') pf.push(`scope=page:pricing stored as ${s.scope}`); } catch { pf.push(`state output not JSON: ${r.out.slice(0, 120)}`); }
+  r = await run(['state', '--set', 'scope=home'], dir);
+  try { const s = JSON.parse(r.out); if (s.scope !== 'home' || /build scope/.test(s.next)) pf.push(`scope=home not recorded: scope=${s.scope}, next "${s.next}"`); } catch { pf.push(`state output not JSON: ${r.out.slice(0, 120)}`); }
+  results.push({ name: 'state records platform, check depth, build scope and colour choice, asks for the build scope at intake, and rejects unknown values', fails: pf });
   return results;
 }
 
@@ -147,7 +151,7 @@ function writeOldSite(dir) {
   const svg = (w, h) => `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}"><rect width="100%" height="100%" fill="#c96"/></svg>`;
   fs.writeFileSync(path.join(dir, 'img/hero.svg'), svg(900, 500));
   fs.writeFileSync(path.join(dir, 'img/oven.svg'), svg(2600, 1400));
-  fs.writeFileSync(path.join(dir, 'index.html'), '<!doctype html><html lang="en"><head><title>Forno Bakery</title><meta name="description" content="Wood-fired bread since 1987."></head><body><header><nav><a href="/">Home</a> <a href="about.html">About</a> <a href="menu.html">Menu</a></nav></header><div id="cookie-banner" role="dialog"><p>We use cookies for tracking.</p><button>Reject all</button></div><main><h1>Bread baked in a wood oven</h1><p>Every loaf starts at 4 am.</p><img src="img/hero.svg" alt="" style="width:1200px"><div><span>Open Tuesday to Sunday</span></div></main><footer><a href="mailto:ola@forno.pt">ola@forno.pt</a> <a href="tel:+351210000000">Call</a> <a href="https://instagram.com/forno">Instagram</a></footer></body></html>');
+  fs.writeFileSync(path.join(dir, 'index.html'), '<!doctype html><html lang="en"><head><title>Forno Bakery</title><meta name="description" content="Wood-fired bread since 1987."><meta name="generator" content="WordPress 6.9"><link rel="stylesheet" href="/wp-content/themes/forno/style.css"><style>.et_pb_section .button{color:red}</style></head><body><header><nav><a href="/">Home</a> <a href="about.html">About</a> <a href="menu.html">Menu</a></nav></header><div id="cookie-banner" role="dialog"><p>We use cookies for tracking.</p><button>Reject all</button></div><main><h1 class="elementor-element">Bread baked in a wood oven</h1><p>Every loaf starts at 4 am.</p><img src="img/hero.svg" alt="" style="width:1200px"><div><span>Open Tuesday to Sunday</span></div></main><footer><a href="mailto:ola@forno.pt">ola@forno.pt</a> <a href="tel:+351210000000">Call</a> <a href="https://instagram.com/forno">Instagram</a></footer></body></html>');
   fs.writeFileSync(path.join(dir, 'about.html'), '<!doctype html><html><head><title>About</title></head><body><main><h1>Three generations</h1><img src="img/oven.svg" alt="The oven" style="width:800px"><a href="private.html">staff</a><a href="http://PLACEHOLDER/menu.html">menu</a></main></body></html>');
   fs.writeFileSync(path.join(dir, 'menu.html'), '<!doctype html><html><head><title>Menu</title></head><body><main><h1>Menu</h1><table><tr><td>Sourdough</td><td>4.50 €</td></tr></table><form><label>Name <input name="n"></label></form></main></body></html>');
   fs.writeFileSync(path.join(dir, 'private.html'), '<!doctype html><title>Private</title><main><h1>Staff only</h1></main>');
@@ -188,14 +192,29 @@ async function siteCases() {
     const origin = new URL(served.url).origin;
     r = await run(['import', origin + '/', '--list', '--out', path.join(base, 'o2')], base);
     if (!/3 page\(s\) found/.test(r.out)) fails.push(`--list did not find 3 pages: ${r.out.slice(0, 200)}`);
+    if (!/built with: platform: wordpress \(WordPress 6\.9\) · theme: forno · page builder: Elementor/.test(r.out)) fails.push(`platform, theme or page builder not detected: ${r.out.split('\n').find((l) => /built with/.test(l)) ?? 'no "built with" line'}`);
+    if (/Divi/.test(r.out)) fails.push('Divi detected from stylesheet text alone');
     if (!/private\.html: robots\.txt disallows it/.test(r.out)) fails.push('robots.txt Disallow: /private was not respected');
     if (fs.existsSync(path.join(base, 'o2', 'CONTENT.md'))) fails.push('--list wrote CONTENT.md');
     r = await run(['import', origin + '/', '--pages', 'home,menu.html', '--take', 'text', '--out', path.join(base, 'o3')], base);
     const pages = fs.existsSync(path.join(base, 'o3', 'content.json')) ? JSON.parse(read(path.join(base, 'o3', 'content.json'))).pages.map((p) => p.path) : [];
     if (pages.join(',') !== '/,/menu.html') fails.push(`--pages home,menu.html imported ${pages.join(',') || 'nothing'}`);
     if (fs.existsSync(path.join(base, 'o3', 'images'))) fails.push('--take text saved images');
+    r = await run(['import', origin + '/', '--list', '--ignore-robots', '--out', path.join(base, 'o2b')], base);
+    if (!/4 page\(s\) found/.test(r.out)) fails.push(`--ignore-robots did not read the blocked page: ${r.out.slice(0, 200)}`);
   } finally { await served.close(); }
-  results.push({ name: 'import of a live URL: robots.txt respected, --list only lists, --pages home,menu.html picks exactly those pages, --take text saves no images', fails });
+  // a site that lets in only Google: the listing explains it and an import refuses to continue on nothing
+  const closed = path.join(base, 'closed'); writeOldSite(closed);
+  fs.writeFileSync(path.join(closed, 'robots.txt'), 'User-agent: googlebot\nDisallow:\n\nUser-agent: *\nDisallow: /\n');
+  const servedClosed = await resolveTarget(closed);
+  try {
+    const origin = new URL(servedClosed.url).origin;
+    r = await run(['import', origin + '/', '--list', '--out', path.join(base, 'o6')], base);
+    if (!/0 page\(s\) found/.test(r.out) || !/--ignore-robots/.test(r.out)) fails.push(`a fully blocked site was not explained: ${r.out.slice(0, 240)}`);
+    r = await run(['import', origin + '/', '--out', path.join(base, 'o7')], base);
+    if (r.code === 0 || !/nothing imported/.test(r.out)) fails.push(`an empty import did not stop: exit ${r.code}, ${r.out.slice(0, 200)}`);
+  } finally { await servedClosed.close(); }
+  results.push({ name: 'import of a live URL: robots.txt respected, --list only lists, --pages home,menu.html picks exactly those pages, --take text saves no images, --ignore-robots reads the owner\'s blocked pages, a fully blocked site stops with a reason, and it reports what the site is built with (not fooled by stylesheet text)', fails });
 
   // PHP source → read, not run; included parts are not pages; theme folders point to the live site
   fails = [];
@@ -313,6 +332,18 @@ function docChecks() {
       ...['I have a palette', 'Suggest some', '60-30-10', 'Creative'].filter((k) => !color.includes(k)).map((k) => `color.md lacks "${k}"`),
       ...['ChatGPT', 'Kling', 'Seedance', 'Veo', 'Image to video', 'Text to video', 'First and last frame'].filter((k) => !assets.includes(k)).map((k) => `asset-tools.md lacks "${k}"`),
     ] });
+    const wp = read('platforms/wordpress.md'); const plat = read('commands/platform.md');
+    const rules = [[plat, 'platform.md', 'Where to build the first design'], [plat, 'platform.md', 'Motion versus editing'], [index, 'platforms/README.md', 'If their current site already runs on one'], [wp, 'wordpress.md', "I don't know: check for me"], [wp, 'wordpress.md', 'Preview with your real content'], [wp, 'wordpress.md', 'restyling the current theme'], [concierge, 'concierge.md', "I don't know: check for me"], [concierge, 'concierge.md', 'How much to build first'], [read('commands/style.md'), 'style.md', '`commands/platform.md` §3']];
+    results.push({ name: 'reasoning rules: where to build the first design (theme, platform or HTML preview, with the cost), stay on the current platform, page builder asked with "I don\'t know: check for me", real-content preview, build scope', fails: rules.filter(([t, , k]) => !t.includes(k)).map(([, f, k]) => `${f} lacks "${k}"`) });
+    const version = read('VERSION').trim(); const pkg = JSON.parse(fs.readFileSync(path.join(here, '..', 'package.json'), 'utf8')).version;
+    const changelog = fs.existsSync(path.join(here, '..', 'CHANGELOG.md')) ? fs.readFileSync(path.join(here, '..', 'CHANGELOG.md'), 'utf8') : '';
+    const vRun = await run(['version'], work);
+    results.push({ name: 'one version everywhere: skill VERSION (major.minor.patch) = package.json = newest CHANGELOG entry = darkroom version', fails: [
+      ...(/^\d+\.\d+\.\d+$/.test(version) ? [] : [`VERSION is "${version}", not major.minor.patch`]),
+      ...(pkg === version ? [] : [`package.json says ${pkg}, VERSION says ${version}`]),
+      ...(/^## (\d+\.\d+\.\d+)/m.exec(changelog)?.[1] === version ? [] : [`newest CHANGELOG.md entry is not ${version}`]),
+      ...(vRun.out.trim() === version ? [] : [`darkroom version printed "${vRun.out.trim()}"`]),
+    ] });
     // a skill file that git ignores exists locally but never reaches GitHub (HANDOFF.md once hid commands/handoff.md)
     let ignored = [];
     try {
@@ -323,7 +354,7 @@ function docChecks() {
     results.push({ name: 'no file of the skill is git-ignored (so everything the playbooks mention is published)', fails: ignored.map((f) => `ignored: ${path.relative(skill, f.replace(/^"|"$/g, ''))}`) });
     const linked = [...new Set([...skillMd.matchAll(/`((?:commands|references|platforms|templates|recipes)\/[\w./-]+\.(?:md|js|json))`/g)].map((m) => m[1]))];
     results.push({ name: 'every file SKILL.md names exists', fails: linked.filter((l) => !fs.existsSync(path.join(skill, l))).map((l) => `missing ${l}`) });
-    const flagDocs = [['commands/import.md', ['--list', '--pages', '--take', '--max', '--out']], ['commands/preview.md', ['--port', '--host']], ['references/asset-tools.md', ['assets intake', '--needs']]];
+    const flagDocs = [['commands/import.md', ['--list', '--pages', '--take', '--max', '--ignore-robots', '--out']], ['commands/preview.md', ['--port', '--host']], ['references/asset-tools.md', ['assets intake', '--needs']]];
     results.push({ name: 'every flag of import, preview and assets intake is documented in its playbook', fails: flagDocs.flatMap(([f, flags]) => flags.filter((k) => !read(f).includes(k)).map((k) => `${f} lacks ${k}`)) });
     const wired = ['commands/import.md', 'commands/preview.md', 'commands/platform.md', 'platforms/README.md', 'platforms/builders.md', 'references/asset-tools.md', 'references/modes.md', 'commands/lookalike.md', 'references/looks.md', 'references/motion-toolkit.md', 'recipes/reveal.js'];
     results.push({ name: 'SKILL.md links the platform playbook and profiles, asset tools, modes, look-alike, looks, motion toolkit and reveal recipe', fails: wired.filter((l) => !fs.existsSync(path.join(skill, l)) || !skillMd.includes(l)).map((l) => `missing or unlinked: ${l}`) });

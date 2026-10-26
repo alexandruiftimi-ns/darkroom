@@ -7,10 +7,11 @@
 <h3 align="center">Type <code>/darkroom</code>. Say what you want.<br>Get a designed website, built on the platform you need.</h3>
 
 <p align="center">
+  <a href="CHANGELOG.md"><img alt="Version 1.1.0, the Reasoning update" src="https://img.shields.io/badge/version-1.1.0%20·%20Reasoning%20update-ff7a3d?style=for-the-badge&labelColor=121110"></a>
   <a href="LICENSE"><img alt="MIT licence" src="https://img.shields.io/badge/licence-MIT-ff7a3d?style=for-the-badge&labelColor=121110"></a>
   <img alt="Claude Code skill" src="https://img.shields.io/badge/Claude%20Code-skill-ece6dc?style=for-the-badge&logo=anthropic&logoColor=ece6dc&labelColor=121110">
   <img alt="10 platforms" src="https://img.shields.io/badge/platforms-10-ff7a3d?style=for-the-badge&labelColor=121110">
-  <img alt="55 automated checks" src="https://img.shields.io/badge/tests-55%20passing-7ab55c?style=for-the-badge&labelColor=121110">
+  <img alt="57 automated checks" src="https://img.shields.io/badge/tests-57%20passing-7ab55c?style=for-the-badge&labelColor=121110">
   <img alt="Node 18+" src="https://img.shields.io/badge/node-18%2B-ece6dc?style=for-the-badge&logo=nodedotjs&logoColor=ece6dc&labelColor=121110">
 </p>
 
@@ -69,7 +70,7 @@ Darkroom is a [Claude Code](https://claude.com/claude-code) skill that turns Cla
 
 ## 🧱 Build it anywhere
 
-One design, ten platforms. Darkroom reads the platform's **official documentation live before it builds** (the platforms change every few months; the live docs win over its notes), asks the questions that platform needs, and puts your colours and fonts **where you can change them later**: in Shopify's theme settings, in WordPress's Styles panel, in one CSS file.
+One design, ten platforms. Darkroom keeps **dated notes on every platform** and re-reads the **official documentation** when those notes are more than a month old (the platforms change every few months; the live docs win over its notes), asks the questions that platform needs, and puts your colours and fonts **where you can change them later**: in Shopify's theme settings, in WordPress's Styles panel, in one CSS file.
 
 <table>
   <tr>
@@ -140,6 +141,10 @@ Already have a site? Give Darkroom its **address** or its **folder on your compu
 
 It asks whether the site is yours and what to bring over (**texts and images**, only texts, or only images), lists your pages so you can pick, then imports them: every text in reading order, your menu, phone, email and social links, and every picture **with its real size**. You get a plain list of what could be sharper (*"900 px wide: fine where it was, soft as a full-width hero"*), never a rejection. It also keeps a list of your old page addresses, so your Google ranking survives the move. Plain HTML, PHP and Markdown folders work; a theme folder (WordPress, Shopify) holds no content, so it asks for the live address instead.
 
+- 🔎 **It sees what your site is built with** (e.g. *WordPress · Kadence theme · Kadence Blocks · TranslatePress*) and recommends **staying there**, so your posts, plugins and rankings stay put. If your pages use a page builder (Elementor, Divi, Kadence…), it suggests restyling your current theme instead of swapping it, because a new theme can break builder pages. Not sure what you use? Pick **"I don't know: check for me"**.
+- 🧭 **It decides where to build the first design, and tells you the cost.** Restyling your Shopify or WordPress theme? It works in the theme from the start. A new theme it can't run yet? A quick HTML preview first, rebuilt on the platform after you approve.
+- 📄 **Every page, or the home page first.** For sites with several pages it asks: *home page first, approve, then the rest* (saves your usage), *one page first*, or *the whole site now*. An import that finds nothing (some sites block all crawlers but Google) stops and tells you why; it never builds just the home page by accident.
+
 - 📱 **See it on your phone.** At the first preview, Darkroom offers to open the site on your phone over **the same Wi-Fi**: nothing to install, nothing public. Want to send it to someone? It can make a shareable link too, after it asks.
 - 📥 **Drop your files in.** Put your photos and clips in the folder and say so. Darkroom checks each one against what it asked for, tells you what could be even better, and asks *"continue with these, or replace any first?"*. **Nothing gets rejected.**
 
@@ -151,12 +156,12 @@ It asks whether the site is yours and what to bring over (**texts and images**, 
 
 <p align="center"><img src="assets/intake.svg" alt="The first question round: where will it live, how should it feel, which colours, and your own pictures or prompts for an AI tool. Each question comes with a recommended answer." width="100%"></p>
 
-One message, at most four questions, **each with a recommended answer**, and nothing the folder or your message already answered. A second round asks only what is still open: the platform's own questions (*"new Shopify theme or restyle your current one?"*, *"which payments?"*), the goal of the page, and how much checking you want:
+One message, at most four questions, **each with a recommended answer**, and nothing the folder or your message already answered. A second round asks only what is still open: the platform's own questions (*"new Shopify theme or restyle your current one?"*, *"which payments?"*), the goal of the page, **how much to build first** (home page, one page, or the whole site) and how much checking you want:
 
 | | ⚡ Quick check (default) | 🔬 Full check |
 |---|---|---|
-| **What is captured** | home page, desktop + phone | every template, desktop + tablet + phone, motion on and off |
-| **What is audited** | home page | every template, plus hover, menus and a cart with an item |
+| **What is captured** | home page + the page that earns you money (a product, pricing, contact), desktop + phone | every template, desktop + tablet + phone, motion on and off |
+| **What is audited** | those two pages | every template, plus hover, menus and a cart with an item |
 | **Platform validator** | structure check | structure check + the platform's own tool (Theme Check, gscan, a real WordPress) |
 | **Why choose it** | uses less of your Claude plan | before a launch |
 
@@ -243,7 +248,7 @@ Open Claude Code in an empty folder (or your project) and type one. Click a grou
 ```text
 /darkroom a WooCommerce shop for my coffee roastery on my existing WordPress site, warm and handmade
 ```
-**What happens:** it checks Shopify's or WooCommerce's current docs, asks the few store questions that matter (new theme or restyle, payments, how many products), then shows you two coded versions of the home page.
+**What happens:** it checks its notes on Shopify or WooCommerce (and the official docs if they are over a month old), asks the few store questions that matter (new theme or restyle, payments, how many products), then shows you two coded versions of the home page.
 </details>
 
 <details>
@@ -314,14 +319,14 @@ Open Claude Code in an empty folder (or your project) and type one. Click a grou
 
 <p align="center"><img src="assets/flow.svg" alt="Intake, look and motion, direction, slice, build, check and fix, final. You confirm the look and motion, pick the direction, approve the slice and decide at the end." width="100%"></p>
 
-You are asked at **four moments only**: the first questions, choosing between two directions, approving a working slice, and the final result. Everything between is Claude's job, and you can say "just go" at any time.
+You are asked at **four moments only**: the first questions, choosing between two directions, approving a working slice, and the final result. If you chose *home page first*, it asks once more before building the other pages. Everything between is Claude's job, and you can say "just go" at any time.
 
 <details>
 <summary>🔍 <b>What happens at each stage</b></summary>
 
 | Stage | What happens |
 |---|---|
-| **Intake** | Reads your message, assets and references; checks the platform's docs; asks one or two rounds of questions. |
+| **Intake** | Reads your message, assets, references and your current site (what it is built with); re-checks the platform's docs when its notes are over a month old; decides where to build the first design; asks one or two rounds of questions. |
 | **Direction** | Finds the one idea of the site and codes two versions of the first screen, with real copy, on desktop and phone. |
 | **Slice** | Builds the first screen, its key motion and the transition into the next section, working, on the real platform when it can run locally. |
 | **Build** | Writes the rest of the pages and templates from a short design bible: palette, type, motion, copy budgets. |
@@ -369,7 +374,7 @@ Every starter theme was run through **the platform's own tools**, not just Darkr
 | <picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/ghost-light.svg"><img src="assets/icons/ghost.svg" width="16" alt=""></picture> Ghost | gscan | **compatible with Ghost 6.x** |
 | <img src="assets/icons/wordpress.svg" width="16" alt=""> WordPress | a real WordPress (Playground), Site Editor block validation | **renders; 0 invalid blocks** in every template |
 | <img src="assets/icons/woocommerce.svg" width="30" alt=""> WooCommerce | WordPress + WooCommerce from wordpress.org, sample products | **shop and product pages render; 0 invalid blocks** |
-| All ten | Darkroom's structure check + **55 automated tests** | passing locally; CI runs them on every push |
+| All ten | Darkroom's structure check + **57 automated tests** | passing locally; CI runs them on every push |
 
 That run found real problems before you could: WooCommerce blocks that look self-closing but save HTML (the editor would have called them broken), missing side padding on phones, and new WooCommerce stores hiding behind "Coming soon". All fixed, and the checks now catch them.
 
@@ -398,7 +403,7 @@ That run found real problems before you could: WooCommerce blocks that look self
 
 ## 📚 Where the knowledge comes from
 
-<p align="center"><img src="assets/knowledge.svg" alt="84 real sites studied (66 good, 18 bad), 24 cross-site lessons with 10 promoted to rules, 32 research sources, 6 design tools studied, 55 automated checks, one human art director" width="100%"></p>
+<p align="center"><img src="assets/knowledge.svg" alt="84 real sites studied (66 good, 18 bad), 24 cross-site lessons with 10 promoted to rules, 32 research sources, 6 design tools studied, 57 automated checks, one human art director" width="100%"></p>
 
 Darkroom is **not a trained model**. It is written knowledge that Claude reads while it works, in plain files you can check: **84 real websites studied** (kept as written notes, never screenshots or copied code), **24 lessons** of which **10 became rules** after the author approved them, **32 research sources** (Nielsen Norman Group, WCAG 2.2, the European Accessibility Act, EU cookie and price rules, the AI Act), the **official docs of all ten platforms**, and the author's own taste calls.
 
@@ -448,7 +453,7 @@ Only `skill/darkroom/` is installed. Tests, the example and CI stay in the repos
 
 ```bash
 npm install && npx playwright install chromium
-npm test        # 55 checks against skill/darkroom; keep it green
+npm test        # 57 checks against skill/darkroom; keep it green
 npm run pack    # dist/darkroom-skill.zip
 ```
 
@@ -459,7 +464,7 @@ Claude only sees the installed copy. After editing anything in `skill/darkroom/`
 ## Honest limits
 
 - **Landing pages are the most tested.** Shops, blogs and multi-page sites follow the same process with platform rules on top; web apps and dashboards are out of scope.
-- Platforms change often. Darkroom re-reads the official docs before building, but its own notes carry a date; a change it has not seen can still surprise it.
+- Platforms change often. Darkroom re-reads the official docs when its notes are over a month old, and its notes carry a date; a change it has not seen can still surprise it.
 - Building a shop is not running one: payments, tax, shipping and legal pages need your accounts and your decisions.
 - Heuristic checks are questions, not verdicts. The compliance checklist is not legal advice.
 - Darkroom raises the floor and the process. It cannot promise a site "worth $10,000"; the result depends heavily on the assets you supply. Your eye is the judge.

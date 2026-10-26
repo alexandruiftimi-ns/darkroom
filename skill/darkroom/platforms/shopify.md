@@ -13,7 +13,7 @@ A shop that must just work: payments, tax, shipping, inventory, apps, all handle
 - https://github.com/Shopify/skeleton-theme and the Horizon release notes (what the reference themes do now)
 
 ## Ask before building
-- **New theme or restyle?** A Darkroom theme from scratch (full design control), or customise their current theme (often Horizon or Dawn) inside its own settings and blocks (cheaper, keeps their apps working).
+- **New theme or restyle?** A Darkroom theme from scratch (full design control), or customise their current theme (often Horizon or Dawn) inside its own settings and blocks (cheaper, keeps their apps working). A restyle is built in their theme from the first comp (`shopify theme pull --store <store>`, then `shopify theme dev`), never as an HTML preview first (`commands/platform.md` §3).
 - Do they have a store yet? To preview, Darkroom needs a store: a free development store from a Shopify Partner account, or theirs (with a staff/collaborator account).
 - Products: how many, variants, collections, which ones to feature? Real product photos, or placeholders until they arrive?
 - Apps they rely on (reviews, subscriptions, bundles): their blocks must keep working.

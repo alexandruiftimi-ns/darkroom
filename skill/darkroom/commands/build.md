@@ -36,8 +36,10 @@ Show the user a runnable preview, the sheets for desktop / phone / reduced motio
 
 ## 4. Build-out
 
-Use the approved system for the remaining sections in storyboard order (`commands/storyboard.md` is an internal plan). Establish the whole page's rhythm early: neighbouring sections must not share a layout family; carry the idea into every section including footer and closing. Run the QA loop per scene, then check the page as a whole (transitions; something changes each viewport) before verifying. Then `commands/handoff.md`.
+Use the approved system for the remaining sections in storyboard order (`commands/storyboard.md` is an internal plan). Establish the whole page's rhythm early: neighbouring sections must not share a layout family; carry the idea into every section including footer and closing. Run the QA loop per scene, then check the page as a whole (transitions; something changes each viewport) before verifying.
+
+**Multi-page sites:** build every page in the bible's page list (from `.darkroom/import/url-map.json` when the site was imported), not only the home page. With `scope=home` or `page:…`, build that page, show it, and ask whether to build the rest (`commands/concierge.md`). Before the handoff, tick the page list: built, merged (into which page) or left out (why, and who decided). Then `commands/handoff.md`.
 
 ## Never
 
-Build every section in one unlooked-at pass · stop to ask whether a visible defect should be fixed · scaffold over existing work · ship a concept image as UI · wait for approval of the bible before there is anything to look at.
+Build every section in one unlooked-at pass · end a multi-page job with pages silently missing · stop to ask whether a visible defect should be fixed · scaffold over existing work · ship a concept image as UI · wait for approval of the bible before there is anything to look at.
