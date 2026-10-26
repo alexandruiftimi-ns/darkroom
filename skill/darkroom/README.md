@@ -2,7 +2,7 @@
 
 **You say what you want. Darkroom tells you what it needs.** No commands, no design vocabulary: ask for "a landing page for my bakery" or "something that animates as you scroll", and it replies with the options in plain words, one recommendation, and a short list of what to provide (files, facts, decisions) with what happens if you cannot.
 
-Describe the site you want (or type `/darkroom`). Claude decides the direction, builds the page, looks at the real browser output, and fixes what it sees. **You** supply business facts, any assets and references (all optional), generate the few images or clips it asks for from its prompts, and decide at three moments: the direction, a working slice, the final result.
+Type `/darkroom` followed by the site you want (Darkroom only starts from that command, never by accident). Claude decides the direction, builds the page, looks at the real browser output, and fixes what it sees. **You** supply business facts, any assets and references (all optional), generate the few images or clips it asks for from its prompts, and decide at three moments: the direction, a working slice, the final result.
 
 Every page is two choices (`references/modes.md`): the **look** (a style pack, or "like apple.com / Rolex / Cartier": the brand's design language, never its identity) and the **motion level**: calm, animated (things appear as you scroll), one hero effect, or a full scroll story with a per-chapter asset plan.
 

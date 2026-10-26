@@ -10,23 +10,23 @@
   ],
   "behaviour_checks": [
     {
-      "prompt": "make me a landing page for a small Lisbon bakery (no references, no assets)",
+      "prompt": "/darkroom make me a landing page for a small Lisbon bakery (no references, no assets)",
       "expect": "Runs init/state, classifies surface=landing and asset tier C, asks at most one round (feeling, first frame, conversion, can you generate images), builds two coded hero comps in .darkroom/comps, shows captures, waits for a pick; never asks for an anchor image."
     },
     {
-      "prompt": "complete brief + supplied photos + \"just go\"",
+      "prompt": "/darkroom complete brief + supplied photos + \"just go\"",
       "expect": "Builds the slice without intermediate approval questions, runs the QA loop on its own captures, then presents checkpoint B with a runnable preview."
     },
     {
-      "prompt": "make it colourful, I do not want the 60-30-10 thing",
+      "prompt": "/darkroom make it colourful, I do not want the 60-30-10 thing",
       "expect": "Sets colour mode expressive in the brief/bible settings; audit runs with that mode; no fallback to dark minimal."
     },
     {
-      "prompt": "session restart mid-build",
+      "prompt": "/darkroom session restart mid-build",
       "expect": "Runs darkroom state first; names the stage, stale captures and the next action; does not claim a stale capture validates new code."
     },
     {
-      "prompt": "a hero that needs a product turntable and the user has no video tool",
+      "prompt": "/darkroom a hero that needs a product turntable and the user has no video tool",
       "expect": "States the consequence (still reveal / layered 2.5D tilt), names the honest technique, builds on a marked placeholder, lists the asset ask with acceptance criteria and a fallback."
     },
     {
@@ -46,20 +46,28 @@
       "expect": "Opens notes and images; writes an entry < 60 lines from templates/LIBRARY_ENTRY.md; candidate lessons carry scope and a counter-evidence line; copies no images; asks before promoting."
     },
     {
-      "prompt": "build me a website that looks like apple.com for my bike repair shop",
+      "prompt": "/darkroom build me a website that looks like apple.com for my bike repair shop",
       "expect": "Places it as look=like:apple, mode=animated; first reply says what it will take (calm, big product shots, short headlines) and what it will not (logo, photos, copy, SF font files); runs study on the live site before building; bible gets a Reference look section with OFL substitutes; distinctness test passes."
     },
     {
-      "prompt": "I want a landing page with scroll storytelling for my coffee roastery",
+      "prompt": "/darkroom I want a landing page with scroll storytelling for my coffee roastery",
       "expect": "Places it as mode=story; proposes 3-6 chapters; writes NEEDS.md with one row per chapter (what, best source, tool class and cost, fallback); recommends recipes before libraries; says plainly that without the clips it becomes an animated page with drawn scenes."
     },
     {
-      "prompt": "a nice landing page for my yoga studio with animations when you scroll (not a story)",
+      "prompt": "/darkroom a nice landing page for my yoga studio with animations when you scroll (not a story)",
       "expect": "Places it as mode=animated; asks for nothing extra for motion; uses recipes/reveal.js with data-reveal groups (headings rise, body fades, images mask); captures with --film --both; reduced motion and no-JS show all content."
     },
     {
-      "prompt": "like Cartier but for my handmade ceramics, with one wow moment at the top",
+      "prompt": "/darkroom like Cartier but for my handmade ceramics, with one wow moment at the top",
       "expect": "look=like:cartier, mode=hero-effect; recommends one hero effect route from effects.md with what the user provides; avoids red with gold; the rest of the page uses reveals."
+    },
+    {
+      "prompt": "make me a landing page for my bakery (WITHOUT /darkroom)",
+      "expect": "Darkroom does not start (disable-model-invocation). Claude may answer normally or suggest typing /darkroom; it never loads the Darkroom playbooks on its own."
+    },
+    {
+      "prompt": "/darkroom",
+      "expect": "One line plus one question: what the page is for, how it should feel, what the user already has. No tool runs before the answer."
     }
   ],
   "recipe_checks": [

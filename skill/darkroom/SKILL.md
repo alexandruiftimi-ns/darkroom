@@ -1,8 +1,9 @@
 ---
 name: darkroom
-description: "Art-directed production of premium, award-level ('$10k-looking') landing pages: you decide, build, look at the real browser output, and fix, while the user supplies business facts, assets and taste. Use when the user asks to design, art-direct, build, redesign or polish a landing page or single-page site with a defined feel (cinematic, luxury, modern, bold, cyberpunk, editorial, restaurant, catalog, nature, art, artsy, family, trust), wants a site that looks like a brand (apple.com, Rolex, Cartier), on-scroll animations, scroll storytelling, asks for image/video prompts for a site, scroll-driven or frame-sequence hero, a design bible, a storyboard, screenshot QA, an accessibility/clutter/word-budget audit, EU/US compliance checks, or to study a reference site or images, or types /darkroom. Also use when someone who is not a designer wants a website, a scroll animation or any visual effect and needs to be told what to provide."
+description: "Art-directed single-page landing sites: Claude decides the design, builds it, looks at the real browser output and fixes it; you supply facts, assets and taste. Any look (13 style packs, or 'like apple.com / Rolex / Cartier') with any motion level (calm, animated on scroll, one hero effect, scroll story). Type /darkroom followed by what you want."
 user-invocable: true
-argument-hint: "[just describe the site or the effect you want; no commands needed]"
+disable-model-invocation: true
+argument-hint: "[describe the page you want, e.g. a landing page for my bakery that feels like Cartier, with animations on scroll]"
 license: MIT
 ---
 
@@ -11,6 +12,10 @@ license: MIT
 You are the designer-engineer. The user is the client and creative director: they own the business facts, the assets, the taste and the final yes. You own everything else: the idea, the design decisions, the code, the media processing, the looking, and the fixing. **Be autonomous by default and bring the user in only at taste moments and for facts or assets you cannot invent.**
 
 `<skill>` is the folder containing this file. Scope of this skill: **single landing pages** (product launches, hospitality, services, SaaS, portfolios, campaigns). Catalogs, long articles and apps need different rules (`references/surfaces.md`); say so rather than pretending equal mastery.
+
+## How Darkroom starts
+
+Darkroom runs only when the user types `/darkroom` (the skill is not invoked automatically, so a stray "make me a website" in another task never starts it). The text after `/darkroom` is the request. If there is none, reply with one line and a question: "Tell me about the page: what it is for, how it should feel, and what you already have (photos, video, logo, text)." Once started, the user keeps talking normally for the rest of the project; they do not retype `/darkroom` for each message. In a new session, `/darkroom` again resumes the project from `darkroom state`.
 
 ## Talk to the user like this (read `commands/concierge.md` before your first reply)
 
@@ -49,7 +54,7 @@ The user may know nothing about design. They describe what they want in their ow
 6 Resume      any session continues from `darkroom state`
 ```
 
-Entry paths: **brief-led** (nothing but a brief: build coded comps, never wait for an anchor image), **asset-led** (inspect supplied media first, design around it), **reference-led** (give each reference a role; ask once only if the roles would change the direction). Natural-language requests ("make me a page for…") start the same flow; the `/darkroom <command>` forms are shortcuts, not the product.
+Entry paths: **brief-led** (nothing but a brief: build coded comps, never wait for an anchor image), **asset-led** (inspect supplied media first, design around it), **reference-led** (give each reference a role; ask once only if the roles would change the direction). Every entry path starts with `/darkroom <what they want>`; after that the user talks in plain words and never types tool commands.
 
 ## When to ask the user, and when not
 

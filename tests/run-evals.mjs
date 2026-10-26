@@ -115,6 +115,12 @@ function docChecks() {
     ] });
     const kit = read('references/motion-toolkit.md');
     results.push({ name: 'motion-toolkit.md covers the recipes, GSAP, Motion, Lenis, three.js, Lottie, CSS scroll-driven animation and asset tools', fails: ['reveal.js', 'GSAP', 'Motion', 'Lenis', 'three.js', 'Lottie', 'animation-timeline', 'Making the assets'].filter((k) => !kit.includes(k)).map((k) => `missing ${k}`) });
+    const front = skillMd.split('---')[1] ?? '';
+    results.push({ name: 'Darkroom starts only from /darkroom (disable-model-invocation: true, user-invocable: true)', fails: [
+      ...(/^disable-model-invocation:\s*true\s*$/m.test(front) ? [] : ['frontmatter lacks disable-model-invocation: true']),
+      ...(/^user-invocable:\s*true\s*$/m.test(front) ? [] : ['frontmatter lacks user-invocable: true']),
+      ...((front.match(/^description:\s*"(.*)"\s*$/m)?.[1].length ?? 9999) <= 1024 ? [] : ['description missing or over 1024 characters']),
+    ] });
     const wired = ['references/modes.md', 'commands/lookalike.md', 'references/looks.md', 'references/motion-toolkit.md', 'recipes/reveal.js'];
     results.push({ name: 'SKILL.md links the modes, look-alike, looks, motion toolkit and reveal recipe', fails: wired.filter((l) => !fs.existsSync(path.join(skill, l)) || !skillMd.includes(l)).map((l) => `missing or unlinked: ${l}`) });
     return results;
