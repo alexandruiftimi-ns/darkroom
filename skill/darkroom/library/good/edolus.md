@@ -6,7 +6,7 @@ confidence: medium
 category: experimental
 packs: [cinematic, modern]
 url: https://edolus.com/
-evidence: live study (study.json + 10 shots, preloader/gate only) + 16 re-shots past "Initiate system"
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | scroll-driven camera flight through one WebGL world, glitch/scramble text reveals, HUD corner brackets; optional audio · libraries: gsap + WebGL canvas |
 | Page weight | 49,330 KB |
 | Mobile | re-composed — same flight, titles bottom, HUD frame around a map panel; legible |
-| Source of values | measured (study.json) for gate; rest estimated from re-shots |
+| Source of values | observed for the gate; rest estimated after entering |
 
 ## What works & why
 
@@ -41,7 +41,7 @@ updated: 2026-10-25
 
 ## What fails & why
 
-- **49 MB, preloader, then a click gate before any story** — automated capture saw only the loader and gate → principle: first frame must sell; performance budget (tells.md "Function") → rule: show the first scene as a poster while 3D streams; never gate content behind "Initiate".
+- **49 MB, preloader, then a click gate before any story** — a first visit shows only the loader and gate → principle: first frame must sell; performance budget (tells.md "Function") → rule: show the first scene as a poster while 3D streams; never gate content behind "Initiate".
 - **Scrambling/blurred headline letters while animating; grey mono caption over a bright Earth** → principle: legibility ≥ 4.5:1 (color.md) → rule: text reveals must settle fast and sit on a dark area or scrim.
 - **No lang, no h1, no reduced-motion rule (audit)** → principle: accessibility → rule: a WebGL flight needs a static, semantic fallback.
 

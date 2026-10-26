@@ -6,7 +6,7 @@ confidence: medium
 category: saas
 packs: [modern, trust]
 url: https://serus.ai/
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---

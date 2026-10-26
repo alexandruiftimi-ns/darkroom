@@ -6,7 +6,7 @@ confidence: medium
 category: corporate
 packs: [cinematic, modern]
 url: https://www.esrbespoke.au/
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -29,8 +29,8 @@ updated: 2026-10-25
 | Layout system | statements always at column 1 (x 32 px), labels/meta always at x ~960 px; black/white fields alternate |
 | Signature motion | muted hero video with UNMUTE; marques list where the active name turns black beside its image tile · libraries: lenis |
 | Page weight | 55,850 KB |
-| Mobile | re-composed — logo + CONTACT pill, numbered hairline services list, giant wordmark footer; hero video black in capture |
-| Source of values | measured (study.json) |
+| Mobile | re-composed — logo + CONTACT pill, numbered hairline services list, giant wordmark footer; hero video black in view |
+| Source of values | observed |
 
 ## What works & why
 

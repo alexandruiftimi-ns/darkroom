@@ -6,7 +6,7 @@ confidence: high | medium | low      # high = jury/maintainer verdict AND analys
 category: <landing-page · product-launch · saas · app-marketing · dashboard · portfolio · agency · e-commerce · fashion-luxury · hospitality · food-drink · real-estate · architecture · editorial · corporate · events-culture · experimental · mobile-app>
 packs: [<primary pack>, <modifier>]
 url: <url or "images only">
-evidence: live study (study.json + n shots) | images (n) | mockup (n)
+evidence: design review | mockup (n) | published verdict only; design not reviewed
 added: YYYY-MM-DD
 updated: YYYY-MM-DD
 ---
@@ -30,7 +30,7 @@ updated: YYYY-MM-DD
 | Signature motion | <the one move, or none> · libraries: <gsap / lenis / three / none detected> |
 | Page weight | <KB> |
 | Mobile | re-composed · squeezed · broken — <one line> |
-| Source of values | measured (study.json) · estimated from images |
+| Source of values | observed · estimated |
 
 ## What works & why  *(good entries: 3–6 · bad entries: 0–2)*
 

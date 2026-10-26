@@ -6,7 +6,7 @@ confidence: medium
 category: hospitality
 packs: [bold, artsy, restaurant]
 url: https://www.terrenohotel.com/
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -28,9 +28,9 @@ updated: 2026-10-25
 | Text zones, first viewport | desktop 3 · mobile 2 · travel 0.34 |
 | Layout system | inset 40 px frame, centred nav around logo; sections alternate 2-up grid / image-left copy-right |
 | Signature motion | rotating circular BOOK NOW stamp; polaroid with orbiting circular text · libraries: none detected |
-| Page weight | 1,308 KB (measured at capture) |
+| Page weight | 1,308 KB (measured when viewed) |
 | Mobile | re-composed — one column, booking bar docked bottom, but it overlaps content |
-| Source of values | measured (study.json); font roles estimated from shots |
+| Source of values | observed; font roles estimated by eye |
 
 ## What works & why
 

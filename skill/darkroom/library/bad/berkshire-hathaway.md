@@ -6,7 +6,7 @@ confidence: medium
 category: corporate
 packs: [trust, editorial-news]
 url: https://www.berkshirehathaway.com/
-evidence: images (10 shots, no study.json)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---

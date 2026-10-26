@@ -4,7 +4,7 @@
 //   manual    - the script cannot decide; a person must look
 import fs from 'node:fs';
 import path from 'node:path';
-import { VIEWPORTS, launch, settle, mkdirp, toolVersions } from './browser.mjs';
+import { VIEWPORTS, contextFor, launch, settle, mkdirp, toolVersions } from './browser.mjs';
 import { dismissConsent } from './consent.mjs';
 import { resolveTarget } from './serve.mjs';
 
@@ -598,7 +598,7 @@ export async function audit(target, opt, { resolveSettings, study = false } = {}
   const hosts = new Set(); const errors = []; const urls = [];
   let consent = { action: 'none' };
   const run = async (vp, { motion = 'reduce', full = true } = {}) => {
-    const ctx = await browser.newContext({ viewport: vp, reducedMotion: motion });
+    const ctx = await browser.newContext({ ...contextFor(vp), reducedMotion: motion });
     const page = await ctx.newPage();
     page.on('request', (r) => { try { hosts.add(new URL(r.url()).host); urls.push(r.url()); } catch { /* data: */ } });
     page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));

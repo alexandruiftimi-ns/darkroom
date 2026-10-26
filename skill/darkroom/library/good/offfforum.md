@@ -6,7 +6,7 @@ confidence: high
 category: events-culture
 packs: [bold, cinematic]
 url: https://www.offforum.com/
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | background video loop · libraries: lenis |
 | Page weight | 994 KB (video streamed via Mux, not counted) |
 | Mobile | re-composed — same stack, headline rewraps to 5 lines; cookie banner covers ~35 % |
-| Source of values | measured (study.json) |
+| Source of values | observed |
 
 ## What works & why
 

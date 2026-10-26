@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/knowledge.svg" alt="84 real sites studied (66 good, 18 bad), 24 cross-site lessons with 10 promoted to rules, 32 research sources, 6 design tools studied, 55 automated checks, one human art director" width="100%"></p>
+<p align="center"><img src="assets/knowledge.svg" alt="84 real site designs that inspired it (66 good, 18 bad), 24 cross-site lessons with 10 promoted to rules, 32 research sources, 6 design tools, 55 automated checks, one human art director" width="100%"></p>
 
 # Where Darkroom's knowledge comes from
 
@@ -6,7 +6,7 @@
 
 | | What | Where it lives in the skill |
 |---|---|---|
-| [Real websites](#1-real-websites-studied) | 84 sites studied live: 66 good examples, 18 bad ones | `library/` (one short written entry per site) |
+| [Real websites](#1-real-websites-that-inspired-it) | 84 site designs: 66 good examples, 18 bad ones | `library/` (one short written entry per site) |
 | [Lessons](#2-lessons-drawn-from-them) | 24 patterns seen across several sites; 10 promoted to rules | `library/LESSONS.md`, then `references/` |
 | [Research](#3-research-and-standards) | 32 sources: usability research, accessibility standards, EU law, award criteria | `references/sources.md` |
 | [Other tools](#4-other-design-tools-studied) | 6 open design skills and tools, read for principles only | `references/provenance.md` |
@@ -15,11 +15,11 @@
 
 ---
 
-## 1. Real websites studied
+## 1. Real websites that inspired it
 
-Each site was opened in a real browser with Darkroom's own `study` tool: captured at desktop and phone width, fonts, colours, word counts and reading zones measured, then written up in Darkroom's own words (thesis, first frame, signals, what to steal, what to avoid). **No screenshots, code, images or text from these sites ship with the skill.** Entries are evidence, not templates: Claude is told never to reproduce a listed site's layout, imagery or copy.
+Darkroom draws inspiration from these designs. What each one does well or badly (first impression, type, colour, how much text, where the eye goes, desktop and phone) is written up in Darkroom's own words (thesis, first frame, signals, what to steal, what to avoid). **No screenshots, code, images or text from these sites ship with the skill.** Entries are evidence, not templates: Claude is told never to reproduce a listed site's layout, imagery or copy.
 
-Honest limits: award winners are a biased sample (they reward spectacle, not conversion or accessibility); several Awwwards listings could not be re-verified; a few sites blocked automated capture and have lower-confidence entries.
+Honest limits: award winners are a biased sample (they reward spectacle, not conversion or accessibility); several Awwwards listings could not be re-verified; a few sites could not be reviewed in full and have lower-confidence entries.
 
 <details>
 <summary><b>Good: 52 Awwwards sites</b> (28 Sites of the Day, the rest nominees and honourable mentions)</summary>
@@ -168,7 +168,7 @@ Each build exposed gaps that became fixes or tests: **NorthShutter** (an AR head
 
 ## 6. Human input
 
-Darkroom was directed by its author, **Alexandru Iftimi**, acting as client and creative director while Claude did the research, writing and coding. Their input shaped it directly:
+Darkroom was directed by its author, acting as client and creative director while Claude did the research, writing and coding. Their input shaped it directly:
 
 - **The goal and the scope.** "$10k-looking" single landing pages, made autonomously. The human only makes taste calls, supplies facts and assets, and approves spend. Single pages only: no shops, blogs or apps.
 - **Approve before build.** No guessed looks: show options and get a yes. This became the checkpoints (look + motion, direction, slice, final).

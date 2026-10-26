@@ -6,7 +6,7 @@ confidence: high
 category: corporate
 packs: [bold, trust]
 url: https://www.tagteamsigns.com/
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | none · libraries: none detected (Wix runtime) |
 | Page weight | 1,380 KB |
 | Mobile | broken — page 590 px wider than viewport; headings and body cut mid-word |
-| Source of values | measured (study.json) |
+| Source of values | observed |
 
 ## What works & why
 

@@ -11,7 +11,7 @@
   <a href="LICENSE"><img alt="MIT licence" src="https://img.shields.io/badge/licence-MIT-ff7a3d?style=for-the-badge&labelColor=121110"></a>
   <img alt="Claude Code skill" src="https://img.shields.io/badge/Claude%20Code-skill-ece6dc?style=for-the-badge&logo=anthropic&logoColor=ece6dc&labelColor=121110">
   <img alt="10 platforms" src="https://img.shields.io/badge/platforms-10-ff7a3d?style=for-the-badge&labelColor=121110">
-  <img alt="57 automated checks" src="https://img.shields.io/badge/tests-57%20passing-7ab55c?style=for-the-badge&labelColor=121110">
+  <img alt="59 automated checks" src="https://img.shields.io/badge/tests-59%20passing-7ab55c?style=for-the-badge&labelColor=121110">
   <img alt="Node 18+" src="https://img.shields.io/badge/node-18%2B-ece6dc?style=for-the-badge&logo=nodedotjs&logoColor=ece6dc&labelColor=121110">
 </p>
 
@@ -374,7 +374,7 @@ Every starter theme was run through **the platform's own tools**, not just Darkr
 | <picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/ghost-light.svg"><img src="assets/icons/ghost.svg" width="16" alt=""></picture> Ghost | gscan | **compatible with Ghost 6.x** |
 | <img src="assets/icons/wordpress.svg" width="16" alt=""> WordPress | a real WordPress (Playground), Site Editor block validation | **renders; 0 invalid blocks** in every template |
 | <img src="assets/icons/woocommerce.svg" width="30" alt=""> WooCommerce | WordPress + WooCommerce from wordpress.org, sample products | **shop and product pages render; 0 invalid blocks** |
-| All ten | Darkroom's structure check + **57 automated tests** | passing locally; CI runs them on every push |
+| All ten | Darkroom's structure check + **59 automated tests** | passing locally; CI runs them on Linux, Mac and Windows on every push |
 
 That run found real problems before you could: WooCommerce blocks that look self-closing but save HTML (the editor would have called them broken), missing side padding on phones, and new WooCommerce stores hiding behind "Coming soon". All fixed, and the checks now catch them.
 
@@ -383,7 +383,7 @@ That run found real problems before you could: WooCommerce blocks that look self
 
 | | |
 |---|---|
-| 🎨 **Art direction** | 13 style packs and brand look-alikes measured from the live site. |
+| 🎨 **Art direction** | 13 style packs and looks inspired by brands you name. |
 | ♻️ **Redesign** | imports your current site (URL or folder): texts, menu, contacts, images with sizes, old addresses. |
 | 📱 **Phone preview** | your site on your phone over the same Wi-Fi, or a shareable link when you say yes. |
 | 📥 **Asset check** | measures what you drop in, suggests improvements, never rejects. |
@@ -403,9 +403,9 @@ That run found real problems before you could: WooCommerce blocks that look self
 
 ## 📚 Where the knowledge comes from
 
-<p align="center"><img src="assets/knowledge.svg" alt="84 real sites studied (66 good, 18 bad), 24 cross-site lessons with 10 promoted to rules, 32 research sources, 6 design tools studied, 57 automated checks, one human art director" width="100%"></p>
+<p align="center"><img src="assets/knowledge.svg" alt="84 real site designs that inspired it (66 good, 18 bad), 24 cross-site lessons with 10 promoted to rules, 32 research sources, 6 design tools, 59 automated checks, one human art director" width="100%"></p>
 
-Darkroom is **not a trained model**. It is written knowledge that Claude reads while it works, in plain files you can check: **84 real websites studied** (kept as written notes, never screenshots or copied code), **24 lessons** of which **10 became rules** after the author approved them, **32 research sources** (Nielsen Norman Group, WCAG 2.2, the European Accessibility Act, EU cookie and price rules, the AI Act), the **official docs of all ten platforms**, and the author's own taste calls.
+Darkroom is **not a trained model**. It is written knowledge that Claude reads while it works, in plain files you can check: **inspiration from 84 real website designs** (kept as written lessons, never screenshots or copied code), **24 lessons** of which **10 became rules** after the author approved them, **32 research sources** (Nielsen Norman Group, WCAG 2.2, the European Accessibility Act, EU cookie and price rules, the AI Act), the **official docs of all ten platforms**, and the author's own taste calls.
 
 **[→ The full list: every site, source and human decision](KNOWLEDGE.md)**
 
@@ -425,6 +425,7 @@ node install.mjs --project    # or for the current project only
 
 1. **Restart Claude Code.**
 2. For screenshots and audits, Darkroom needs Playwright: `npm i -D playwright && npx playwright install chromium` in your project, or a global install. On Windows it can use the Edge browser you already have. ffmpeg is optional.
+   Not sure what you have? `node ~/.claude/skills/darkroom/scripts/darkroom.mjs doctor` checks and prints the exact command for anything missing.
 3. Type `/darkroom` and describe your site.
 
 Platform tools (Shopify CLI, WordPress Playground, gscan, Astro, Hugo) are free, and Darkroom asks before it downloads any of them. To remove Darkroom: `node install.mjs --uninstall`.
@@ -453,7 +454,7 @@ Only `skill/darkroom/` is installed. Tests, the example and CI stay in the repos
 
 ```bash
 npm install && npx playwright install chromium
-npm test        # 57 checks against skill/darkroom; keep it green
+npm test        # 59 checks against skill/darkroom; keep it green
 npm run pack    # dist/darkroom-skill.zip
 ```
 
@@ -471,4 +472,4 @@ Claude only sees the installed copy. After editing anything in `skill/darkroom/`
 
 ## Licence
 
-[MIT](LICENSE) © 2026 Alexandru Iftimi. Example fonts: SIL OFL 1.1. Platform logos come from [Simple Icons](https://simpleicons.org) (CC0); the names and logos are trademarks of their owners, shown only to say which platforms Darkroom builds for. Darkroom is not affiliated with or endorsed by any of them.
+[MIT](LICENSE) © 2026 Darkroom contributors. Example fonts: SIL OFL 1.1. Platform logos come from [Simple Icons](https://simpleicons.org) (CC0); the names and logos are trademarks of their owners, shown only to say which platforms Darkroom builds for. Darkroom is not affiliated with or endorsed by any of them.

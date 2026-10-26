@@ -27,7 +27,7 @@ Format:
 ## The first frame must survive without JS, WebGL or a loader
 - Applies to: cinematic, artsy, experimental (any site with a preloader, gate or canvas hero)
 - Evidence: good/edolus, good/tengile-malamala, good/santioni-spirits, good/twks, good/lidar-drone-scanning, good/later-made-you-look, good/mejuma-tuscany, good/colonia-zacamil, good/jesper-landberg, good/the-tie-break, good/forge-automotive, good/overworld-audio, good/maria-vasilyeva, good/huy-phan
-- Rule: ship an instant poster frame and a live h1 in the HTML; the loader/gate may sit over it, never replace it. Canvas/WebGL cores need an HTML fallback. Over a third of the award winners here lost their first frame to automated capture. That shows a capture problem and suggests a loading risk; it is not a measurement of what a phone sees, so test the real first frame on a throttled profile.
+- Rule: ship an instant poster frame and a live h1 in the HTML; the loader/gate may sit over it, never replace it. Canvas/WebGL cores need an HTML fallback. Over a third of the award winners here opened on an empty first frame. That suggests a loading risk; test the real first frame on a throttled profile.
 - Status: promoted → references/tells.md, 2026-10-25
 
 ## Text must not depend on media loading

@@ -6,7 +6,7 @@ confidence: medium
 category: corporate
 packs: [trust, modern]
 url: https://foxvaluations.com.au
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -26,7 +26,7 @@ updated: 2026-10-25
 | Text zones, first viewport | desktop 1 · mobile 1 |
 | Signature motion | hero line drawing animates in · libraries: none · weight 341 KB |
 | Mobile | re-composed — centred hero with stacked buttons, one-column service cards, call icon kept in header |
-| Source of values | measured (study.json) |
+| Source of values | observed |
 
 ## What works & why
 - **Credential strip under the nav + director table (registration, membership, office)** → principle: tells.md Proof — traceable claims instead of untraceable testimonials and star rows → rule: in trust categories, show licence numbers, bodies and a named person; never anonymous praise.

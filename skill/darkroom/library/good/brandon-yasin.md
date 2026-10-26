@@ -6,7 +6,7 @@ confidence: medium
 category: portfolio
 packs: [art-gallery, modern]
 url: https://brandonyasin.com
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | centre image expands into the strip; scroll drives a horizontal gallery; rotating text slot (name → SOTD → date) · libraries: lenis |
 | Page weight | 16,379 KB |
 | Mobile | re-composed — one card at ~80 % width with the next peeking; nav cut to MENU / CONTACT + indicator |
-| Source of values | measured (study.json); motion inferred from shot sequence |
+| Source of values | observed; motion inferred from shot sequence |
 
 ## What works & why
 

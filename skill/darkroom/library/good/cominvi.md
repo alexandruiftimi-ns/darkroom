@@ -6,7 +6,7 @@ confidence: high
 category: corporate
 packs: [cinematic, trust]
 url: https://www.cominvi.com.mx/
-evidence: live study (study.json + 10 shots + 16 click shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -28,9 +28,9 @@ updated: 2026-10-25
 | Text zones, first viewport | desktop 6 (incl. nav, card labels) · mobile 4 |
 | Layout system | 32 px gutter, left copy anchor; 50/50 photo + stat grid, 3-col service cards, centred mineral dial, statement + giant number, dark machine grid |
 | Signature motion | mineral selector (rotating specimen in a tick dial, names in one column); scroll-filled statement text · libraries: lenis |
-| Page weight | 350 KB at capture (media lazy-loaded) |
+| Page weight | 350 KB when viewed (media lazy-loaded) |
 | Mobile | re-composed — stat moves above two 2-up cards; stats one column; mineral names become a horizontal ticker under the specimen |
-| Source of values | measured (study.json); sections seen via click shots (scroll capture stuck at hero) |
+| Source of values | observed; sections seen via click-through views (scrolling stuck at the hero) |
 
 ## What works & why
 
@@ -56,4 +56,4 @@ updated: 2026-10-25
 
 Logo, renders, photography, exact layout, copy text. Learn the principle only.
 
-**Open question:** none on the verdict; scroll capture didn't advance (Lenis), so later sections were judged from click shots.
+**Open question:** none on the verdict; scrolling didn't advance (Lenis), so later sections were judged from click-through views.

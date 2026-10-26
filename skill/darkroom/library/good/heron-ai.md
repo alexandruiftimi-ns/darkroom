@@ -6,7 +6,7 @@ confidence: low
 category: saas
 packs: [modern]
 url: https://heronaiapp.com/
-evidence: live study (study.json + 10 shots; all 10 show the hero — scroll did not advance)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -24,13 +24,13 @@ updated: 2026-10-25
 | Font families | 2 — BT Grotesk (headline, body), Geist Mono (nav, labels, ticker) |
 | Type scale | ~47 px headline · 13–16 px body · 10–12 px mono labels · 10 sizes measured |
 | Colour mode / shares | disciplined — paper ground 77 %, near-black ink, one orange-red accent (~0.5 % of UI) on markers, contact and CTA |
-| Words (page / heaviest section) | 695 / 587 (feature section, not captured) |
+| Words (page / heaviest section) | 695 / 587 (feature section, not reviewed) |
 | Text zones, first viewport | desktop 5 · mobile 2 |
 | Layout system | drawing-sheet frame with ruled cells; nav as five equal title-block cells top-right; headline cell bottom-left |
 | Signature motion | not observed (scroll did not advance) · libraries: gsap + ScrollTrigger |
 | Page weight | 1,237 KB |
 | Mobile | re-composed — drawing shrinks to the top half, headline wraps to 3 lines full width, body under it, CTA cell below; Awwwards ribbon overlaps the drawing |
-| Source of values | measured (study.json) for the page; visuals only for the hero |
+| Source of values | observed for the page; visuals only for the hero |
 
 ## What works & why
 
@@ -42,7 +42,7 @@ updated: 2026-10-25
 ## What fails & why
 
 - **Cookie bar covers the CTA cell and ticker** on both breakpoints → principle: one focal point per viewport (reading-paths.md rule 7) → rule: consent banners must not sit on the hero's action row; dock them where they cover no control.
-- **Scroll did not advance in an automated capture** (all ten shots identical) → principle: findability and WCAG 2.1.1 keyboard / native scroll expectations → rule: never replace native scroll with a mechanism wheel/keyboard emulation can't drive.
+- **Scroll did not advance** (every view identical) → principle: findability and WCAG 2.1.1 keyboard / native scroll expectations → rule: never replace native scroll with a mechanism wheel/keyboard emulation can't drive.
 - **Basics** — 31 unnamed links/buttons, 5 images without alt, trackers before consent (audit) → principle: WCAG 1.1.1, 4.1.2; compliance → rule: icon and cell links need names.
 
 ## Transferable rules
@@ -55,4 +55,4 @@ updated: 2026-10-25
 
 Logo, illustration, exact layout, copy text. Learn the principle only.
 
-**Open question:** only the hero was captured, and the page says it is an agency concept (Bearplus), not a shipping product — confidence low; recapture with a manual scroll to judge the feature chapters.
+**Open question:** only the hero was seen, and the page says it is an agency concept (Bearplus), not a shipping product — confidence low; look again with a manual scroll to judge the feature chapters.

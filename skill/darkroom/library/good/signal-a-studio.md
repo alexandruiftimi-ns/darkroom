@@ -6,7 +6,7 @@ confidence: medium
 category: agency
 packs: [modern, editorial-news]
 url: https://signal-a.studio
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | weight-mixed justified headline; brand marquee in three styles at the footer · libraries: gsap + ScrollTrigger + lenis |
 | Page weight | 37 KB (measured HTML/first load; media lazy) |
 | Mobile | re-composed — centred stacked headline, case rows become label + thumbnail right; fixed logo/menu overlaps content without a ground |
-| Source of values | measured (study.json); display face estimated from shots |
+| Source of values | observed; display face estimated by eye |
 
 ## What works & why
 

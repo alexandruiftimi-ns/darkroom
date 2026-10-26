@@ -90,7 +90,7 @@ Categories: `landing-page` · `product-launch` · `saas` · `app-marketing` · `
 | offfforum | good | events-culture | bold, cinematic | Awwwards SOTD 2026-10-16 | high | A design festival announced with one video, one sentence, one ticket. |
 | ascension-pegassi | good | experimental | cinematic, bold | Awwwards SOTD + Developer Award | low | EP microsite as a portal: the cover art alone in a grain-black void. |
 | edolus | good | experimental | cinematic, modern | Awwwards SOTD + Developer Award | medium | AI infrastructure as one continuous WebGL camera flight from orbit to chip, one object and one caption per stop. |
-| the-tie-break | good | experimental | bold, artsy | Awwwards SOTD + Developer Award | low | Co-branded tennis game whose loader is already a bouncing ball under the stacked logos (game not captured). |
+| the-tie-break | good | experimental | bold, artsy | Awwwards SOTD + Developer Award | low | Co-branded tennis game whose loader is already a bouncing ball under the stacked logos (game not reviewed). |
 | life-action-revival | bad | experimental | artsy | colorlib | medium | Collage of overlapping boxes, raw RTF code and stray ads; nobody can tell whose page it is. |
 | real-ultimate-power | bad | experimental | artsy, bold | colorlib | medium | Parody site whose home page is a YES/no entry gate in front of any content. |
 | the-big-ugly-website | bad | experimental | artsy | colorlib | medium | Joke link directory where every image is dead, leaving giant alt text, colour bars and 5 fonts. |

@@ -6,7 +6,7 @@ confidence: medium
 category: editorial
 packs: [editorial-news]
 url: https://news.ycombinator.com/
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | none · libraries: none detected |
 | Page weight | 6 KB |
 | Mobile | re-composed — type scales up, rows reflow to one column; nav wraps to 3 lines |
-| Source of values | measured (study.json) |
+| Source of values | observed |
 
 ## What works & why
 

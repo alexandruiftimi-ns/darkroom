@@ -6,7 +6,7 @@ confidence: low
 category: corporate
 packs: [cinematic, luxury]
 url: https://forgeautomotive.co.uk/
-evidence: live study (study.json + 10 shots + 16 extra post-enter shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | enter gate → hairline loader → reveal · libraries: lenis |
 | Page weight | 583 KB (at gate, media failed) |
 | Mobile | re-composed — headline re-broken to 3 lines, phone and menu icons in top corners |
-| Source of values | measured (study.json, gate state); post-enter seen only on mobile hero |
+| Source of values | observed; post-enter seen only on mobile hero |
 
 ## What works & why
 
@@ -41,7 +41,7 @@ updated: 2026-10-25
 ## What fails & why
 
 - **ENTER is also cookie consent** ("by pressing enter … you accept cookies") → principle: consent tied to access is not freely given (GDPR Art. 7(4); EDPB on cookie walls; compliance.md) → rule: consent is its own, declinable control, never the door to the content.
-- **Desktop stalled on a black loader** — media blocked by CORS (8 console errors); all 8 post-enter desktop shots are the same empty frame → principle: reveals that fail leave blank bands (tells.md Motion) → rule: every gated reveal needs a poster/still state that renders without the media.
+- **Desktop stalled on a black loader** — media blocked by CORS (8 console errors); after entering, desktop stays an empty frame → principle: reveals that fail leave blank bands (tells.md Motion) → rule: every gated reveal needs a poster/still state that renders without the media.
 - **Hidden text and a long identity block** — 23 text runs measured ~1.0–1.15:1 (pre-reveal), 80-word identity section vs 30 budget → principle: attention.md hero budget; WCAG 1.4.3 → rule: text in the DOM must be legible before animation, or not exposed yet.
 
 ## Transferable rules
@@ -53,4 +53,4 @@ updated: 2026-10-25
 
 Logo, photography, exact layout, copy text. Learn the principle only.
 
-**Open question:** the SOTD + Developer Award almost certainly rewards the post-enter car showcase, which never rendered on desktop here; confidence low until a real-browser capture shows the builds and stock sections.
+**Open question:** the SOTD + Developer Award almost certainly rewards the post-enter car showcase, which never rendered on desktop here; confidence low until a closer look shows the builds and stock sections.

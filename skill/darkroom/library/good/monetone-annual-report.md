@@ -25,6 +25,6 @@ updated: 2026-10-25
 - **Figure + photo checkerboard** → principle: related items with their labels in one grid (reading-paths.md rule 4) → rule: alternate number and image cells so each figure gets a human context.
 ## Transferable rules
 - Do: one sans, extreme size contrast, one accent bound to the key figure.
-- Don't: leave lorem-ipsum captions under the figures — visible in the shot (tells.md Copy, placeholders).
+- Don't: leave lorem-ipsum captions under the figures — visible in view (tells.md Copy, placeholders).
 
 **Open question:** stock-style team photos weaken the editorial voice; numbers are invented for the concept (tells.md Proof).

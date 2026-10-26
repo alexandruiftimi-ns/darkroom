@@ -6,7 +6,7 @@ confidence: high
 category: real-estate
 packs: [luxury, nature]
 url: https://belgradearbor.rs/en
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -29,8 +29,8 @@ updated: 2026-10-25
 | Layout system | full-bleed sections, copy anchored left gutter; each section a different colour field; polygon image masks |
 | Signature motion | sketch → render bookend; masked image reveals · libraries: lenis, WebGL canvas |
 | Page weight | 3,281 KB |
-| Mobile | re-composed — one column, but reveals captured half-done (see fails) |
-| Source of values | measured (study.json) · palette names estimated from images |
+| Mobile | re-composed — one column, but reveals seen half-done (see fails) |
+| Source of values | observed · palette names estimated from images |
 
 ## What works & why
 
@@ -43,7 +43,7 @@ updated: 2026-10-25
 ## What fails & why
 
 - **Brochure copy** — 1,207 words; Location 379 vs 45 budget → principle: users read ~20 % (attention.md) → rule: move location/amenity detail to a sub-page; keep chapters ≤ 45 words.
-- **Reveal-dependent mobile** — mobile shots show a near-blank frame at 100 % and a panel clipping copy mid-word at 50 % → principle: "reveals that fail and leave blank bands" (tells.md) → rule: content must be readable with the reveal skipped or interrupted.
+- **Reveal-dependent mobile** — mobile views show a near-blank frame at 100 % and a panel clipping copy mid-word at 50 % → principle: "reveals that fail and leave blank bands" (tells.md) → rule: content must be readable with the reveal skipped or interrupted.
 - **Footer letter-wave + compliance** — running text set on a wavy per-letter baseline; 12 unnamed buttons; GTM/Facebook/DoubleClick before consent → principle: effects only on display type; EU consent → rule: never animate body text baselines; gate trackers.
 
 ## Transferable rules

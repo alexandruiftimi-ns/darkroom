@@ -6,7 +6,7 @@ confidence: medium
 category: agency
 packs: [bold, modern]
 url: https://neutomni.com/
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | process columns rise like a road A→B with a polygon rolling over them; pricing receipts tilt; draggable diamond CTA · libraries: gsap + ScrollTrigger + lenis |
 | Page weight | 5 KB measured (Webflow lazy assets not counted — treat as unknown) |
 | Mobile | re-composed — wordmark still full width, claim left, receipts one per screen; process columns become a horizontal track cropped at the edges |
-| Source of values | measured (study.json) |
+| Source of values | observed |
 
 ## What works & why
 

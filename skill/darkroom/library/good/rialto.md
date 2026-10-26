@@ -6,7 +6,7 @@ confidence: medium
 category: real-estate
 packs: [cinematic, bold]
 url: https://rialto.com.au/
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---

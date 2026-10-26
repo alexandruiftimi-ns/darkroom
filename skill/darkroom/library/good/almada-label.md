@@ -6,7 +6,7 @@ confidence: medium
 category: fashion-luxury
 packs: [luxury, catalog]
 url: https://almadalabel.com/
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -26,7 +26,7 @@ updated: 2026-10-25
 | Text zones, first viewport | desktop 4 · mobile 5 (shipping bar counted) |
 | Signature motion | none detected · libraries: none · weight 3,362 KB |
 | Mobile | re-composed — diptych becomes one photo, categories 2-up, product rail swipes |
-| Source of values | measured (study.json) |
+| Source of values | observed |
 
 ## What works & why
 - **Product rail: same cutout on the same pale grey, name left / price right on one baseline** → principle: related items in one row with labels in a fixed position (reading-paths.md rule 4) → rule: catalogue cards share photo treatment, crop and label grid so only the garment varies.

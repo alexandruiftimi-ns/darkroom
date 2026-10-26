@@ -25,6 +25,6 @@ updated: 2026-10-25
 - **Black ground with colour only in photography** → principle: monochrome mode (color.md) → rule: in fashion, keep chrome ink-and-paper and let the garments carry colour.
 ## Transferable rules
 - Do: crop the wordmark with the hero image; keep everything else ink and paper.
-- Don't: set body copy in title case at ~12 px in white on black — it is the weakest part of the shot (typography.md details).
+- Don't: set body copy in title case at ~12 px in white on black — it is the weakest part of the view (typography.md details).
 
 **Open question:** uses a real house's name without affiliation; learn the system only. The asterisk pair is decorative and repeats on both frames.

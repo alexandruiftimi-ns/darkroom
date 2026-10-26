@@ -6,13 +6,13 @@ confidence: medium
 category: real-estate
 packs: [luxury, nature]
 url: https://mejuma-tuscany.com/
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
 # Mejuma Tuscany — good
 - **Thesis in one line:** a Tuscan home-buying service that sells guidance as much as houses — warm photos, a high-contrast serif, a five-verb process.
-- **First frame:** desktop capture is a blank dark preloader; mobile shows a dusk terrace under a dark scrim, oversized serif wordmark centred at ~50 % / 48 %, a one-sentence offer and a yellow pill CTA bottom-left at ~88 % y.
+- **First frame:** desktop opens on a blank dark preloader; mobile shows a dusk terrace under a dark scrim, oversized serif wordmark centred at ~50 % / 48 %, a one-sentence offer and a yellow pill CTA bottom-left at ~88 % y.
 ## Signals
 | Signal | Value |
 |---|---|
@@ -27,4 +27,4 @@ updated: 2026-10-25
 - Do: spec rows in fixed positions; verbs as process headlines; end on the wordmark at full width.
 - Don't: add a third face just to set one word of the logo; don't open on a blank preloader.
 
-**Open question:** blank desktop preloader, 3 families, mobile overflow and lazy images that left a card empty at capture are real defects behind a calm system — confidence medium.
+**Open question:** blank desktop preloader, 3 families, mobile overflow and lazy images that left a card empty when viewed are real defects behind a calm system — confidence medium.

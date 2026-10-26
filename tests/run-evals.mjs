@@ -344,6 +344,11 @@ function docChecks() {
       ...(/^## (\d+\.\d+\.\d+)/m.exec(changelog)?.[1] === version ? [] : [`newest CHANGELOG.md entry is not ${version}`]),
       ...(vRun.out.trim() === version ? [] : [`darkroom version printed "${vRun.out.trim()}"`]),
     ] });
+    const doc = await run(['doctor'], work);
+    results.push({ name: 'darkroom doctor reports Node, Playwright, the browser and ffmpeg, and exits 0 when the required ones are there', fails: [
+      ...(doc.code === 0 ? [] : [`exit ${doc.code}: ${doc.out.trim().split('\n').slice(-3).join(' | ')}`]),
+      ...['Node.js', 'Playwright', 'Browser', 'ffmpeg'].filter((k) => !doc.out.includes(k)).map((k) => `no ${k} row`),
+    ] });
     // a skill file that git ignores exists locally but never reaches GitHub (HANDOFF.md once hid commands/handoff.md)
     let ignored = [];
     try {
@@ -385,6 +390,33 @@ async function recipeChecks() {
 }
 
 // reveal.js: below-the-fold items wait for scroll, then show; reduced motion and no-JS show everything at once.
+// Phone views must behave like a phone: the page's meta viewport and touch apply (a 390 px desktop window ignores both).
+async function phoneCheck() {
+  const name = 'phone captures and audits render as a phone: meta viewport honoured, touch, no hover';
+  const { contextFor, launch, VIEWPORTS } = await import(pathToFileURL(path.join(skill, 'scripts', 'lib', 'browser.mjs')).href);
+  process.env.DARKROOM_RESOLVE_FROM = env.DARKROOM_RESOLVE_FROM;
+  const fails = ['capture.mjs', 'audit.mjs'].filter((f) => !fs.readFileSync(path.join(skill, 'scripts', 'lib', f), 'utf8').includes('...contextFor(vp)')).map((f) => `${f} does not use contextFor`);
+  const browser = await launch();
+  try {
+    const ctx = await browser.newContext(contextFor(VIEWPORTS['mobile-390']));
+    const page = await ctx.newPage();
+    await page.setContent('<p>no meta viewport</p>');
+    const legacy = await page.evaluate(() => innerWidth);
+    await page.setContent('<meta name="viewport" content="width=device-width,initial-scale=1"><p>phone</p>');
+    const m = await page.evaluate(() => ({ w: innerWidth, hover: matchMedia('(hover: none)').matches, touch: navigator.maxTouchPoints > 0 }));
+    if (legacy <= 390) fails.push(`a page without a meta viewport rendered ${legacy} px wide; a phone renders it at ~980 px`);
+    if (m.w !== 390) fails.push(`page with a meta viewport is ${m.w} px wide, wanted 390`);
+    if (!m.hover) fails.push('(hover: none) does not match on the phone view');
+    if (!m.touch) fails.push('no touch points on the phone view');
+    await ctx.close();
+    const desk = await browser.newContext(contextFor(VIEWPORTS['desktop-1440']));
+    const dp = await desk.newPage(); await dp.setContent('<p>desk</p>');
+    if (await dp.evaluate(() => matchMedia('(hover: none)').matches)) fails.push('desktop view has no hover');
+    await desk.close();
+  } finally { await browser.close(); }
+  return { name, fails };
+}
+
 async function revealCheck() {
   const name = 'recipe demo-reveal.html hides below-the-fold items until scrolled, and never under reduced motion or without JS';
   const { launch } = await import(pathToFileURL(path.join(skill, 'scripts', 'lib', 'browser.mjs')).href);
@@ -424,7 +456,7 @@ const cases =spec.cases.filter((c) => !only || c.name.includes(only) || c.fixtur
 const results = [];
 let next = 0;
 await Promise.all(Array.from({ length: 3 }, async () => { while (next < cases.length) { const i = next++; results[i] = await fileCase(cases[i], i); } }));
-if (!only) { results.push(...await projectCases()); results.push(...await platformCases()); results.push(...await siteCases()); results.push(...await docChecks()); results.push(...await recipeChecks()); }
+if (!only) { results.push(...await projectCases()); results.push(...await platformCases()); results.push(...await siteCases()); results.push(...await docChecks()); results.push(...await recipeChecks()); results.push(await phoneCheck()); }
 let bad = 0;
 for (const r of results) { const ok = !r.fails.length; if (!ok) bad++; console.log(`${ok ? 'PASS' : 'FAIL'}  ${r.name}${ok ? '' : '\n      - ' + r.fails.join('\n      - ')}`); }
 console.log(`\n${results.length - bad}/${results.length} passed`);

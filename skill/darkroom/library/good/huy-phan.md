@@ -6,7 +6,7 @@ confidence: medium
 category: portfolio
 packs: [artsy, modern]
 url: https://huyml.co/
-evidence: live study (study.json + 10 shots; one fixed viewport, 3 mobile shots are the intro loader)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | WebGL image ribbon that bends and skews with scroll velocity; illustrated self-portrait pushes the intro wall open · libraries: WebGL canvas (Framer) |
 | Page weight | 3,155 KB |
 | Mobile | re-composed into a bare ribbon — logo + burger + curved images; no project names or meta visible |
-| Source of values | measured (study.json); font roles estimated from shots |
+| Source of values | observed; font roles estimated by eye |
 
 ## What works & why
 
@@ -55,4 +55,4 @@ updated: 2026-10-25
 
 Logo, illustration, photography, exact layout, copy text. Learn the principle only.
 
-**Open question:** scroll-state capture shows one project on desktop and the loader on mobile; the full ribbon behaviour is inferred from two states — confidence medium.
+**Open question:** scrolling showed one project on desktop and the loader on mobile; the full ribbon behaviour is inferred from two states — confidence medium.

@@ -6,7 +6,7 @@ confidence: low
 category: corporate
 packs: [trust, cinematic]
 url: https://www.icapital.es/en/
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -26,7 +26,7 @@ updated: 2026-10-25
 | Text zones, first viewport | desktop 3 · mobile 2 |
 | Signature motion | full-screen scene transitions with a mountain→moon progress rail · libraries: none detected · weight 14,071 KB |
 | Mobile | re-composed — same scenes, rail moves to a horizontal bar at the bottom |
-| Source of values | measured (study.json) |
+| Source of values | observed |
 
 ## What works & why
 - **One landscape + one centred line per viewport, 214 words in all** → principle: attention.md budgets and cadence (each viewport a new image/light) → rule: when the offer is abstract, carry it with one metaphor and give each scene a single sentence.

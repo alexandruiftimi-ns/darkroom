@@ -6,7 +6,7 @@ confidence: medium
 category: real-estate
 packs: [luxury, cinematic]
 url: https://lenvalproperties.com
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -17,7 +17,7 @@ updated: 2026-10-25
 | Signal | Value |
 |---|---|
 | Type | 2 families — Financier Display (serif display) · Helvetica Now Display (caps utility); 5 sizes 10–58 |
-| Colour · words · weight | disciplined UI — 0 % saturated UI, colour comes only from warm renders; 459 words; 347 KB at capture |
+| Colour · words · weight | disciplined UI — 0 % saturated UI, colour comes only from warm renders; 459 words; 347 KB when viewed |
 | Zones · motion · mobile | desktop 2 · mobile 5; GSAP + ScrollTrigger + Lenis + WebGL; mobile re-composed (stacked serif claims, numbered services list) · source: measured |
 ## What works & why
 - **One rendered camera move carries the scroll** (sand → villa forecourt → tennis court → terrace) with no copy on most frames → principle: one effect at a time; something new to look at every few seconds (attention.md cadence) → rule: for unbuilt property, let a single scrubbed render sequence be the story and hold copy until the camera lands.

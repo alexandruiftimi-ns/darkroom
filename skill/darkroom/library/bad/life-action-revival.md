@@ -6,7 +6,7 @@ confidence: medium
 category: experimental
 packs: [artsy]
 url: http://lifeactionrevival.org/
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | scrolling marquee title in a box · libraries: none detected |
 | Page weight | 775 KB |
 | Mobile | broken — page 390 px wider than viewport; desktop collage cropped |
-| Source of values | measured (study.json) + images |
+| Source of values | observed + images |
 
 ## What works & why
 

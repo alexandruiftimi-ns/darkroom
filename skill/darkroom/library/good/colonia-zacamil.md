@@ -6,7 +6,7 @@ confidence: medium
 category: events-culture
 packs: [bold, editorial-news]
 url: https://coloniazacamil.com/
-evidence: live study (study.json + 10 shots + 10 click shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | image-in-headline intro → onboarding screen → draggable/zoomable WebGL map with pins · libraries: WebGL canvas |
 | Page weight | 5,716 KB |
 | Mobile | re-composed — FLY TO / clip / ZACAMIL stacked vertically, CTA docked bottom; consent sheet covers the lower half |
-| Source of values | measured (study.json); font roles from shots |
+| Source of values | observed; font roles by eye |
 
 ## What works & why
 
@@ -43,7 +43,7 @@ updated: 2026-10-25
 ## What fails & why
 
 - **Mono on buttons and labels as a third family** with no data to justify it → principle: 2 families + utility only for real data (typography.md) → rule: labels and CTAs in the text face; mono only for coordinates/timecodes.
-- **WebGL-only core** — in capture the map state showed chrome on a blank ground; 5.7 MB; no reduced-motion rule; 0 h1, no `lang` → principle: least-complex illusion with a fallback (motion.md); WCAG 1.3.1, 3.1.1 → rule: every canvas scene ships a static poster/HTML fallback; the page keeps one h1 and `lang`.
+- **WebGL-only core** — in view the map state showed chrome on a blank ground; 5.7 MB; no reduced-motion rule; 0 h1, no `lang` → principle: least-complex illusion with a fallback (motion.md); WCAG 1.3.1, 3.1.1 → rule: every canvas scene ships a static poster/HTML fallback; the page keeps one h1 and `lang`.
 - **GTM before consent; consent sheet over half the phone hero** → principle: consent-gate trackers (compliance.md) → rule: nothing non-essential loads before the choice; the phone first layer stays compact.
 
 ## Transferable rules
@@ -56,4 +56,4 @@ updated: 2026-10-25
 
 Logo, footage, exact layout, copy text. Learn the principle only.
 
-**Open question:** scroll points were identical (single-screen intro) and the map rendered blank headless, so the award-winning map itself is unverified — confidence medium.
+**Open question:** the intro is a single screen and the map did not render for us, so the award-winning map itself is unverified — confidence medium.

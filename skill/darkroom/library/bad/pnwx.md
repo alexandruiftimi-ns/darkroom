@@ -6,7 +6,7 @@ confidence: high
 category: e-commerce
 packs: [catalog, trust]
 url: http://www2.pnwx.com/
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | animated GIF logo · libraries: none |
 | Page weight | 44 KB |
 | Mobile | broken — search input 172 px off-canvas; 2 columns squeezed, labels wrap under icons |
-| Source of values | measured (study.json) |
+| Source of values | observed |
 
 ## What works & why
 

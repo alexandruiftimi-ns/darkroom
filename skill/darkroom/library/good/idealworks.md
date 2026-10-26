@@ -6,7 +6,7 @@ confidence: low
 category: corporate
 packs: [modern, bold]
 url: https://www.idealworks.com/
-evidence: live study (study.json + 10 shots; consent banner over all shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -25,8 +25,8 @@ updated: 2026-10-25
 | Words (page / heaviest section) | 750 / 1,176 (measured section incl. hidden tabs) |
 | Text zones, first viewport | desktop 2 · mobile 2 (under banner) |
 | Signature motion | accordion product layers with swapping photo; pixel-grid motif · libraries: none · weight 1,510 KB |
-| Mobile | not assessable — consent dialog covered all five shots |
-| Source of values | measured (study.json); visual reading limited by consent banner |
+| Mobile | not assessable — consent dialog covered all five views |
+| Source of values | observed; visual reading limited by consent banner |
 
 ## What works & why
 - **One family in two weights for everything** → principle: typography.md budget (2 families, few sizes; weight as the one emphasis device) → rule: a technical B2B brand can run on one disciplined grotesk.

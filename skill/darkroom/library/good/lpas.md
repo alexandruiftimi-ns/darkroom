@@ -6,7 +6,7 @@ confidence: high
 category: architecture
 packs: [modern, trust]
 url: https://lpas.com/
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -21,7 +21,7 @@ updated: 2026-10-25
 
 | Signal | Value |
 |---|---|
-| Font families | 1 — Aeonik (all roles); mobile shots look like a fallback sans (estimated) |
+| Font families | 1 — Aeonik (all roles); mobile views look like a fallback sans (estimated) |
 | Type scale | 75 px hero/sector names · 28–38 px section heads · 14–16 px body (7 sizes) |
 | Colour mode / shares | disciplined — white/near-black grounds 99.8 %; sector panels carry muted fields (rust, sage, peach, slate) with UI hue 30° only |
 | Words (page / heaviest section) | 651 / 399 (news list) |
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | horizontal sector accordion driven by vertical scroll, next panel always peeking · libraries: lenis |
 | Page weight | 5,416 KB (hero video + photography) |
 | Mobile | re-composed — sectors stack as half-width panels with a thumbnail, projects one per row, news and footer one column |
-| Source of values | measured (study.json) |
+| Source of values | observed |
 
 ## What works & why
 

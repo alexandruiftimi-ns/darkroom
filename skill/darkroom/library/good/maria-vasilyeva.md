@@ -6,7 +6,7 @@ confidence: low
 category: portfolio
 packs: [artsy, art-gallery]
 url: https://www.mariavasilyeva.com/
-evidence: live study (study.json + 10 shots + 2 extra; only project 01 and the loader captured)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | loader of five serif lines repeated as a "playlist" with letter trails; scroll swaps project collages; filmstrip of frames · libraries: WebGL canvas |
 | Page weight | 3,136 KB |
 | Mobile | re-composed — rails become a top bar (name, menu) and a bottom bar (toggles); collage shrinks into the ruled sheet |
-| Source of values | measured (study.json); scroll behaviour inferred from near-identical shots |
+| Source of values | observed; scroll behaviour inferred from near-identical views |
 
 ## What works & why
 
@@ -55,4 +55,4 @@ updated: 2026-10-25
 
 Logo, artwork, photography, exact layout, copy text. Learn the principle only.
 
-**Open question:** the capture shows only the loader and project 01 (scroll swaps projects in place), so cadence across projects is unverified — confidence low.
+**Open question:** the visit showed only the loader and project 01 (scroll swaps projects in place), so cadence across projects is unverified — confidence low.

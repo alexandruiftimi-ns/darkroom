@@ -6,7 +6,7 @@ confidence: medium
 category: portfolio
 packs: [art-gallery, cinematic]
 url: http://jesperlandberg.com
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -29,8 +29,8 @@ updated: 2026-10-25
 | Layout system | four-corner chrome frame around a centred 3D stage; FEATURED / FULL toggle switches to a list |
 | Signature motion | WebGL carousel of curved screens moving through space on a grid floor · libraries: WebGL canvas |
 | Page weight | 7,565 KB |
-| Mobile | re-composed — after a three-bar loader (3 of 5 shots), the stage becomes a vertical stack of rounded cards, title + arrow on each |
-| Source of values | measured (study.json) |
+| Mobile | re-composed — after a three-bar loader (most of the first views), the stage becomes a vertical stack of rounded cards, title + arrow on each |
+| Source of values | observed |
 
 ## What works & why
 
@@ -41,7 +41,7 @@ updated: 2026-10-25
 
 ## What fails & why
 
-- **Weight and load gaps** — 7.5 MB; mobile shows only a loader for the first three capture points; on desktop the left panel's texture never arrived (flat pink slab); one card on mobile left a black hole → principle: posters before heavy media; reveals that fail leave blank bands (tells.md Motion) → rule: show a poster image on every panel before its WebGL texture; never present an empty stage.
+- **Weight and load gaps** — 7.5 MB; mobile shows only a loader for the first three scroll points; on desktop the left panel's texture never arrived (flat pink slab); one card on mobile left a black hole → principle: posters before heavy media; reveals that fail leave blank bands (tells.md Motion) → rule: show a poster image on every panel before its WebGL texture; never present an empty stage.
 - **Caption over baked text** — the live title sits on top of the screenshot's own description copy → principle: text and image don't compete (reading-paths.md rule 7) → rule: captions sit outside the media or on a clean plate.
 - **Newsletter field without a label** → principle: WCAG 1.3.1 / 3.3.2 → rule: every input has a visible or programmatic label.
 
@@ -55,4 +55,4 @@ updated: 2026-10-25
 
 Logo, project imagery, exact layout, copy text. Learn the principle only.
 
-**Open question:** extra Portfolio Honors support the verdict; confidence medium only because the capture shows load failures that a visitor on a slow connection would also see.
+**Open question:** extra Portfolio Honors support the verdict; confidence medium only because the visit showed load failures that a visitor on a slow connection would also see.

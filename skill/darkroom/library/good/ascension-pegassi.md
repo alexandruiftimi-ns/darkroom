@@ -6,7 +6,7 @@ confidence: low
 category: experimental
 packs: [cinematic, bold]
 url: https://ascension.pegassi.be/
-evidence: live study (study.json + 10 shots, gate only)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | click-to-enter portal, WebGL canvas, moving grain · libraries: lenis |
 | Page weight | 2,667 KB |
 | Mobile | re-composed — cover scales to ~60 % width, enter label added |
-| Source of values | measured (study.json); post-enter not captured |
+| Source of values | observed; post-enter not reviewed |
 
 ## What works & why
 
@@ -53,4 +53,4 @@ updated: 2026-10-25
 
 Logo, photography, exact layout, copy text. Learn the principle only.
 
-**Open question:** gate-only capture; the Developer Award likely rewards the WebGL sequencer behind it. Confidence low.
+**Open question:** only the gate was seen; the Developer Award likely rewards the WebGL sequencer behind it. Confidence low.

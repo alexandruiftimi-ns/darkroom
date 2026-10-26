@@ -6,7 +6,7 @@ confidence: low
 category: agency
 packs: [cinematic]
 url: https://overworldaudio.com/
-evidence: live study (study.json + 10 shots + 10 extra; desktop never passed the gate)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | drag/scroll travel through a 3D landscape with clickable markers · libraries: WebGL canvas (no gsap/lenis detected) |
 | Page weight | 3,069 KB before entry |
 | Mobile | re-composed — same scene, headline left-aligned in the sky, controls stay in corners |
-| Source of values | measured (study.json) for the gate; entered state estimated from 5 mobile shots |
+| Source of values | observed for the gate; entered state estimated from 5 mobile views |
 
 ## What works & why
 
@@ -55,4 +55,4 @@ updated: 2026-10-25
 
 Logo, photography, exact layout, copy text. Learn the principle only.
 
-**Open question:** the capture never got past the gate on desktop and only 5 mobile frames show the world, so the award-winning part (the landscape travel and audio) is mostly unseen — confidence low until a manual desktop capture exists.
+**Open question:** we never got past the gate on desktop and only part of mobile shows the world, so the award-winning part (the landscape travel and audio) is mostly unseen — confidence low until the desktop experience is reviewed.

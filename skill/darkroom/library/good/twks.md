@@ -6,7 +6,7 @@ confidence: high
 category: agency
 packs: [modern, bold]
 url: https://twks.ch/en
-evidence: live study (study.json + 10 shots + 12 extra at 375/390/1024/1440)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | mid-screen nav line that becomes the sticky header; mix-blend nav over images; footer particle cloud of letters · libraries: gsap + ScrollTrigger + lenis |
 | Page weight | 4,505 KB |
 | Mobile | re-composed — wordmark/contact/burger, single column, statement shrinks; blend nav sometimes collides with text |
-| Source of values | measured (study.json) |
+| Source of values | observed |
 
 ## What works & why
 

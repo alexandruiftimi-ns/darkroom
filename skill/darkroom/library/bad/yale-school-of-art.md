@@ -6,7 +6,7 @@ confidence: medium
 category: corporate
 packs: [art-gallery, artsy]
 url: https://www.art.yale.edu/
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | marquee ticker (mobile), slideshow · libraries: WebGL canvas detected |
 | Page weight | 514 KB |
 | Mobile | squeezed — one column, but Menu, a "30" badge and a docked marquee cover body text |
-| Source of values | measured (study.json) |
+| Source of values | observed |
 
 ## What works & why
 
@@ -54,4 +54,4 @@ updated: 2026-10-25
 
 Logo, photography, exact layout, copy text. Learn the principle only.
 
-**Open question:** colorlib describes the older wiki-style site (backgrounds, odd formatting); the captured site is a later redesign that is calmer. Verdict recorded bad per user rule; confidence medium because the evidence differs from what colorlib judged, and the rail/marquee may be a deliberate art-school stance.
+**Open question:** colorlib describes the older wiki-style site (backgrounds, odd formatting); the seen site is a later redesign that is calmer. Verdict recorded bad per user rule; confidence medium because the evidence differs from what colorlib judged, and the rail/marquee may be a deliberate art-school stance.

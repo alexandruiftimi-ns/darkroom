@@ -5,8 +5,8 @@ verdict_source: Awwwards nominee
 confidence: low
 category: hospitality
 packs: [luxury]
-url: not recorded (no study.json)
-evidence: images (10)
+url: not recorded
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -27,4 +27,4 @@ updated: 2026-10-25
 - Do: a paired booking control that never leaves the screen; one ground colour.
 - Don't: stack offer badge, accessibility button, chat bubble, consent modal and voucher modal — up to five overlays at once (p075, p100).
 
-**Open question:** no study.json or URL; p075–p100 are covered by consent plus a €50 voucher modal and the marquee title rendered in a fallback serif, so most claims are estimated — confidence low.
+**Open question:** no URL; the lower part of the page are covered by consent plus a €50 voucher modal and the marquee title rendered in a fallback serif, so most claims are estimated — confidence low.

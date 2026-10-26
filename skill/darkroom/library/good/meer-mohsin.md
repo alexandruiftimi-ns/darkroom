@@ -6,7 +6,7 @@ confidence: low
 category: portfolio
 packs: [bold, artsy]
 url: https://www.meermohsin.me/
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | glyph mask on the portrait; script marquees; red wireframe perspective grid · libraries: lenis, WebGL canvas |
 | Page weight | 3,063 KB |
 | Mobile | squeezed — intro text sits on the face; journal titles collide with the logo; AWARDS heading runs into the bottom rail |
-| Source of values | measured (study.json) |
+| Source of values | observed |
 
 ## What works & why
 

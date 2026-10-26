@@ -6,7 +6,7 @@ confidence: medium
 category: food-drink
 packs: [artsy, cinematic]
 url: https://santionispirits.com/
-evidence: images (12 re-shot after age gate; original 10 study shots blank, study.json empty)
+evidence: design review (after the age gate)
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -41,7 +41,7 @@ updated: 2026-10-25
 
 ## What fails & why
 
-- **Scroll-jacked document (844 px tall) and a dark empty first paint for automated capture** → principle: real content and semantics (tells.md "Function"), first frame must sell → rule: keep native scroll height and server-render a poster panel so crawlers and slow devices see the story.
+- **Scroll-jacked document (844 px tall) and a dark empty first paint** → principle: real content and semantics (tells.md "Function"), first frame must sell → rule: keep native scroll height and server-render a poster panel so crawlers and slow devices see the story.
 - **Cookie box overlaps the bottom-right panel on every frame; analytics load before consent (audit)** → principle: chrome must not cover content (reading-paths.md rule 5); consent-gate trackers → rule: small consent banner off the focal panel, trackers only after accept.
 - **All-caps captions at ~13 px** → principle: body text legibility (typography.md) → rule: caps captions need ≥ 16 px and generous tracking, or sentence case.
 
@@ -55,4 +55,4 @@ updated: 2026-10-25
 
 Logo, illustrations, saint character, exact layout, copy text. Learn the principle only.
 
-**Open question:** only the first third of the story was captured (scroll-jacked); collection/product pages unseen, so confidence medium.
+**Open question:** only the first third of the story was seen (scroll-jacked); collection/product pages unseen, so confidence medium.

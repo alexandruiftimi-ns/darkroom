@@ -6,7 +6,7 @@ confidence: low
 category: saas
 packs: [modern]
 url: https://jimo.ai/product/ai
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -26,7 +26,7 @@ updated: 2026-10-25
 | Text zones, first viewport | desktop 1 · mobile 1 (+ cookie banner) |
 | Signature motion | scroll-driven demo: agent panel guiding a billing screen · libraries: WebGL canvas · weight not measured (1 KB reported) |
 | Mobile | re-composed — stacked demo, pricing slider; scroll scenes partly blank |
-| Source of values | measured (study.json) |
+| Source of values | observed |
 
 ## What works & why
 - **A mock billing app with the agent panel docked beside it, tabs "Guides / Answers / Acts"** → principle: tells.md Structure (avoid fake grey-bar dashboards; replace with substance) → rule: demo an AI product inside a realistic, specific UI with real-looking data and one task.
@@ -35,6 +35,6 @@ updated: 2026-10-25
 
 ## Transferable rules
 - Do: keep the hero to one claim, one line and one action (attention.md budgets).
-- Don't: build scroll scenes that leave whole viewports black when they don't render — 2 of 5 desktop shots were empty (tells.md Motion "reveals that fail"); and don't fade headline words into grey gradient text (tells.md Colour; color.md contrast).
+- Don't: build scroll scenes that leave whole viewports black when they don't render — 2 of 5 desktop views were empty (tells.md Motion "reveals that fail"); and don't fade headline words into grey gradient text (tells.md Colour; color.md contrast).
 
 **Open question:** blank viewports, gradient text, 4 families / 27 sizes and the near-black-plus-glow default make me doubt the nominee prior — confidence low.

@@ -6,7 +6,7 @@ confidence: medium
 category: food-drink
 packs: [bold, artsy]
 url: https://theobromachocolat.com/
-evidence: live study (study.json + 12 shots, incl. 2 extra product-grid shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---

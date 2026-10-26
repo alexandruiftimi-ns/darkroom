@@ -6,7 +6,7 @@ confidence: high
 category: editorial
 packs: [editorial-news, bold]
 url: https://drudgereport.com/
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | none · libraries: none detected |
 | Page weight | 54 KB |
 | Mobile | broken — desktop table kept, page 268 px wider than viewport, masthead clipped |
-| Source of values | measured (study.json) + images |
+| Source of values | observed + images |
 
 ## What works & why
 

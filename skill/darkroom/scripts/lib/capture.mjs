@@ -2,7 +2,7 @@
 // says exactly how each image was made (so nobody mistakes a fallback shot for the real experience).
 import fs from 'node:fs';
 import path from 'node:path';
-import { VIEWPORTS, launch, settle, mkdirp, toolVersions } from './browser.mjs';
+import { VIEWPORTS, contextFor, launch, settle, mkdirp, toolVersions } from './browser.mjs';
 import { dismissConsent } from './consent.mjs';
 import { resolveTarget, revisionOf } from './serve.mjs';
 
@@ -98,7 +98,7 @@ export async function capture(target, opt, { defaultModes = ['no-preference', 'r
       const vp = VIEWPORTS[vpName];
       if (!vp) { console.warn(`unknown viewport ${vpName}`); continue; }
       for (const motion of modes) {
-        const ctx = await browser.newContext({ viewport: vp, reducedMotion: motion, deviceScaleFactor: Number(opt.dpr ?? 1), hasTouch: vp.width < 600, isMobile: false });
+        const ctx = await browser.newContext({ ...contextFor(vp), reducedMotion: motion, deviceScaleFactor: Number(opt.dpr ?? 1) });
         const page = await ctx.newPage();
         page.on('console', (m) => m.type() === 'error' && errors.push(`[${vpName}/${motion}] ${m.text()}`));
         page.on('pageerror', (e) => errors.push(`[${vpName}/${motion}] ${e.message}`));

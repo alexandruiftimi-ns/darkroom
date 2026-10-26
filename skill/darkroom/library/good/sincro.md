@@ -6,12 +6,12 @@ confidence: medium
 category: corporate
 packs: [modern, trust]
 url: https://sincro.es/en/us/
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
 # Sincro — good
-- **Thesis in one line:** a Spanish labour, tax and legal advisory builds trust with an exposed hairline grid, one blue and a rowing-crew metaphor (captured page: "Us", not the home page).
+- **Thesis in one line:** a Spanish labour, tax and legal advisory builds trust with an exposed hairline grid, one blue and a rowing-crew metaphor (page reviewed: "Us", not the home page).
 - **First frame:** "Us" at 144 px top-left in a 2/3 column; the right 1/3 holds a B/W rowing photo with the logo mark over it and a Mission label/value pair; one 4-line paragraph sits bottom-left at ~2–30 % x / 88 % y.
 ## Signals
 | Signal | Value |
@@ -27,4 +27,4 @@ updated: 2026-10-25
 - Do: hairline grid, numbered lists, one brand blue as whole fields.
 - Don't: park the page's main sentence in the bottom-left corner, 600 px below its title.
 
-**Open question:** the study captured the "Us" page, not the home page; audit contrast hits (1.13:1) match a mid-reveal frame (mobile p025 is faded), likely an artefact — confidence medium.
+**Open question:** we reviewed the "Us" page, not the home page; audit contrast hits (1.13:1) match a mid-reveal frame (mobile p025 is faded), likely an artefact — confidence medium.

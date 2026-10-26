@@ -6,7 +6,7 @@ confidence: medium
 category: product-launch
 packs: [modern, cinematic]
 url: https://drone.riotters.com/
-evidence: live study (study.json + 10 shots; desktop WebGL canvas rendered blank)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | WebGL drone pinned in the centre column while the left list (Scan · Connection · Compactness) and right stat swap on scroll · libraries: lenis + WebGL canvas |
 | Page weight | 9,215 KB |
 | Mobile | re-composed — stats become a ruled stacked list, triptych becomes list → stat → render; preloader shows "100" first |
-| Source of values | measured (study.json); drone visuals seen only on mobile shots |
+| Source of values | observed; drone visuals seen only on mobile views |
 
 ## What works & why
 
@@ -56,4 +56,4 @@ updated: 2026-10-25
 
 Logo, drone model, exact layout, copy text. Learn the principle only.
 
-**Open question:** desktop WebGL did not render in capture, so the hero was judged without its object; confidence medium.
+**Open question:** desktop WebGL did not render in view, so the hero was judged without its object; confidence medium.

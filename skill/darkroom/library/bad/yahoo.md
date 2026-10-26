@@ -6,7 +6,7 @@ confidence: high
 category: editorial
 packs: [editorial-news]
 url: https://www.yahoo.com/
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -28,9 +28,9 @@ updated: 2026-10-25
 | Text zones, first viewport | desktop 7 · mobile 6 · travel 1.38 |
 | Layout system | 3-column portal: 300 / 584 / 300 px; centre feed of thumbnail + headline rows |
 | Signature motion | auto-advancing carousel · libraries: none detected |
-| Page weight | 1,921 KB at capture (feed thumbnails lazy, not all loaded) |
+| Page weight | 1,921 KB when viewed (feed thumbnails lazy, not all loaded) |
 | Mobile | re-composed — one-column thumbnail feed, consistent rows; ad notice banner on top |
-| Source of values | measured (study.json) |
+| Source of values | observed |
 
 ## What works & why
 
@@ -54,4 +54,4 @@ updated: 2026-10-25
 
 Logo, photography, exact layout, copy text. Learn the principle only.
 
-**Open question:** colorlib also notes the site "works better on mobile"; the capture agrees, so the bad verdict applies mainly to desktop.
+**Open question:** colorlib also notes the site "works better on mobile"; our look agrees, so the bad verdict applies mainly to desktop.

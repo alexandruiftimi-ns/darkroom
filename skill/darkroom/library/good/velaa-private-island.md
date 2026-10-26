@@ -6,7 +6,7 @@ confidence: high
 category: hospitality
 packs: [luxury, cinematic]
 url: https://www.velaaprivateisland.com/
-evidence: live study (study.json + 10 shots + 8 extra)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -21,7 +21,7 @@ updated: 2026-10-25
 
 | Signal | Value |
 |---|---|
-| Font families | 2 real — Canela Text Thin (+ italic cut; display) · Instrument Sans (text/UI); study lists 3 |
+| Font families | 2 real — Canela Text Thin (+ italic cut; display) · Instrument Sans (text/UI) |
 | Type scale | 80 px display · body 16 px · 7 sizes (12–80) |
 | Colour mode / shares | disciplined — ground 99.8 % (UI only) · accent 0 % · ivory + deep navy, colour lives in photos |
 | Words (page / heaviest section) | 527 / inflated by Framer breakpoint duplicates (visible ≈ 500) |
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | one sentence pinned while photos parallax past · libraries: lenis (Framer) |
 | Page weight | 2,381 KB |
 | Mobile | re-composed — single column, hero chrome reduced to logo + menu + sound |
-| Source of values | measured (study.json); copy count estimated |
+| Source of values | observed; copy count estimated |
 
 ## What works & why
 

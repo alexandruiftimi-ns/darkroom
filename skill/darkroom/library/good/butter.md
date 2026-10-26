@@ -6,7 +6,7 @@ confidence: medium
 category: saas
 packs: [modern, artsy]
 url: https://www.butter.video/
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -29,8 +29,8 @@ updated: 2026-10-25
 | Layout system | centred hero axis; then split sections (copy left, dark product panel right); nav collapses to logo + overflow dots |
 | Signature motion | 3D charms; per-word blur/fade statement text on scroll; iridescent liquid wordmark footer · libraries: lenis, WebGL canvas |
 | Page weight | 1,700 KB |
-| Mobile | re-composed but blocked — consent sheet covers ~70 % of all five phone shots |
-| Source of values | measured (study.json); label face estimated from shots |
+| Mobile | re-composed but blocked — consent sheet covers ~70 % of the phone views |
+| Source of values | observed; label face estimated by eye |
 
 ## What works & why
 
@@ -55,4 +55,4 @@ updated: 2026-10-25
 
 Logo, 3D charms, wordmark, exact layout, copy text. Learn the principle only.
 
-**Open question:** the consent wall hid most mobile content in capture, so mobile reading quality is only partly verified — confidence medium.
+**Open question:** the consent wall hid most mobile content in view, so mobile reading quality is only partly verified — confidence medium.

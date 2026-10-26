@@ -25,6 +25,6 @@ updated: 2026-10-25
 - **One central frame per viewport, smaller ones at the margins** → principle: one focal point per viewport (reading-paths.md rule 7) → rule: rank images by size so the eye knows which to open first.
 ## Transferable rules
 - Do: let the photographs supply all colour and display type.
-- Don't: let the intro paragraph run under the cover image — its last line is cut off in the shot (reading-paths.md rule 7).
+- Don't: let the intro paragraph run under the cover image — its last line is cut off in view (reading-paths.md rule 7).
 
 **Open question:** text–image overlap may be a scroll transition caught mid-way (video shot); confidence medium.

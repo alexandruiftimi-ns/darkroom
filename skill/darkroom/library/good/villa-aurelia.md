@@ -6,7 +6,7 @@ confidence: medium
 category: hospitality
 packs: [luxury]
 url: https://hotelaurelia.online/
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | gold birds + script reveal; ambient sound toggle · libraries: lenis |
 | Page weight | 3,647 KB |
 | Mobile | re-composed — hero holds; one blank band at 75 % |
-| Source of values | measured (study.json) |
+| Source of values | observed |
 
 ## What works & why
 

@@ -6,16 +6,16 @@ confidence: low
 category: editorial
 packs: [editorial-news, catalog]
 url: https://www.goodreads.com/
-evidence: verdict text only — all 10 study shots blank (AWS WAF challenge, 403); not visually inspected
+evidence: published verdict only; design not reviewed
 added: 2026-10-25
 updated: 2026-10-25
 ---
 # Goodreads — bad
-**Thesis in one line:** A large book community whose desktop site, per colorlib, has "way-too-basic design and terrible navigation", while its mobile layout is better. **First frame:** not captured — the WAF challenge left every shot blank. Points below rest on colorlib's description.
+**Thesis in one line:** A large book community whose desktop site, per colorlib, has "way-too-basic design and terrible navigation", while its mobile layout is better. **First frame:** not reviewed — the WAF challenge left every view blank. Points below rest on colorlib's description.
 
 | Signal | Value |
 |---|---|
-| Fonts / scale / colour / words / weight | not captured (blank page, 0 words); mobile: per colorlib: noticeably better than desktop; source: colorlib text; re-shoot needed |
+| Fonts / scale / colour / words / weight | not reviewed (blank page, 0 words); mobile: per colorlib: noticeably better than desktop; source: colorlib text; to review again |
 
 ## What fails & why
 - **Desktop navigation hard to use (colorlib)** → principle: reading-paths.md rule 5 (tools in chrome) and rule 3 (zone order = reading order) → rule: the primary tasks (search, my books, browse) sit in one top bar in task order.
@@ -26,4 +26,4 @@ updated: 2026-10-25
 - Do: let product imagery (covers) carry a book catalog.
 - Don't: maintain two diverging navigation models for desktop and phone.
 
-**Open question:** evidence is second-hand and the site changes often. Re-shoot from a logged-out normal browser before relying on it.
+**Open question:** evidence is second-hand and the site changes often. Review the design directly before relying on it.

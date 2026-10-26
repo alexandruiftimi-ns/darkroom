@@ -6,7 +6,7 @@ confidence: low
 category: agency
 packs: [modern, artsy]
 url: https://emotion-agency.com/
-evidence: live study (study.json + 10 shots, gate only)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | audio-choice gate, glass pill shimmer, WebGL canvas · libraries: lenis |
 | Page weight | 10,371 KB |
 | Mobile | re-composed — same centred stack, both choices at thumb height |
-| Source of values | measured (study.json); post-gate content known from DOM text only |
+| Source of values | observed; post-gate content known from DOM text only |
 
 ## What works & why
 
@@ -53,4 +53,4 @@ updated: 2026-10-25
 
 Logo, photography, exact layout, copy text. Learn the principle only.
 
-**Open question:** all 10 shots show the gate; the award surely rests on the post-enter WebGL work, which wasn't captured. Confidence low until a click-through capture exists.
+**Open question:** all 10 views show the gate; the award surely rests on the post-enter WebGL work, which wasn't seen. Confidence low until a click-through review exists.

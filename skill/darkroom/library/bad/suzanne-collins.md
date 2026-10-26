@@ -6,7 +6,7 @@ confidence: medium
 category: editorial
 packs: [editorial-news, catalog]
 url: https://www.suzannecollinsbooks.com/
-evidence: images (10)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | none · libraries: unknown |
 | Page weight | unknown |
 | Mobile | re-composed — one column, but the H1 has no left margin and the buy links fall to the very end |
-| Source of values | estimated from images (no study.json) |
+| Source of values | estimated from images |
 
 ## What works & why
 
@@ -55,4 +55,4 @@ updated: 2026-10-25
 
 Logo, photography, exact layout, copy text. Learn the principle only.
 
-**Open question:** signals are estimated from images only (no study.json); confidence medium. The impersonation banner is a reasonable trust device for this author, just over-long.
+**Open question:** signals are estimated from images only; confidence medium. The impersonation banner is a reasonable trust device for this author, just over-long.

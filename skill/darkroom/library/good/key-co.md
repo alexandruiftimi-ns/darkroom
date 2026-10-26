@@ -6,7 +6,7 @@ confidence: medium
 category: hospitality
 packs: [luxury, catalog]
 url: https://key.co/
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -15,7 +15,7 @@ updated: 2026-10-25
 
 **Thesis in one line:** a small, vetted portfolio of vacation homes — calm serif editorial wrapped around a search box.
 
-**First frame:** full-bleed overhead video of a swimmer in teal water (mobile: a dinner-party still); centred caps line "curated vacation homes + luxury services" at ~50 %, 53 %, destination search below it (still a grey skeleton at capture); navy promo-code bar on top.
+**First frame:** full-bleed overhead video of a swimmer in teal water (mobile: a dinner-party still); centred caps line "curated vacation homes + luxury services" at ~50 %, 53 %, destination search below it (still a grey skeleton when viewed); navy promo-code bar on top.
 
 | Signal | Value |
 |---|---|
@@ -26,7 +26,7 @@ updated: 2026-10-25
 | Text zones, first viewport | desktop 3 · mobile 3 |
 | Signature motion | hero video; rails with gold progress bar · libraries: none · weight 2,432 KB |
 | Mobile | re-composed — one column, search docks under the promo bar while scrolling |
-| Source of values | measured (study.json) |
+| Source of values | observed |
 
 ## What works & why
 - **Search under the hero line, docked on mobile scroll** → principle: CTA on the path (reading-paths.md rule 6) → rule: when the product is inventory, the search box is the hero's action and stays reachable.
@@ -35,6 +35,6 @@ updated: 2026-10-25
 
 ## Transferable rules
 - Do: keep one accent (gold) for rules and progress — don't add a magenta button for search (color.md: CTAs share one hue).
-- Don't: ship lazy images that stay blurred placeholders at normal scroll speed — every rail was still blurred at capture (tells.md Motion "reveals that fail").
+- Don't: ship lazy images that stay blurred placeholders at normal scroll speed — every rail was still blurred when viewed (tells.md Motion "reveals that fail").
 
 **Open question:** the blurred rails, skeleton search and a deadline promo bar (attention to urgency claims, UCPD) keep confidence at medium.

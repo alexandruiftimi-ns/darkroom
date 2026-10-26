@@ -6,7 +6,7 @@ confidence: high
 category: hospitality
 packs: [nature, luxury]
 url: https://tengilemalamala.com/
-evidence: live study (study.json + 10 shots, mostly preloader) + 16 re-shots after load
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -28,9 +28,9 @@ updated: 2026-10-25
 | Text zones, first viewport | desktop 3 · mobile 3 · travel 0.95 |
 | Layout system | 16 px gutters, 2-col split (labels at left edge, statements start at 50 %); 3-up lodge grid with serif names under; staggered animal photo pairs; scattered thumbnail constellation around a centred conservation title |
 | Signature motion | headline letters rise out of a mask on load; constellation of photos drifting around the conservation heading · libraries: none detected |
-| Page weight | 491 KB (measured at capture; video streamed) |
+| Page weight | 491 KB (measured when viewed; video streamed) |
 | Mobile | re-composed — hero swaps to an elephant crop, lodges stack one per screen with labels, constellation keeps the centred title |
-| Source of values | measured (study.json) + re-shots |
+| Source of values | observed |
 
 ## What works & why
 
@@ -42,7 +42,7 @@ updated: 2026-10-25
 
 ## What fails & why
 
-- **Olive preloader blocks every first paint; first audit shots were blank** → principle: first frame must sell → rule: show the hero poster immediately; preloaders are a cost.
+- **Olive preloader blocks every first paint; the first views were blank** → principle: first frame must sell → rule: show the hero poster immediately; preloaders are a cost.
 - **White statement over a bright sky/river photo (Plan a Trip)**, hero caps measured ~1:1 on light frames → principle: contrast ≥ 3:1 for large text (color.md) → rule: place copy on the image's shadow or add a local gradient.
 - **Cookie panel pinned bottom-left across all views** → principle: chrome off content (rule 5) → rule: consent UI should be dismissable and small, never covering statements.
 

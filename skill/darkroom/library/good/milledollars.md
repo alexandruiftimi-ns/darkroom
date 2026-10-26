@@ -6,7 +6,7 @@ confidence: high
 category: agency
 packs: [cinematic, modern]
 url: https://milledollars.fr/
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | card stack → full-screen zoom into the active film; scroll swaps projects; mobile uses story-style segmented progress bars · libraries: lenis + WebGL canvas |
 | Page weight | 2,949 KB (video streamed) |
 | Mobile | re-composed — portrait film, wordmark top-left, nav top-right, index + title mid-left, story progress bars at the bottom |
-| Source of values | measured (study.json) |
+| Source of values | observed |
 
 ## What works & why
 

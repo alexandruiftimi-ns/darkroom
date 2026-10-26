@@ -6,13 +6,13 @@ confidence: medium
 category: app-marketing
 packs: [modern, artsy]
 url: https://twodo.design
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
 # Two-Do — good
 - **Thesis in one line:** a couples' to-do app concept told as numbered "moments" beside a pinned, live phone prototype.
-- **First frame:** two-line serif headline at ~3–35 % x / 28–48 % y with two italic words coloured peach and sage, body, a "phone is live" prompt and a demo button; right, a phone frame (screen blank at capture) with "Live prototype · Reset" below; olive-brown gradient ground.
+- **First frame:** two-line serif headline at ~3–35 % x / 28–48 % y with two italic words coloured peach and sage, body, a "phone is live" prompt and a demo button; right, a phone frame (screen blank when viewed) with "Live prototype · Reset" below; olive-brown gradient ground.
 ## Signals
 | Signal | Value |
 |---|---|
@@ -27,4 +27,4 @@ updated: 2026-10-25
 - Do: one device, chapters that drive it; accents with named owners.
 - Don't: 4 families and 23 sizes — a strict colour-role system deserves an equally strict type system.
 
-**Open question:** the phone screen is blank in every capture, so the core interaction is unverified; it is a designer's concept piece, not a shipping product — confidence medium.
+**Open question:** the phone screen is blank in every view, so the core interaction is unverified; it is a designer's concept piece, not a shipping product — confidence medium.

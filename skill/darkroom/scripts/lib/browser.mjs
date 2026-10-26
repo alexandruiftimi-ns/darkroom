@@ -12,10 +12,13 @@ export const VIEWPORTS = {
   'desktop-1920': { width: 1920, height: 1080 },
 };
 
+// Phone widths render as a phone: the page's meta viewport, touch and no hover apply, as on a real device.
+export const contextFor = (vp) => (vp.width < 600 ? { viewport: vp, isMobile: true, hasTouch: true } : { viewport: vp });
+
 export const mkdirp = (d) => fs.mkdirSync(d, { recursive: true });
 
 let pwCache = null;
-export function loadPlaywright() {
+export function loadPlaywright({ exit = true } = {}) {
   if (pwCache) return pwCache;
   const tries = [];
   // project first, then DARKROOM_RESOLVE_FROM (used by the eval runner), then the global install
@@ -33,6 +36,7 @@ export function loadPlaywright() {
       if (fs.existsSync(full)) return (pwCache = createRequire(path.join(root, 'noop.js'))(full));
     }
   } catch { /* npm missing */ }
+  if (!exit) return null;
   console.error(`Playwright not found (tried ${tries.join(', ')} and the global npm root).\nAsk the user before installing: npm i -D playwright`);
   process.exit(2);
 }

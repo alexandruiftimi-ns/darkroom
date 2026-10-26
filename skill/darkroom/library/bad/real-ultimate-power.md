@@ -6,7 +6,7 @@ confidence: medium
 category: experimental
 packs: [artsy, bold]
 url: https://realultimatepower.net/
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | none · libraries: none |
 | Page weight | ~0 KB reported (tiny HTML + one JPG) |
 | Mobile | survives — same centred column; photo scales; headline wraps to 2 lines |
-| Source of values | measured (study.json) |
+| Source of values | observed |
 
 ## What works & why
 

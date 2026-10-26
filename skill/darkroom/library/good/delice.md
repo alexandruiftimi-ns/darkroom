@@ -6,7 +6,7 @@ confidence: medium
 category: food-drink
 packs: [restaurant, bold]
 url: https://delice.ca/
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -26,7 +26,7 @@ updated: 2026-10-25
 | Text zones, first viewport | desktop 1 · mobile 1 |
 | Signature motion | blob masks + curved text on daily-special plates · libraries: lenis, WebGL canvas · weight 2,021 KB |
 | Mobile | re-composed — headline first, photo blob below, sections stack in their colour fields |
-| Source of values | measured (study.json) |
+| Source of values | observed |
 
 ## What works & why
 - **One colour field per chapter, cream ink constant** → principle: cadence hook "colour-field change" (attention.md); expressive mode, one dominant per viewport (color.md) → rule: in an expressive palette keep the ink colour fixed so the fields can change freely.

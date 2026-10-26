@@ -6,7 +6,7 @@ confidence: medium
 category: fashion-luxury
 packs: [luxury, trust]
 url: https://www.odysseeclinic.com.au/
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | 4-up carousel where inactive cards fade to ~10 % and a progress line fills ("3 : 4"); sticky nav morphs from mid-hero band to top bar · libraries: lenis |
 | Page weight | 1,046 KB |
 | Mobile | re-composed — single column, nav reduced to BOOK / MENU, carousel shows one card |
-| Source of values | measured (study.json); type px estimated from shots |
+| Source of values | observed; type px estimated by eye |
 
 ## What works & why
 

@@ -6,7 +6,7 @@ confidence: medium
 category: real-estate
 packs: [bold, luxury]
 url: https://realevate.agency/
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -22,7 +22,7 @@ updated: 2026-10-25
 | Signal | Value |
 |---|---|
 | Font families | 1 measured (Google Sans) + extended caps in wordmark and price tag (likely SVG/outlined — estimated) |
-| Type scale | ~200 px marquee · ~24 px claim · ~16 px nav/buttons (study saw only 17 px — marquee likely not live text) |
+| Type scale | ~200 px marquee · ~24 px claim · ~16 px nav/buttons (marquee likely not live text) |
 | Colour mode / shares | monochrome — navy (240°) on white, ground 99.7 %; navy preloader; colour otherwise only in photos |
 | Words (page / heaviest section) | 4 measured / ~25 visible |
 | Text zones, first viewport | 1 measured · ~5 visible (nav, marquee, claim + price, buttons, ©) |
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | counter preloader with photo cycle → marquee behind a fixed photo · libraries: gsap + ScrollTrigger |
 | Page weight | 758 KB |
 | Mobile | re-composed — nav cut to the wordmark; marquee shows only fragments; claim, price and buttons stacked centred |
-| Source of values | measured (study.json) + estimated from images where text is not live |
+| Source of values | observed + estimated from images where text is not live |
 
 ## What works & why
 

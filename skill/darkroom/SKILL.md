@@ -84,7 +84,7 @@ If the project already has `PROJECT_BLUEPRINT.md` / `DESIGN.md` / a `CLAUDE.md` 
 
 | Command | Use | Playbook |
 |---|---|---|
-| `init`, `state`, `version` | project files; stage, approvals, stale evidence, next action; the installed Darkroom version | `commands/status.md` |
+| `init`, `state`, `version`, `doctor` | project files; stage, approvals, stale evidence, next action; the installed Darkroom version; what this computer is missing (Playwright, a browser, ffmpeg) with the install command (ask before running it) | `commands/status.md` |
 | `capture <url\|dir\|file>` | named states, real wheel input, scene progress, motion + reduced-motion, contact sheets, crops, manifest | `commands/shoot.md` |
 | `audit <…>` | measured / heuristic / manual checks, per viewport (`darkroom checks` lists them) | `commands/audit.md` |
 | `import <url\|folder>` | the user's current site: texts in reading order, navigation, contacts, images with sizes, old addresses | `commands/import.md` |

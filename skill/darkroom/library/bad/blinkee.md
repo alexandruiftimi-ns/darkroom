@@ -6,7 +6,7 @@ confidence: medium
 category: e-commerce
 packs: [catalog, bold]
 url: https://blinkee.com/
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | none observed · libraries: none detected |
 | Page weight | 796 KB |
 | Mobile | re-composed into one column, but the sticky header holds ~230 of 844 px and the nav strip is clipped mid-word |
-| Source of values | measured (study.json) |
+| Source of values | observed |
 
 ## What works & why
 

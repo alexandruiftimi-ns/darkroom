@@ -4,6 +4,14 @@ Darkroom uses [semantic versioning](https://semver.org): **major.minor.patch**.
 A **major** change breaks how projects or commands worked before, a **minor** one adds features, a **patch** fixes things.
 The installed version: `node ~/.claude/skills/darkroom/scripts/darkroom.mjs version` (or the `VERSION` file in the skill).
 
+## 1.2.0 · 2026-10-26
+
+- **`darkroom doctor`.** Checks Node, Playwright, a browser and ffmpeg, and prints the exact command for anything missing. It installs nothing.
+- **Phone views are real phone views.** Screenshots and the audit at phone width now honour the page's viewport tag and touch, with no hover, as a phone does. A page that forgets the viewport tag now shows the problem instead of hiding it.
+- **Zip packed on Windows works on Mac and Linux.** It used backslash paths; it now uses Windows' own tar.
+- **Tested on Linux, Mac and Windows** on every push.
+- Example library reworded as design notes; licence holder is "Darkroom contributors".
+
 ## 1.1.0 · Reasoning update · 2026-10-26
 
 Darkroom now thinks about your situation before it builds, instead of following one fixed path.

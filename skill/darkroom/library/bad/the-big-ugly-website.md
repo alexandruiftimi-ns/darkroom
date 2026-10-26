@@ -6,7 +6,7 @@ confidence: medium
 category: experimental
 packs: [artsy]
 url: http://thebiguglywebsite.com/
-evidence: live study (study.json + 10 shots; page did not scroll, all five points identical)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -30,7 +30,7 @@ updated: 2026-10-25
 | Signature motion | none · libraries: none |
 | Page weight | 1 KB HTML (images hotlinked from tinypic, all dead) |
 | Mobile | broken — page 71 px wider than viewport; title and alt text overflow |
-| Source of values | measured (study.json) |
+| Source of values | observed |
 
 ## What works & why
 
@@ -55,4 +55,4 @@ updated: 2026-10-25
 
 Logo, photography, exact layout, copy text. Learn the principle only.
 
-**Open question:** the site is ugly on purpose (it's the joke). Colorlib-bad is recorded as bad, no exceptions; audience-fit and a capture that never scrolled keep confidence at medium.
+**Open question:** the site is ugly on purpose (it's the joke). Colorlib-bad is recorded as bad, no exceptions; audience-fit and a view that never scrolled keep confidence at medium.

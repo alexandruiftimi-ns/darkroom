@@ -6,7 +6,7 @@ confidence: medium
 category: e-commerce
 packs: [cinematic, luxury]
 url: https://forumcases.com/
-evidence: live study (study.json + 12 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -26,7 +26,7 @@ updated: 2026-10-25
 | Text zones, first viewport | desktop 2 · mobile 1 |
 | Signature motion | hero video; fade-in blocks · libraries: none · weight 1,343 KB |
 | Mobile | re-composed — each product gets its own textured band, name, price and full-width shop button |
-| Source of values | measured (study.json); extra shots of product page |
+| Source of values | observed; product page seen too |
 
 ## What works & why
 - **95 words on the whole home page** → principle: attention.md budgets (headline ≤ 8 words, hero ≤ 30) → rule: a three-product shop can sell with a claim, a range and a sign-up; detail lives on product pages.
@@ -35,6 +35,6 @@ updated: 2026-10-25
 
 ## Transferable rules
 - Do: borrow a mythology (names, crest, serif) to lift a utilitarian object — then keep the grid strict.
-- Don't: reveal blocks on scroll without a fallback — the newsletter band was a near-blank fade at capture (tells.md Motion); and don't track caps on every label (typography.md: labels only, ≤ 4 words).
+- Don't: reveal blocks on scroll without a fallback — the newsletter band was a near-blank fade when viewed (tells.md Motion); and don't track caps on every label (typography.md: labels only, ≤ 4 words).
 
 **Open question:** 3 families, tracked-caps overuse and analytics before consent (audit) keep confidence at medium.

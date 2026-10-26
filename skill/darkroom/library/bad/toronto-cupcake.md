@@ -6,7 +6,7 @@ confidence: high
 category: food-drink
 packs: [restaurant, family]
 url: https://www.torontocupcake.com/index.html
-evidence: live study (study.json + 10 shots)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -28,9 +28,9 @@ updated: 2026-10-25
 | Text zones, first viewport | desktop 2 · mobile 2 · travel 0.38 |
 | Layout system | centred single column; full-width pink bars; justified paragraphs at 1,330 px measure |
 | Signature motion | animations present, no reduced-motion rule · libraries: none |
-| Page weight | 4 KB HTML at capture |
+| Page weight | 4 KB HTML when viewed |
 | Mobile | squeezed — one column but menu icon overlaps the promo text; justified body opens rivers |
-| Source of values | measured (study.json) |
+| Source of values | observed |
 
 ## What works & why
 

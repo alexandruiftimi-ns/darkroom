@@ -6,7 +6,7 @@ confidence: medium
 category: fashion-luxury
 packs: [luxury, catalog]
 url: https://www.deadlyponies.com/ (assumed, not verified)
-evidence: images (10)
+evidence: design review
 added: 2026-10-25
 updated: 2026-10-25
 ---
@@ -25,7 +25,7 @@ updated: 2026-10-25
 | Words (page / heaviest section) | ~250 / ~70 (5-up values row) |
 | Text zones, first viewport | desktop 3 (nav, two link labels) · mobile blocked by modal |
 | Signature motion | none visible · libraries: unknown |
-| Mobile | re-composed (one photo per screen, 2-up categories) but every shot is covered by a region modal |
+| Mobile | re-composed (one photo per screen, 2-up categories) but every view is covered by a region modal |
 | Source of values | estimated from images |
 
 ## What works & why
@@ -37,4 +37,4 @@ updated: 2026-10-25
 - Do: keep UI colourless when the products carry strong colour (color.md: separate UI from media palette).
 - Don't: float a transparent fixed nav over photos and products — the wordmark collides with imagery at every scroll point; give the header its own ground after the hero.
 
-**Open question:** no study.json (estimated); the mobile region modal covered all five mobile shots, so mobile quality is unverified — confidence medium.
+**Open question:** values estimated; the mobile region modal covered all five mobile views, so mobile quality is unverified — confidence medium.
