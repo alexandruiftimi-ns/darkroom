@@ -33,7 +33,9 @@ const USAGE = `darkroom <command>   (Darkroom ${VERSION})
   preview <folder|http://127.0.0.1:port> [--port 8800] [--host 0.0.0.0]
                                open the site on a phone on the same Wi-Fi (relays a dev server); runs until stopped
   platform list | scaffold <id> [--out dir] [--name "Site name"] | check [dir] [--platform id] [--json out.json]
-                               the platforms Darkroom builds for, a starter per platform, and an offline structure check
+           | content [dir] [--out dir] [--site https://…] [--theme theme-dir]
+                               the platforms Darkroom builds for, a starter per platform, an offline structure check, and
+                               WordPress content (paste files + content.xml for Tools → Import) from content/content.json
   media inspect|derive|frames|check …   probe, derive, frame sequences (see: darkroom media)
   assets search|get|credits|intake …    openly licensed images with provenance; intake = check what the user dropped in
 viewports: ${Object.keys(VIEWPORTS).join(', ')}

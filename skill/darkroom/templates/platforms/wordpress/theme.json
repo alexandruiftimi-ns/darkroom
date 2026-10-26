@@ -173,5 +173,14 @@
       "title": "Footer",
       "area": "footer"
     }
+  ],
+  "customTemplates": [
+    {
+      "name": "page-landing",
+      "title": "Landing (no title, sections only)",
+      "postTypes": [
+        "page"
+      ]
+    }
   ]
 }

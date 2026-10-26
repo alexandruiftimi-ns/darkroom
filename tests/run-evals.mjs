@@ -125,6 +125,8 @@ async function platformCases() {
     ['wordpress', 'blocks', (d) => fs.writeFileSync(path.join(d, 'templates/page.html'), fs.readFileSync(path.join(d, 'templates/page.html'), 'utf8').replace('<!-- /wp:group -->', ''))],
     ['wordpress', 'structure', (d) => fs.rmSync(path.join(d, 'templates/index.html'))],
     ['wordpress', 'blocks', (d) => fs.writeFileSync(path.join(d, 'templates/page.html'), fs.readFileSync(path.join(d, 'templates/page.html'), 'utf8').replace('"slug":"footer"', '"slug":"no-such-part"'))],
+    ['wordpress', 'content', (d) => fs.writeFileSync(path.join(d, 'templates/front-page.html'), '<!-- wp:heading {"level":1} -->\n<h1 class="wp-block-heading">Our promise</h1>\n<!-- /wp:heading -->')],
+    ['wordpress', 'templates', (d) => fs.rmSync(path.join(d, 'templates/page-landing.html'))],
     ['woocommerce', 'blocks', (d) => fs.writeFileSync(path.join(d, 'templates/single-product.html'), fs.readFileSync(path.join(d, 'templates/single-product.html'), 'utf8').replace(/<!-- wp:woocommerce\/product-price -->[\s\S]*?<!-- \/wp:woocommerce\/product-price -->/, '<!-- wp:woocommerce/product-price /-->'))],
     ['ghost', 'helpers', (d) => fs.writeFileSync(path.join(d, 'default.hbs'), fs.readFileSync(path.join(d, 'default.hbs'), 'utf8').replace('{{ghost_foot}}', ''))],
     ['static', 'links', (d) => fs.writeFileSync(path.join(d, 'index.html'), fs.readFileSync(path.join(d, 'index.html'), 'utf8').replace('css/site.css', 'css/missing.css'))],
@@ -141,7 +143,43 @@ async function platformCases() {
     const { code, res } = await check(d, id);
     if (!res || code === 0 || !res.findings.some((f) => f.sev === 'high' && f.check === checkId)) caught.push(`${id}: break #${i} not caught as high:${checkId} (${res?.findings.filter((f) => f.sev === 'high').map((f) => f.check).join(', ') || 'no highs'})`);
   }
-  results.push({ name: `the platform check catches ${breaks.length} deliberate breaks (missing content_for_header, unknown section, bad schema JSON, unbalanced or invalid blocks, missing template part, missing ghost_foot, broken link, unescaped PHP, missing layout, secrets, local paths)`, fails: caught });
+  // WordPress content: paste files and an import file, apart from the theme (platforms/wordpress-content.md)
+  {
+    const fails = []; const d = path.join(base, 'wp-content'); const theme = path.join(d, 'kiln'); const c = path.join(d, 'content');
+    await run(['platform', 'scaffold', 'wordpress', '--out', theme, '--name', 'Kiln'], work);
+    if (fs.existsSync(path.join(theme, 'templates/front-page.html'))) fails.push('the WordPress starter ships front-page.html, which overrides the Home page');
+    fs.mkdirSync(path.join(c, 'pages'), { recursive: true }); fs.mkdirSync(path.join(c, 'posts'), { recursive: true });
+    const block = (s) => `<!-- wp:paragraph -->\n<p>${s}</p>\n<!-- /wp:paragraph -->\n`;
+    fs.writeFileSync(path.join(c, 'pages/home.html'), '<!-- wp:image -->\n<figure class="wp-block-image"><img src="{{images}}/kiln.jpg" alt="The kiln"/></figure>\n<!-- /wp:image -->\n' + block('Fired by hand ]]> since 1998.'));
+    fs.writeFileSync(path.join(c, 'pages/about.html'), block('Ana &amp; Ion.'));
+    fs.writeFileSync(path.join(c, 'posts/first.html'), block('Cone 10.'));
+    const manifest = { site: 'Kiln', siteUrl: 'https://kiln.example', pages: [{ file: 'pages/home.html', title: 'Home', template: 'page-landing', front: true }, { file: 'pages/about.html', title: 'About us', slug: 'about' }], posts: [{ file: 'posts/first.html', title: 'First firing', date: '2026-10-01', categories: ['Studio'], image: 'kiln.jpg' }], images: [{ file: 'kiln.jpg', alt: 'The kiln' }] };
+    fs.writeFileSync(path.join(c, 'content.json'), JSON.stringify(manifest));
+    let r = await run(['platform', 'content', c, '--theme', theme], work);
+    const xml = fs.existsSync(path.join(c, 'out/content.xml')) ? fs.readFileSync(path.join(c, 'out/content.xml'), 'utf8') : '';
+    if (r.code !== 0) fails.push(`a valid content folder failed (exit ${r.code}): ${r.out.slice(0, 200)}`);
+    if ((xml.match(/<item>/g) ?? []).length !== 4) fails.push(`content.xml has ${(xml.match(/<item>/g) ?? []).length} items, wanted 4 (2 pages, 1 post, 1 image)`);
+    for (const k of ['<wp:wxr_version>1.2</wp:wxr_version>', '<wp:post_type><![CDATA[page]]></wp:post_type>', '<wp:status><![CDATA[draft]]></wp:status>', '_wp_page_template</wp:meta_key><wp:meta_value><![CDATA[page-landing]]>', '<wp:attachment_url><![CDATA[https://kiln.example/wp-content/themes/kiln/assets/images/kiln.jpg]]>', '_thumbnail_id', 'nicename="studio"', '<wp:post_name><![CDATA[about]]>']) if (!xml.includes(k)) fails.push(`content.xml lacks ${k}`);
+    if (/\]\]>[^<\n]*since/.test(xml.replaceAll(']]]]><![CDATA[>', ''))) fails.push('"]]>" in page text was not escaped inside CDATA');
+    const paste = path.join(c, 'out/paste/home.html');
+    if (!fs.existsSync(paste) || !fs.readFileSync(paste, 'utf8').includes('https://kiln.example/wp-content/themes/kiln/assets/images/kiln.jpg')) fails.push('paste/home.html missing or its image address not filled in');
+    if (!/Settings → Reading → A static page → Home/.test(r.out)) fails.push('no reminder to set the Home page in Settings → Reading');
+    // each broken input must fail with a named problem
+    for (const [label, breakIt, want] of [
+      ['unbalanced block', () => fs.writeFileSync(path.join(c, 'pages/about.html'), '<!-- wp:paragraph -->\n<p>x</p>\n'), /never closed/],
+      ['placeholder text', () => fs.writeFileSync(path.join(c, 'pages/about.html'), block('Placeholder: the reason to care')), /placeholder text/],
+      ['two pages, one address', () => fs.writeFileSync(path.join(c, 'content.json'), JSON.stringify({ ...manifest, pages: [...manifest.pages, { file: 'pages/about.html', title: 'About' }] })), /address "about"/],
+      ['template the theme lacks', () => fs.writeFileSync(path.join(c, 'content.json'), JSON.stringify({ ...manifest, pages: [{ ...manifest.pages[0], template: 'page-wide' }] })), /template "page-wide"/],
+      ['images without an address', () => fs.writeFileSync(path.join(c, 'content.json'), JSON.stringify({ ...manifest, siteUrl: undefined })), /--site/],
+    ]) {
+      const keepJson = fs.readFileSync(path.join(c, 'content.json'), 'utf8'); const keepAbout = fs.readFileSync(path.join(c, 'pages/about.html'), 'utf8');
+      breakIt(); r = await run(['platform', 'content', c, '--theme', theme], work);
+      if (r.code === 0 || !want.test(r.out)) fails.push(`${label}: not reported (exit ${r.code}): ${r.out.split('\n').filter((l) => /problem/.test(l)).join(' | ') || 'no problem lines'}`);
+      fs.writeFileSync(path.join(c, 'content.json'), keepJson); fs.writeFileSync(path.join(c, 'pages/about.html'), keepAbout);
+    }
+    results.push({ name: 'WordPress content is delivered apart from the theme: no front-page.html in the starter; platform content writes content.xml (pages, drafts, Landing template, parent, image attachment, featured image, categories) and paste files, and rejects broken blocks, placeholder text, duplicate addresses, unknown templates and images without an address', fails });
+  }
+  results.push({ name: `the platform check catches ${breaks.length} deliberate breaks (missing content_for_header, unknown section, bad schema JSON, unbalanced or invalid blocks, missing template part, a front page with fixed text, a missing custom template, missing ghost_foot, broken link, unescaped PHP, missing layout, secrets, local paths)`, fails: caught });
   return results;
 }
 
@@ -333,8 +371,8 @@ function docChecks() {
       ...['ChatGPT', 'Kling', 'Seedance', 'Veo', 'Image to video', 'Text to video', 'First and last frame'].filter((k) => !assets.includes(k)).map((k) => `asset-tools.md lacks "${k}"`),
     ] });
     const wp = read('platforms/wordpress.md'); const plat = read('commands/platform.md');
-    const rules = [[plat, 'platform.md', 'Where to build the first design'], [plat, 'platform.md', 'Motion versus editing'], [index, 'platforms/README.md', 'If their current site already runs on one'], [wp, 'wordpress.md', "I don't know: check for me"], [wp, 'wordpress.md', 'Preview with your real content'], [wp, 'wordpress.md', 'restyling the current theme'], [concierge, 'concierge.md', "I don't know: check for me"], [concierge, 'concierge.md', 'How much to build first'], [read('commands/style.md'), 'style.md', '`commands/platform.md` §3']];
-    results.push({ name: 'reasoning rules: where to build the first design (theme, platform or HTML preview, with the cost), stay on the current platform, page builder asked with "I don\'t know: check for me", real-content preview, build scope', fails: rules.filter(([t, , k]) => !t.includes(k)).map(([, f, k]) => `${f} lacks "${k}"`) });
+    const rules = [[plat, 'platform.md', 'Where to build the first design'], [plat, 'platform.md', 'Motion versus editing'], [index, 'platforms/README.md', 'If their current site already runs on one'], [wp, 'wordpress.md', "I don't know: check for me"], [wp, 'wordpress.md', 'Preview with your real content'], [wp, 'wordpress.md', 'required before anything goes on a live site'], ...['## Going live', 'Back up first', 'Day one must look finished', 'Front page setting', 'Translation plugins', 'Caching', 'Check it as a visitor'].map((k) => [wp, 'wordpress.md', k]), [plat, 'platform.md', 'never let the first real test be the live site'], [wp, 'wordpress.md', 'restyling the current theme'], [concierge, 'concierge.md', "I don't know: check for me"], [concierge, 'concierge.md', 'How much to build first'], [read('commands/style.md'), 'style.md', '`commands/platform.md` §3'], ...['A theme is only the look', "Never put a page's text in a template", 'Read the situation first', 'Replace or add', 'Replace the content, keep the page and its address (recommended)', 'Download and import file attachments', 'Code editor', 'Patterns: for adding sections', 'Paste files: for replacing', '`content.xml`: for creating', 'Page builders', '--global-palette', 'not verified'].map((k) => [read('platforms/wordpress-content.md') ?? '', 'wordpress-content.md', k]), [wp, 'wordpress.md', 'platforms/wordpress-content.md'], [plat, 'platform.md', 'darkroom platform content'], [read('platforms/woocommerce.md'), 'woocommerce.md', 'platforms/wordpress-content.md'], [read('SKILL.md'), 'SKILL.md', 'One command: `/darkroom`'], [read('platforms/wordpress-content.md'), 'wordpress-content.md', 'the user never runs it']];
+    results.push({ name: 'reasoning rules: where to build the first design (theme, platform or HTML preview, with the cost), stay on the current platform, page builder asked with "I don\'t know: check for me", real-content preview, build scope, WordPress content apart from the theme (situations, replace or add, patterns / paste / import, page builders)', fails: rules.filter(([t, , k]) => !t.includes(k)).map(([, f, k]) => `${f} lacks "${k}"`) });
     const version = read('VERSION').trim(); const pkg = JSON.parse(fs.readFileSync(path.join(here, '..', 'package.json'), 'utf8')).version;
     const changelog = fs.existsSync(path.join(here, '..', 'CHANGELOG.md')) ? fs.readFileSync(path.join(here, '..', 'CHANGELOG.md'), 'utf8') : '';
     const vRun = await run(['version'], work);
@@ -343,6 +381,8 @@ function docChecks() {
       ...(pkg === version ? [] : [`package.json says ${pkg}, VERSION says ${version}`]),
       ...(/^## (\d+\.\d+\.\d+)/m.exec(changelog)?.[1] === version ? [] : [`newest CHANGELOG.md entry is not ${version}`]),
       ...(vRun.out.trim() === version ? [] : [`darkroom version printed "${vRun.out.trim()}"`]),
+      // users only type /darkroom: the newest entry talks about results, not about commands to run
+      ...((changelog.split(/^## /m)[1] ?? '').match(/`darkroom [a-z]+/g) ?? []).map((c) => `newest CHANGELOG.md entry shows the command ${c}; users only type /darkroom`),
     ] });
     // the plugin manifest wraps the same skill folder; its version and names must match, or installs break or never update
     const pluginJson = JSON.parse(fs.readFileSync(path.join(skill, '..', '.claude-plugin', 'plugin.json'), 'utf8'));
@@ -372,7 +412,7 @@ function docChecks() {
     results.push({ name: 'every file SKILL.md names exists', fails: linked.filter((l) => !fs.existsSync(path.join(skill, l))).map((l) => `missing ${l}`) });
     const flagDocs = [['commands/import.md', ['--list', '--pages', '--take', '--max', '--ignore-robots', '--out']], ['commands/preview.md', ['--port', '--host']], ['references/asset-tools.md', ['assets intake', '--needs']]];
     results.push({ name: 'every flag of import, preview and assets intake is documented in its playbook', fails: flagDocs.flatMap(([f, flags]) => flags.filter((k) => !read(f).includes(k)).map((k) => `${f} lacks ${k}`)) });
-    const wired = ['commands/import.md', 'commands/preview.md', 'commands/platform.md', 'platforms/README.md', 'platforms/builders.md', 'references/asset-tools.md', 'references/modes.md', 'commands/lookalike.md', 'references/looks.md', 'references/motion-toolkit.md', 'recipes/reveal.js'];
+    const wired = ['commands/import.md', 'commands/preview.md', 'commands/platform.md', 'platforms/README.md', 'platforms/builders.md', 'platforms/wordpress-content.md', 'references/asset-tools.md', 'references/modes.md', 'commands/lookalike.md', 'references/looks.md', 'references/motion-toolkit.md', 'recipes/reveal.js'];
     results.push({ name: 'SKILL.md links the platform playbook and profiles, asset tools, modes, look-alike, looks, motion toolkit and reveal recipe', fails: wired.filter((l) => !fs.existsSync(path.join(skill, l)) || !skillMd.includes(l)).map((l) => `missing or unlinked: ${l}`) });
     return results;
   });

@@ -13,6 +13,7 @@ Every project has a platform, chosen at intake (`platforms/README.md`, "Picking 
 
 - File-based starter: `darkroom platform scaffold <id> --out <dir> --name "<site name>"` (never overwrites). It gives a working, minimal, accessible base with the tokens in the platform's own settings.
 - Generator platforms (`astro`, `nextjs`): run the official generator printed by `darkroom platform scaffold <id>` **after the user's yes to installing packages**, then add the design layer the profile describes.
+- **WordPress and WooCommerce: the theme is the look, the content is theirs** (`platforms/wordpress-content.md`). Read the situation (no pages, pages to keep, pages to replace, a page builder) before the first template; deliver content as patterns, paste files or `content.xml` from `darkroom platform content <dir> [--theme dir] [--site url] [--out dir]`, never as text inside templates.
 - An existing project: never scaffold over it. Read its structure, detect it (`darkroom platform check .` names the platform), and adopt its conventions.
 
 ## 3. Design once, map to the platform
@@ -45,5 +46,7 @@ Ask only when it changes the user's effort (e.g. they must create a Shopify deve
 Say which one ran in the handoff. A full check on a large site costs real time and tokens: that is why the user picks it. Never claim a template is checked when only the quick pages were captured. Quick limits the checking, not the building: every page in scope is built either way.
 
 ## 5. Hand over
+
+**Redesigning a site that is already live** (WordPress, WooCommerce, Shopify, Ghost): never let the first real test be the live site. Before the user switches anything on, test on a copy of their real setup (their content, plugins or apps, settings and languages: an export loaded locally, or the host's staging site), then walk them through the profile's *Going live* list (WordPress and WooCommerce: `platforms/wordpress.md`). A pass on a clean test site is not a pass on theirs; say "tested on a clean site only" if that is all that ran.
 
 The handoff (`commands/handoff.md`) adds, per platform: how to preview it, how to deploy it (the profile's "Deploy and free hosting", step by step, in plain words), what the user must sign up for, what the platform's validator said, and the date of the docs check.

@@ -4,6 +4,26 @@ Darkroom uses [semantic versioning](https://semver.org): **major.minor.patch**.
 A **major** change breaks how projects or commands worked before, a **minor** one adds features, a **patch** fixes things.
 The installed version: `node ~/.claude/skills/darkroom/scripts/darkroom.mjs version` (or the `VERSION` file in the skill).
 
+## 1.4.0 · WordPress Good Practice · 2026-10-26
+
+A WordPress theme is only the look; your pages, posts and images live in WordPress. Darkroom now keeps the two apart, so what you see on the site is what you can edit in *Pages*.
+
+- **No more theme text on your home page.** The WordPress starter no longer has a `front-page.html`, which made WordPress ignore the Home page set in *Settings → Reading*. The home page uses a new **Landing** template (no title, sections only) that you pick in the page editor. Darkroom's own theme check now stops a front page with fixed content and warns about page text inside templates.
+- **Reads your situation first:** no pages yet, pages to keep, pages to replace with new ones, or pages built with a page builder. Each has its own plan, in plain words.
+- **Replace or add, never a surprise delete.** When you want new pages, Darkroom asks: replace the content and keep the page's address (recommended: links, menus and Google keep working, and *Revisions* can undo it), add new pages as drafts, or delete the old ones. Deleting is decided page by page, after a backup. Posts are kept by default.
+- **Three ways to get the content into WordPress,** each with step-by-step instructions: **patterns** for adding sections (*+* → *Patterns*), **paste files** for replacing a page through the *Code editor*, and a **`content.xml`** import file for many pages and posts at once (*Tools → Import → WordPress*).
+- **The content files are made for you.** Along with the theme you get the paste files and the import file (pages as drafts, parent pages, the Landing template, categories, featured images, images copied into the Media Library). Darkroom checks them first for broken blocks, placeholder text, two pages with one address, a missing template or missing images.
+- **Still one command.** You only type `/darkroom`; Darkroom runs its own tools at the right moment and tells you what it found. The only things you do yourself are clicks in your own WordPress, given step by step, and the yeses (installs, deleting, going live).
+- **Page builders (Kadence, Elementor, Divi…):** the design goes into the builder's global colours and fonts, not only a new theme. Darkroom first counts which sections follow them and which need editing by hand. Kadence's nine-colour palette is mapped by role, and a Darkroom theme can drive it from its own colours (not yet tested on a live Kadence site).
+- WooCommerce follows the same rules; products stay in WooCommerce.
+
+## 1.3.1 · 2026-10-26
+
+Lessons from redesigning a real, live WordPress site, where a theme that passed every test on a clean WordPress broke on the real one.
+
+- **Test on a copy of the real site first.** Before anything goes on a live site, Darkroom reproduces the user's setup (their content, plugins, front-page setting and languages, from an export or the host's staging site), not a clean WordPress.
+- **Going-live checklist for WordPress:** back up first and say how to undo; the site must look finished the moment the theme is switched on, even with page-builder content (Kadence, Spectra…); check the front-page setting; translation plugins must not machine-translate brand names or cover the header with a floating language box; purge LiteSpeed / WP Rocket / host caches; check every language as a logged-out visitor.
+
 ## 1.3.0 · 2026-10-26
 
 - **Install as a Claude Code plugin.** `/plugin install darkroom --marketplace alexandruiftimi-ns/darkroom`, then `/darkroom:darkroom`. Updates with `claude plugin update darkroom@darkroom`. The plain-skill install (`node install.mjs` or the release zip, command `/darkroom`) works as before; use one or the other.

@@ -211,6 +211,17 @@ function wordpress(dir, woo = false) {
     const t = read(path.join(dir, 'patterns', f));
     if (!/Title:/.test(t) || !/Slug:/.test(t)) out.push(finding('high', 'patterns', `patterns/${f} needs Title: and Slug: in its header comment`));
   }
+  // the theme is the look; page text lives in Pages (platforms/wordpress-content.md)
+  const front = read(path.join(dir, 'templates/front-page.html'));
+  if (front !== null && !/wp:post-content\b/.test(front) && !/wp:query\s+\{[^}]*"inherit":true/.test(front)) out.push(finding('high', 'content', 'templates/front-page.html shows fixed content: WordPress uses it instead of the Home page set in Settings → Reading, so editing that page changes nothing. Show the page (wp:post-content) or delete the file (platforms/wordpress-content.md)'));
+  for (const f of walk(path.join(dir, 'templates'), (x) => x.endsWith('.html')).filter((x) => x !== '404.html')) {
+    const t = read(path.join(dir, 'templates', f)).replace(/<!--\s*wp:([a-z/-]*no-results)\b[\s\S]*?<!--\s*\/wp:\1\s*-->/g, '');
+    const words = [...t.matchAll(/<(h[1-6]|p)\b[^>]*>([^<]*[A-Za-z][^<]*)<\/\1>/g)].map((m) => m[2].trim());
+    if (words.length) out.push(finding('medium', 'content', `templates/${f} has fixed text ("${words[0].slice(0, 40)}"): visitors see it on every page using this template and the client cannot edit it in Pages; put page text in the page or a pattern`, 'heuristic'));
+  }
+  try {
+    for (const t of JSON.parse(tj ?? '{}').customTemplates ?? []) if (t.name && !exists(dir, `templates/${t.name}.html`) && !child) out.push(finding('high', 'templates', `theme.json lists custom template "${t.name}" but templates/${t.name}.html does not exist`));
+  } catch { /* reported above */ }
   if (woo) {
     // these blocks save HTML; written self-closing they show "invalid content" in the Site Editor (seen in WordPress, 2026-10-26)
     for (const f of walk(path.join(dir, 'templates'), (x) => x.endsWith('.html'))) {
@@ -311,9 +322,10 @@ export async function platform(pos, opt, skillDir) {
   const [sub, arg] = pos;
   if (sub === 'list' || !sub) {
     for (const [id, p] of Object.entries(PLATFORMS)) console.log(`${id.padEnd(12)} ${p.name.padEnd(32)} ${p.kinds}  ·  ${p.host}`);
-    if (!sub) console.log('\nplatform list | scaffold <id> [--out dir] [--name "Site name"] | check [dir] [--platform id] [--json out.json]');
+    if (!sub) console.log('\nplatform list | scaffold <id> [--out dir] [--name "Site name"] | check [dir] [--platform id] [--json out.json] | content [dir] [--out dir] [--site url] [--theme dir]');
     return;
   }
+  if (sub === 'content') { const { wpContent } = await import('./wpcontent.mjs'); return wpContent(arg ?? 'content', opt); }
   if (sub === 'scaffold') {
     if (!arg) throw new Error('platform scaffold <id> [--out dir] [--name "Site name"]');
     const out = opt.out && opt.out !== true ? String(opt.out) : '.';
@@ -332,5 +344,5 @@ export async function platform(pos, opt, skillDir) {
     if (r.findings.some((f) => f.sev === 'high')) process.exitCode = 1;
     return;
   }
-  throw new Error('platform list | scaffold <id> | check [dir]');
+  throw new Error('platform list | scaffold <id> | check [dir] | content [dir]');
 }

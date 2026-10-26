@@ -9,7 +9,7 @@ A shop on WordPress: the client already runs WordPress, wants no monthly platfor
 - https://developer.woocommerce.com/docs/theming/block-theme-development/theming-woo-blocks/
 - https://github.com/woocommerce/woocommerce/tree/trunk/plugins/woocommerce/templates/templates/blockified (Woo's current block templates: copy structure, not wording)
 - https://woocommerce.com/document/woocommerce-blocks/ (Cart and Checkout blocks)
-- everything in `platforms/wordpress.md`
+- everything in `platforms/wordpress.md` and `platforms/wordpress-content.md` (pages and posts are content, not theme; products stay in WooCommerce: *Products → Import* reads a CSV)
 
 ## Ask before building (in addition to WordPress's questions)
 - **Own block theme, the default theme, or their current one?** WooCommerce works with WordPress's default theme out of the box. Options: (A) Darkroom's own block theme with shop templates (recommended for a new shop or block-editor pages), (B) a child of the default theme, restyled through `theme.json`, Woo's templates untouched, (C) restyle their current theme (recommended when a page builder owns their pages: WordPress's "What are the pages built with?").
