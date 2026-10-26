@@ -30,4 +30,4 @@ if (fs.existsSync(dest)) {
 }
 fs.mkdirSync(base, { recursive: true });
 fs.cpSync(src, dest, { recursive: true });
-console.log(`Installed Darkroom to ${dest}\nRestart Claude Code, then type /darkroom or describe the landing page you want.`);
+console.log(`Installed Darkroom to ${dest}\nRestart Claude Code, then type /darkroom followed by the page you want.`);
