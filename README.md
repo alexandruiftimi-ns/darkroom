@@ -41,7 +41,7 @@
 Darkroom is a [Claude Code](https://claude.com/claude-code) skill that turns Claude into **your art director and developer**. You bring the facts, your photos and your taste. Darkroom picks the design, writes the code **on the platform you need**: a Shopify store, a WooCommerce shop, a WordPress site you can edit, Astro on Cloudflare, Next.js on Vercel, Hugo, Jekyll, a Ghost publication, PHP, or plain HTML you can host for free. Then it **opens the result in a real browser, screenshots it, audits it and fixes what it sees.** You need no design vocabulary: ask for "animations when I scroll" and it answers in plain words, with one recommendation and a short list of what it needs from you.
 
 > [!IMPORTANT]
-> Darkroom **only starts when you type `/darkroom`**. Mentioning websites in another task never starts it by accident. Put what you want after the command, then just talk normally. In a new session, type `/darkroom` again and it continues where you left off.
+> Darkroom **only starts when you type `/darkroom`**. Mentioning websites in another task never starts it by accident. Put what you want after the command, then just talk normally. In a new session, type `/darkroom` again and it continues where you left off. [How to ask for changes later ↓](#changes)
 
 ---
 
@@ -330,6 +330,31 @@ You are asked at **four moments only**: the first questions, choosing between tw
 
 </details>
 
+<a id="changes"></a>
+
+<details>
+<summary>✏️ <b>Changing your site later</b></summary>
+
+**Same session:** just type in chat. Once `/darkroom` has run, its rules stay loaded, so "make the hero darker" or "swap the font" goes through the same build, screenshot and fix loop.
+
+```text
+make the hero darker and the headline shorter
+the pricing cards feel crowded on my phone, fix that
+```
+
+**New session, or after `/clear`:** start with `/darkroom` again. The project's state is saved in its `.darkroom/` folder, so it picks up where you left off.
+
+```text
+/darkroom change the pricing section on my landing page: three plans instead of two
+```
+
+Without `/darkroom`, Claude still edits your files, but as plain Claude: no Darkroom design rules, no browser check.
+
+> [!TIP]
+> Want Darkroom to start on its own whenever you ask for design work? Delete the line `disable-model-invocation: true` from `skill/darkroom/SKILL.md`, reinstall and restart. The catch: it may also start when you didn't want it.
+
+</details>
+
 ---
 
 <a id="proof"></a>
@@ -426,6 +451,8 @@ npm install && npx playwright install chromium
 npm test        # 55 checks against skill/darkroom; keep it green
 npm run pack    # dist/darkroom-skill.zip
 ```
+
+Claude only sees the installed copy. After editing anything in `skill/darkroom/`, run `node install.mjs` again and restart Claude Code.
 
 </details>
 
