@@ -1,0 +1,18 @@
+{
+  "name": "{{slug}}",
+  "description": "Ghost theme for {{name}}, designed and built with Darkroom.",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": { "name": "{{name}}", "email": "hello@example.com" },
+  "engines": { "ghost": ">=5.0.0" },
+  "keywords": ["ghost-theme"],
+  "config": {
+    "posts_per_page": 9,
+    "image_sizes": {
+      "s": { "width": 600 },
+      "m": { "width": 1200 },
+      "l": { "width": 2000 }
+    },
+    "card_assets": true
+  }
+}

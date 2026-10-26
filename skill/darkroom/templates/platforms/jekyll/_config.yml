@@ -1,0 +1,6 @@
+title: "{{name}}"
+description: "One sentence about {{name}} (placeholder)."
+url: ""        # e.g. https://example.com, set before deploying
+baseurl: ""    # e.g. /repo-name for a GitHub Pages project site
+markdown: kramdown
+exclude: [Gemfile, Gemfile.lock, README.md, .darkroom, node_modules, vendor]

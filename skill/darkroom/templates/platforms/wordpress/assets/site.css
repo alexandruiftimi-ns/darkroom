@@ -1,0 +1,7 @@
+/* {{name}}: what theme.json cannot express. Colours and sizes come from theme.json presets (--wp--preset--…). */
+:focus-visible { outline: 2px solid var(--wp--preset--color--ink); outline-offset: 3px; }
+h1, h2, h3 { text-wrap: balance; }
+.site-header { border-bottom: 1px solid var(--wp--preset--color--line); }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; } }
+/* WooCommerce: the price is medium in grids (theme.json) and large on the product page */
+.single-product main .wp-block-woocommerce-product-price { font-size: var(--wp--preset--font-size--large); }

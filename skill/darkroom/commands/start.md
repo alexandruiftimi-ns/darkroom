@@ -2,7 +2,7 @@
 
 How to *talk* to the user during intake (plain words, recommended defaults, the "what I need from you" card) is `commands/concierge.md`; read it first. This file is what you decide and record.
 
-Goal: a confirmed `.darkroom/BRIEF.md` in **at most one question round**, then straight on to direction. Fifteen minutes, not a workshop.
+Goal: a confirmed `.darkroom/BRIEF.md` in **at most two question rounds**, then straight on to direction. Fifteen minutes, not a workshop.
 
 ## 1. Set up and read what exists
 
@@ -12,7 +12,11 @@ Goal: a confirmed `.darkroom/BRIEF.md` in **at most one question round**, then s
 
 ## 2. Classify (decide these yourself; state them in one line each)
 
-- **Surface:** `landing` (default here), or note that the request is a catalog / editorial / app and which rules change (`references/surfaces.md`). Set `surface` in `project.json` and the bible's `darkroom` block.
+- **Platform:** where the site will live (`platforms/README.md`): static, php, astro, nextjs, hugo, jekyll, wordpress, woocommerce, shopify or ghost. Read its profile, run the live-docs check and add its "Ask before building" questions to the question round (`commands/platform.md`). `darkroom state --set platform=<id>`. Closed builders (Wix, Squarespace, Webflow, Framer) get a design kit (`platforms/builders.md`).
+- **Surface:** `landing` (default), `catalog` (shops), `editorial` (blogs, publications) or several (a shop has a landing home page and catalog templates); say which rules change (`references/surfaces.md`). Set `surface` in `project.json` and the bible's `darkroom` block.
+- **Colour choice** (`references/color.md`, "Asking about colour"): own palette, suggested, 60-30-10, creative or monochrome. `--set palette=…`.
+- **Assets: own or prompts** (`references/asset-tools.md`), and which tools the user has.
+- **Check depth:** `quick` (home page, desktop + phone) or `full` (every template, every viewport, motion on and off). The user decides; it is their usage. `--set verify=…`.
 - **Asset tier** (what is actually available, which sets the achievable visual ceiling):
   - **A: own photography / footage / product renders / 3D exist** → design around them; process them with `darkroom media`.
   - **B: some assets** (logo, a few photos, a short clip, UI screenshots) → build the strongest page those carry; list the 3–5 assets that would lift it most.
@@ -42,7 +46,7 @@ Also: **colour mode** (`disciplined` · `expressive` · `monochrome`), **font bu
 
 ## 4. Ask (only if gaps remain)
 
-One `AskUserQuestion` round, ≤ 4 questions, each with 2–4 options and a recommended default. Good ones: the feeling (pack names), the first frame, conversion, the asset question. If the brief is complete, ask nothing: write the brief, state your reading in one line, and go to direction.
+At most two `AskUserQuestion` rounds, ≤ 4 questions each, each with 2–4 options and a recommended default, in the order of `commands/concierge.md`: round 1 platform, feeling, colours, assets; round 2 the platform's own questions, conversion, tools, check depth. If the brief is complete, ask nothing: write the brief, state your reading in one line, and go to direction.
 
 ## 5. Write
 

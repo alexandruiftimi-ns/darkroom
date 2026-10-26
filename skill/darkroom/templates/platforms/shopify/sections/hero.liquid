@@ -1,0 +1,28 @@
+<section class="section hero">
+  <div class="wrap">
+    {%- if section.settings.image %}
+      {{ section.settings.image | image_url: width: 2400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '800, 1200, 1800, 2400', sizes: '100vw', class: 'hero__image' }}
+    {%- endif %}
+    <h1>{{ section.settings.heading | escape }}</h1>
+    {%- if section.settings.text != blank %}<div class="rte">{{ section.settings.text }}</div>{% endif %}
+    {% content_for 'blocks' %}
+    {%- if section.settings.button_label != blank %}
+      <a class="button" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">{{ section.settings.button_label | escape }}</a>
+    {%- endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The one promise of {{name}}" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Placeholder: the reason to care, in one or two sentences.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop now" },
+    { "type": "url", "id": "button_link", "label": "Button link" }
+  ],
+  "blocks": [{ "type": "@theme" }],
+  "presets": [{ "name": "Hero" }]
+}
+{% endschema %}

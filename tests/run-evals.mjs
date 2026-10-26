@@ -81,6 +81,63 @@ async function projectCases() {
   for (const bad of ['mode=scrolly', 'look=cartier', 'approvals=x']) { r = await run(['state', '--set', bad], dir); if (r.code === 0) fails.push(`--set ${bad} was accepted`); }
   r = await run(['state', '--approve', 'direction'], dir); if (r.code !== 0) fails.push(`approve failed after rejected sets: ${r.out.slice(0, 120)}`);
   results.push({ name: 'state records mode and look, and rejects unknown modes, malformed looks and direct writes to approvals', fails });
+  const pf = [];
+  r = await run(['state', '--set', 'platform=shopify,verify=quick,palette=60-30-10'], dir);
+  try { const s = JSON.parse(r.out); if (s.platform !== 'shopify' || s.verify !== 'quick' || s.palette !== '60-30-10') pf.push(`state shows platform=${s.platform} verify=${s.verify} palette=${s.palette}`); } catch { pf.push(`state output not JSON: ${r.out.slice(0, 120)}`); }
+  for (const bad of ['platform=wix', 'verify=some', 'palette=rainbow']) { r = await run(['state', '--set', bad], dir); if (r.code === 0) pf.push(`--set ${bad} was accepted`); }
+  results.push({ name: 'state records platform, check depth and colour choice, and rejects unknown values', fails: pf });
+  return results;
+}
+
+// Every file-based starter passes its own structure check; deliberately broken copies are caught.
+async function platformCases() {
+  const { PLATFORMS } = await import(pathToFileURL(path.join(skill, 'scripts', 'lib', 'platforms.mjs')).href);
+  const results = [];
+  const base = path.join(work, 'platforms');
+  const scaffold = async (id) => { const d = path.join(base, id); await run(['platform', 'scaffold', id, '--out', d, '--name', 'Test Site'], work); return d; };
+  const check = async (d, id) => { const j = path.join(d, '..', `${path.basename(d)}.json`); const r = await run(['platform', 'check', d, ...(id ? ['--platform', id] : []), '--json', j], work); return { code: r.code, res: fs.existsSync(j) ? JSON.parse(fs.readFileSync(j, 'utf8')) : null, out: r.out }; };
+  const fileBased = Object.entries(PLATFORMS).filter(([, p]) => p.scaffold === 'files').map(([id]) => id);
+  const fails = [];
+  for (const id of fileBased) {
+    const d = await scaffold(id);
+    const { code, res, out } = await check(d);
+    if (!res) { fails.push(`${id}: no check output: ${out.slice(0, 150)}`); continue; }
+    if (res.platform !== id) fails.push(`${id}: detected as ${res.platform}`);
+    const highs = res.findings.filter((f) => f.sev === 'high');
+    if (code !== 0 || highs.length) fails.push(`${id}: ${highs.map((f) => f.msg).join(' | ') || `exit ${code}`}`);
+    const files = fs.readdirSync(d, { recursive: true }).map((f) => path.join(d, f)).filter((f) => fs.statSync(f).isFile());
+    if (files.some((f) => /\{\{(name|slug)\}\}/.test(fs.readFileSync(f, 'utf8')))) fails.push(`${id}: {{name}} or {{slug}} left unfilled`);
+  }
+  results.push({ name: `every file-based platform starter (${fileBased.join(', ')}) is detected correctly, fully filled in, and passes its structure check`, fails });
+
+  const gen = await run(['platform', 'scaffold', 'astro', '--name', 'x'], work);
+  results.push({ name: 'generator platforms (astro, nextjs) print the official generator instead of writing files', fails: /npm create astro@latest/.test(gen.out) ? [] : [`astro scaffold printed: ${gen.out.slice(0, 120)}`] });
+
+  // break one thing per platform; each must produce a high finding of the named check
+  const breaks = [
+    ['shopify', 'layout', (d) => fs.writeFileSync(path.join(d, 'layout/theme.liquid'), fs.readFileSync(path.join(d, 'layout/theme.liquid'), 'utf8').replace('{{ content_for_header }}', ''))],
+    ['shopify', 'templates', (d) => fs.writeFileSync(path.join(d, 'templates/index.json'), '{ "sections": { "x": { "type": "missing-section" } }, "order": ["x"] }')],
+    ['shopify', 'schema', (d) => fs.writeFileSync(path.join(d, 'sections/hero.liquid'), fs.readFileSync(path.join(d, 'sections/hero.liquid'), 'utf8').replace('"name": "Hero",', '"name": "Hero",,'))],
+    ['wordpress', 'blocks', (d) => fs.writeFileSync(path.join(d, 'templates/page.html'), fs.readFileSync(path.join(d, 'templates/page.html'), 'utf8').replace('<!-- /wp:group -->', ''))],
+    ['wordpress', 'structure', (d) => fs.rmSync(path.join(d, 'templates/index.html'))],
+    ['wordpress', 'blocks', (d) => fs.writeFileSync(path.join(d, 'templates/page.html'), fs.readFileSync(path.join(d, 'templates/page.html'), 'utf8').replace('"slug":"footer"', '"slug":"no-such-part"'))],
+    ['woocommerce', 'blocks', (d) => fs.writeFileSync(path.join(d, 'templates/single-product.html'), fs.readFileSync(path.join(d, 'templates/single-product.html'), 'utf8').replace(/<!-- wp:woocommerce\/product-price -->[\s\S]*?<!-- \/wp:woocommerce\/product-price -->/, '<!-- wp:woocommerce/product-price /-->'))],
+    ['ghost', 'helpers', (d) => fs.writeFileSync(path.join(d, 'default.hbs'), fs.readFileSync(path.join(d, 'default.hbs'), 'utf8').replace('{{ghost_foot}}', ''))],
+    ['static', 'links', (d) => fs.writeFileSync(path.join(d, 'index.html'), fs.readFileSync(path.join(d, 'index.html'), 'utf8').replace('css/site.css', 'css/missing.css'))],
+    ['php', 'escaping', (d) => fs.appendFileSync(path.join(d, 'index.php'), '<?php echo $_GET["q"]; ?>')],
+    ['jekyll', 'layouts', (d) => fs.writeFileSync(path.join(d, 'about.md'), '---\nlayout: page\n---\nAbout')],
+    ['static', 'secret', (d) => fs.writeFileSync(path.join(d, 'js/site.js'), 'const api_key = "sk_live_51Habcdefghijklmnop";')],
+    ['hugo', 'local-path', (d) => fs.appendFileSync(path.join(d, 'layouts/home.html'), '<img src="C:\\Users\\someone\\photo.jpg">')],
+  ];
+  const caught = [];
+  for (const [i, [id, checkId, breakIt]] of breaks.entries()) {
+    const d = path.join(base, `broken-${i}-${id}`);
+    await run(['platform', 'scaffold', id, '--out', d, '--name', 'Test Site'], work);
+    breakIt(d);
+    const { code, res } = await check(d, id);
+    if (!res || code === 0 || !res.findings.some((f) => f.sev === 'high' && f.check === checkId)) caught.push(`${id}: break #${i} not caught as high:${checkId} (${res?.findings.filter((f) => f.sev === 'high').map((f) => f.check).join(', ') || 'no highs'})`);
+  }
+  results.push({ name: `the platform check catches ${breaks.length} deliberate breaks (missing content_for_header, unknown section, bad schema JSON, unbalanced or invalid blocks, missing template part, missing ghost_foot, broken link, unescaped PHP, missing layout, secrets, local paths)`, fails: caught });
   return results;
 }
 
@@ -121,8 +178,32 @@ function docChecks() {
       ...(/^user-invocable:\s*true\s*$/m.test(front) ? [] : ['frontmatter lacks user-invocable: true']),
       ...((front.match(/^description:\s*"(.*)"\s*$/m)?.[1].length ?? 9999) <= 1024 ? [] : ['description missing or over 1024 characters']),
     ] });
-    const wired = ['references/modes.md', 'commands/lookalike.md', 'references/looks.md', 'references/motion-toolkit.md', 'recipes/reveal.js'];
-    results.push({ name: 'SKILL.md links the modes, look-alike, looks, motion toolkit and reveal recipe', fails: wired.filter((l) => !fs.existsSync(path.join(skill, l)) || !skillMd.includes(l)).map((l) => `missing or unlinked: ${l}`) });
+    const { PLATFORMS } = await import(pathToFileURL(path.join(skill, 'scripts', 'lib', 'platforms.mjs')).href);
+    const heads = ['Checked on:', '## Choose it when', '## Official docs to check before building', '## Ask before building', '## What Darkroom delivers', '## Where the design goes', '## Preview and capture', '## Deploy and free hosting', '## Gotchas'];
+    const index = read('platforms/README.md');
+    results.push({ name: 'every platform has a dated profile with official docs, questions, delivery, preview, hosting and gotchas, listed in platforms/README.md', fails: Object.keys(PLATFORMS).flatMap((id) => {
+      const md = read(`platforms/${id}.md`);
+      if (!md) return [`platforms/${id}.md missing`];
+      return [...heads.filter((h) => !md.includes(h)).map((h) => `${id}.md lacks "${h}"`), ...(/https:\/\//.test(md.split('## Official docs')[1] ?? '') ? [] : [`${id}.md lists no official docs URL`]), ...(index.includes('`' + id + '`') ? [] : [`README.md does not list ${id}`])];
+    }) });
+    const concierge = read('commands/concierge.md'); const assets = read('references/asset-tools.md'); const color = read('references/color.md');
+    results.push({ name: 'intake asks about platform, colours (own, suggested, 60-30-10, creative), assets (own or prompts for ChatGPT, Kling, Seedance, Veo) and quick or full checks', fails: [
+      ...['Where will it live?', 'Colours?', 'Pictures and video?', 'Quick check', 'Full check'].filter((k) => !concierge.includes(k)).map((k) => `concierge.md lacks "${k}"`),
+      ...['I have a palette', 'Suggest some', '60-30-10', 'Creative'].filter((k) => !color.includes(k)).map((k) => `color.md lacks "${k}"`),
+      ...['ChatGPT', 'Kling', 'Seedance', 'Veo', 'Image to video', 'Text to video', 'First and last frame'].filter((k) => !assets.includes(k)).map((k) => `asset-tools.md lacks "${k}"`),
+    ] });
+    // a skill file that git ignores exists locally but never reaches GitHub (HANDOFF.md once hid commands/handoff.md)
+    let ignored = [];
+    try {
+      const { execFileSync } = await import('node:child_process');
+      const files = fs.readdirSync(skill, { recursive: true }).map((f) => path.join(skill, f)).filter((f) => fs.statSync(f).isFile());
+      ignored = execFileSync('git', ['check-ignore', '--stdin'], { cwd: skill, input: files.join('\n'), encoding: 'utf8' }).trim().split('\n').filter(Boolean);
+    } catch (e) { if (e.status !== 1) ignored = []; } // exit 1 = nothing ignored; no git = skip
+    results.push({ name: 'no file of the skill is git-ignored (so everything the playbooks mention is published)', fails: ignored.map((f) => `ignored: ${path.relative(skill, f.replace(/^"|"$/g, ''))}`) });
+    const linked = [...new Set([...skillMd.matchAll(/`((?:commands|references|platforms|templates|recipes)\/[\w./-]+\.(?:md|js|json))`/g)].map((m) => m[1]))];
+    results.push({ name: 'every file SKILL.md names exists', fails: linked.filter((l) => !fs.existsSync(path.join(skill, l))).map((l) => `missing ${l}`) });
+    const wired = ['commands/platform.md', 'platforms/README.md', 'platforms/builders.md', 'references/asset-tools.md', 'references/modes.md', 'commands/lookalike.md', 'references/looks.md', 'references/motion-toolkit.md', 'recipes/reveal.js'];
+    results.push({ name: 'SKILL.md links the platform playbook and profiles, asset tools, modes, look-alike, looks, motion toolkit and reveal recipe', fails: wired.filter((l) => !fs.existsSync(path.join(skill, l)) || !skillMd.includes(l)).map((l) => `missing or unlinked: ${l}`) });
     return results;
   });
 }
@@ -189,7 +270,7 @@ const cases =spec.cases.filter((c) => !only || c.name.includes(only) || c.fixtur
 const results = [];
 let next = 0;
 await Promise.all(Array.from({ length: 3 }, async () => { while (next < cases.length) { const i = next++; results[i] = await fileCase(cases[i], i); } }));
-if (!only) { results.push(...await projectCases()); results.push(...await docChecks()); results.push(...await recipeChecks()); }
+if (!only) { results.push(...await projectCases()); results.push(...await platformCases()); results.push(...await docChecks()); results.push(...await recipeChecks()); }
 let bad = 0;
 for (const r of results) { const ok = !r.fails.length; if (!ok) bad++; console.log(`${ok ? 'PASS' : 'FAIL'}  ${r.name}${ok ? '' : '\n      - ' + r.fails.join('\n      - ')}`); }
 console.log(`\n${results.length - bad}/${results.length} passed`);

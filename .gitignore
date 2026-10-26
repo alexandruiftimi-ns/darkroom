@@ -2,6 +2,7 @@ node_modules/
 dist/
 .darkroom/
 *.bak-*
-HANDOFF.md
-CLAUDE.md
+# private notes at the repo root only (a bare name would also hide skill/darkroom/commands/handoff.md on case-insensitive systems)
+/HANDOFF.md
+/CLAUDE.md
 .claude/

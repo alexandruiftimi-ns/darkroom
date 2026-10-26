@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 360" role="img" aria-label="Four ways to choose colours: your own palette, three suggested palettes, the classic 60-30-10 proportion, or creative colour blocking.">
+  <style>
+    text { font-family: Inter, Segoe UI, Helvetica, Arial, sans-serif; }
+    .k { fill: #ff7a3d; font-size: 11.5px; font-weight: 600; letter-spacing: 2px; }
+    .t { fill: #ece6dc; font-size: 19px; font-weight: 600; }
+    .s { fill: #a39b8f; font-size: 13px; }
+    .hex { fill: #a39b8f; font-size: 10px; font-family: ui-monospace, Consolas, monospace; }
+    .sug { animation: sug 7.5s ease-in-out infinite; }
+    .g2 { animation-delay: 2.5s; } .g3 { animation-delay: 5s; }
+    @keyframes sug { 0%, 30% { opacity: 1; } 36%, 94% { opacity: .25; } 100% { opacity: 1; } }
+    .w60 { animation: w60 6s ease-in-out infinite; transform-box: fill-box; transform-origin: left; }
+    @keyframes w60 { 0% { transform: scaleX(.05); } 30%, 85% { transform: scaleX(1); } 100% { transform: scaleX(.05); } }
+    .blk { animation: blk 6s ease-in-out infinite; }
+    .b2 { animation-delay: -2s; } .b3 { animation-delay: -4s; }
+    @keyframes blk { 0%, 100% { fill: #ff4f8b; } 33% { fill: #ffd23f; } 66% { fill: #3fb6ff; } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <rect width="1280" height="360" rx="16" fill="#121110"/>
+  <g fill="#1b1917" stroke="#2e2a26">
+    <rect x="40" y="28" width="282" height="304" rx="12"/><rect x="340" y="28" width="282" height="304" rx="12"/>
+    <rect x="640" y="28" width="282" height="304" rx="12"/><rect x="940" y="28" width="300" height="304" rx="12"/>
+  </g>
+  <g class="k"><text x="58" y="56">A · YOUR PALETTE</text><text x="358" y="56">B · SUGGESTED ★</text><text x="658" y="56">C · 60-30-10</text><text x="958" y="56">D · CREATIVE</text></g>
+
+  <!-- A: own palette with roles -->
+  <g>
+    <rect x="58" y="76" width="44" height="96" rx="6" fill="#f4f1ec"/><rect x="108" y="76" width="44" height="96" rx="6" fill="#1b1a18" stroke="#3a342e"/>
+    <rect x="158" y="76" width="44" height="96" rx="6" fill="#5d5850"/><rect x="208" y="76" width="44" height="96" rx="6" fill="#8a3b12"/>
+    <rect x="258" y="76" width="44" height="96" rx="6" fill="#d6cfc4"/>
+    <text class="hex" x="58" y="188">ground</text><text class="hex" x="110" y="188">ink</text><text class="hex" x="158" y="188">ink-2</text><text class="hex" x="208" y="188">accent</text><text class="hex" x="258" y="188">line</text>
+  </g>
+  <!-- B: three suggestions, one highlighted at a time -->
+  <g class="sug"><rect x="358" y="76" width="82" height="30" rx="5" fill="#f2ede4"/><rect x="440" y="76" width="82" height="30" fill="#2b2622"/><rect x="522" y="76" width="82" height="30" rx="5" fill="#b4532a"/><text class="hex" x="358" y="120">Kiln: clay, soot, ember</text></g>
+  <g class="sug g2"><rect x="358" y="128" width="82" height="30" rx="5" fill="#0f1a24"/><rect x="440" y="128" width="82" height="30" fill="#e8eef2"/><rect x="522" y="128" width="82" height="30" rx="5" fill="#4fb3a9"/><text class="hex" x="358" y="172">Harbour: night, mist, sea glass</text></g>
+  <g class="sug g3"><rect x="358" y="180" width="82" height="30" rx="5" fill="#fbf6ee"/><rect x="440" y="180" width="82" height="30" fill="#3d4a2f"/><rect x="522" y="180" width="82" height="30" rx="5" fill="#d9a441"/><text class="hex" x="358" y="224">Orchard: paper, moss, honey</text></g>
+  <!-- C: 60 / 30 / 10 -->
+  <g>
+    <rect x="658" y="76" width="246" height="34" rx="5" fill="#2e2a26"/>
+    <rect class="w60" x="658" y="76" width="148" height="34" rx="5" fill="#ece6dc"/>
+    <rect x="806" y="76" width="74" height="34" fill="#3a342e"/><rect x="880" y="76" width="24" height="34" rx="5" fill="#ff7a3d"/>
+    <text class="hex" x="658" y="128">60 % ground</text><text class="hex" x="806" y="128">30 % text</text><text class="hex" x="872" y="128">10 %</text>
+    <rect x="658" y="146" width="246" height="80" rx="6" fill="#ece6dc"/>
+    <rect x="674" y="160" width="120" height="10" rx="3" fill="#3a342e"/><rect x="674" y="178" width="180" height="6" rx="3" fill="#a39b8f"/><rect x="674" y="190" width="150" height="6" rx="3" fill="#a39b8f"/>
+    <rect x="674" y="204" width="64" height="14" rx="7" fill="#ff7a3d"/>
+  </g>
+  <!-- D: creative colour blocking -->
+  <g>
+    <rect class="blk" x="958" y="76" width="130" height="74" rx="6"/><rect class="blk b2" x="1094" y="76" width="128" height="74" rx="6"/>
+    <rect class="blk b3" x="958" y="156" width="264" height="70" rx="6"/>
+    <rect x="976" y="176" width="140" height="14" rx="3" fill="#121110" opacity=".85"/><rect x="976" y="198" width="90" height="10" rx="3" fill="#121110" opacity=".6"/>
+  </g>
+
+  <g class="t"><text x="58" y="262">I have a palette</text><text x="358" y="262">Suggest some</text><text x="658" y="262">Classic and calm</text><text x="958" y="262">Anything goes</text></g>
+  <g class="s">
+    <text x="58" y="286">Your hex codes get roles;</text><text x="58" y="304">failing contrast is fixed.</text>
+    <text x="358" y="286">Three palettes from your</text><text x="358" y="304">subject, shown as swatches.</text>
+    <text x="658" y="286">Calm ground, one accent</text><text x="658" y="304">that points at the button.</text>
+    <text x="958" y="286">Colour fields per section;</text><text x="958" y="304">text still has to be readable.</text>
+  </g>
+</svg>

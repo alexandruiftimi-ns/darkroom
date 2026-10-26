@@ -1,5 +1,19 @@
 # Colour
 
+## Asking about colour (intake, one question)
+
+Ask in the first question round unless the brief already settles it: **"How should we pick the colours?"**
+
+| Answer | `--set palette=` | What Darkroom does | Audit `colorMode` |
+|---|---|---|---|
+| **I have a palette / brand colours** | `own` | ask for the hex codes or the brand guide; assign each colour a role (ground, ink, accent…); check contrast and say which pairs fail and the nearest passing shade | as the palette suggests, usually `disciplined` |
+| **Suggest some** (recommended when they have none) | `suggested` | propose **three palettes** drawn from the subject (product, place, materials, light), each as swatches with role names and one line on the feeling; render the hero in the favourite if they hesitate | per palette |
+| **Classic and calm: 60-30-10** | `60-30-10` | about 60 % ground, 30 % structure, 10 % one accent for the main action; explain it in one line ("most of the page is calm, one colour points at the button") | `disciplined` |
+| **Creative: anything goes** | `creative` | colour fields, colour-blocking, several saturated hues each owning a section; contrast and one consistent button style still apply | `expressive` |
+| **Black and white, maybe one colour** | `monochrome` | ink, paper and at most one functional accent | `monochrome` |
+
+Show palettes as rendered swatches with hex codes (a quick HTML swatch sheet captured with `darkroom capture`, or the coded hero), never as hex lists alone. Record the choice (`darkroom state --set palette=…`) and the final hex values with roles in the bible. On platforms with settings (Shopify, WordPress), the palette becomes the editable defaults (`platforms/README.md`).
+
 ## Three modes (set in BRIEF, enforced by audit)
 
 | Mode | When | Rules |

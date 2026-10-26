@@ -1,0 +1,21 @@
+<header class="site-header">
+  <div class="wrap">
+    <a href="{{ routes.root_url }}"><strong>{{ shop.name }}</strong></a>
+    {%- if section.settings.menu != blank %}
+      <nav aria-label="Main">
+        {%- for link in section.settings.menu.links %}<a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a>{% endfor -%}
+      </nav>
+    {%- endif %}
+    <a href="{{ routes.cart_url }}">{{ 'cart.title' | t }} ({{ cart.item_count }})</a>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "enabled_on": { "groups": ["header"] },
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,6 @@
+baseURL = "https://example.com/"   # set before deploying
+languageCode = "en"
+title = "{{name}}"
+
+[params]
+  description = "One sentence about {{name}} (placeholder)."

@@ -1,0 +1,29 @@
+<div class="wrap section">
+  <h1>{{ 'cart.title' | t }}</h1>
+  {%- if cart.item_count > 0 %}
+    <form action="{{ routes.cart_url }}" method="post">
+      <ul class="cart" role="list">
+        {%- for item in cart.items %}
+          <li>
+            <a href="{{ item.url }}">{{ item.product.title }}</a>
+            {%- unless item.product.has_only_default_variant %} · {{ item.variant.title }}{% endunless %}
+            <label>{{ 'cart.quantity' | t }} <input type="number" name="updates[]" value="{{ item.quantity }}" min="0"></label>
+            <span>{{ item.final_line_price | money }}</span>
+          </li>
+        {%- endfor %}
+      </ul>
+      <p>{{ 'cart.subtotal' | t }}: {{ cart.total_price | money }}</p>
+      <button class="button" type="submit" name="checkout">{{ 'cart.checkout' | t }}</button>
+    </form>
+  {%- else %}
+    <p>{{ 'cart.empty' | t }}</p>
+    <a class="button" href="{{ routes.all_products_collection_url }}">{{ 'general.continue' | t }}</a>
+  {%- endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Cart",
+  "settings": []
+}
+{% endschema %}

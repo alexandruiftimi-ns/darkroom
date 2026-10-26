@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/knowledge.svg" alt="84 real sites studied (66 good, 18 bad), 24 cross-site lessons with 10 promoted to rules, 32 research sources, 6 design tools studied, 41 automated checks, one human art director" width="100%"></p>
+<p align="center"><img src="assets/knowledge.svg" alt="84 real sites studied (66 good, 18 bad), 24 cross-site lessons with 10 promoted to rules, 32 research sources, 6 design tools studied, 49 automated checks, one human art director" width="100%"></p>
 
 # Where Darkroom's knowledge comes from
 
@@ -146,6 +146,8 @@ The "AI-made look" tells in [`references/tells.md`](skill/darkroom/references/te
 ## 3. Research and standards
 
 Full list with links: [`references/sources.md`](skill/darkroom/references/sources.md). Highlights: the Awwwards jury criteria; Nielsen Norman Group research on how little people read and how they scan; W3C WCAG 2.2; the European Accessibility Act and EN 301 549; EDPB guidance on cookie banners; the Omnibus 30-day price rule; EU rules on dark patterns; the EU AI Act's labelling duty; a German court ruling on remote Google Fonts; Vercel's interface guidelines; GSAP and Playwright documentation.
+
+**Platform documentation (checked 2026-10-26, re-checked live before every build):** Shopify theme architecture, layouts and theme blocks; WordPress theme structure and the `theme.json` v3 reference; WooCommerce's block-theme templates (block names from WooCommerce's own templates, markup written fresh); Ghost theme structure and helpers; the Astro and Cloudflare deployment guides; Next.js static exports and Vercel's Hobby plan terms; Hugo's directory structure and its 0.146 template system; Jekyll and GitHub Pages limits. Each profile in [`platforms/`](skill/darkroom/platforms/README.md) lists its links. The starters were then run through the platforms' own validators: Shopify Theme Check, Ghost's gscan, and WordPress + WooCommerce in WordPress Playground with the Site Editor's block validation.
 
 ## 4. Other design tools studied
 

@@ -1,0 +1,35 @@
+{%- assign current = product.selected_or_first_available_variant -%}
+<div class="wrap product section">
+  <div class="product__media">
+    {%- if product.featured_media %}
+      {{ product.featured_media | image_url: width: 1600 | image_tag: loading: 'eager', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 50vw, 100vw' }}
+    {%- endif %}
+  </div>
+  <div class="product__info">
+    <h1>{{ product.title }}</h1>
+    {% render 'price', variant: current %}
+    {%- form 'product', product %}
+      {%- if product.has_only_default_variant %}
+        <input type="hidden" name="id" value="{{ current.id }}">
+      {%- else %}
+        <label for="variant-{{ section.id }}">{{ 'products.option' | t }}</label>
+        <select id="variant-{{ section.id }}" name="id">
+          {%- for variant in product.variants %}
+            <option value="{{ variant.id }}"{% if variant == current %} selected{% endif %}{% unless variant.available %} disabled{% endunless %}>{{ variant.title }}</option>
+          {%- endfor %}
+        </select>
+      {%- endif %}
+      <button class="button" type="submit"{% unless current.available %} disabled{% endunless %}>
+        {%- if current.available %}{{ 'products.add_to_cart' | t }}{% else %}{{ 'products.sold_out' | t }}{% endif -%}
+      </button>
+    {%- endform %}
+    <div class="rte">{{ product.description }}</div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": []
+}
+{% endschema %}

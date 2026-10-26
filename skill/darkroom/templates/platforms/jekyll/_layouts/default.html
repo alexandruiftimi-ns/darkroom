@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="{{ site.lang | default: 'en' }}">
+<head>
+{% include head.html %}
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a href="{{ '/' | relative_url }}"><strong>{{ site.title }}</strong></a>
+    </div>
+  </header>
+  <main id="main">
+    {{ content }}
+  </main>
+  <footer class="site-footer">
+    <div class="wrap"><small>&copy; {{ 'now' | date: '%Y' }} {{ site.title }}</small></div>
+  </footer>
+</body>
+</html>

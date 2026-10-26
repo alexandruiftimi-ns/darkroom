@@ -13,7 +13,8 @@ const { cmd, pos, opt } = parseArgs(process.argv.slice(2));
 
 const USAGE = `darkroom <command>
   init                         create .darkroom/ (never overwrites); adopts PROJECT_BLUEPRINT.md / DESIGN.md as the design document
-  state [--set stage=slice,mode=animated,look=like:apple] [--approve id --note "…"] [--open type:id[:blocking]] [--close id] [--root dir]
+  state [--set stage=slice,mode=animated,look=like:apple,platform=shopify,verify=quick,palette=60-30-10]
+        [--approve id --note "…"] [--open type:id[:blocking]] [--close id] [--root dir]
                                where the project is, what is approved against which build revision, which evidence is stale
   capture <url|dir|file> [--out dir] [--label x] [--viewports desktop-1440,mobile-390] [--scroll 0,.25,.5,.75,1]
           [--scene "#id" --steps 10] [--film] [--states states.json] [--motion|--reduce|--both] [--dpr 2] [--crop css] [--wait ms] [--dismiss]
@@ -23,6 +24,8 @@ const USAGE = `darkroom <command>
   audit <url|dir|file> [--bible file] [--fonts 3] [--mode disciplined|expressive|monochrome] [--json out.json] [--dismiss]
   study <url> [--out dir]      capture + audit of someone else's page (rejects cookies only inside a recognised consent dialog)
   checks [--md]                the audit's check registry: id, severity, basis, limits
+  platform list | scaffold <id> [--out dir] [--name "Site name"] | check [dir] [--platform id] [--json out.json]
+                               the platforms Darkroom builds for, a starter per platform, and an offline structure check
   media inspect|derive|frames|check …   probe, derive, frame sequences (see: darkroom media)
   assets search|get|credits …           find openly licensed images with provenance (network; see: darkroom assets)
 viewports: ${Object.keys(VIEWPORTS).join(', ')}
@@ -59,6 +62,7 @@ try {
     if (opt.md) { console.log('| Check | Severity | Basis | What | Limits |\n|---|---|---|---|---|'); CHECKS.forEach((c) => console.log(`| \`${c.id}\` | ${c.sev} | ${c.basis} | ${c.what} | ${c.limits || '—'} |`)); }
     else CHECKS.forEach((c) => console.log(`${c.id.padEnd(15)} ${c.sev.padEnd(7)} ${c.basis.padEnd(10)} ${c.what}`));
   } else if (cmd === 'assets') { const { assets } = await import('./lib/assets.mjs'); await assets(pos, opt); }
+  else if (cmd === 'platform') { const { platform } = await import('./lib/platforms.mjs'); await platform(pos, opt, SKILL_DIR); }
   else if (cmd === 'media') { const { media } = await import('./lib/media.mjs'); await media(pos, opt); }
   else { console.log(USAGE); process.exitCode = cmd ? 1 : 0; }
 } catch (e) {

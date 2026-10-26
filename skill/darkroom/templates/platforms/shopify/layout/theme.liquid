@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page_title }}{% unless page_title contains shop.name %} · {{ shop.name }}{% endunless %}</title>
+  {%- if page_description %}<meta name="description" content="{{ page_description | escape }}">{% endif %}
+  <link rel="canonical" href="{{ canonical_url }}">
+  {{ settings.type_heading_font | font_face: font_display: 'swap' }}
+  {{ settings.type_body_font | font_face: font_display: 'swap' }}
+  <style>
+    :root {
+      --ground: {{ settings.color_ground }};
+      --surface: {{ settings.color_surface }};
+      --ink: {{ settings.color_ink }};
+      --ink-2: {{ settings.color_ink_2 }};
+      --accent: {{ settings.color_accent }};
+      --accent-ink: {{ settings.color_accent_ink }};
+      --line: {{ settings.color_line }};
+      --focus: {{ settings.color_ink }};
+      --font-display: {{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }};
+      --font-body: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+    }
+  </style>
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'theme.js' | asset_url }}" defer></script>
+  {{ content_for_header }}
+</head>
+<body>
+  <a class="skip" href="#main">{{ 'general.skip' | t }}</a>
+  {% sections 'header-group' %}
+  <main id="main">
+    {{ content_for_layout }}
+  </main>
+  {% sections 'footer-group' %}
+</body>
+</html>

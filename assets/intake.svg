@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 400" role="img" aria-label="Darkroom's first question round: where will it live, how should it feel, which colours, and your own pictures or prompts for an AI tool. Each question has a recommended answer.">
+  <style>
+    text { font-family: Inter, Segoe UI, Helvetica, Arial, sans-serif; }
+    .k { fill: #ff7a3d; font-size: 11.5px; font-weight: 600; letter-spacing: 2px; }
+    .q { fill: #ece6dc; font-size: 17px; font-weight: 600; }
+    .o { fill: #d8d0c4; font-size: 13px; }
+    .r { fill: #121110; font-size: 13px; font-weight: 600; }
+    .chip { fill: #1f1c19; stroke: #3a342e; }
+    .rec { fill: #ff7a3d; }
+    .row { animation: in 9s cubic-bezier(.22,1,.36,1) infinite both; }
+    .d2 { animation-delay: .6s; } .d3 { animation-delay: 1.2s; } .d4 { animation-delay: 1.8s; }
+    @keyframes in { 0% { opacity: 0; transform: translateX(-16px); } 8%, 88% { opacity: 1; transform: translateX(0); } 100% { opacity: 0; transform: translateX(0); } }
+    .pick { animation: pick 9s ease-in-out infinite both; }
+    .p2 { animation-delay: .6s; } .p3 { animation-delay: 1.2s; } .p4 { animation-delay: 1.8s; }
+    @keyframes pick { 0%, 30% { opacity: 0; } 36%, 86% { opacity: 1; } 100% { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <rect width="1280" height="400" rx="16" fill="#121110"/>
+  <text class="k" x="48" y="50">ROUND 1 · ONE MESSAGE, FOUR QUESTIONS, A RECOMMENDED ANSWER EACH</text>
+
+  <g class="row">
+    <text class="q" x="48" y="102">🛒  Where will it live?</text>
+    <rect class="rec" x="370" y="82" width="132" height="30" rx="15"/><text class="r" x="384" y="102">Shopify store ★</text>
+    <rect class="chip" x="512" y="82" width="196" height="30" rx="15"/><text class="o" x="526" y="102">WordPress you can edit</text>
+    <rect class="chip" x="718" y="82" width="236" height="30" rx="15"/><text class="o" x="732" y="102">Free one-pager (plain HTML)</text>
+    <rect class="chip" x="964" y="82" width="268" height="30" rx="15"/><text class="o" x="978" y="102">Astro · Next.js · Woo · Ghost · Hugo…</text>
+  </g>
+  <g class="row d2">
+    <text class="q" x="48" y="174">✨  How should it feel?</text>
+    <rect class="rec" x="370" y="154" width="196" height="30" rx="15"/><text class="r" x="384" y="174">Quiet and expensive ★</text>
+    <rect class="chip" x="576" y="154" width="150" height="30" rx="15"/><text class="o" x="590" y="174">Bold and loud</text>
+    <rect class="chip" x="736" y="154" width="190" height="30" rx="15"/><text class="o" x="750" y="174">Warm and handmade</text>
+    <rect class="chip" x="936" y="154" width="196" height="30" rx="15"/><text class="o" x="950" y="174">Like apple.com / Rolex…</text>
+  </g>
+  <g class="row d3">
+    <text class="q" x="48" y="246">🎨  Colours?</text>
+    <rect class="rec" x="370" y="226" width="150" height="30" rx="15"/><text class="r" x="384" y="246">Suggest some ★</text>
+    <rect class="chip" x="530" y="226" width="164" height="30" rx="15"/><text class="o" x="544" y="246">I have a palette</text>
+    <rect class="chip" x="704" y="226" width="222" height="30" rx="15"/><text class="o" x="718" y="246">Classic and calm (60-30-10)</text>
+    <rect class="chip" x="936" y="226" width="200" height="30" rx="15"/><text class="o" x="950" y="246">Creative, anything goes</text>
+  </g>
+  <g class="row d4">
+    <text class="q" x="48" y="318">📸  Pictures and video?</text>
+    <rect class="rec" x="370" y="298" width="140" height="30" rx="15"/><text class="r" x="384" y="318">I have my own ★</text>
+    <rect class="chip" x="520" y="298" width="356" height="30" rx="15"/><text class="o" x="534" y="318">Write me prompts (ChatGPT, Kling, Seedance, Veo…)</text>
+    <rect class="chip" x="886" y="298" width="80" height="30" rx="15"/><text class="o" x="900" y="318">A mix</text>
+    <rect class="chip" x="976" y="298" width="170" height="30" rx="15"/><text class="o" x="990" y="318">Neither: build without</text>
+  </g>
+  <g fill="#ff7a3d" font-size="12" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif">
+    <text class="pick" x="370" y="132">→ a theme with product, collection and cart pages</text>
+    <text class="pick p2" x="370" y="204">→ the luxury style pack</text>
+    <text class="pick p3" x="370" y="276">→ three palettes drawn from your product, as swatches</text>
+    <text class="pick p4" x="370" y="348">→ designed around your photos; I list what would lift it most</text>
+  </g>
+  <text x="48" y="382" fill="#a39b8f" font-size="13" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif">Round 2 asks only what is still open: the platform's own questions, the goal of the page, and a quick or a full check.</text>
+</svg>

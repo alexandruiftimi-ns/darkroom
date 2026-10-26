@@ -2,52 +2,177 @@
   <img src="assets/darkroom-designer.jpg" alt="Darkroom: a designer in a dark room, two monitors showing pages built with the skill" width="100%">
 </p>
 
-<h3 align="center">Type <code>/darkroom</code>. Say what you want. It tells you what it needs.</h3>
+<h1 align="center">Darkroom</h1>
+
+<h3 align="center">Type <code>/darkroom</code>. Say what you want.<br>Get a designed website, built on the platform you need.</h3>
 
 <p align="center">
-  <a href="LICENSE"><img alt="MIT licence" src="https://img.shields.io/badge/licence-MIT-ff7a3d?style=flat-square&labelColor=121110"></a>
-  <img alt="Node 18+" src="https://img.shields.io/badge/node-18%2B-ece6dc?style=flat-square&labelColor=121110">
-  <img alt="Claude Code skill" src="https://img.shields.io/badge/Claude%20Code-skill-ff7a3d?style=flat-square&labelColor=121110">
-  <img alt="Scope: single landing pages" src="https://img.shields.io/badge/scope-single--page%20landing%20sites-a39b8f?style=flat-square&labelColor=121110">
-  <img alt="Tests: 41 checks" src="https://img.shields.io/badge/tests-41%20checks-ece6dc?style=flat-square&labelColor=121110">
+  <a href="LICENSE"><img alt="MIT licence" src="https://img.shields.io/badge/licence-MIT-ff7a3d?style=for-the-badge&labelColor=121110"></a>
+  <img alt="Claude Code skill" src="https://img.shields.io/badge/Claude%20Code-skill-ece6dc?style=for-the-badge&logo=anthropic&logoColor=ece6dc&labelColor=121110">
+  <img alt="10 platforms" src="https://img.shields.io/badge/platforms-10-ff7a3d?style=for-the-badge&labelColor=121110">
+  <img alt="49 automated checks" src="https://img.shields.io/badge/tests-49%20passing-7ab55c?style=for-the-badge&labelColor=121110">
+  <img alt="Node 18+" src="https://img.shields.io/badge/node-18%2B-ece6dc?style=for-the-badge&logo=nodedotjs&logoColor=ece6dc&labelColor=121110">
 </p>
 
 <p align="center">
-  <a href="#what-you-can-make"><b>What you can make</b></a> &nbsp;·&nbsp;
-  <a href="#see-it"><b>See it</b></a> &nbsp;·&nbsp;
-  <a href="#try-these-prompts"><b>Prompts</b></a> &nbsp;·&nbsp;
-  <a href="#how-a-project-runs"><b>How it runs</b></a> &nbsp;·&nbsp;
-  <a href="#where-the-knowledge-comes-from"><b>Knowledge</b></a> &nbsp;·&nbsp;
-  <a href="#install"><b>Install</b></a>
+  <a href="#see-it">🎬 <b>See it</b></a> &nbsp;·&nbsp;
+  <a href="#platforms">🧱 <b>Platforms</b></a> &nbsp;·&nbsp;
+  <a href="#questions">💬 <b>How it asks</b></a> &nbsp;·&nbsp;
+  <a href="#looks">✨ <b>Looks & motion</b></a> &nbsp;·&nbsp;
+  <a href="#prompts">🗣️ <b>Prompts</b></a> &nbsp;·&nbsp;
+  <a href="#proof">✅ <b>Proof</b></a> &nbsp;·&nbsp;
+  <a href="#install">🚀 <b>Install</b></a>
 </p>
 
-Darkroom is a [Claude Code](https://claude.com/claude-code) skill for **single-page landing sites**. You bring the business facts, any photos or video, and your taste. Claude acts as art director and developer: it decides the design, writes the code, **screenshots the real browser output**, audits it and fixes what it sees. You need no design vocabulary. Ask for "animations when I scroll" and it answers in plain words with one recommendation and a short list of what it needs from you.
+<p align="center">
+  <img src="assets/icons/shopify.svg" width="34" alt="Shopify" title="Shopify">&nbsp;&nbsp;
+  <img src="assets/icons/woocommerce.svg" width="64" alt="WooCommerce" title="WooCommerce">&nbsp;&nbsp;
+  <img src="assets/icons/wordpress.svg" width="34" alt="WordPress" title="WordPress">&nbsp;&nbsp;
+  <img src="assets/icons/astro.svg" width="34" alt="Astro" title="Astro">&nbsp;&nbsp;
+  <picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/nextdotjs-light.svg"><img src="assets/icons/nextdotjs.svg" width="34" alt="Next.js" title="Next.js"></picture>&nbsp;&nbsp;
+  <img src="assets/icons/hugo.svg" width="34" alt="Hugo" title="Hugo">&nbsp;&nbsp;
+  <img src="assets/icons/jekyll.svg" width="34" alt="Jekyll" title="Jekyll">&nbsp;&nbsp;
+  <picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/ghost-light.svg"><img src="assets/icons/ghost.svg" width="34" alt="Ghost" title="Ghost"></picture>&nbsp;&nbsp;
+  <img src="assets/icons/php.svg" width="34" alt="PHP" title="PHP">&nbsp;&nbsp;
+  <img src="assets/icons/html5.svg" width="34" alt="HTML" title="Plain HTML">
+</p>
 
----
-
-## Start with `/darkroom`
-
-```text
-/darkroom a landing page for my bakery in Lisbon, warm and handmade, with animations on scroll
-```
+Darkroom is a [Claude Code](https://claude.com/claude-code) skill that turns Claude into **your art director and developer**. You bring the facts, your photos and your taste. Darkroom picks the design, writes the code **on the platform you need**: a Shopify store, a WooCommerce shop, a WordPress site you can edit, Astro on Cloudflare, Next.js on Vercel, Hugo, Jekyll, a Ghost publication, PHP, or plain HTML you can host for free. Then it **opens the result in a real browser, screenshots it, audits it and fixes what it sees.** You need no design vocabulary: ask for "animations when I scroll" and it answers in plain words, with one recommendation and a short list of what it needs from you.
 
 > [!IMPORTANT]
-> Darkroom **only starts when you type `/darkroom`**. Talking about websites in any other task will never start it by accident. Put what you want after the command; after that, just talk normally. To continue a project in a new session, type `/darkroom` again and it picks up where you left off.
+> Darkroom **only starts when you type `/darkroom`**. Mentioning websites in another task never starts it by accident. Put what you want after the command, then just talk normally. In a new session, type `/darkroom` again and it continues where you left off.
 
 ---
 
-## What you can make
+<a id="see-it"></a>
 
-Every page is **two choices**: how it **looks** and how it **moves**. Any look works with any motion level. Darkroom reads both from your message and confirms them in one line ("A Cartier-like look, animated on scroll, no scroll story"). Say so if you want something else.
+## 🎬 See it
+
+<p align="center">
+  <a href="assets/darkroom-showcase.mp4"><img src="assets/darkroom-showcase.webp" alt="24-second showcase: two concept pages built with Darkroom playing on monitors in a dark room" width="100%"></a>
+  <br><sub>▶ Silent preview. <a href="assets/darkroom-showcase.mp4"><b>Open the full film with sound</b></a> (24 s, 720p).</sub>
+</p>
+
+<table>
+  <tr>
+    <td width="50%"><img src="assets/mockup-porsche.jpg" alt="Porsche 911 Turbo S concept page on a laptop and a phone"><br><sub><b>Porsche 911 Turbo S (concept)</b> · look: cinematic · motion: <b>one hero effect</b><br>A supplied film becomes a scroll-controlled frame sequence, with a configurator.</sub></td>
+    <td width="50%"><img src="assets/mockup-northshutter.jpg" alt="NorthShutter AI Reality headset concept page on a laptop and a phone"><br><sub><b>NorthShutter AI Reality (concept)</b> · look: cinematic · motion: <b>scroll story</b><br>A hero film scrubbed by scroll, a lens dive, eight cinematic beats.</sub></td>
+  </tr>
+</table>
+
+<sub>Both are <b>unofficial fictional concepts</b>, not affiliated with Porsche, Rockstar Games or Take-Two Interactive. The laptop and phone frames are AI-generated presentation art.</sub>
+
+---
+
+<a id="platforms"></a>
+
+## 🧱 Build it anywhere
+
+One design, ten platforms. Darkroom reads the platform's **official documentation live before it builds** (the platforms change every few months; the live docs win over its notes), asks the questions that platform needs, and puts your colours and fonts **where you can change them later**: in Shopify's theme settings, in WordPress's Styles panel, in one CSS file.
+
+<table>
+  <tr>
+    <td align="center" width="20%"><img src="assets/icons/shopify.svg" width="44" alt=""><br><b>Shopify</b><br><sub>Online Store 2.0 theme: sections, theme blocks, product, collection, cart</sub></td>
+    <td align="center" width="20%"><img src="assets/icons/woocommerce.svg" width="84" alt=""><br><b>WooCommerce</b><br><sub>block theme with shop and product templates, or the default theme restyled</sub></td>
+    <td align="center" width="20%"><img src="assets/icons/wordpress.svg" width="44" alt=""><br><b>WordPress</b><br><sub>block theme with <code>theme.json</code>, patterns you can edit</sub></td>
+    <td align="center" width="20%"><img src="assets/icons/astro.svg" width="44" alt=""><br><b>Astro</b><br><sub>multi-page site, free on Cloudflare Workers</sub></td>
+    <td align="center" width="20%"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/nextdotjs-light.svg"><img src="assets/icons/nextdotjs.svg" width="44" alt=""></picture><br><b>Next.js</b><br><sub>React site on Vercel, or a static export anywhere</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="assets/icons/hugo.svg" width="44" alt=""><br><b>Hugo</b><br><sub>blogs, docs, big content sites; one binary</sub></td>
+    <td align="center"><img src="assets/icons/jekyll.svg" width="44" alt=""><br><b>Jekyll</b><br><sub>a blog or portfolio GitHub Pages builds for you</sub></td>
+    <td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/ghost-light.svg"><img src="assets/icons/ghost.svg" width="44" alt=""></picture><br><b>Ghost</b><br><sub>publication or newsletter with paid members</sub></td>
+    <td align="center"><img src="assets/icons/php.svg" width="44" alt=""><br><b>PHP</b><br><sub>shared hosting, with a safe contact form</sub></td>
+    <td align="center"><img src="assets/icons/html5.svg" width="44" alt=""><br><b>Plain HTML</b><br><sub>one page or a few: fast, free to host, nothing to install</sub></td>
+  </tr>
+</table>
+
+<p><b>Host it free</b> 🆓 &nbsp;
+<img alt="Cloudflare" src="https://img.shields.io/badge/Cloudflare-free-F38020?style=flat-square&logo=cloudflare&logoColor=white&labelColor=121110">
+<img alt="GitHub Pages" src="https://img.shields.io/badge/GitHub%20Pages-free-ece6dc?style=flat-square&logo=githubpages&logoColor=white&labelColor=121110">
+<img alt="Netlify" src="https://img.shields.io/badge/Netlify-free%20tier-00C7B7?style=flat-square&logo=netlify&logoColor=white&labelColor=121110">
+<img alt="Vercel" src="https://img.shields.io/badge/Vercel-Hobby-ece6dc?style=flat-square&logo=vercel&logoColor=white&labelColor=121110"></p>
+
+Darkroom tells you the catch before you pick one (GitHub Pages and Vercel's free plan are for non-commercial sites) and writes the deploy steps in plain words.
+
+<details>
+<summary>🧭 <b>Not sure which platform? This is how Darkroom recommends one</b></summary>
+
+```mermaid
+flowchart LR
+  A([What are you making?]) --> B{Selling products?}
+  B -- "yes, keep it simple" --> S[Shopify]
+  B -- "yes, on WordPress / no platform fee" --> W[WooCommerce]
+  B -- no --> C{Will you edit it yourself?}
+  C -- "pages and posts" --> WP[WordPress]
+  C -- "a newsletter with members" --> G[Ghost]
+  C -- no --> D{How big?}
+  D -- "one page or a few, free" --> H[Plain HTML]
+  D -- "several pages, free, fast" --> AS[Astro on Cloudflare]
+  D -- "a blog on GitHub" --> J[Jekyll / Hugo]
+  D -- "React, may grow into an app" --> N[Next.js]
+```
+
+If you already named a platform, it uses yours and only mentions the catch, if there is one.
+</details>
+
+<details>
+<summary>🔒 <b>On Wix, Squarespace, Webflow or Framer?</b></summary>
+
+Those are closed editors: no tool can import a theme into them as code. Darkroom says so up front and gives you a **design kit** instead: the approved screens, the palette with hex codes, fonts, sizes, section order, copy and every asset sized and named, plus the small CSS or embed snippets each builder accepts. Or it builds the site on a free platform you own.
+</details>
+
+---
+
+<a id="questions"></a>
+
+## 💬 It asks before it builds
+
+<p align="center"><img src="assets/intake.svg" alt="The first question round: where will it live, how should it feel, which colours, and your own pictures or prompts for an AI tool. Each question comes with a recommended answer." width="100%"></p>
+
+One message, at most four questions, **each with a recommended answer**, and nothing the folder or your message already answered. A second round asks only what is still open: the platform's own questions (*"new Shopify theme or restyle your current one?"*, *"which payments?"*), the goal of the page, and how much checking you want:
+
+| | ⚡ Quick check (default) | 🔬 Full check |
+|---|---|---|
+| **What is captured** | home page, desktop + phone | every template, desktop + tablet + phone, motion on and off |
+| **What is audited** | home page | every template, plus hover, menus and a cart with an item |
+| **Platform validator** | structure check | structure check + the platform's own tool (Theme Check, gscan, a real WordPress) |
+| **Why choose it** | uses less of your Claude plan | before a launch |
+
+### 🎨 Colours, your way
+
+<p align="center"><img src="assets/colours.svg" alt="Four ways to choose colours: your own palette, three suggested palettes, the classic 60-30-10 proportion, or creative colour blocking." width="100%"></p>
+
+Bring your brand colours, let Darkroom **suggest three palettes drawn from your subject** (shown as swatches, not hex lists), go **classic and calm with 60-30-10** (most of the page calm, one colour pointing at the button), or go **creative** with colour fields per section. Whatever you pick, text contrast is measured on the real page.
+
+### 📸 Your photos, or prompts for AI tools
+
+Have your own pictures and video? Darkroom designs around them. Don't? It writes **ready-to-paste prompts** for the tools you use, says which mode to use, what to attach, how to tell a good result from a bad one, and what ships if the asset never arrives. It never spends your credits.
+
+| Mode | Use it for | Tools it writes prompts for (examples) |
+|---|---|---|
+| 🖼️ Text to image | hero plates, atmosphere, textures | ChatGPT image generation, Midjourney, Gemini / Imagen, Flux, Firefly |
+| 🪄 Image edit | cleaning your real product photo, new background | ChatGPT, Gemini |
+| 🎞️ Image to video | your product turning, a camera move into a still | Kling, Veo 3, Seedance, Runway, Luma |
+| 🎬 Text to video | a mood loop, a place, a background film | Veo 3, Kling, Seedance, Sora |
+| 🧷 First and last frame | a transition that must start and end exactly (scroll scrubs) | Kling, Veo 3 |
+
+---
+
+<a id="looks"></a>
+
+## ✨ Any look × any motion
+
+Every project is **three choices**: where it lives, how it **looks** and how it **moves**. Darkroom reads all three from your message and says them back in one line (*"A Shopify theme, a Cartier-like look, things appear as you scroll. No scroll story."*).
 
 ### How it looks: a style, or "like a brand you love"
 
 <p align="center"><img src="assets/looks.svg" alt="Three reference looks drawn as abstract page miniatures: Apple-like, light and centred with one product; Rolex-like, dark with one lit object; Cartier-like, white with a serif headline and a product grid" width="100%"></p>
 
-Say *"like apple.com"*, *"like Rolex"* or *"like Cartier"*: Darkroom measures the live site (type sizes, spacing, rhythm, palette roles, motion) and applies that **design language** to *your* brand. It never copies their logo, photos, text or font files, and it checks that nobody could mistake your page for theirs. Profiles ship for Apple, Rolex, Cartier, Aesop, Stripe, Linear and Tesla; any other site can be measured.
+Say *"like apple.com"*, *"like Rolex"* or *"like Cartier"*: Darkroom measures the live site (type sizes, spacing, rhythm, palette roles, motion) and applies that **design language** to *your* brand. It never copies their logo, photos, text or font files, and it checks that nobody could mistake your site for theirs.
 
 <details>
-<summary><b>Or pick one of 13 style packs</b> (each one changes the rules, so a luxury page and a bold page are not judged the same way)</summary>
+<summary>🎭 <b>Or pick one of 13 style packs</b> (each changes the rules, so a luxury page and a bold page are not judged the same way)</summary>
 
 | Pack | Feels | Typical use |
 |---|---|---|
@@ -71,110 +196,78 @@ Say *"like apple.com"*, *"like Rolex"* or *"like Cartier"*: Darkroom measures th
 
 <p align="center"><img src="assets/modes.svg" alt="The four motion levels as small animated browser windows: calm, animated, one hero effect, scroll story" width="100%"></p>
 
-| Level | Visitors see | You provide | Built with |
-|---|---|---|---|
-| **Calm** | a still, composed page; hover and focus states only | nothing extra | CSS |
-| **Animated** | headings rise, text fades in, pictures open, cards arrive one by one as you scroll; normal scrolling | nothing extra | built-in reveal recipe (no library) |
-| **One hero effect** | one memorable moment (a product that turns, a dive into a lens, a looping film), then a normal page | usually one video clip or one strong image | frame-sequence or scrubbed-video recipe |
-| **Scroll story** | chapters on a pinned stage; text arrives in step with the pictures; scroll back to replay | a few sentences per chapter, plus the media each one needs | scene recipes, GSAP only when needed |
-
-For a scroll story you get a **per-chapter asset list**: what each chapter needs, the best way to make it (your phone, Blender, an AI image or video tool), the cost class, and what ships if it never arrives. Which library suits which job (GSAP, Motion, Lenis, three.js, Lottie, CSS scroll animations) is in [`motion-toolkit.md`](skill/darkroom/references/motion-toolkit.md).
-
-### For your kind of business
-
-| You are… | A good starting look | A good motion level |
+| Level | Visitors see | You provide |
 |---|---|---|
-| launching a product or device | cinematic, or like Apple | one hero effect or scroll story |
-| a SaaS or app | modern, or like Stripe / Linear | animated |
-| a restaurant, café or bakery | restaurant | animated |
-| a hotel, villa or property | luxury, nature | animated, or a looping film hero |
-| fashion, jewellery, watches | luxury, or like Cartier / Rolex | animated or one hero effect |
-| an agency, studio or portfolio | bold, artsy, art gallery | animated or scroll story |
-| an event, festival or campaign | bold, artsy, cyberpunk | one hero effect |
-| finance, legal, medical, B2B | trust | calm |
-| a school, kids' or community project | family | animated |
-| wellness, outdoor, a farm | nature | animated |
+| 🧘 **Calm** | a still, composed page; hover and focus states only | nothing extra |
+| 🌊 **Animated** | headings rise, text fades in, pictures open as you scroll | nothing extra |
+| 💥 **One hero effect** | one memorable moment (a product that turns, a dive into a lens), then a normal page | usually one clip or one strong image |
+| 📖 **Scroll story** | chapters on a pinned stage; scroll back to replay | a few sentences per chapter, plus the media each one needs |
 
-**Not for:** online shops with many products, blogs, web apps or multi-page sites. Darkroom says so instead of pretending.
+Every effect has a reduced-motion version and works without JavaScript. Which library suits which job (GSAP, Motion, Lenis, three.js, Lottie, CSS scroll animations): [`motion-toolkit.md`](skill/darkroom/references/motion-toolkit.md).
 
 ---
 
-## See it
+<a id="prompts"></a>
 
-<p align="center"><a href="assets/darkroom-showcase.mp4"><b>▶ Watch the 24-second showcase film</b></a><br><sub>Real screen capture of the two pages below, on two monitors in a dark room.</sub></p>
+## 🗣️ Try these prompts
 
-<table>
-  <tr>
-    <td width="50%"><img src="assets/mockup-porsche.jpg" alt="Porsche 911 Turbo S concept page on a laptop and a phone"><br><sub><b>Porsche 911 Turbo S (concept)</b> · look: cinematic · motion: <b>one hero effect</b><br>A supplied film becomes a scroll-controlled frame sequence, with a configurator.</sub></td>
-    <td width="50%"><img src="assets/mockup-northshutter.jpg" alt="NorthShutter AI Reality headset concept page on a laptop and a phone"><br><sub><b>NorthShutter AI Reality (concept)</b> · look: cinematic · motion: <b>scroll story</b><br>A hero film scrubbed by scroll, a lens dive, eight cinematic beats.</sub></td>
-  </tr>
-</table>
-
-<sub>Both are <b>unofficial fictional concepts</b>, not affiliated with Porsche, Rockstar Games or Take-Two Interactive. The laptop and phone frames are AI-generated presentation art.</sub>
-
----
-
-## Try these prompts
-
-Open Claude Code in an empty folder (or your project), then type one of these. Click a level to see the prompts for it.
+Open Claude Code in an empty folder (or your project) and type one. Click a group to open it.
 
 <details open>
-<summary><b>Look like a brand</b></summary>
+<summary>🛒 <b>Shops</b></summary>
 
 ```text
-/darkroom a landing page for my bike repair shop in Porto that looks like apple.com
+/darkroom a Shopify store for my handmade ceramics, quiet and expensive like Cartier. 14 product photos are in ./photos
 ```
 ```text
-/darkroom a site like Rolex for my watch-strap brand. Dark, slow, expensive. 12 product photos are in ./photos
+/darkroom a WooCommerce shop for my coffee roastery on my existing WordPress site, warm and handmade
 ```
-```text
-/darkroom Cartier-style landing page for my handmade ceramics, with one wow moment at the top
-```
-**What happens:** it says in plain words what it will borrow and what it won't, measures the reference site, then shows you two coded versions of the first screen to choose from.
+**What happens:** it checks Shopify's or WooCommerce's current docs, asks the few store questions that matter (new theme or restyle, payments, how many products), then shows you two coded versions of the home page.
 </details>
 
 <details>
-<summary><b>Animated: things appear as you scroll</b></summary>
+<summary>📝 <b>Sites you edit yourself, blogs and newsletters</b></summary>
 
 ```text
-/darkroom a nice landing page for my yoga studio with animations when you scroll: text and images fading in. Not a scroll story.
+/darkroom a WordPress site for my physiotherapy practice that I can edit myself. Calm, trustworthy, suggest colours.
 ```
 ```text
-/darkroom modern landing page for my invoicing app, lively but not flashy
+/darkroom a Ghost theme for my design newsletter with paid members. Editorial, black and white.
 ```
-**What you provide:** nothing extra. Better photos make it richer.
+```text
+/darkroom a Hugo blog for my travel photography, the photos first
+```
 </details>
 
 <details>
-<summary><b>One hero effect</b></summary>
+<summary>🆓 <b>Free to host</b></summary>
+
+```text
+/darkroom a one-page site for my band I can host for free. Bold and loud, animations on scroll.
+```
+```text
+/darkroom an Astro site on Cloudflare for my architecture studio: home, projects, about, contact
+```
+```text
+/darkroom a portfolio on GitHub Pages with Jekyll. I'm a motion designer; write me Kling prompts for the hero.
+```
+</details>
+
+<details>
+<summary>💥 <b>Big effects</b></summary>
 
 ```text
 /darkroom here is my product video (./assets/turn.mp4). Make the product turn as people scroll.
 ```
 ```text
-/darkroom landing page for a boutique hotel with a looping film at the top. I have a 10-second clip.
-```
-**What you provide:** usually one clip or one strong image. No clip? It offers a version drawn in code, which always works.
-</details>
-
-<details>
-<summary><b>Scroll story</b></summary>
-
-```text
 /darkroom I want scroll storytelling for my coffee roastery: from the farm to the cup. What do you need from me?
 ```
-```text
-/darkroom tell the story of our electric boat in chapters as people scroll. We have renders but no video.
-```
-**What you get first:** a chapter plan and a "what I need from you" list. Each item says the best way to make it, the cost class, and what ships if it never arrives.
+**What you get first:** a chapter plan and a "what I need from you" list. Each item says the best way to make it (your phone, Blender, an AI tool, with the prompt), the cost class, and what ships if it never arrives.
 </details>
 
 <details>
-<summary><b>Calm, or "you decide"</b></summary>
+<summary>🤝 <b>"You decide"</b></summary>
 
-```text
-/darkroom calm and trustworthy one-pager for my accounting practice. No animations, it has to load fast.
-```
 ```text
 /darkroom a landing page for my dog-walking service. Just go: you decide everything, show me the result at the end.
 ```
@@ -182,62 +275,79 @@ Open Claude Code in an empty folder (or your project), then type one of these. C
 
 ---
 
-## How a project runs
+<a id="how-it-runs"></a>
+
+## ⚙️ How a project runs
 
 <p align="center"><img src="assets/flow.svg" alt="Intake, look and motion, direction, slice, build, check and fix, final. You confirm the look and motion, pick the direction, approve the slice and decide at the end." width="100%"></p>
 
-You are asked at **four moments only**: confirming the look and motion level, choosing between two directions, approving a working slice, and the final result. Everything between is Claude's job, and you can say "just go" at any time.
+You are asked at **four moments only**: the first questions, choosing between two directions, approving a working slice, and the final result. Everything between is Claude's job, and you can say "just go" at any time.
 
 <details>
-<summary><b>What happens at each stage</b></summary>
+<summary>🔍 <b>What happens at each stage</b></summary>
 
 | Stage | What happens |
 |---|---|
-| **Intake** | Reads your message, assets and references. Works out what quality your assets can support. |
-| **Look + motion** | Places the request: style pack or brand look, and one of four motion levels. Hands you the "what I need from you" list. |
-| **Direction** | Finds the one idea of the page and codes two versions of the first screen, with real copy, on desktop and phone. |
-| **Slice** | Builds the first screen, its key motion and the transition into the next section, working. |
-| **Build** | Writes the rest from a short design bible: palette, type, motion, copy budgets. |
-| **Check + fix** | Captures real browser states (scroll, hover, reduced motion), runs the audits and fixes what shows up. |
-| **Final** | You review. Nothing is called done without a capture of the current build. |
-
-</details>
-
-<details>
-<summary><b>Everything it can do</b></summary>
-
-| | |
-|---|---|
-| **Art direction** | 13 style packs and brand look-alikes measured from the live site. |
-| **Scroll and motion** | Tested recipes: on-scroll reveals, scroll-scrubbed video, frame sequences, pinned scenes, pointer tilt. Every one has a reduced-motion fallback, and nothing is hidden for visitors without JavaScript. |
-| **Real-browser QA** | Playwright captures at several screen sizes, contact sheets and crops, in motion and reduced-motion modes. Each run records the build it was taken from. |
-| **Audits** | Each check is marked measured, heuristic or manual: accessibility, contrast from real pixels, clutter, word budgets, type scale, colour, keyboard, reduced motion. |
-| **Compliance checklist** | EU and US build checklists for cookies, prices, disclosures and AI-image labelling. A checklist, not legal advice. |
-| **Media** | Probes media, makes responsive images, turns video into a frame sequence with a manifest. |
-| **Image and video prompts** | Prompt templates for image and video models (hero plates, product masters, phone crops, clips), with acceptance criteria. |
-| **Study a reference** | Captures and audits any public page so you can borrow its mood, type or motion by role. |
+| **Intake** | Reads your message, assets and references; checks the platform's docs; asks one or two rounds of questions. |
+| **Direction** | Finds the one idea of the site and codes two versions of the first screen, with real copy, on desktop and phone. |
+| **Slice** | Builds the first screen, its key motion and the transition into the next section, working, on the real platform when it can run locally. |
+| **Build** | Writes the rest of the pages and templates from a short design bible: palette, type, motion, copy budgets. |
+| **Check + fix** | Captures real browser states, runs the audits and the platform's validator, fixes what shows up. |
+| **Final** | You review. Nothing is called done without a capture of the current build, and the deploy steps are written for you. |
 
 </details>
 
 ---
 
-## Where the knowledge comes from
+<a id="proof"></a>
 
-<p align="center"><img src="assets/knowledge.svg" alt="84 real sites studied (66 good, 18 bad), 24 cross-site lessons with 10 promoted to rules, 32 research sources, 6 design tools studied, 41 automated checks, one human art director" width="100%"></p>
+## ✅ Checked, not guessed
 
-Darkroom is **not a trained model**. It is written knowledge that Claude reads while it works, and all of it is in plain files you can check:
+Every starter theme was run through **the platform's own tools**, not just Darkroom's:
 
-- **84 real websites studied live**: 52 Awwwards sites (28 Sites of the Day), 14 Dribbble concept mockups, and 18 counter-examples from colorlib's "bad website examples". Each one is kept as a short written note, never as screenshots or copied code.
-- **24 lessons** that repeat across sites; **10 became rules** only after the author approved them.
-- **32 research sources**: Nielsen Norman Group reading research, WCAG 2.2, the European Accessibility Act, EU cookie, price and dark-pattern rules, the AI Act's labelling duty.
-- **6 open design tools** studied for principles, then rewritten in Darkroom's own words.
-- **The author's own direction**: their dislikes became audit checks (font soup, scattered text, brochure-length copy), and they made the taste calls, approved the rules and supplied the test assets.
+| Platform | Validated with | Result (2026-10-26) |
+|---|---|---|
+| <img src="assets/icons/shopify.svg" width="16" alt=""> Shopify | Shopify Theme Check | **24 files, 0 offenses** |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/ghost-light.svg"><img src="assets/icons/ghost.svg" width="16" alt=""></picture> Ghost | gscan | **compatible with Ghost 6.x** |
+| <img src="assets/icons/wordpress.svg" width="16" alt=""> WordPress | a real WordPress (Playground), Site Editor block validation | **renders; 0 invalid blocks** in every template |
+| <img src="assets/icons/woocommerce.svg" width="30" alt=""> WooCommerce | WordPress + WooCommerce from wordpress.org, sample products | **shop and product pages render; 0 invalid blocks** |
+| All ten | Darkroom's structure check + **49 automated tests** | passing locally; CI runs them on every push |
+
+That run found real problems before you could: WooCommerce blocks that look self-closing but save HTML (the editor would have called them broken), missing side padding on phones, and new WooCommerce stores hiding behind "Coming soon". All fixed, and the checks now catch them.
+
+<details>
+<summary>🧪 <b>Everything the skill can do</b></summary>
+
+| | |
+|---|---|
+| 🎨 **Art direction** | 13 style packs and brand look-alikes measured from the live site. |
+| 🧱 **Ten platforms** | dated profiles with the official docs to re-check, starters, a structure check, deploy steps. |
+| 🌊 **Scroll and motion** | tested recipes: reveals, scroll-scrubbed video, frame sequences, pinned scenes. Every one has a reduced-motion fallback. |
+| 📷 **Real-browser QA** | Playwright captures at several screen sizes, contact sheets and crops, motion on and off; each run records the build it was taken from. |
+| 🔎 **Audits** | each check marked measured, heuristic or manual: accessibility, contrast from real pixels, clutter, word budgets, type scale, colour, keyboard, reduced motion. |
+| ⚖️ **Compliance checklist** | EU and US checklists for cookies, prices, disclosures and AI-image labelling. A checklist, not legal advice. |
+| 🎞️ **Media** | probes media, makes responsive images, turns video into a frame sequence. |
+| ✍️ **Image and video prompts** | for ChatGPT, Midjourney, Kling, Seedance, Veo and others, with acceptance criteria. |
+
+</details>
+
+---
+
+<a id="knowledge"></a>
+
+## 📚 Where the knowledge comes from
+
+<p align="center"><img src="assets/knowledge.svg" alt="84 real sites studied (66 good, 18 bad), 24 cross-site lessons with 10 promoted to rules, 32 research sources, 6 design tools studied, 49 automated checks, one human art director" width="100%"></p>
+
+Darkroom is **not a trained model**. It is written knowledge that Claude reads while it works, in plain files you can check: **84 real websites studied** (kept as written notes, never screenshots or copied code), **24 lessons** of which **10 became rules** after the author approved them, **32 research sources** (Nielsen Norman Group, WCAG 2.2, the European Accessibility Act, EU cookie and price rules, the AI Act), the **official docs of all ten platforms**, and the author's own taste calls.
 
 **[→ The full list: every site, source and human decision](KNOWLEDGE.md)**
 
 ---
 
-## Install
+<a id="install"></a>
+
+## 🚀 Install
 
 Requires [Claude Code](https://claude.com/claude-code) and Node 18+.
 
@@ -248,34 +358,36 @@ node install.mjs --project    # or for the current project only
 ```
 
 1. **Restart Claude Code.**
-2. For screenshots and audits, Darkroom needs Playwright: `npm i -D playwright && npx playwright install chromium` in your project, or a global install. On Windows it can use the Edge browser you already have. ffmpeg and sharp are optional.
-3. Type `/darkroom` and describe your page.
+2. For screenshots and audits, Darkroom needs Playwright: `npm i -D playwright && npx playwright install chromium` in your project, or a global install. On Windows it can use the Edge browser you already have. ffmpeg is optional.
+3. Type `/darkroom` and describe your site.
 
-To remove it: `node install.mjs --uninstall`.
+Platform tools (Shopify CLI, WordPress Playground, gscan, Astro, Hugo) are free, and Darkroom asks before it downloads any of them. To remove Darkroom: `node install.mjs --uninstall`.
 
 <details>
-<summary><b>What is inside the repository</b></summary>
+<summary>📁 <b>What is inside the repository</b></summary>
 
 The skill is plain Markdown playbooks plus small Node scripts. There is no build step.
 
 | Folder | Purpose |
 |---|---|
 | `skill/darkroom/SKILL.md` | the flow and the rules Claude follows |
-| `skill/darkroom/commands/` | one playbook per stage (intake, style, look-alike, build, audit…) |
-| `skill/darkroom/scripts/` | `darkroom.mjs`: capture, audit, media, assets, state |
-| `skill/darkroom/references/` | modes, looks, motion toolkit, effects, craft, compliance… |
-| `skill/darkroom/styles/`, `library/`, `prompts/`, `recipes/`, `templates/` | style packs, written lessons from real sites, model prompts, tested motion code, project files |
+| `skill/darkroom/commands/` | one playbook per stage (intake, style, platform, build, audit…) |
+| `skill/darkroom/platforms/` | one dated profile per platform, with the official docs to re-check |
+| `skill/darkroom/scripts/` | `darkroom.mjs`: capture, audit, platform, media, assets, state |
+| `skill/darkroom/templates/platforms/` | the starter for each platform |
+| `skill/darkroom/references/` | colour, asset tools, modes, looks, motion toolkit, craft, compliance… |
+| `skill/darkroom/styles/`, `library/`, `prompts/`, `recipes/` | style packs, written lessons from real sites, model prompts, tested motion code |
 
 Only `skill/darkroom/` is installed. Tests, the example and CI stay in the repository.
 
 </details>
 
 <details>
-<summary><b>Develop and test</b></summary>
+<summary>🛠️ <b>Develop and test</b></summary>
 
 ```bash
 npm install && npx playwright install chromium
-npm test        # regression suite against skill/darkroom; keep it green when scripts change
+npm test        # 49 checks against skill/darkroom; keep it green
 npm run pack    # dist/darkroom-skill.zip
 ```
 
@@ -283,11 +395,12 @@ npm run pack    # dist/darkroom-skill.zip
 
 ## Honest limits
 
-- Scope is **single landing pages**. Shops, blogs, apps and multi-page sites need different rules.
+- **Landing pages are the most tested.** Shops, blogs and multi-page sites follow the same process with platform rules on top; web apps and dashboards are out of scope.
+- Platforms change often. Darkroom re-reads the official docs before building, but its own notes carry a date; a change it has not seen can still surprise it.
+- Building a shop is not running one: payments, tax, shipping and legal pages need your accounts and your decisions.
 - Heuristic checks are questions, not verdicts. The compliance checklist is not legal advice.
-- Darkroom raises the floor and the process. It cannot certify that a page is "worth $10,000", and the result depends heavily on the assets you supply. Your eye is the judge.
-- Brand looks borrow a design language, never an identity. You are responsible for how you use any brand name in your own marketing.
+- Darkroom raises the floor and the process. It cannot promise a site "worth $10,000"; the result depends heavily on the assets you supply. Your eye is the judge.
 
 ## Licence
 
-[MIT](LICENSE) © 2026 Alexandru Iftimi. Example fonts: SIL OFL 1.1.
+[MIT](LICENSE) © 2026 Alexandru Iftimi. Example fonts: SIL OFL 1.1. Platform logos come from [Simple Icons](https://simpleicons.org) (CC0); the names and logos are trademarks of their owners, shown only to say which platforms Darkroom builds for. Darkroom is not affiliated with or endorsed by any of them.

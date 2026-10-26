@@ -1,0 +1,4 @@
+source "https://rubygems.org"
+# GitHub Pages builds with its own pinned gem set; this keeps local builds the same.
+# For Jekyll 4 or unsupported plugins, build with GitHub Actions instead (platforms/jekyll.md).
+gem "github-pages", group: :jekyll_plugins

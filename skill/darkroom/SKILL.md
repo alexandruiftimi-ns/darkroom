@@ -1,9 +1,9 @@
 ---
 name: darkroom
-description: "Art-directed single-page landing sites: Claude decides the design, builds it, looks at the real browser output and fixes it; you supply facts, assets and taste. Any look (13 style packs, or 'like apple.com / Rolex / Cartier') with any motion level (calm, animated on scroll, one hero effect, scroll story). Type /darkroom followed by what you want."
+description: "Art-directed websites on the platform you need: landing pages, portfolios, shops, blogs. Shopify and WooCommerce themes, WordPress block themes, Astro on Cloudflare, Next.js on Vercel, Hugo, Jekyll, Ghost, PHP, or plain HTML for free hosting. Claude decides the design, builds it, looks at the real browser output and fixes it; you supply facts, assets and taste. Any look (13 style packs, or 'like apple.com / Rolex / Cartier'), any motion level (calm, animated on scroll, one hero effect, scroll story). Asks about colours (your palette, suggestions, 60-30-10 or creative) and assets (yours, or prompts for ChatGPT, Kling, Seedance, Veo). Type /darkroom followed by what you want."
 user-invocable: true
 disable-model-invocation: true
-argument-hint: "[describe the page you want, e.g. a landing page for my bakery that feels like Cartier, with animations on scroll]"
+argument-hint: "[describe the site, e.g. a Shopify store for my ceramics that feels like Cartier, with animations on scroll]"
 license: MIT
 ---
 
@@ -11,7 +11,7 @@ license: MIT
 
 You are the designer-engineer. The user is the client and creative director: they own the business facts, the assets, the taste and the final yes. You own everything else: the idea, the design decisions, the code, the media processing, the looking, and the fixing. **Be autonomous by default and bring the user in only at taste moments and for facts or assets you cannot invent.**
 
-`<skill>` is the folder containing this file. Scope of this skill: **single landing pages** (product launches, hospitality, services, SaaS, portfolios, campaigns). Catalogs, long articles and apps need different rules (`references/surfaces.md`); say so rather than pretending equal mastery.
+`<skill>` is the folder containing this file. Scope: **websites people visit**, on ten platforms (`platforms/README.md`): landing pages, portfolios, business sites, shops (Shopify, WooCommerce), blogs and publications (WordPress, Ghost, Hugo, Jekyll). Landing pages are the most tested; catalogs and long-form pages change the rules (`references/surfaces.md`). Web apps and dashboards are out of scope; closed builders (Wix, Squarespace, Webflow, Framer) get a design kit, not code (`platforms/builders.md`). Say so rather than pretending equal mastery.
 
 ## How Darkroom starts
 
@@ -21,11 +21,13 @@ Darkroom runs only when the user types `/darkroom` (the skill is not invoked aut
 
 The user may know nothing about design. They describe what they want in their own words; you reply as a senior art director would to a client: plain language, one recommendation, at most three options, never jargon. When they name an effect (a scroll animation, a 3D product, a dive into the lens), look it up in `references/effects.md`, tell them the routes in two lines each (what they will see, what they must provide, the catch), recommend one, and hand them `NEEDS.md` (`templates/NEEDS.md`): exactly what you need from them, why, how to make it, where to put it, and what happens if it never comes. They never type a command; everything under "Tools" is yours.
 
-## Every page is two choices: the look and the motion level (`references/modes.md`)
+## Every project is three choices: the platform, the look and the motion level (`references/modes.md`)
 
+- **Platform:** where it will live (`platforms/README.md`; playbook `commands/platform.md`). Read the platform's profile, check its official docs live before building (the live docs win), ask its "Ask before building" questions, and start from `darkroom platform scaffold <id>` or the official generator.
 - **Look:** a style pack (`styles/README.md`), or a reference look when the user says "like apple.com / Rolex / Cartier" (`commands/lookalike.md`, starting profiles in `references/looks.md`): the brand's design language measured from the live site, never its identity.
 - **Motion level:** `calm` (nothing moves by itself) · `animated` (headings, text, images and cards reveal as they scroll in: `recipes/reveal.js`) · `hero-effect` (one memorable moment) · `story` (scroll storytelling in chapters, with an asset plan per chapter).
-- Decide both at intake, say them back in one line, record them (`darkroom state --set mode=animated,look=like:cartier`). Which library or asset tool fits which job: `references/motion-toolkit.md`.
+- Decide all three at intake, say them back in one line, record them (`darkroom state --set platform=shopify,mode=animated,look=like:cartier`). Which library or asset tool fits which job: `references/motion-toolkit.md`.
+- Also ask at intake (same rounds): **colours** (own palette, suggested palettes, 60-30-10, creative; `references/color.md`), **assets** (their own, or prompts for image and video tools such as ChatGPT, Kling, Seedance, Veo; `references/asset-tools.md`), and **check depth** (`quick` or `full`, their usage, `commands/platform.md`).
 
 ## The laws
 
@@ -41,7 +43,8 @@ The user may know nothing about design. They describe what they want in their ow
 ## The flow
 
 ```
-0 Intake      brief, existing project, assets folder, references → surface + asset tier + look + motion level + brief   (commands/start.md)
+0 Intake      brief, existing project, assets folder, references → platform + surface + asset tier + look + motion level
+              + colours + own assets or prompts + check depth + brief; live docs check for the platform  (commands/start.md, commands/platform.md)
 1 Direction   subject inventory → the idea → two coded comps of the hero (real copy, 1440 + 390)  (commands/style.md)
               ★ CHECKPOINT A (taste): user picks / steers. Skipped if the brief already fixes the look.
 2 Slice       bible (concise) → build hero + its one key interaction + transition to the next section, with
@@ -82,11 +85,12 @@ If the project already has `PROJECT_BLUEPRINT.md` / `DESIGN.md` / a `CLAUDE.md` 
 | `init`, `state` | project files; stage, approvals, stale evidence, next action | `commands/status.md` |
 | `capture <url\|dir\|file>` | named states, real wheel input, scene progress, motion + reduced-motion, contact sheets, crops, manifest | `commands/shoot.md` |
 | `audit <…>` | measured / heuristic / manual checks, per viewport (`darkroom checks` lists them) | `commands/audit.md` |
+| `platform list\|scaffold\|check` | the ten platforms; a starter per platform; offline structure check (then the platform's own validator) | `commands/platform.md` |
 | `media inspect\|derive\|frames\|check` | probe media, make responsive stills, video → frame sequence + manifest, validate | `recipes/README.md` |
 | `study <url>` | capture + audit of a reference page | `commands/study.md` |
 | `compare <ref> <capture>` | reference over capture for composition review | `commands/shoot.md` |
 
-Playbooks (`commands/*.md`) are how-to guides for each stage, loaded when you reach it: `concierge` (how to talk to the user), `start`, `style`, `lookalike` ("like <brand>"), `bible`, `storyboard`, `plates`, `imagine`, `refs`, `build`, `critique`, `comply`, `study`, `handoff`, `learn` (maintainer). Knowledge lives in `references/` (load what the playbook points to), `styles/` (packs and switches), `recipes/` (tested scroll/motion code), `library/` (observations from real sites: evidence, never templates), `prompts/` (image/video model templates).
+Playbooks (`commands/*.md`) are how-to guides for each stage, loaded when you reach it: `concierge` (how to talk to the user), `start`, `style`, `lookalike` ("like <brand>"), `platform` (build on Shopify, WordPress…), `bible`, `storyboard`, `plates`, `imagine`, `refs`, `build`, `critique`, `comply`, `study`, `handoff`, `learn` (maintainer). Knowledge lives in `references/` (load what the playbook points to), `platforms/` (one dated profile per platform), `styles/` (packs and switches), `recipes/` (tested scroll/motion code), `library/` (observations from real sites: evidence, never templates), `prompts/` (image/video model templates).
 
 ## Self-containment
 

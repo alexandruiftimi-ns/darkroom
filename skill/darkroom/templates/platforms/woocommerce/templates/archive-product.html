@@ -1,0 +1,41 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","layout":{"type":"constrained"}} -->
+<main class="wp-block-group">
+<!-- wp:woocommerce/breadcrumbs /-->
+<!-- wp:query-title {"type":"archive","showPrefix":false,"align":"wide"} /-->
+<!-- wp:woocommerce/store-notices /-->
+<!-- wp:group {"align":"wide","layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->
+<div class="wp-block-group alignwide">
+<!-- wp:woocommerce/product-results-count /-->
+<!-- wp:woocommerce/catalog-sorting /-->
+</div>
+<!-- /wp:group -->
+<!-- wp:woocommerce/product-collection {"queryId":1,"query":{"perPage":12,"pages":0,"offset":0,"postType":"product","order":"asc","orderBy":"title","inherit":true,"isProductCollectionBlock":true,"woocommerceStockStatus":["instock","outofstock","onbackorder"],"woocommerceAttributes":[],"taxQuery":{}},"tagName":"div","displayLayout":{"type":"flex","columns":3,"shrinkColumns":true},"align":"wide"} -->
+<div class="wp-block-woocommerce-product-collection alignwide">
+<!-- wp:woocommerce/product-template -->
+<!-- wp:woocommerce/product-image {"imageSizing":"thumbnail"} -->
+<div class="is-loading"></div>
+<!-- /wp:woocommerce/product-image -->
+<!-- wp:post-title {"level":2,"isLink":true,"fontSize":"medium","__woocommerceNamespace":"woocommerce/product-title"} /-->
+<!-- wp:woocommerce/product-price -->
+<div class="is-loading"></div>
+<!-- /wp:woocommerce/product-price -->
+<!-- wp:woocommerce/product-button {"textAlign":"left","fontSize":"small"} /-->
+<!-- /wp:woocommerce/product-template -->
+<!-- wp:query-pagination {"layout":{"type":"flex","justifyContent":"center"}} -->
+<!-- wp:query-pagination-previous /-->
+<!-- wp:query-pagination-numbers /-->
+<!-- wp:query-pagination-next /-->
+<!-- /wp:query-pagination -->
+<!-- wp:woocommerce/product-collection-no-results -->
+<!-- wp:paragraph -->
+<p>No products found.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:woocommerce/product-collection-no-results -->
+</div>
+<!-- /wp:woocommerce/product-collection -->
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

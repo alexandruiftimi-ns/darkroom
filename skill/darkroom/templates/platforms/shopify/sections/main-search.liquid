@@ -1,0 +1,24 @@
+<div class="wrap section">
+  <h1>{{ 'search.title' | t }}</h1>
+  <form action="{{ routes.search_url }}" method="get" role="search">
+    <label for="q-{{ section.id }}">{{ 'search.title' | t }}</label>
+    <input id="q-{{ section.id }}" type="search" name="q" value="{{ search.terms | escape }}">
+    <button class="button" type="submit">{{ 'search.submit' | t }}</button>
+  </form>
+  {%- if search.performed %}
+    <ul role="list">
+      {%- for item in search.results %}
+        <li><a href="{{ item.url }}">{{ item.title }}</a></li>
+      {%- else %}
+        <li>{{ 'search.none' | t }}</li>
+      {%- endfor %}
+    </ul>
+  {%- endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Search",
+  "settings": []
+}
+{% endschema %}

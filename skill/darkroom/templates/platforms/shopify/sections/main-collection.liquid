@@ -1,0 +1,31 @@
+{%- paginate collection.products by section.settings.per_page %}
+  <div class="wrap section">
+    <h1>{{ collection.title }}</h1>
+    {%- if collection.description != blank %}<div class="rte">{{ collection.description }}</div>{% endif %}
+    <ul class="grid" role="list">
+      {%- for product in collection.products %}
+        <li class="card">
+          <a href="{{ product.url }}">
+            {%- if product.featured_media %}
+              {{ product.featured_media | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400, 600, 800', sizes: '(min-width: 990px) 25vw, 50vw' }}
+            {%- endif %}
+            <h2>{{ product.title }}</h2>
+          </a>
+          {% render 'price', variant: product.selected_or_first_available_variant %}
+        </li>
+      {%- else %}
+        <li>{{ 'collections.empty' | t }}</li>
+      {%- endfor %}
+    </ul>
+    {{ paginate | default_pagination }}
+  </div>
+{%- endpaginate %}
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    { "type": "range", "id": "per_page", "label": "Products per page", "min": 8, "max": 48, "step": 4, "default": 24 }
+  ]
+}
+{% endschema %}

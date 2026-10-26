@@ -1,0 +1,9 @@
+{{!< default}}
+{{#post}}
+<article class="section {{post_class}}">
+  <div class="wrap">
+    {{#match @page.show_title_and_feature_image}}<h1>{{title}}</h1>{{/match}}
+    <div class="gh-content">{{content}}</div>
+  </div>
+</article>
+{{/post}}

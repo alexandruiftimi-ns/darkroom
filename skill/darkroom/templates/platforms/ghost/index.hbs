@@ -1,0 +1,19 @@
+{{!< default}}
+<section class="section">
+  <div class="wrap">
+    <h1>{{@site.title}}</h1>
+    {{#if @site.description}}<p>{{@site.description}}</p>{{/if}}
+    <ul class="grid" role="list">
+      {{#foreach posts}}
+        <li class="{{post_class}}">
+          <a href="{{url}}">
+            {{#if feature_image}}<img src="{{img_url feature_image size="s"}}" alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}" loading="lazy">{{/if}}
+            <h2>{{title}}</h2>
+          </a>
+          <p>{{excerpt words="24"}}</p>
+        </li>
+      {{/foreach}}
+    </ul>
+    {{pagination}}
+  </div>
+</section>
