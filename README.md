@@ -11,7 +11,7 @@
   <a href="LICENSE"><img alt="MIT licence" src="https://img.shields.io/badge/licence-MIT-ff7a3d?style=for-the-badge&labelColor=121110"></a>
   <img alt="Claude Code skill" src="https://img.shields.io/badge/Claude%20Code-skill-ece6dc?style=for-the-badge&logo=anthropic&logoColor=ece6dc&labelColor=121110">
   <img alt="10 platforms" src="https://img.shields.io/badge/platforms-10-ff7a3d?style=for-the-badge&labelColor=121110">
-  <img alt="59 automated checks" src="https://img.shields.io/badge/tests-59%20passing-7ab55c?style=for-the-badge&labelColor=121110">
+  <img alt="60 automated checks" src="https://img.shields.io/badge/tests-60%20passing-7ab55c?style=for-the-badge&labelColor=121110">
   <img alt="Node 18+" src="https://img.shields.io/badge/node-18%2B-ece6dc?style=for-the-badge&logo=nodedotjs&logoColor=ece6dc&labelColor=121110">
 </p>
 
@@ -374,7 +374,7 @@ Every starter theme was run through **the platform's own tools**, not just Darkr
 | <picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/ghost-light.svg"><img src="assets/icons/ghost.svg" width="16" alt=""></picture> Ghost | gscan | **compatible with Ghost 6.x** |
 | <img src="assets/icons/wordpress.svg" width="16" alt=""> WordPress | a real WordPress (Playground), Site Editor block validation | **renders; 0 invalid blocks** in every template |
 | <img src="assets/icons/woocommerce.svg" width="30" alt=""> WooCommerce | WordPress + WooCommerce from wordpress.org, sample products | **shop and product pages render; 0 invalid blocks** |
-| All ten | Darkroom's structure check + **59 automated tests** | passing locally; CI runs them on Linux, Mac and Windows on every push |
+| All ten | Darkroom's structure check + **60 automated tests** | passing locally; CI runs them on Linux, Mac and Windows on every push |
 
 That run found real problems before you could: WooCommerce blocks that look self-closing but save HTML (the editor would have called them broken), missing side padding on phones, and new WooCommerce stores hiding behind "Coming soon". All fixed, and the checks now catch them.
 
@@ -403,7 +403,7 @@ That run found real problems before you could: WooCommerce blocks that look self
 
 ## 📚 Where the knowledge comes from
 
-<p align="center"><img src="assets/knowledge.svg" alt="84 real site designs that inspired it (66 good, 18 bad), 24 cross-site lessons with 10 promoted to rules, 32 research sources, 6 design tools, 59 automated checks, one human art director" width="100%"></p>
+<p align="center"><img src="assets/knowledge.svg" alt="84 real site designs that inspired it (66 good, 18 bad), 24 cross-site lessons with 10 promoted to rules, 32 research sources, 6 design tools, 60 automated checks, one human art director" width="100%"></p>
 
 Darkroom is **not a trained model**. It is written knowledge that Claude reads while it works, in plain files you can check: **inspiration from 84 real website designs** (kept as written lessons, never screenshots or copied code), **24 lessons** of which **10 became rules** after the author approved them, **32 research sources** (Nielsen Norman Group, WCAG 2.2, the European Accessibility Act, EU cookie and price rules, the AI Act), the **official docs of all ten platforms**, and the author's own taste calls.
 
@@ -415,7 +415,17 @@ Darkroom is **not a trained model**. It is written knowledge that Claude reads w
 
 ## 🚀 Install
 
-Requires [Claude Code](https://claude.com/claude-code) and Node 18+.
+Requires [Claude Code](https://claude.com/claude-code) and Node 18+. Two ways, same skill:
+
+**As a plugin** (easiest; updates with one command). Inside Claude Code:
+
+```text
+/plugin install darkroom --marketplace alexandruiftimi-ns/darkroom
+```
+
+Or from your shell: `claude plugin marketplace add alexandruiftimi-ns/darkroom`, then `claude plugin install darkroom@darkroom`. Update later with `claude plugin update darkroom@darkroom`. Plugin commands carry the plugin's name, so you type **`/darkroom:darkroom`**.
+
+**As a plain skill** (you type **`/darkroom`**):
 
 ```bash
 git clone https://github.com/alexandruiftimi-ns/darkroom.git && cd darkroom
@@ -423,12 +433,14 @@ node install.mjs              # for all your projects  (~/.claude/skills/darkroo
 node install.mjs --project    # or for the current project only
 ```
 
+Or download `darkroom-skill.zip` from the [latest release](https://github.com/alexandruiftimi-ns/darkroom/releases/latest) and unzip it into `~/.claude/skills/`. Pick one way, not both, or Darkroom shows up twice.
+
 1. **Restart Claude Code.**
 2. For screenshots and audits, Darkroom needs Playwright: `npm i -D playwright && npx playwright install chromium` in your project, or a global install. On Windows it can use the Edge browser you already have. ffmpeg is optional.
-   Not sure what you have? `node ~/.claude/skills/darkroom/scripts/darkroom.mjs doctor` checks and prints the exact command for anything missing.
-3. Type `/darkroom` and describe your site.
+   Not sure what you have? `node ~/.claude/skills/darkroom/scripts/darkroom.mjs doctor` (plugin installs: ask Claude to run Darkroom's doctor) checks and prints the exact command for anything missing.
+3. Type `/darkroom` (plugin: `/darkroom:darkroom`) and describe your site.
 
-Platform tools (Shopify CLI, WordPress Playground, gscan, Astro, Hugo) are free, and Darkroom asks before it downloads any of them. To remove Darkroom: `node install.mjs --uninstall`.
+Platform tools (Shopify CLI, WordPress Playground, gscan, Astro, Hugo) are free, and Darkroom asks before it downloads any of them. To remove Darkroom: `node install.mjs --uninstall`, or `claude plugin uninstall darkroom@darkroom` for the plugin.
 
 <details>
 <summary>📁 <b>What is inside the repository</b></summary>
@@ -444,6 +456,7 @@ The skill is plain Markdown playbooks plus small Node scripts. There is no build
 | `skill/darkroom/templates/platforms/` | the starter for each platform |
 | `skill/darkroom/references/` | colour, asset tools, modes, looks, motion toolkit, craft, compliance… |
 | `skill/darkroom/styles/`, `library/`, `prompts/`, `recipes/` | style packs, written lessons from real sites, model prompts, tested motion code |
+| `skill/.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` | what makes the same skill installable as a Claude Code plugin |
 
 Only `skill/darkroom/` is installed. Tests, the example and CI stay in the repository.
 
@@ -454,7 +467,7 @@ Only `skill/darkroom/` is installed. Tests, the example and CI stay in the repos
 
 ```bash
 npm install && npx playwright install chromium
-npm test        # 59 checks against skill/darkroom; keep it green
+npm test        # 60 checks against skill/darkroom; keep it green
 npm run pack    # dist/darkroom-skill.zip
 ```
 

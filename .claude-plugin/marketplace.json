@@ -1,0 +1,12 @@
+{
+  "name": "darkroom",
+  "description": "Darkroom, the art-directed website skill for Claude Code",
+  "owner": { "name": "Darkroom contributors" },
+  "plugins": [
+    {
+      "name": "darkroom",
+      "source": "./skill",
+      "description": "Art-directed websites on ten platforms: Claude designs, builds, looks at the real browser output and fixes it."
+    }
+  ]
+}

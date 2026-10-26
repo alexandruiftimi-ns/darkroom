@@ -344,6 +344,17 @@ function docChecks() {
       ...(/^## (\d+\.\d+\.\d+)/m.exec(changelog)?.[1] === version ? [] : [`newest CHANGELOG.md entry is not ${version}`]),
       ...(vRun.out.trim() === version ? [] : [`darkroom version printed "${vRun.out.trim()}"`]),
     ] });
+    // the plugin manifest wraps the same skill folder; its version and names must match, or installs break or never update
+    const pluginJson = JSON.parse(fs.readFileSync(path.join(skill, '..', '.claude-plugin', 'plugin.json'), 'utf8'));
+    const market = JSON.parse(fs.readFileSync(path.join(here, '..', '.claude-plugin', 'marketplace.json'), 'utf8'));
+    const entry = market.plugins?.find((p) => p.name === pluginJson.name);
+    const skillDirs = (pluginJson.skills ?? []).map((s) => path.join(skill, '..', s));
+    results.push({ name: 'plugin: plugin.json version = VERSION, marketplace entry points at it, and its skills path holds SKILL.md', fails: [
+      ...(pluginJson.version === version ? [] : [`plugin.json version ${pluginJson.version}, VERSION ${version}`]),
+      ...(entry ? [] : [`marketplace.json has no entry named ${pluginJson.name}`]),
+      ...(entry && path.resolve(here, '..', entry.source) === path.resolve(skill, '..') ? [] : ['marketplace entry source is not the folder holding plugin.json']),
+      ...(skillDirs.length && skillDirs.every((d) => fs.existsSync(path.join(d, 'SKILL.md'))) ? [] : ['plugin.json skills path has no SKILL.md']),
+    ] });
     const doc = await run(['doctor'], work);
     results.push({ name: 'darkroom doctor reports Node, Playwright, the browser and ffmpeg, and exits 0 when the required ones are there', fails: [
       ...(doc.code === 0 ? [] : [`exit ${doc.code}: ${doc.out.trim().split('\n').slice(-3).join(' | ')}`]),
