@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/banner.svg" alt="Darkroom: a Claude Code skill that art-directs, builds, looks at and fixes landing pages" width="100%">
+  <img src="assets/darkroom-designer.jpg" alt="Darkroom: a designer in a dark room, two monitors showing pages built with the skill" width="100%">
 </p>
 
 <p align="center">
@@ -19,12 +19,9 @@ It is built for people who know nothing about design. Say "an animation when I s
 
 ## See what it makes
 
-<p align="center">
-  <a href="assets/darkroom-showcase.mp4"><img src="assets/darkroom-showcase-poster.jpg" alt="Darkroom showcase film: two monitors in a dark room, each playing a page built with the skill" width="100%"></a>
-  <br><sub>Click to play the 24-second showcase film (<code>assets/darkroom-showcase.mp4</code>). Footage is real screen capture of the pages below.</sub>
-</p>
+<p align="center"><a href="assets/darkroom-showcase.mp4"><b>▶ Watch the 24-second showcase film</b></a><br><sub>Real screen capture of the pages below, on two monitors in a dark room.</sub></p>
 
-These pages were art-directed and built with Darkroom and Claude. The two big ones are **unofficial fictional concepts** (not affiliated with Porsche, Rockstar Games or Take-Two Interactive); the mockup frames around them are AI-generated presentation art.
+These two pages were art-directed and built with Darkroom and Claude. Both are **unofficial fictional concepts** (not affiliated with Porsche, Rockstar Games or Take-Two Interactive); the mockup frames around them are AI-generated presentation art.
 
 <table>
   <tr>
@@ -32,17 +29,6 @@ These pages were art-directed and built with Darkroom and Claude. The two big on
     <td width="50%"><img src="assets/mockup-northshutter.jpg" alt="NorthShutter AI Reality headset concept page on a laptop and a phone"><br><sub><b>NorthShutter AI Reality (concept).</b> A hero film scrubbed by scroll, a lens dive, eight cinematic beats.</sub></td>
   </tr>
 </table>
-
-And the smallest one, [`examples/halden-kiln`](examples/halden-kiln): a fictional ceramics studio where a vessel heats from cold clay to 1,280 °C as you scroll.
-
-<table>
-  <tr>
-    <td width="50%"><img src="assets/kiln-hero.png" alt="Halden Kiln hero"></td>
-    <td width="50%"><img src="assets/kiln-peak.png" alt="Halden Kiln mid-scroll at 931 degrees"></td>
-  </tr>
-</table>
-
-Open [`examples/halden-kiln/index.html`](examples/halden-kiln/index.html) in a browser and scroll. Its [design bible](examples/halden-kiln/DESIGN_BIBLE.md) shows the decisions written down before anything was built. [`examples/showcase`](examples/showcase) is the mockup page template used for the screenshots above.
 
 ---
 
