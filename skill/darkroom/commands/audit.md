@@ -5,7 +5,7 @@ node <skill>/scripts/darkroom.mjs audit <url | dir | file.html> [--bible file] [
 node <skill>/scripts/darkroom.mjs checks          # the registry below, from the code
 ```
 
-Local directories and files are served over `http://127.0.0.1` first (never `file://`). The page is loaded at desktop (1440) and mobile (390) widths under `prefers-reduced-motion: reduce`, plus one default-motion pass used only to compare animation. Every finding carries a severity and a **basis**:
+Local directories and files are served over `http://127.0.0.1` first (never `file://`). Before measuring, the audit scrolls through the page once and back to the top, so text that fades in on scroll (`reveal.js`, ScrollTrigger, AOS) is revealed and measured; reveals that hide again when scrolled away are not seen. The page is loaded at desktop (1440) and mobile (390) widths under `prefers-reduced-motion: reduce`, plus one default-motion pass used only to compare animation. Every finding carries a severity and a **basis**:
 
 - **measured**: read from the rendered page (pixels, computed state, behaviour).
 - **heuristic**: a rule of thumb applied to measurements. A kept exception is legitimate; log it in the bible.

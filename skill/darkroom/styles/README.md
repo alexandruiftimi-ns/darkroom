@@ -18,6 +18,8 @@ A pack is a set of **defaults and switches**, not a template. It tells Darkroom 
 | [family](family.md) | warm, safe, easy | expressive (soft) | medium | gentle feedback | kids, schools, community, family health |
 | [trust](trust.md) | credible, calm, competent | disciplined | medium | minimal | finance, legal, medical, B2B, public sector |
 
+**Reference looks.** "Like apple.com / Rolex / Cartier" is a look too: start from `references/looks.md`, measure the live site, and follow `commands/lookalike.md`. Map it to the nearest pack for switches (Apple → modern, Rolex → cinematic + luxury, Cartier → luxury). The motion level is chosen separately (`references/modes.md`).
+
 ## Switches vocabulary (every pack sets these)
 
 `eyebrow` (label above headings) · `tracked-caps` · `index-numerals` (01/02) · `hairlines` · `cards` · `glass` · `gradients` · `mono-labels` · `centred-layout` · `marquee` · `custom-cursor` · `full-bleed-imagery` · `script-lettering`

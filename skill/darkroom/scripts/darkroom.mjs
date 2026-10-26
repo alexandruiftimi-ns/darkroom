@@ -13,7 +13,7 @@ const { cmd, pos, opt } = parseArgs(process.argv.slice(2));
 
 const USAGE = `darkroom <command>
   init                         create .darkroom/ (never overwrites); adopts PROJECT_BLUEPRINT.md / DESIGN.md as the design document
-  state [--set stage=slice] [--approve id --note "…"] [--open type:id[:blocking]] [--close id] [--root dir]
+  state [--set stage=slice,mode=animated,look=like:apple] [--approve id --note "…"] [--open type:id[:blocking]] [--close id] [--root dir]
                                where the project is, what is approved against which build revision, which evidence is stale
   capture <url|dir|file> [--out dir] [--label x] [--viewports desktop-1440,mobile-390] [--scroll 0,.25,.5,.75,1]
           [--scene "#id" --steps 10] [--film] [--states states.json] [--motion|--reduce|--both] [--dpr 2] [--crop css] [--wait ms] [--dismiss]

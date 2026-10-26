@@ -26,8 +26,10 @@ Ask in this order, as one `AskUserQuestion` round of at most four, with defaults
 - What do you already have? Checklist: logo, photos, product pictures or renders, video, a 3D model, written copy, none. Never assume.
 - What should the visitor do at the end? (buy, book, contact, sign up, just look)
 
+**Place the request in a mode before you ask anything** (`references/modes.md`): the look (a style pack, or "like <brand>") and the motion level (calm / animated / one hero effect / scroll story). Say it back in one line: "So: a Cartier-like look, and things appear as you scroll. No scroll story." If they named a brand, answer with the look-alike opening in `commands/lookalike.md` (what you will and won't take). If they asked for scroll storytelling, give them the story asset plan from `references/modes.md` as their `NEEDS.md`, with the tool class and cost of each item (`references/motion-toolkit.md`).
+
 **2. Ask about motion only if they bring it up, or if the idea clearly wants it**
-If they name an effect ("something that animates when you scroll"), open `references/effects.md`, find the effect, and answer in this shape:
+"Animations when I scroll" without the word story means the reveal effect (mode `animated`): recommend it, it needs nothing from them. If they name an effect ("something that animates when you scroll"), open `references/effects.md`, find the effect, and answer in this shape:
 
 ```
 Yes, that works. There are 2 ways:

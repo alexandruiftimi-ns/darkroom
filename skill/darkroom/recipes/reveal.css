@@ -1,0 +1,23 @@
+/* On-scroll reveals (pairs with reveal.js). Hidden states apply only under html.reveal-ready, which the script sets,
+   so the page is complete without JavaScript. Only opacity, transform and clip-path move. Tune per style pack:
+   luxury = slower and shorter travel (900 ms, 12px); bold = faster, harder (350 ms, 40px); trust = fade only. */
+:root { --reveal-dur: 700ms; --reveal-ease: cubic-bezier(.22, 1, .36, 1); --reveal-travel: 24px; }
+
+.reveal-ready [data-reveal]:not(.is-revealed) { opacity: 0; }
+.reveal-ready [data-reveal=""]:not(.is-revealed),
+.reveal-ready [data-reveal="up"]:not(.is-revealed) { transform: translateY(var(--reveal-travel)); }
+.reveal-ready [data-reveal="scale"]:not(.is-revealed) { transform: scale(.96); }
+.reveal-ready [data-reveal="mask"]:not(.is-revealed) { opacity: 1; clip-path: inset(100% 0 0 0); }
+.reveal-ready [data-reveal="words"]:not(.is-revealed) { opacity: 1; }
+.reveal-ready [data-reveal="words"]:not(.is-revealed) .reveal-word { opacity: 0; transform: translateY(.4em); }
+
+[data-reveal] {
+  transition: opacity var(--reveal-dur) var(--reveal-ease), transform var(--reveal-dur) var(--reveal-ease), clip-path calc(var(--reveal-dur) * 1.4) var(--reveal-ease);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+[data-reveal="mask"] { clip-path: inset(0 0 0 0); }
+.reveal-word { display: inline-block; transition: opacity var(--reveal-dur) var(--reveal-ease), transform var(--reveal-dur) var(--reveal-ease); transition-delay: calc(var(--reveal-delay, 0ms) + var(--i, 0) * 60ms); }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal], .reveal-word { transition: none !important; opacity: 1 !important; transform: none !important; clip-path: none !important; }
+}

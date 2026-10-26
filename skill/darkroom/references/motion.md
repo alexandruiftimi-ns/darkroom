@@ -24,6 +24,9 @@
 | Lens/mask transition | SVG/CSS mask + scale, or a short clip | Full WebGL for a 1-second effect |
 | Exploded product | Separate part renders + transforms | One baked image "animated" |
 | UI micro-motion | CSS / small GSAP | Video credits for a hover |
+| Content appearing as it scrolls in (mode `animated`) | `recipes/reveal.js` (IntersectionObserver, no library) | Hiding content without JS; animating every paragraph; a scroll library for fades |
+
+Which library or asset tool for which job, with licences: `references/motion-toolkit.md`. Which motion level a request means: `references/modes.md`.
 
 Tested building blocks live in `recipes/` (frames, seeked video, scene progress, pointer tilt); the *whether and how* is `references/motion-craft.md`. Frame sequences: start 48–72 frames, poster first, load nearby frames first, cap DPR, draw only on frame change, pause when hidden. ~8 MB decoded per 1080p frame — bound memory.
 

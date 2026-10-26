@@ -4,6 +4,8 @@
 
 Describe the site you want (or type `/darkroom`). Claude decides the direction, builds the page, looks at the real browser output, and fixes what it sees. **You** supply business facts, any assets and references (all optional), generate the few images or clips it asks for from its prompts, and decide at three moments: the direction, a working slice, the final result.
 
+Every page is two choices (`references/modes.md`): the **look** (a style pack, or "like apple.com / Rolex / Cartier": the brand's design language, never its identity) and the **motion level**: calm, animated (things appear as you scroll), one hero effect, or a full scroll story with a per-chapter asset plan.
+
 Scope: single landing pages (product launches, hospitality, services, SaaS, portfolios, campaigns). Catalogs, articles and apps need different rules (`references/surfaces.md`).
 
 ## Install

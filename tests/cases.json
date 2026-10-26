@@ -280,6 +280,17 @@
           }
         ]
       }
+    },
+    {
+      "name": "text that fades in on scroll is still audited (words and contrast)",
+      "fixture": "scroll-reveal.html",
+      "expect": {
+        "exit": 1,
+        "has": [
+          "high:word-budget",
+          "high:contrast"
+        ]
+      }
     }
   ],
   "projectCases": [

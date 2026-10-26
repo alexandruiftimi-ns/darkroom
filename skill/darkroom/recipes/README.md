@@ -8,8 +8,9 @@ Small, framework-free ES modules. Copy the one you need into the project (they h
 | Fixed-path photoreal motion (turntable, product reveal, dive) as images | `scrub-frames.js` + `darkroom media frames` | the clip has a locked camera, 48–120 frames carry it, and you want exact, reversible control | a 12-second film (use video) |
 | The same clip as a seekable video | `scrub-video.js` (all-intra or GOP ≤ 4 encode) | smaller download than frames matters | the file cannot be all-intra encoded; seeking stutters |
 | Slight pointer response on a product still or layers | `pointer-tilt.js` | one approved image, bounded ±3° / ±5° | you promised a 360° viewer (that needs views or a model) |
+| Headings, text, images, cards appearing as they scroll in (mode `animated`) | `reveal.js` + `reveal.css` (`data-reveal="up\|fade\|scale\|mask\|words"`, `data-reveal-stagger`, `data-reveal-delay`) | an ordinary landing page should feel alive | the content must be pinned or scrubbed (that is a scene) |
 
-Demos: `demo-scrub-frames.html` (+ `demo-frames/`), `demo-scrub-video.html` (+ `demo-clip.mp4`), `demo-portal.html`. Verify any page the same way:
+Demos: `demo-scrub-frames.html` (+ `demo-frames/`), `demo-scrub-video.html` (+ `demo-clip.mp4`), `demo-portal.html`, `demo-reveal.html` (tested: below-the-fold items wait for scroll; reduced motion and no-JS show everything at once; word splitting keeps the heading text intact). Verify any page the same way:
 
 ```bash
 node <skill>/scripts/darkroom.mjs capture recipes/demo-portal.html --scene "#portal" --steps 4 --viewports desktop-1440 --both

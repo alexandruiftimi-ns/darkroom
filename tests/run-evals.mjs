@@ -73,6 +73,14 @@ async function projectCases() {
     ...(res.config.source === '.darkroom/settings.json' ? [] : [`config source ${res.config.source}`]),
     ...(fs.readFileSync(path.join(dir, 'DESIGN.md'), 'utf8').includes('darkroom') ? ['init modified the adopted document'] : []),
   ] : [`no output: ${r.out.slice(0, 200)}`] });
+  dir = path.join(work, 'modes'); fs.mkdirSync(dir, { recursive: true });
+  await run(['init'], dir);
+  const fails = [];
+  r = await run(['state', '--set', 'mode=animated,look=like:cartier'], dir);
+  try { const s = JSON.parse(r.out); if (s.mode !== 'animated' || s.look !== 'like:cartier') fails.push(`state shows mode=${s.mode} look=${s.look}`); } catch { fails.push(`state output not JSON: ${r.out.slice(0, 120)}`); }
+  for (const bad of ['mode=scrolly', 'look=cartier', 'approvals=x']) { r = await run(['state', '--set', bad], dir); if (r.code === 0) fails.push(`--set ${bad} was accepted`); }
+  r = await run(['state', '--approve', 'direction'], dir); if (r.code !== 0) fails.push(`approve failed after rejected sets: ${r.out.slice(0, 120)}`);
+  results.push({ name: 'state records mode and look, and rejects unknown modes, malformed looks and direct writes to approvals', fails });
   return results;
 }
 
@@ -93,6 +101,22 @@ function docChecks() {
     results.push({ name: 'the plain-language front door exists and SKILL.md points to it', fails: links.filter((l) => !fs.existsSync(path.join(skill, l)) || !skillMd.includes(l)).map((l) => `missing or unlinked: ${l}`) });
     const needsMention = /3D model|GLB/.test(eff) && /frames/.test(eff) && /Drawn in code/.test(eff);
     results.push({ name: 'effects.md covers the frames, 3D model and drawn-in-code routes', fails: needsMention ? [] : ['one of frames / 3D model / drawn-in-code is missing'] });
+    const read = (f) => (fs.existsSync(path.join(skill, f)) ? fs.readFileSync(path.join(skill, f), 'utf8') : '');
+    const modes = read('references/modes.md');
+    results.push({ name: 'modes.md defines calm, animated, hero-effect and story, each with what the visitor sees, what the user provides, how it is built and checked', fails: !modes ? ['references/modes.md missing'] : ['calm', 'animated', 'hero-effect', 'story'].flatMap((m) => {
+      const block = modes.split(/^### /m).find((b) => b.startsWith(m));
+      return block ? ['Visitor sees:', 'You need from the user:', 'Build with:', 'Checks:'].filter((k) => !block.includes(k)).map((k) => `${m} lacks ${k}`) : [`no section for ${m}`];
+    }) });
+    const looks = read('references/looks.md');
+    const profiles = looks.split(/^## like:/m).slice(1);
+    results.push({ name: 'looks.md profiles (apple, rolex, cartier at least) each say what to take, what never to take, and font substitutes', fails: [
+      ...['apple', 'rolex', 'cartier'].filter((b) => !profiles.some((p) => p.startsWith(b))).map((b) => `no like:${b} profile`),
+      ...profiles.flatMap((p) => ['Take:', 'Do not take:', 'Type:', 'Motion:'].filter((k) => !p.includes(k)).map((k) => `like:${p.split(String.fromCharCode(10))[0]} lacks ${k}`)),
+    ] });
+    const kit = read('references/motion-toolkit.md');
+    results.push({ name: 'motion-toolkit.md covers the recipes, GSAP, Motion, Lenis, three.js, Lottie, CSS scroll-driven animation and asset tools', fails: ['reveal.js', 'GSAP', 'Motion', 'Lenis', 'three.js', 'Lottie', 'animation-timeline', 'Making the assets'].filter((k) => !kit.includes(k)).map((k) => `missing ${k}`) });
+    const wired = ['references/modes.md', 'commands/lookalike.md', 'references/looks.md', 'references/motion-toolkit.md', 'recipes/reveal.js'];
+    results.push({ name: 'SKILL.md links the modes, look-alike, looks, motion toolkit and reveal recipe', fails: wired.filter((l) => !fs.existsSync(path.join(skill, l)) || !skillMd.includes(l)).map((l) => `missing or unlinked: ${l}`) });
     return results;
   });
 }
@@ -115,10 +139,47 @@ async function recipeChecks() {
     if (m.errors.length) fails.push(`console errors: ${m.errors[0]}`);
     out.push({ name: `recipe ${file} scrubs with scroll and holds still under reduced motion`, fails });
   }
+  out.push(await revealCheck());
   return out;
 }
 
-const cases = spec.cases.filter((c) => !only || c.name.includes(only) || c.fixture.includes(only));
+// reveal.js: below-the-fold items wait for scroll, then show; reduced motion and no-JS show everything at once.
+async function revealCheck() {
+  const name = 'recipe demo-reveal.html hides below-the-fold items until scrolled, and never under reduced motion or without JS';
+  const { launch } = await import(pathToFileURL(path.join(skill, 'scripts', 'lib', 'browser.mjs')).href);
+  const { resolveTarget } = await import(pathToFileURL(path.join(skill, 'scripts', 'lib', 'serve.mjs')).href);
+  process.env.DARKROOM_RESOLVE_FROM = env.DARKROOM_RESOLVE_FROM;
+  const served = await resolveTarget(path.join(skill, 'recipes', 'demo-reveal.html'));
+  const browser = await launch();
+  const fails = [];
+  const opacity = (page, sel) => page.evaluate((s) => Number(getComputedStyle(document.querySelector(s)).opacity), sel);
+  try {
+    for (const [mode, js] of [['no-preference', true], ['reduce', true], ['no-preference', false]]) {
+      const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: mode, javaScriptEnabled: js });
+      const page = await ctx.newPage();
+      const errors = []; page.on('pageerror', (e) => errors.push(e.message));
+      await page.goto(served.url); await page.waitForTimeout(900);
+      const label = `${mode}${js ? '' : ', no JS'}`;
+      const hero = await opacity(page, '#hero p'); const below = await opacity(page, '#closing h2');
+      if (hero < 0.99) fails.push(`${label}: first-screen text not shown at load (opacity ${hero})`);
+      if (mode === 'no-preference' && js && below > 0.01) fails.push(`${label}: below-the-fold heading visible before scrolling (opacity ${below})`);
+      if ((mode === 'reduce' || !js) && below < 0.99) fails.push(`${label}: content hidden (opacity ${below})`);
+      if (mode === 'no-preference' && js) {
+        await page.evaluate(() => document.querySelector('#closing').scrollIntoView());
+        await page.waitForTimeout(1400);
+        const after = await opacity(page, '#closing h2');
+        if (after < 0.99) fails.push(`${label}: heading not revealed after scrolling to it (opacity ${after})`);
+        const words = await page.evaluate(() => document.querySelector('#hero h1').textContent);
+        if (words !== 'Things appear as you arrive.') fails.push(`word split changed the heading text: "${words}"`);
+      }
+      if (errors.length) fails.push(`${label}: ${errors[0]}`);
+      await ctx.close();
+    }
+  } finally { await browser.close(); await served.close(); }
+  return { name, fails };
+}
+
+const cases =spec.cases.filter((c) => !only || c.name.includes(only) || c.fixture.includes(only));
 const results = [];
 let next = 0;
 await Promise.all(Array.from({ length: 3 }, async () => { while (next < cases.length) { const i = next++; results[i] = await fileCase(cases[i], i); } }));

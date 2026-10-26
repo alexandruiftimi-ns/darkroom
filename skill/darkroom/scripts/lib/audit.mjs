@@ -570,6 +570,19 @@ export function findings({ desk, mob, colour, motion, keyboard, contrast, ctx })
   return F.sort((a, b) => order[a.sev] - order[b.sev]);
 }
 
+// Scroll-triggered reveals (IntersectionObserver, ScrollTrigger) keep text at opacity 0 until it has been on screen.
+// Scroll through the page once, as a visitor would, so the audit measures the revealed page and not a half-empty one.
+// Reveals that hide again when scrolled away stay invisible to the audit (see commands/audit.md).
+async function revealPass(page) {
+  const steps = await page.evaluate(() => Math.min(40, Math.ceil((document.documentElement.scrollHeight - innerHeight) / (innerHeight * 0.8))));
+  for (let i = 1; i <= steps; i++) {
+    await page.evaluate((k) => scrollTo({ top: k * innerHeight * 0.8, behavior: 'instant' }), i);
+    await page.waitForTimeout(90);
+  }
+  await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
+  await page.waitForTimeout(steps ? 400 : 0);
+}
+
 // ---------- run ----------
 export async function audit(target, opt, { resolveSettings, study = false } = {}) {
   const { settings, source, problem } = resolveSettings(opt.bible);
@@ -594,6 +607,7 @@ export async function audit(target, opt, { resolveSettings, study = false } = {}
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
     await settle(page);
     if (full && (study || opt.dismiss)) consent = await dismissConsent(page, { allowAccept: !!opt['accept-consent'] });
+    if (full) await revealPass(page);
     await page.waitForTimeout(700);
     const motionNow = await page.evaluate(motionState);
     if (!full) { await ctx.close(); return { motion: motionNow }; }

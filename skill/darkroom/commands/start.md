@@ -18,7 +18,7 @@ Goal: a confirmed `.darkroom/BRIEF.md` in **at most one question round**, then s
   - **B: some assets** (logo, a few photos, a short clip, UI screenshots) → build the strongest page those carry; list the 3–5 assets that would lift it most.
   - **C: nothing but words** → type-led composition, real UI built in code, drawn-in-code graphics, openly licensed archival/found imagery with provenance (`commands/plates.md`), and generated plates if the user can make them. Say plainly what this tier can and cannot reach.
   - Ask once: can the user generate images (which tool), video (which tool, budget), 3D? Their answer changes the motion plan, so it comes before direction, not after the storyboard.
-- **Interaction ambition:** none / restrained / scroll story / pointer. Pick the cheapest convincing technique for the assets in hand (`references/motion.md`).
+- **Look and motion level** (`references/modes.md`): the look is a style pack or `like:<brand>` (then follow `commands/lookalike.md`); the motion level is `calm` / `animated` / `hero-effect` / `story`. Pick the cheapest convincing technique for the assets in hand (`references/motion.md`, `references/motion-toolkit.md`). Record: `darkroom state --set mode=<level>,look=<pack:name|like:brand>`.
 - **References:** record each with a role (borrow: mood / type / colour / layout / motion; not: …). Never treat "I like this site" as a request to clone it.
 
 ## 3. The ten decisions

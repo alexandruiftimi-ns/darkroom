@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>On-scroll reveal demo</title>
+<link rel="stylesheet" href="reveal.css">
+<style>
+body{margin:0;background:#f4f1ec;color:#1b1a18;font:18px/1.55 system-ui,sans-serif}
+a{color:inherit}
+.skip{position:absolute;left:-999px}.skip:focus{left:16px;top:16px;background:#fff;padding:8px}
+section{min-height:90vh;display:grid;align-content:center;gap:24px;padding:10vh 8vw}
+h1{font-size:clamp(40px,7vw,96px);line-height:1;margin:0;font-weight:600;letter-spacing:-.02em}
+h2{font-size:clamp(30px,4.5vw,60px);line-height:1.05;margin:0;font-weight:600}
+p{max-width:44ch;margin:0}
+.media{height:46vh;border-radius:6px;background:linear-gradient(135deg,#c9b8a3,#6d5a48)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;list-style:none;margin:0;padding:0}
+.cards li{background:#fff;border-radius:6px;padding:24px;min-height:140px}
+</style></head><body>
+<a class="skip" href="#main">Skip to content</a>
+<main id="main">
+<section id="hero"><h1 data-reveal="words">Things appear as you arrive.</h1><p data-reveal="up" data-reveal-delay="200">The first screen shows at once. Everything below waits for you.</p></section>
+<section id="feature"><h2 data-reveal="up">A heading rises into place</h2><p data-reveal="fade">Body copy fades in a beat later, then the picture opens from the bottom.</p><div class="media" data-reveal="mask" role="img" aria-label="A warm gradient standing in for a photograph"></div></section>
+<section id="cards"><h2 data-reveal="words">Cards follow one another</h2>
+<ul class="cards" data-reveal-stagger="90"><li data-reveal="up">One</li><li data-reveal="up">Two</li><li data-reveal="up">Three</li><li data-reveal="scale">Four</li></ul></section>
+<section id="closing"><h2 data-reveal="up">Nothing is hidden without JavaScript</h2><p data-reveal="fade"><a href="#hero">Back to the top</a></p></section>
+</main>
+<script type="module">import { reveal } from './reveal.js'; reveal();</script>
+</body></html>

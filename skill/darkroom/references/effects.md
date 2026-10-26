@@ -7,7 +7,8 @@ Rules for using this file:
 - Always state what the user must provide **before** they say yes, and what ships if they never provide it.
 - Say plainly what a route cannot do (a video cannot be turned by the mouse; a photo cannot rotate).
 - Costs of generating assets (credits, subscriptions) are the user's decision. Name the cost class, never assume a tool.
-- Technical details live in `references/motion.md` and `recipes/`; do not repeat them to the user.
+- Technical details live in `references/motion.md`, `references/motion-toolkit.md` and `recipes/`; do not repeat them to the user.
+- First place the request in a mode (`references/modes.md`): "animations on scroll" is the reveal effect below, not a scroll story.
 
 Terms to use with users: "scroll animation" (not "scrub"), "frames" = "a flip-book of pictures", "3D model" = "a digital copy of the object you can turn any way", "plate" = "a clean background picture".
 
@@ -94,6 +95,31 @@ What the visitor sees: they scroll and move into an object or opening and arrive
 - Cons: the photo set must be shot consistently; a 3D model is a big job; both are heavier to load.
 - Effort for you: high.
 - Choose when: customers need to inspect the product before buying.
+
+## Effect: Things appear as you scroll (headings, text, pictures, cards)
+
+What the visitor sees: an ordinary page, but each heading rises into place, text fades in, pictures open, and cards arrive one after another as they come on screen. Nothing is pinned; the page scrolls normally. This is the "animated landing page", not a scroll story (`references/modes.md`).
+
+### Route A: Built-in reveals (recommended)
+- You provide: nothing extra.
+- Pros: works with any page and any pictures; light; no library; content is never hidden for visitors without JavaScript or with reduced motion.
+- Cons: subtle by nature; it adds polish, not a "wow" moment on its own.
+- Effort for you: none.
+- Choose when: you want a lively, finished feel without preparing special media.
+
+### Route B: The same, using the animation library your site already has (GSAP, Motion)
+- You provide: nothing extra (the site already uses the library).
+- Pros: matches what the rest of your site does; fine control over timing.
+- Cons: only worth it if the library is already there; adding one just for this is extra weight.
+- Effort for you: none.
+- Choose when: your site or developer already uses one of these libraries.
+
+### Route C: Reveals plus one hero effect
+- You provide: what the hero effect needs (see the effects above), usually one clip or one strong picture.
+- Pros: a calm, animated page with one memorable moment.
+- Cons: the hero effect needs assets and testing.
+- Effort for you: medium.
+- Choose when: you want "nice animations" and one thing people remember.
 
 ## Effect: A story told in chapters as you scroll (text appears, scenes change)
 

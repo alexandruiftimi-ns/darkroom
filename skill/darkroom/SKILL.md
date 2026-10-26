@@ -1,6 +1,6 @@
 ---
 name: darkroom
-description: "Art-directed production of premium, award-level ('$10k-looking') landing pages: you decide, build, look at the real browser output, and fix, while the user supplies business facts, assets and taste. Use when the user asks to design, art-direct, build, redesign or polish a landing page or single-page site with a defined feel (cinematic, luxury, modern, bold, cyberpunk, editorial, restaurant, catalog, nature, art, artsy, family, trust), asks for image/video prompts for a site, scroll-driven or frame-sequence hero, a design bible, a storyboard, screenshot QA, an accessibility/clutter/word-budget audit, EU/US compliance checks, or to study a reference site or images, or types /darkroom. Also use when someone who is not a designer wants a website, a scroll animation or any visual effect and needs to be told what to provide."
+description: "Art-directed production of premium, award-level ('$10k-looking') landing pages: you decide, build, look at the real browser output, and fix, while the user supplies business facts, assets and taste. Use when the user asks to design, art-direct, build, redesign or polish a landing page or single-page site with a defined feel (cinematic, luxury, modern, bold, cyberpunk, editorial, restaurant, catalog, nature, art, artsy, family, trust), wants a site that looks like a brand (apple.com, Rolex, Cartier), on-scroll animations, scroll storytelling, asks for image/video prompts for a site, scroll-driven or frame-sequence hero, a design bible, a storyboard, screenshot QA, an accessibility/clutter/word-budget audit, EU/US compliance checks, or to study a reference site or images, or types /darkroom. Also use when someone who is not a designer wants a website, a scroll animation or any visual effect and needs to be told what to provide."
 user-invocable: true
 argument-hint: "[just describe the site or the effect you want; no commands needed]"
 license: MIT
@@ -16,6 +16,12 @@ You are the designer-engineer. The user is the client and creative director: the
 
 The user may know nothing about design. They describe what they want in their own words; you reply as a senior art director would to a client: plain language, one recommendation, at most three options, never jargon. When they name an effect (a scroll animation, a 3D product, a dive into the lens), look it up in `references/effects.md`, tell them the routes in two lines each (what they will see, what they must provide, the catch), recommend one, and hand them `NEEDS.md` (`templates/NEEDS.md`): exactly what you need from them, why, how to make it, where to put it, and what happens if it never comes. They never type a command; everything under "Tools" is yours.
 
+## Every page is two choices: the look and the motion level (`references/modes.md`)
+
+- **Look:** a style pack (`styles/README.md`), or a reference look when the user says "like apple.com / Rolex / Cartier" (`commands/lookalike.md`, starting profiles in `references/looks.md`): the brand's design language measured from the live site, never its identity.
+- **Motion level:** `calm` (nothing moves by itself) · `animated` (headings, text, images and cards reveal as they scroll in: `recipes/reveal.js`) · `hero-effect` (one memorable moment) · `story` (scroll storytelling in chapters, with an asset plan per chapter).
+- Decide both at intake, say them back in one line, record them (`darkroom state --set mode=animated,look=like:cartier`). Which library or asset tool fits which job: `references/motion-toolkit.md`.
+
 ## The laws
 
 1. **Decide, show, then build.** Make the design decisions yourself from the brief and the subject. Show 2 coded options when the direction is genuinely open; never ask the user to choose between things you could not tell apart. Ask only what the files do not answer.
@@ -30,7 +36,7 @@ The user may know nothing about design. They describe what they want in their ow
 ## The flow
 
 ```
-0 Intake      brief, existing project, assets folder, references → surface + asset tier + brief   (commands/start.md)
+0 Intake      brief, existing project, assets folder, references → surface + asset tier + look + motion level + brief   (commands/start.md)
 1 Direction   subject inventory → the idea → two coded comps of the hero (real copy, 1440 + 390)  (commands/style.md)
               ★ CHECKPOINT A (taste): user picks / steers. Skipped if the brief already fixes the look.
 2 Slice       bible (concise) → build hero + its one key interaction + transition to the next section, with
@@ -75,7 +81,7 @@ If the project already has `PROJECT_BLUEPRINT.md` / `DESIGN.md` / a `CLAUDE.md` 
 | `study <url>` | capture + audit of a reference page | `commands/study.md` |
 | `compare <ref> <capture>` | reference over capture for composition review | `commands/shoot.md` |
 
-Playbooks (`commands/*.md`) are how-to guides for each stage, loaded when you reach it: `concierge` (how to talk to the user), `start`, `style`, `bible`, `storyboard`, `plates`, `imagine`, `refs`, `build`, `critique`, `comply`, `study`, `handoff`, `learn` (maintainer). Knowledge lives in `references/` (load what the playbook points to), `styles/` (packs and switches), `recipes/` (tested scroll/motion code), `library/` (observations from real sites: evidence, never templates), `prompts/` (image/video model templates).
+Playbooks (`commands/*.md`) are how-to guides for each stage, loaded when you reach it: `concierge` (how to talk to the user), `start`, `style`, `lookalike` ("like <brand>"), `bible`, `storyboard`, `plates`, `imagine`, `refs`, `build`, `critique`, `comply`, `study`, `handoff`, `learn` (maintainer). Knowledge lives in `references/` (load what the playbook points to), `styles/` (packs and switches), `recipes/` (tested scroll/motion code), `library/` (observations from real sites: evidence, never templates), `prompts/` (image/video model templates).
 
 ## Self-containment
 

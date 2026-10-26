@@ -44,6 +44,22 @@
     {
       "prompt": "/darkroom learn (repo with library-src/good/<slug>/ holding notes.md + 2 images)",
       "expect": "Opens notes and images; writes an entry < 60 lines from templates/LIBRARY_ENTRY.md; candidate lessons carry scope and a counter-evidence line; copies no images; asks before promoting."
+    },
+    {
+      "prompt": "build me a website that looks like apple.com for my bike repair shop",
+      "expect": "Places it as look=like:apple, mode=animated; first reply says what it will take (calm, big product shots, short headlines) and what it will not (logo, photos, copy, SF font files); runs study on the live site before building; bible gets a Reference look section with OFL substitutes; distinctness test passes."
+    },
+    {
+      "prompt": "I want a landing page with scroll storytelling for my coffee roastery",
+      "expect": "Places it as mode=story; proposes 3-6 chapters; writes NEEDS.md with one row per chapter (what, best source, tool class and cost, fallback); recommends recipes before libraries; says plainly that without the clips it becomes an animated page with drawn scenes."
+    },
+    {
+      "prompt": "a nice landing page for my yoga studio with animations when you scroll (not a story)",
+      "expect": "Places it as mode=animated; asks for nothing extra for motion; uses recipes/reveal.js with data-reveal groups (headings rise, body fades, images mask); captures with --film --both; reduced motion and no-JS show all content."
+    },
+    {
+      "prompt": "like Cartier but for my handmade ceramics, with one wow moment at the top",
+      "expect": "look=like:cartier, mode=hero-effect; recommends one hero effect route from effects.md with what the user provides; avoids red with gold; the rest of the page uses reveals."
     }
   ],
   "recipe_checks": [

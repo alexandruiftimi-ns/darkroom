@@ -40,6 +40,59 @@ These two pages were art-directed and built with Darkroom and Claude. Both are *
 
 What it will *not* do: generate photographic video or 3D models by itself (you supply those, or use an image/video model with the prompts it writes), replace a human creative director, or guarantee any particular result.
 
+## One tool, many kinds of page
+
+Every page is two choices, and any look combines with any motion level. Darkroom works out both from what you say, tells you in one line, and lets you change it.
+
+**The look**
+
+| You say | You get |
+|---|---|
+| "luxury", "bold", "warm and handmade", "trustworthy"… | one of 13 style packs, each with its own rules for type, colour, layout and motion |
+| "make it look like apple.com", "like Rolex", "like Cartier" | that brand's design language (spacing, type scale, rhythm, restraint) measured from the live site and applied to *your* brand. Never their logo, photos, text or font files. Profiles ship for Apple, Rolex, Cartier, Aesop, Stripe, Linear and Tesla; any other site can be measured. |
+
+**The motion level**
+
+| Level | What visitors see | What you provide |
+|---|---|---|
+| **Calm** | a still, composed page; hover and focus states only | nothing extra |
+| **Animated** | headings rise, text fades in, pictures open, cards arrive one by one as you scroll. No pinning, normal scrolling. | nothing extra |
+| **One hero effect** | one memorable moment (a product that turns, a dive into a lens, a looping film), then a normal page | usually one video clip or one strong image |
+| **Scroll story** | the page told in chapters: sections pin while scenes change and text arrives in step | a few sentences per chapter, plus the media each chapter needs. Darkroom gives you a per-chapter list with the kind of tool to make each item (phone, Blender, an AI image or video tool), its cost class, and what ships if it never arrives. |
+
+Which library fits which job (built-in recipes, GSAP, Motion, Lenis, three.js, Lottie, CSS scroll-driven animation), and which tools can make the assets, is in [`motion-toolkit.md`](skill/darkroom/references/motion-toolkit.md).
+
+## Example prompts
+
+You don't need commands. Open Claude Code in an empty folder (or your project) and say what you want:
+
+```text
+Build me a landing page for my bike repair shop in Porto that looks like apple.com.
+```
+```text
+I want a site like Rolex for my watch-strap brand. Dark, slow, expensive. I have 12 product photos in ./photos.
+```
+```text
+Make a Cartier-style landing page for my handmade ceramics, with one wow moment at the top.
+```
+```text
+A nice landing page for my yoga studio with animations when you scroll: text and images fading in. Not a scroll story.
+```
+```text
+I want scroll storytelling for my coffee roastery: from the farm to the cup. What do you need from me?
+```
+```text
+Calm and trustworthy one-pager for my accounting practice. No animations, it has to load fast.
+```
+```text
+Here is my product video (./assets/turn.mp4). Make the product turn as people scroll.
+```
+```text
+Just go: you decide everything, show me the result at the end.
+```
+
+Typing `/darkroom` first makes sure Darkroom is the skill that answers (useful if you have other design skills installed).
+
 ## How a project runs
 
 <p align="center"><img src="assets/flow.svg" alt="Intake, Direction, Slice, Build, Look and fix, Final" width="100%"></p>
@@ -60,7 +113,8 @@ You are asked at **three moments only**: the direction, a working slice, the fin
 | | |
 |---|---|
 | **Art direction** | 13 style packs: cinematic, luxury, modern, bold, cyberpunk, editorial, restaurant, catalog, nature, art, artsy, family, trust. Each switches the rules, so a luxury page and a bold page are not judged the same way. |
-| **Scroll and motion** | Tested recipes for scroll-scrubbed video, frame sequences, scene progress and pointer tilt, with a reduced-motion fallback. |
+| **Scroll and motion** | Tested recipes for on-scroll reveals (headings, text, images, cards), scroll-scrubbed video, frame sequences, scene progress and pointer tilt. Each has a reduced-motion fallback, and nothing is hidden for visitors without JavaScript. |
+| **Brand look-alikes** | "Like apple.com / Rolex / Cartier": the reference is measured live, translated into licensable fonts and your own colours, and checked so it cannot be mistaken for the brand. |
 | **Real-browser QA** | Playwright captures at several viewports, contact sheets and crops, with motion and reduced-motion modes. Each run records the build revision it was taken from. |
 | **Audits** | Each check is marked measured, heuristic or manual: accessibility, clutter, word budgets, type scale, colour. |
 | **Compliance checklist** | EU and US build checklists for things like cookies and disclosures. A checklist, not legal advice. |
