@@ -52,7 +52,7 @@ Yes, that works. There are 2 ways:
 I'd choose A because <reason from their assets>. What I would need from you is below.
 ```
 
-If they have nothing to provide, offer the "drawn in code" route first; it always works and looks intentional.
+Recommend the route that delivers what they asked to see, for their kind of site (`references/effects.md`, the rules and "A scroll story that looks 3D"), not the one that needs the fewest files: "3D", "realistic" or "cinematic" never gets "drawn in code" as the recommendation. If they picked prompts, the generated route is in reach; name its cost class once. "Drawn in code" is the last option, offered as the no-cost one, with what it loses.
 
 **3. Hand over the "what I need from you" card**
 Write `NEEDS.md` from `templates/NEEDS.md` in the project and show the user a short version in chat (a table of at most five rows: item, why, how to make it, where to put it). Each row says what happens if it never arrives. Mark which items **block** progress and which only improve the result. Then keep building with clearly marked placeholders so the user is never waiting on you.

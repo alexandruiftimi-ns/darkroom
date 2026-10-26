@@ -4,6 +4,8 @@ For the person who knows what they want to *see* but not how it is built. When t
 
 Rules for using this file:
 - Offer **at most three routes**, the recommended one first, each in one sentence plus its main trade-off.
+- **Recommend what delivers what they asked to see, for their kind of site** (the table under "A scroll story that looks 3D" shows the pattern). The words they used ("3D", "realistic", "cinematic", "like Apple") and the subject decide the recommendation; what they own today decides only what they must provide. Never recommend a route that cannot produce the asked look because it is cheaper or needs no files: offer it last, as the no-cost option, and say what it loses ("flat and drawn, it will not look 3D").
+- When they asked for prompts (`references/asset-tools.md`), the generated-media route is in reach: recommend it when it fits, write the prompts for their tools, and name the cost class (paid credits) once. Spending stays their call.
 - Always state what the user must provide **before** they say yes, and what ships if they never provide it.
 - Say plainly what a route cannot do (a video cannot be turned by the mouse; a photo cannot rotate).
 - Costs of generating assets (credits, subscriptions) are the user's decision. Name the cost class, never assume a tool.
@@ -44,7 +46,7 @@ What the visitor sees: they scroll and a product turns around, an object assembl
 - Pros: tiny, sharp at every size, works everywhere, the fastest to get a result.
 - Cons: stylised, not photoreal; limited to objects that suit a simple drawing.
 - Effort for you: none.
-- Choose when: you have no media yet, or the story is more about an idea than a physical object. (A scroll-heated vessel drawn entirely in code is a typical example.)
+- Choose when: the story is more about an idea than a physical object and a stylised look suits it (a scroll-heated vessel drawn entirely in code is a typical example). Not when they asked for a real or 3D look: then recommend A or C and offer this last, as the no-cost option.
 
 ## Effect: Dive through something into the next scene (portal, lens, window)
 
@@ -121,14 +123,51 @@ What the visitor sees: an ordinary page, but each heading rises into place, text
 - Effort for you: medium.
 - Choose when: you want "nice animations" and one thing people remember.
 
+## Effect: A scroll story that looks 3D (depth, camera moves, objects in space)
+
+What the visitor sees: they scroll and the camera moves through a scene, an object turns in space or comes apart, chapters change as if filmed. "Looks 3D" is the brief: a flat drawing does not answer it.
+
+### Route A: Cinematic frames from generated video (recommended for photoreal: products, places, food, fashion, cars, architecture)
+- You provide: the prompts I write, run in your tools: one still per chapter (ChatGPT image, or edits of your own photos), then a short clip between each pair of stills in a first-and-last-frame video tool (Kling, Veo, Seedance). I turn the clips into a flip-book that plays with the scroll, forwards and back.
+- Pros: the richest, most "filmed" 3D look; any material (glass, metal, food, fabric); smooth on phones once cut into frames.
+- Cons: paid credits in your tools; each clip may need a few tries; one fixed camera path.
+- Effort for you: medium (copy prompts, download clips; I check every clip frame by frame before you make the rest).
+- Choose when: the look must be real and premium, and the subject is a physical thing or place.
+
+### Route B: Real 3D in the page (recommended for tech, abstract and geometric subjects: software, AI, finance, science, data)
+- You provide: nothing for abstract shapes (I build them from code: glass, light, particles, geometry), or a 3D model (GLB) for a real product.
+- Pros: true depth and lighting, any camera path, can react to the mouse; sharp at every size; no video files.
+- Cons: a 3D library on the page (heavier); needs a lighter version for slow phones; real products need a good model, which is the hard part.
+- Effort for you: none for abstract scenes; high for a real product without a model.
+- Choose when: the subject is an idea, a system or a shape, or the visitor should move it.
+
+### Route C: Layered depth (2.5D) from generated or cut-out pictures
+- You provide: each scene as 2 to 5 layers (background, middle, foreground), from prompts I write or cut from your photos.
+- Pros: a strong sense of depth with light files; works on every phone; cheap to make.
+- Cons: depth is an illusion: no turning around objects, small camera moves only.
+- Effort for you: low to medium.
+- Choose when: a lighter page matters, or the story is about places and atmosphere more than objects.
+
+Drawn in code (shapes and gradients only) does not look 3D: offer it only as the no-cost option, last, with that sentence.
+
+Which route fits which site (recommend from this, then adjust to their assets):
+
+| Site | Recommend | Why |
+|---|---|---|
+| Physical product launch, shop hero, cars, watches, cosmetics | A (frames), B with their CAD or GLB if they have one | materials and reflections must look real |
+| Architecture, real estate, hotels, travel, restaurants | A (a camera flying through the place) | a place is sold by moving through it |
+| SaaS, AI, fintech, developer tools, science | B (abstract 3D from code) | the product is an idea; real 3D reads as technical |
+| Agency, portfolio, music, events | B or A, by their work's medium (renders → B, film/photo → A) | the site shows the craft |
+| Craft, food, editorial, nature, heritage | C (layered depth), A for one hero moment | warmth and texture matter more than a full camera move |
+
 ## Effect: A story told in chapters as you scroll (text appears, scenes change)
 
-### Route A: Chapters built from your words and simple visuals (recommended)
+### Route A: Chapters built from your words and simple visuals (recommended when no look was asked for)
 - You provide: the story in a few sentences per chapter, and any images you have.
 - Pros: needs no special media; fastest; the strongest base for any other effect.
 - Cons: the look depends on your imagery and type; without images it is typographic and drawn.
 - Effort for you: low.
-- Choose when: you are starting, or the message matters more than spectacle.
+- Choose when: you are starting, or the message matters more than spectacle. If they asked for 3D, cinematic or realistic chapters, use "A scroll story that looks 3D" instead.
 
 ### Route B: Chapters with one hero effect from the sections above
 - You provide: what the chosen effect needs.

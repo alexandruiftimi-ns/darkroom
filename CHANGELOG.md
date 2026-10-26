@@ -4,6 +4,15 @@ Darkroom uses [semantic versioning](https://semver.org): **major.minor.patch**.
 A **major** change breaks how projects or commands worked before, a **minor** one adds features, a **patch** fixes things.
 The installed version: `node ~/.claude/skills/darkroom/scripts/darkroom.mjs version` (or the `VERSION` file in the skill).
 
+## 1.4.1 · 2026-10-26
+
+Recommendations now follow what you asked to see, for your kind of site.
+
+- **Ask for a scroll story that looks 3D and you get 3D routes.** Darkroom used to recommend "drawn in code" whenever you had no files yet, even when you asked for 3D. Now the look you ask for ("3D", "realistic", "cinematic", "like Apple") and your subject decide the recommendation; what you own today only decides what you need to provide.
+- **Three ways to make a scroll story look 3D**, recommended by the kind of site: cinematic frames from generated video for products, places, food and architecture (Darkroom writes the ChatGPT and Kling, Veo or Seedance prompts); real 3D in the page for tech, AI and abstract subjects; layered depth for craft, editorial and nature.
+- **"Drawn in code" is still offered** as the free option, last, with a plain note that it will look flat, not 3D.
+- If you choose prompts, Darkroom plans the page for the pictures and clips those prompts will give you, not for an empty folder.
+
 ## 1.4.0 · WordPress Good Practice · 2026-10-26
 
 A WordPress theme is only the look; your pages, posts and images live in WordPress. Darkroom now keeps the two apart, so what you see on the site is what you can edit in *Pages*.
