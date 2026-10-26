@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Scrub fixture</title>
+<style>
+body{margin:0;background:#0b0e14;color:#e8ecf4;font:18px/1.5 system-ui}
+.intro,.outro{height:100vh;display:grid;place-items:center}
+#story{height:400vh;position:relative}
+.stage{position:sticky;top:0;height:100vh;display:grid;place-items:center}
+.num{font-size:12vw;font-weight:200}
+.bar{position:absolute;left:10%;bottom:12%;height:6px;background:#ff6d61;width:0}
+</style></head><body>
+<main><section class="intro"><h1>Scrub fixture</h1></section>
+<section id="story"><div class="stage"><div class="num" id="n">0%</div><div class="bar" id="b"></div></div></section>
+<section class="outro"><h2>End</h2></section></main>
+<script>
+const st=document.getElementById('story'),n=document.getElementById('n'),b=document.getElementById('b');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let cur=0;
+function target(){const r=st.getBoundingClientRect();return Math.max(0,Math.min(1,-r.top/(r.height-innerHeight)));}
+(function tick(){const t=target();cur=reduce?t:cur+(t-cur)*0.08; // eased scrub like GSAP scrub:1
+ n.textContent=Math.round(cur*100)+'%';b.style.width=(cur*80)+'%';requestAnimationFrame(tick)})();
+</script></body></html>

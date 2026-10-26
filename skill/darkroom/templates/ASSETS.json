@@ -1,0 +1,25 @@
+{
+  "schema": "darkroom-assets-v1",
+  "assets": [
+    {
+      "file": "",
+      "section": "",
+      "role": "reference-only | runtime | TEMP",
+      "bakedUI": false,
+      "source": "photographer | client | ChatGPT image | Kling | found: <source> | built in code",
+      "sourceUrl": "",
+      "creator": "",
+      "licence": "",
+      "creditRequired": false,
+      "acquired": "",
+      "intendedUse": "",
+      "rights": "",
+      "format": "",
+      "bytes": null,
+      "status": "needed | generating | candidate | approved | rejected"
+    }
+  ],
+  "log": [
+    { "date": "", "asset": "", "tool": "", "prompt": ".darkroom/prompts/…", "cost": "", "result": "accepted | rejected", "reason": "" }
+  ]
+}

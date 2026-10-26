@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 220" role="img" aria-label="Darkroom flow: intake, direction, slice, build, audit, final">
+  <rect width="1280" height="220" rx="16" fill="#121110"/>
+  <g font-family="Inter,Segoe UI,Arial,sans-serif" text-anchor="middle">
+    <g id="n" fill="#1b1917" stroke="#2e2a26">
+      <rect x="40" y="70" width="170" height="80" rx="10"/><rect x="250" y="70" width="170" height="80" rx="10"/><rect x="460" y="70" width="170" height="80" rx="10"/>
+      <rect x="670" y="70" width="170" height="80" rx="10"/><rect x="880" y="70" width="170" height="80" rx="10"/><rect x="1090" y="70" width="150" height="80" rx="10"/>
+    </g>
+    <g stroke="#ff7a3d" stroke-width="2" fill="none"><path d="M212 110h36M422 110h36M632 110h36M842 110h36M1052 110h36"/></g>
+    <g fill="#ece6dc" font-size="18" font-weight="600">
+      <text x="125" y="105">Intake</text><text x="335" y="105">Direction</text><text x="545" y="105">Slice</text><text x="755" y="105">Build</text><text x="965" y="105">Look + fix</text><text x="1165" y="105">Final</text>
+    </g>
+    <g fill="#a39b8f" font-size="13">
+      <text x="125" y="130">brief + assets</text><text x="335" y="130">two coded comps</text><text x="545" y="130">hero + key motion</text><text x="755" y="130">the whole page</text><text x="965" y="130">capture · audit</text><text x="1165" y="130">your yes</text>
+    </g>
+    <g fill="#ff7a3d" font-size="12" letter-spacing="2">
+      <text x="335" y="52">YOU CHOOSE</text><text x="545" y="52">YOU APPROVE</text><text x="1165" y="52">YOU DECIDE</text>
+    </g>
+  </g>
+</svg>

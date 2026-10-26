@@ -1,0 +1,23 @@
+{
+  "schema": "darkroom-storyboard-v1",
+  "project": "",
+  "thesis": "",
+  "sections": [
+    {
+      "id": "hero",
+      "claim": "",
+      "hook": "",
+      "focal": { "subject": "", "x": 0.6, "y": 0.45 },
+      "zones": ["headline+body+cta", "bottom row"],
+      "headline": "",
+      "words": 30,
+      "cta": "secondary",
+      "motion": { "what": "", "trigger": "", "range": [0, 0.12], "reducedMotion": "" },
+      "technique": "DOM/CSS",
+      "reference": ".darkroom/refs/anchor.png",
+      "assets": [],
+      "mobile": "",
+      "status": "planned | building | built | verified | blocked"
+    }
+  ]
+}

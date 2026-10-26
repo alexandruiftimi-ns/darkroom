@@ -1,0 +1,141 @@
+{
+  "schema": "darkroom-frames-v1",
+  "source": "clip.mp4",
+  "sourceSha256": "3e34be2bbe5b981cef3d1dd5c14cfa4513000f24bb4a7d8ee813fc34a58ad9c0",
+  "engine": "ffmpeg",
+  "fps": 8,
+  "duration": 3,
+  "start": 0,
+  "count": 24,
+  "width": 640,
+  "height": 360,
+  "format": "webp",
+  "pattern": "seq_%04d.webp",
+  "poster": "poster.webp",
+  "totalBytes": 161382,
+  "decodedMiBPerFrame": 0.9,
+  "decodedMiBAllFrames": 22,
+  "suggestedWindow": "keep about +/-12 frames decoded around the target; cancel stale decodes; close ImageBitmaps",
+  "frames": [
+    {
+      "file": "seq_0001.webp",
+      "bytes": 6206,
+      "sha256": "39166b8c7d4c7c3de28d4a885f6513ec0ad6f7f5f194b545c574b03752e07c9b"
+    },
+    {
+      "file": "seq_0002.webp",
+      "bytes": 6504,
+      "sha256": "3f51f1fa97fec3f515c79973daeefcec6208df6e0b4c4923e4ccd26d3d2b8744"
+    },
+    {
+      "file": "seq_0003.webp",
+      "bytes": 6738,
+      "sha256": "ca758c5a5a2c89fcf5afd1d2f5a0188d5f20518c6657c5498d7635eafc054a63"
+    },
+    {
+      "file": "seq_0004.webp",
+      "bytes": 6628,
+      "sha256": "8b0a94711b873f552d25d368fb4d0f9b43d71c3951e304a5ae6962d7569fc411"
+    },
+    {
+      "file": "seq_0005.webp",
+      "bytes": 6556,
+      "sha256": "c451994dcee2213048d732cb5e9f9d779b9eb93512505de4d4a36733dc20b536"
+    },
+    {
+      "file": "seq_0006.webp",
+      "bytes": 6446,
+      "sha256": "dbda4ea771ab5bd74dd9022ea5d74011ebb8c1d41768666705d522f5bd8d3c75"
+    },
+    {
+      "file": "seq_0007.webp",
+      "bytes": 6384,
+      "sha256": "ff41bad800aee2e9166dbb72c39271997ed2c2f5d6733c0e30cefdcf2c39eec2"
+    },
+    {
+      "file": "seq_0008.webp",
+      "bytes": 6422,
+      "sha256": "b566d7e58936dc0689dc0ab7b0ec40bb36cb091a6ec174208a369761f0eb42f0"
+    },
+    {
+      "file": "seq_0009.webp",
+      "bytes": 6408,
+      "sha256": "4f8416f7612b1656a8603950d51dfb6ee5e656d29d01945b8754d9ed844703d8"
+    },
+    {
+      "file": "seq_0010.webp",
+      "bytes": 6556,
+      "sha256": "3b94b8813f8285e9e2f0b19ff47cec2c664b693c8e450b5fdcf21c2237a632f3"
+    },
+    {
+      "file": "seq_0011.webp",
+      "bytes": 6558,
+      "sha256": "75dbac423eaa67c0e1fa1e0b22ba7dfebb7cf87ad0ba85f3194db162df26701d"
+    },
+    {
+      "file": "seq_0012.webp",
+      "bytes": 6484,
+      "sha256": "c53ff3dc6a2b154ef223f66498fd8069793c764833ef8da0ef1f657dceacbe41"
+    },
+    {
+      "file": "seq_0013.webp",
+      "bytes": 6484,
+      "sha256": "8bf944318623a2051b7dc1f013e989a8ad4c8381c46fb32bc3c898503505e318"
+    },
+    {
+      "file": "seq_0014.webp",
+      "bytes": 6460,
+      "sha256": "c0cdf3ea026afacda331a824c570b37454ad10ecf915794079f7f5a0bc38b3b6"
+    },
+    {
+      "file": "seq_0015.webp",
+      "bytes": 6464,
+      "sha256": "82ca7d914908fbe5276a995d4073571dc319349e3af38ed7b89291dee657c635"
+    },
+    {
+      "file": "seq_0016.webp",
+      "bytes": 6706,
+      "sha256": "92918dc067c564bfad88124b8314f959fc0d2238019e00aa06e8ab8b3eac2c64"
+    },
+    {
+      "file": "seq_0017.webp",
+      "bytes": 6674,
+      "sha256": "5d67705588efab74a3597caeed3b7ef430aef2633d9cd4958ef31b15ded6dda7"
+    },
+    {
+      "file": "seq_0018.webp",
+      "bytes": 7044,
+      "sha256": "739381249cfc1ce187df8a2404aa6730145878e2a82aa93dd88c662dc2f0ed93"
+    },
+    {
+      "file": "seq_0019.webp",
+      "bytes": 7194,
+      "sha256": "3018b4794786e8821e979d19b81ed8dfd2389d2698bf8d775aef92fe6e6d181f"
+    },
+    {
+      "file": "seq_0020.webp",
+      "bytes": 7232,
+      "sha256": "7ac9ba13e4d4f7efb5b9f44a54b68c251f095274969f14ce7561c0504dd18136"
+    },
+    {
+      "file": "seq_0021.webp",
+      "bytes": 7386,
+      "sha256": "51c20fe95a34386b740820730879a4af7270fa32603afdf8873bee0798a055da"
+    },
+    {
+      "file": "seq_0022.webp",
+      "bytes": 7346,
+      "sha256": "0de372954154a9849ead35de6fc4675923c17d9614ded3a7fee55baddd0dc221"
+    },
+    {
+      "file": "seq_0023.webp",
+      "bytes": 7328,
+      "sha256": "b0d00fe2895091b135ee8de07efadbb8bbd5a5fae507f42e0602428691cf57e4"
+    },
+    {
+      "file": "seq_0024.webp",
+      "bytes": 7174,
+      "sha256": "d595012c385e59659dc6a96447167ce36ad2412d2d3b2640a71c6205461eab52"
+    }
+  ]
+}

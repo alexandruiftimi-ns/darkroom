@@ -1,0 +1,321 @@
+{
+  "url": "http://127.0.0.1:58442/index.html",
+  "date": "2026-10-26T08:18:08.287Z",
+  "capture": {
+    "mode": "prefers-reduced-motion: reduce (plus one default-motion pass for the motion comparison)",
+    "viewports": [
+      "desktop-1440",
+      "mobile-390"
+    ],
+    "consent": {
+      "action": "none"
+    },
+    "tools": {
+      "node": "v26.12.1",
+      "playwright": null,
+      "browser": null
+    }
+  },
+  "config": {
+    "source": "DESIGN_BIBLE.md",
+    "problem": null
+  },
+  "settings": {
+    "surface": "landing",
+    "fontBudget": 2,
+    "colorMode": "disciplined",
+    "markets": [
+      "EU"
+    ],
+    "disclosure": "Fictional concept page. Halden Kiln does not exist; nothing here can be ordered.",
+    "currency": "EUR",
+    "wordBudgets": {
+      "hero": 30,
+      "feature": 45,
+      "proof": 60,
+      "closing": 30
+    },
+    "maxZones": 3
+  },
+  "findings": [
+    {
+      "sev": "high",
+      "check": "word-budget",
+      "basis": "heuristic",
+      "msg": "firing: 103 words vs budget 45"
+    },
+    {
+      "sev": "medium",
+      "check": "type-scale",
+      "basis": "heuristic",
+      "msg": "11 distinct font sizes — collapse to 5–6 steps",
+      "data": [
+        13,
+        14,
+        15,
+        17,
+        24,
+        36,
+        44,
+        60,
+        72,
+        101,
+        124
+      ]
+    },
+    {
+      "sev": "medium",
+      "check": "colour",
+      "basis": "heuristic",
+      "msg": "saturated colour is 41.5% of non-ground UI pixels (> 20%)"
+    },
+    {
+      "sev": "info",
+      "check": "fonts",
+      "basis": "measured",
+      "msg": "2/2 families: Newsreader, Inter"
+    },
+    {
+      "sev": "info",
+      "check": "reading-zones",
+      "basis": "heuristic",
+      "msg": "desktop zones in order: [Clay, taken to 1,280°. 1,280°. Salt-glaze tableware, fired in] → [14 Nov 14 Nov\nNext firing, sample dat] · travel 0.49"
+    },
+    {
+      "sev": "info",
+      "check": "page-length",
+      "basis": "heuristic",
+      "msg": "194 words on page"
+    },
+    {
+      "sev": "info",
+      "check": "colour",
+      "basis": "heuristic",
+      "msg": "UI-only (media hidden): ground 88.3%, saturated 4.86% · UI hues 30° 100% · mode disciplined"
+    },
+    {
+      "sev": "info",
+      "check": "contrast",
+      "basis": "measured",
+      "msg": "desktop: 44 text items measured from pixels, 0 below threshold",
+      "viewport": "desktop"
+    },
+    {
+      "sev": "info",
+      "check": "contrast",
+      "basis": "measured",
+      "msg": "mobile: 42 text items measured from pixels, 0 below threshold",
+      "viewport": "mobile"
+    },
+    {
+      "sev": "info",
+      "check": "keyboard",
+      "basis": "measured",
+      "msg": "7 Tab stops, 7 with a visible focus change"
+    },
+    {
+      "sev": "info",
+      "check": "reduced-motion",
+      "basis": "measured",
+      "msg": "animations running: 0 by default → 0 with reduced motion (videos 0 → 0); static rule present: true"
+    }
+  ],
+  "desktop": {
+    "lang": "en",
+    "title": "Halden Kiln — salt-glaze tableware, one firing a month",
+    "families": [
+      "Newsreader",
+      "Inter"
+    ],
+    "declared": {
+      "Newsreader": 21,
+      "Inter": 23
+    },
+    "weights": {
+      "Newsreader": [
+        "300"
+      ],
+      "Inter": [
+        "400",
+        "500"
+      ]
+    },
+    "loaded": [
+      "Newsreader",
+      "Inter"
+    ],
+    "sizes": [
+      13,
+      14,
+      15,
+      17,
+      24,
+      36,
+      44,
+      60,
+      72,
+      101,
+      124
+    ],
+    "zones": [
+      {
+        "cx": 429,
+        "cy": 633.4375,
+        "w": 714,
+        "h": 405.125,
+        "text": "Clay, taken to 1,280°. 1,280°. Salt-glaze tableware, fired in"
+      },
+      {
+        "cx": 1253.1875,
+        "cy": 780.109375,
+        "w": 229.625,
+        "h": 111.78125,
+        "text": "14 Nov 14 Nov\nNext firing, sample dat"
+      }
+    ],
+    "travel": 0.49,
+    "corners": [
+      "BL",
+      "BR"
+    ],
+    "smallTargets": [],
+    "targetCount": 6,
+    "h1s": 1,
+    "skips": 0,
+    "imgsNoAlt": [],
+    "unlabeled": 0,
+    "nameless": 0,
+    "skipLink": true,
+    "reducedMotionRule": true,
+    "sections": [
+      {
+        "id": "top",
+        "headline": "Clay, taken to 1,280°.",
+        "headlineWords": 5,
+        "bodyWords": 25,
+        "budget": 30
+      },
+      {
+        "id": "firing",
+        "headline": "One firing, five stages",
+        "headlineWords": 0,
+        "bodyWords": 103,
+        "budget": 45
+      },
+      {
+        "id": "pieces",
+        "headline": "What comes out.",
+        "headlineWords": 3,
+        "bodyWords": 13,
+        "budget": 45
+      },
+      {
+        "id": "reserve",
+        "headline": "Next firing, 14 November.",
+        "headlineWords": 4,
+        "bodyWords": 19,
+        "budget": 45
+      }
+    ],
+    "totalWords": 194,
+    "prices": [],
+    "genre": [],
+    "urgency": [],
+    "uiHues": [
+      {
+        "hue": 30,
+        "share": 100
+      }
+    ],
+    "disclosureFound": true,
+    "overflow": 0,
+    "maxZones": 3,
+    "surface": "landing",
+    "libs": {
+      "gsap": false,
+      "scrollTrigger": false,
+      "three": false,
+      "lenis": false,
+      "locomotive": false,
+      "webglCanvas": false
+    },
+    "media": {
+      "video": 0,
+      "canvas": 0
+    },
+    "resources": {
+      "kb": 95,
+      "entries": 3,
+      "unmeasured": 0
+    }
+  },
+  "mobile": {
+    "zones": [
+      {
+        "cx": 195,
+        "cy": 253.59375,
+        "w": 350,
+        "h": 267.1875,
+        "text": "Clay, taken to 1,280°. 1,280°. Salt-glaze tableware, fired in"
+      },
+      {
+        "cx": 265.5234375,
+        "cy": 724.109375,
+        "w": 208.953125,
+        "h": 111.78125,
+        "text": "14 Nov 14 Nov\nNext firing, sample dat"
+      }
+    ],
+    "travel": 0.51,
+    "smallTargets": [],
+    "overflow": 0,
+    "nameless": 0,
+    "unlabeled": 0
+  },
+  "colour": {
+    "groundShare": 88.3,
+    "accentShareOfNonGround": 41.5,
+    "saturatedShare": 4.86,
+    "hueFamilies": [
+      {
+        "hue": 30,
+        "share": 4.74
+      }
+    ]
+  },
+  "contrast": {
+    "desktop": {
+      "checked": 44,
+      "issues": [],
+      "skipped": []
+    },
+    "mobile": {
+      "checked": 42,
+      "issues": [],
+      "skipped": []
+    }
+  },
+  "keyboard": {
+    "stops": 7,
+    "noIndicatorCount": 0,
+    "noIndicator": [],
+    "hiddenFocus": [],
+    "withIndicator": 7
+  },
+  "motion": {
+    "reduce": {
+      "running": 0,
+      "infinite": 0,
+      "long": 0,
+      "videosPlaying": 0,
+      "names": []
+    },
+    "normal": {
+      "running": 0,
+      "infinite": 0,
+      "long": 0,
+      "videosPlaying": 0,
+      "names": []
+    }
+  }
+}

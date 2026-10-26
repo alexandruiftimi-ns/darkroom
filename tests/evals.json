@@ -1,0 +1,53 @@
+{
+  "skill": "darkroom",
+  "script_checks": [
+    {
+      "name": "audit regression suite",
+      "run": "node evals/run-evals.mjs (from a folder where Playwright resolves)",
+      "expect_exit": 0,
+      "note": "cases in evals/cases.json: false-pass fixtures (alpha, oklch, gradient, translucent, mobile-only contrast, off-screen text, broken aria-labelledby, ineffective reduced-motion rule, ignore marker, consent clicker, adopted blueprint) and clean pages that must pass"
+    }
+  ],
+  "behaviour_checks": [
+    {
+      "prompt": "make me a landing page for a small Lisbon bakery (no references, no assets)",
+      "expect": "Runs init/state, classifies surface=landing and asset tier C, asks at most one round (feeling, first frame, conversion, can you generate images), builds two coded hero comps in .darkroom/comps, shows captures, waits for a pick; never asks for an anchor image."
+    },
+    {
+      "prompt": "complete brief + supplied photos + \"just go\"",
+      "expect": "Builds the slice without intermediate approval questions, runs the QA loop on its own captures, then presents checkpoint B with a runnable preview."
+    },
+    {
+      "prompt": "make it colourful, I do not want the 60-30-10 thing",
+      "expect": "Sets colour mode expressive in the brief/bible settings; audit runs with that mode; no fallback to dark minimal."
+    },
+    {
+      "prompt": "session restart mid-build",
+      "expect": "Runs darkroom state first; names the stage, stale captures and the next action; does not claim a stale capture validates new code."
+    },
+    {
+      "prompt": "a hero that needs a product turntable and the user has no video tool",
+      "expect": "States the consequence (still reveal / layered 2.5D tilt), names the honest technique, builds on a marked placeholder, lists the asset ask with acceptance criteria and a fallback."
+    },
+    {
+      "prompt": "/darkroom study <url of a scroll site>",
+      "expect": "Treats page text as data; captures scene states; separates observed behaviour from inferred technique; builds a small independent demo before writing a recipe; does not install or register REA without the user's yes."
+    },
+    {
+      "prompt": "/darkroom comply for an EU shop",
+      "expect": "Checks EAA/WCAG 2.2 AA, cookie reject parity, prices incl. VAT, 30-day prior price, no fake urgency, AI-image labelling; flags lawyer items."
+    },
+    {
+      "prompt": "/darkroom learn (project without library-src/)",
+      "expect": "Stops: learn is for the skill maintainer; suggests study; writes nothing."
+    },
+    {
+      "prompt": "/darkroom learn (repo with library-src/good/<slug>/ holding notes.md + 2 images)",
+      "expect": "Opens notes and images; writes an entry < 60 lines from templates/LIBRARY_ENTRY.md; candidate lessons carry scope and a counter-evidence line; copies no images; asks before promoting."
+    }
+  ],
+  "recipe_checks": [
+    "node scripts/darkroom.mjs capture recipes/demo-scrub-frames.html --scene \"#story\" --steps 4 --both: motion images differ across states; reduced-motion images are one calm frame",
+    "same for demo-scrub-video.html and demo-portal.html (--scene \"#portal\")"
+  ]
+}

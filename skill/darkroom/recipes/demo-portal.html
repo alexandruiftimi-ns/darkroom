@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Portal mask demo</title>
+<style>
+body{margin:0;background:#0b0e14;color:#eef2f8;font:18px/1.5 system-ui,sans-serif}
+.intro,.outro{min-height:100vh;display:grid;place-items:center;padding:24px}
+h1{font-size:clamp(32px,5vw,64px);font-weight:300;margin:0}
+#portal{height:300vh;position:relative;--p:0}
+.stage{position:sticky;top:0;height:100vh;overflow:hidden;background:#10141f}
+/* the lens: a circle that reaches the screen corners exactly at p = 1 (circle() percentages are of the box diagonal / sqrt 2, so ~72 % covers a 16:10 screen). Only clip-path and opacity read --p. */
+.world{position:absolute;inset:0;background:radial-gradient(circle at 70% 30%,#ff8a5b,#7a2c6e 45%,#14183a);
+  clip-path:circle(calc(4% + var(--p) * 68%) at 50% 50%)}
+.rim{position:absolute;left:50%;top:50%;width:calc(12vmin + var(--p) * 180vmin);aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);
+  border:2px solid rgba(255,255,255,.5);opacity:calc(1 - var(--p) * 1.4)}
+.copy{position:absolute;left:6vw;bottom:10vh;max-width:24ch;opacity:calc(1 - var(--p) * 3)}
+@media (prefers-reduced-motion:reduce){.world{clip-path:none}.rim{display:none}}
+</style></head><body><main>
+<section class="intro"><h1>Enter the lens</h1></section>
+<section id="portal" aria-label="Portal"><div class="stage"><div class="world"></div><div class="rim"></div><p class="copy">The world inside becomes the world outside.</p></div></section>
+<section class="outro"><h2>Inside</h2></section></main>
+<script type="module">import { sceneProgress } from './scene-progress.js'; sceneProgress(document.getElementById('portal'));</script>
+</body></html>

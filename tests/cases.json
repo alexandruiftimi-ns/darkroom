@@ -1,0 +1,293 @@
+{
+  "about": "Executable audit regression suite. Run from a folder where Playwright resolves: node <skill>/evals/run-evals.mjs [--only name]. Each case audits one fixture page. 'has'/'not' are sev:check pairs; 'msg' pins a finding to text; 'json' asserts on the saved audit JSON. Clean pages MUST pass: this suite guards against false positives as much as false passes.",
+  "cases": [
+    {
+      "name": "clean landing passes with no high findings",
+      "fixture": "clean-landing.html",
+      "expect": {
+        "exit": 0,
+        "not": [
+          "high:contrast",
+          "high:names",
+          "high:keyboard",
+          "high:reduced-motion",
+          "high:fonts",
+          "high:word-budget"
+        ]
+      }
+    },
+    {
+      "name": "bad page is caught",
+      "fixture": "bad.html",
+      "expect": {
+        "exit": 1,
+        "has": [
+          "high:fonts",
+          "high:word-budget",
+          "high:contrast",
+          "high:lang",
+          "high:headings",
+          "high:alt",
+          "high:labels",
+          "high:third-party",
+          "high:urgency",
+          "medium:copy",
+          "medium:colour"
+        ]
+      }
+    },
+    {
+      "name": "5% alpha text is a contrast failure",
+      "fixture": "alpha-text.html",
+      "expect": {
+        "has": [
+          "high:contrast"
+        ],
+        "msg": {
+          "high:contrast": "Almost invisible"
+        }
+      }
+    },
+    {
+      "name": "pale oklch text is a contrast failure",
+      "fixture": "oklch-pale.html",
+      "expect": {
+        "has": [
+          "high:contrast"
+        ],
+        "msg": {
+          "high:contrast": "Pale oklch"
+        }
+      }
+    },
+    {
+      "name": "white text on a white gradient is a contrast failure",
+      "fixture": "gradient-invisible.html",
+      "expect": {
+        "has": [
+          "high:contrast"
+        ],
+        "msg": {
+          "high:contrast": "White on a white gradient"
+        }
+      }
+    },
+    {
+      "name": "display type whose line box overlaps another surface is not a false contrast failure",
+      "fixture": "display-type-box.html",
+      "expect": {
+        "not": [
+          "high:contrast",
+          "medium:contrast"
+        ]
+      }
+    },
+    {
+      "name": "white text on a half-transparent panel over black fails",
+      "fixture": "translucent-bg.html",
+      "expect": {
+        "has": [
+          "high:contrast"
+        ],
+        "msg": {
+          "high:contrast": "half-white"
+        }
+      }
+    },
+    {
+      "name": "a mobile-only contrast failure is reported as mobile",
+      "fixture": "mobile-contrast.html",
+      "expect": {
+        "has": [
+          "high:contrast"
+        ],
+        "msg": {
+          "high:contrast": "mobile:"
+        },
+        "msgAbsent": {
+          "high:contrast": "desktop:"
+        }
+      }
+    },
+    {
+      "name": "off-screen text is not rendered copy or a rendered font",
+      "fixture": "offscreen-text.html",
+      "expect": {
+        "json": [
+          {
+            "path": "desktop.families",
+            "excludes": "GhostFace"
+          },
+          {
+            "path": "desktop.totalWords",
+            "max": 40
+          }
+        ]
+      }
+    },
+    {
+      "name": "aria-labelledby pointing nowhere leaves the button unnamed",
+      "fixture": "broken-labelledby.html",
+      "expect": {
+        "has": [
+          "high:names"
+        ]
+      }
+    },
+    {
+      "name": "a valid aria-labelledby gives the button a name",
+      "fixture": "valid-labelledby.html",
+      "expect": {
+        "not": [
+          "high:names"
+        ]
+      }
+    },
+    {
+      "name": "an unrelated reduced-motion rule does not excuse a running animation",
+      "fixture": "motion-ineffective.html",
+      "expect": {
+        "has": [
+          "high:reduced-motion"
+        ]
+      }
+    },
+    {
+      "name": "CSS reduced-motion handling passes",
+      "fixture": "motion-css-good.html",
+      "expect": {
+        "not": [
+          "high:reduced-motion",
+          "medium:reduced-motion"
+        ]
+      }
+    },
+    {
+      "name": "JS matchMedia reduced-motion handling passes without any CSS rule",
+      "fixture": "motion-js-good.html",
+      "expect": {
+        "not": [
+          "high:reduced-motion",
+          "medium:reduced-motion"
+        ]
+      }
+    },
+    {
+      "name": "data-darkroom-ignore copy is not counted",
+      "fixture": "ignore-marker.html",
+      "expect": {
+        "not": [
+          "high:word-budget",
+          "medium:word-budget"
+        ]
+      }
+    },
+    {
+      "name": "aria-hidden copy is not counted",
+      "fixture": "aria-hidden-copy.html",
+      "expect": {
+        "not": [
+          "high:word-budget",
+          "medium:word-budget"
+        ]
+      }
+    },
+    {
+      "name": "surface read skips word budgets",
+      "fixture": "long-article.html",
+      "args": [
+        "--bible",
+        "read-settings.json"
+      ],
+      "expect": {
+        "not": [
+          "high:word-budget",
+          "high:page-length"
+        ]
+      }
+    },
+    {
+      "name": "the same long page on a landing surface is flagged",
+      "fixture": "long-article.html",
+      "expect": {
+        "has": [
+          "high:word-budget"
+        ]
+      }
+    },
+    {
+      "name": "removed focus outlines are caught by Tab traversal",
+      "fixture": "no-focus-indicator.html",
+      "expect": {
+        "has": [
+          "high:keyboard"
+        ]
+      }
+    },
+    {
+      "name": "visible focus rings pass",
+      "fixture": "clean-landing.html",
+      "expect": {
+        "not": [
+          "high:keyboard",
+          "medium:keyboard"
+        ]
+      }
+    },
+    {
+      "name": "font budget counts rendered families",
+      "fixture": "two-hero-fonts.html",
+      "expect": {
+        "has": [
+          "high:fonts"
+        ]
+      }
+    },
+    {
+      "name": "consent: only the reject control inside the dialog is clicked",
+      "fixture": "consent-dialog.html",
+      "args": [
+        "--dismiss"
+      ],
+      "expect": {
+        "json": [
+          {
+            "path": "desktop.title",
+            "equals": "CLICKED-REJECT"
+          },
+          {
+            "path": "capture.consent.action",
+            "equals": "rejected"
+          }
+        ]
+      }
+    },
+    {
+      "name": "consent: with no banner nothing on the page is clicked",
+      "fixture": "consent-none.html",
+      "args": [
+        "--dismiss"
+      ],
+      "expect": {
+        "json": [
+          {
+            "path": "desktop.title",
+            "equals": "Fixture"
+          },
+          {
+            "path": "capture.consent.action",
+            "equals": "none"
+          }
+        ]
+      }
+    }
+  ],
+  "projectCases": [
+    "adopted blueprint: init then audit uses the blueprint's darkroom block (fontBudget 1)",
+    "blueprint without a darkroom block: init writes .darkroom/settings.json and audit uses it, reporting the source"
+  ],
+  "docChecks": [
+    "every check id in the registry is described in commands/audit.md",
+    "every viewport named in commands/*.md exists in the script"
+  ]
+}
