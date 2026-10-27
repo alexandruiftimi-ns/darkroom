@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/knowledge.svg" alt="139 real site designs that inspired it (96 good, 43 bad), 28 cross-site lessons with 12 promoted to rules, 32 research sources, 6 design tools, 63 automated checks, one human art director" width="100%"></p>
+<p align="center"><img src="assets/knowledge.svg" alt="139 real site designs that inspired it (96 good, 43 bad), 28 cross-site lessons with 12 promoted to rules, 28 research sources, 6 design tools, 63 automated checks, one human art director" width="100%"></p>
 
 # Where Darkroom's knowledge comes from
 
@@ -8,7 +8,7 @@
 |---|---|---|
 | [Real websites](#1-real-websites-that-inspired-it) | 139 site designs: 96 good examples, 43 bad ones, searchable by technique | `library/` (one short written entry per site) |
 | [Lessons](#2-lessons-drawn-from-them) | 28 patterns seen across several sites; 12 promoted to rules | `library/LESSONS.md`, then `references/` |
-| [Research](#3-research-and-standards) | 32 sources: usability research, accessibility standards, EU law, award criteria | `references/sources.md` |
+| [Research](#3-research-and-standards) | 28 sources: usability research, accessibility standards, EU law, award criteria | `references/sources.md` |
 | [Other tools](#4-other-design-tools-studied) | 6 open design skills and tools, read for principles only | `references/provenance.md` |
 | [Test pages](#5-test-pages-built-with-it) | 4 pages built end to end to find what broke | `examples/`, the test suite |
 | [Human input](#6-human-input) | the author's taste calls, dislikes, approvals and assets | everywhere |
