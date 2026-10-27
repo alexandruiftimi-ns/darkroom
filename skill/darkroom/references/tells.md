@@ -54,6 +54,7 @@ These hit award winners as often as slop — they're failures, not style. Eviden
 - **Loader or gate instead of a first frame.** Preloader, "Enter" click or WebGL canvas with no poster and no live h1 behind it: slow phones and crawlers see nothing (14 award winners lost their first frame in capture). Ship the real composition at once; a gate may sit over it, never replace it.
 - **Stacked overlays.** Consent + newsletter + voucher + chat + accessibility widget over the opening screen. One overlay at a time, never over the first frame; consent first layer ≤ 25 % of the phone viewport with equal-weight reject.
 - **No who/what in the first frame.** No live h1 naming the offer — a paragraph, a slogan or a logo stack instead. One h1 of ≤ 8 words, before any other copy.
+- **A gate in front of the content (2026-10-27).** "Enter the experience", a START button or a mini-game the visitor must finish before anything scrolls (bad/avatr-vision, bad/dont-board-me, bad/minh-pham, bad/real-ultimate-power). The page scrolls and sells with no click; intros, games and sound choices sit over or beside the content and scrolling skips them. A sound on/off choice that still lets you scroll is not a gate. Severity: high.
 - **Text that needs the media to load.** White copy over a lazy photo or video, reveals that leave blank bands, hotlinked images. Copy gets its own ground or scrim; media boxes reserve `aspect-ratio` and a poster colour.
 
 ## What `audit` measures vs what needs eyes

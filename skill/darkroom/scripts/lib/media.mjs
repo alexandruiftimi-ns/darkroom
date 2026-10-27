@@ -177,6 +177,7 @@ export async function frames(source, opt) {
   const fps = Number(opt.fps ?? 24); const width = Number(opt.width ?? 1600); const quality = Number(opt.quality ?? 76);
   const format = String(opt.format ?? 'webp'); const ext = format === 'jpeg' ? 'jpg' : format;
   const eng = engines();
+  if (format === 'avif') return framesAvif(src, outDir, opt, eng);
   const want = opt.engine ?? 'auto';
   const useFfmpeg = want !== 'chromium' && eng.ffmpeg && (format === 'webp' ? eng.ffmpeg.encoders.libwebp : format === 'jpg' || format === 'jpeg' ? eng.ffmpeg.encoders.mjpeg : format === 'png');
   const start = opt.start ? Number(opt.start) : 0;
@@ -229,8 +230,44 @@ export async function frames(source, opt) {
     decodedMiBPerFrame: decodedMiB, decodedMiBAllFrames: +(decodedMiB * list.length).toFixed(0), suggestedWindow: 'keep about +/-12 frames decoded around the target; cancel stale decodes; close ImageBitmaps',
     frames: list,
   };
+  if (opt['mobile-width'] && !opt.isMobileSet) {
+    // A second, smaller set for phones (same frame count, so scroll progress maps 1:1). recipes/scrub-frames.js picks it below 1024 px.
+    const mob = await frames(source, { ...opt, out: path.join(outDir, 'mobile'), width: Number(opt['mobile-width']), isMobileSet: true });
+    manifest.mobile = 'mobile/manifest.json'; manifest.mobileWidth = mob.width;
+  }
   fs.writeFileSync(path.join(outDir, 'manifest.json'), JSON.stringify(manifest, null, 2));
   console.log(`${list.length} frames (${engine}) ${width_}x${height_} ${ext}, ${(total / 1048576).toFixed(1)} MB on the wire, ${decodedMiB} MiB decoded per frame (${manifest.decodedMiBAllFrames} MiB if all were held) → ${path.join(outDir, 'manifest.json')}`);
+  return manifest;
+}
+
+// AVIF frames: lossless PNG frames first, then one AVIF per frame (sharp, else ffmpeg's AV1 encoder). Chromium cannot encode AVIF.
+async function framesAvif(src, outDir, opt, eng) {
+  const quality = Number(opt.quality ?? 45);
+  const av1 = eng.ffmpeg?.encoders['libaom-av1'] ? ['-c:v', 'libaom-av1', '-still-picture', '1', '-crf', String(Math.round((100 - quality) * 0.63)), '-cpu-used', '6']
+    : eng.ffmpeg?.encoders.libsvtav1 ? ['-c:v', 'libsvtav1', '-crf', String(Math.round((100 - quality) * 0.63))] : null;
+  if (!eng.sharp && !(eng.ffmpeg && av1)) throw new Error('AVIF frames need sharp or ffmpeg with an AV1 encoder (libaom-av1 or libsvtav1); use --format webp');
+  const tmp = path.join(outDir, '.png-frames'); mkdirp(tmp);
+  await frames(src, { ...opt, out: tmp, format: 'png', 'mobile-width': undefined, isMobileSet: true });
+  const sharp = eng.sharp ? createRequire(path.join(process.cwd(), 'noop.js'))('sharp') : null;
+  for (const f of fs.readdirSync(outDir).filter((x) => /^seq_\d{4}\.avif$/.test(x))) fs.rmSync(path.join(outDir, f));
+  const pngs = fs.readdirSync(tmp).filter((f) => /^seq_\d{4}\.png$/.test(f)).sort();
+  for (const f of pngs) {
+    const out = path.join(outDir, f.replace(/\.png$/, '.avif'));
+    if (sharp) await sharp(path.join(tmp, f)).avif({ quality }).toFile(out);
+    else sh(eng.ffmpeg.bin, ['-y', '-v', 'error', '-i', path.join(tmp, f), '-frames:v', '1', ...av1, out]);
+  }
+  const src0 = JSON.parse(fs.readFileSync(path.join(tmp, 'manifest.json'), 'utf8'));
+  fs.rmSync(tmp, { recursive: true, force: true });
+  const list = pngs.map((f) => { const file = f.replace(/\.png$/, '.avif'); const p = path.join(outDir, file); return { file, bytes: fs.statSync(p).size, sha256: sha256(p) }; });
+  fs.copyFileSync(path.join(outDir, list[0].file), path.join(outDir, 'poster.avif'));
+  const total = list.reduce((s, x) => s + x.bytes, 0);
+  const manifest = { ...src0, engine: `${src0.engine}+${sharp ? 'sharp' : 'ffmpeg-av1'}`, format: 'avif', pattern: 'seq_%04d.avif', poster: 'poster.avif', totalBytes: total, frames: list };
+  if (opt['mobile-width'] && !opt.isMobileSet) {
+    const mob = await framesAvif(src, path.join(outDir, 'mobile'), { ...opt, width: Number(opt['mobile-width']), isMobileSet: true }, eng);
+    manifest.mobile = 'mobile/manifest.json'; manifest.mobileWidth = mob.width;
+  }
+  fs.writeFileSync(path.join(outDir, 'manifest.json'), JSON.stringify(manifest, null, 2));
+  console.log(`${list.length} frames (${manifest.engine}) ${manifest.width}x${manifest.height} avif, ${(total / 1048576).toFixed(1)} MB on the wire → ${path.join(outDir, 'manifest.json')}`);
   return manifest;
 }
 
@@ -274,7 +311,8 @@ export async function media(pos, opt) {
   doctor                              which engines exist (ffmpeg + real encoders, sharp, chromium)
   inspect <file|dir>                  dimensions, duration, codec, alpha, rotation, decoded memory per frame, checksums
   derive <image> [--out dir] [--widths 640,1280,1920] [--formats webp,jpg,avif] [--quality 78]
-  frames <video> [--out dir] [--fps 24] [--width 1600] [--format webp|jpg|png] [--quality 76] [--start s --end s] [--sharpen 0.6] [--engine ffmpeg|chromium]
+  frames <video> [--out dir] [--fps 24] [--width 1600] [--format webp|jpg|png|avif] [--quality 76] [--start s --end s] [--sharpen 0.6] [--engine ffmpeg|chromium]
+         [--mobile-width 900]         also write a smaller phone set to <out>/mobile/ (same frame count); avif needs sharp or ffmpeg with AV1
   check <frames dir>                  validate manifest, files, order, checksums, sizes; warn on memory`);
     return;
   }

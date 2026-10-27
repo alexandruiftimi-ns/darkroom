@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/knowledge.svg" alt="84 real site designs that inspired it (66 good, 18 bad), 24 cross-site lessons with 10 promoted to rules, 32 research sources, 6 design tools, 55 automated checks, one human art director" width="100%"></p>
+<p align="center"><img src="assets/knowledge.svg" alt="139 real site designs that inspired it (96 good, 43 bad), 28 cross-site lessons with 12 promoted to rules, 32 research sources, 6 design tools, 63 automated checks, one human art director" width="100%"></p>
 
 # Where Darkroom's knowledge comes from
 
@@ -6,8 +6,8 @@
 
 | | What | Where it lives in the skill |
 |---|---|---|
-| [Real websites](#1-real-websites-that-inspired-it) | 84 site designs: 66 good examples, 18 bad ones | `library/` (one short written entry per site) |
-| [Lessons](#2-lessons-drawn-from-them) | 24 patterns seen across several sites; 10 promoted to rules | `library/LESSONS.md`, then `references/` |
+| [Real websites](#1-real-websites-that-inspired-it) | 139 site designs: 96 good examples, 43 bad ones, searchable by technique | `library/` (one short written entry per site) |
+| [Lessons](#2-lessons-drawn-from-them) | 28 patterns seen across several sites; 12 promoted to rules | `library/LESSONS.md`, then `references/` |
 | [Research](#3-research-and-standards) | 32 sources: usability research, accessibility standards, EU law, award criteria | `references/sources.md` |
 | [Other tools](#4-other-design-tools-studied) | 6 open design skills and tools, read for principles only | `references/provenance.md` |
 | [Test pages](#5-test-pages-built-with-it) | 4 pages built end to end to find what broke | `examples/`, the test suite |
@@ -131,9 +131,84 @@ These are used to recognise problems (clutter, font soup, scattered text, compet
 
 </details>
 
+<details>
+<summary><b>Good: 30 scroll-era sites</b> (added 2026-10-27: Sites of the Year, Sites of the Day, scroll-storytelling picks, and five sites the author moved from "bad" to "good")</summary>
+
+Chosen for scroll animation, frame sequences, pinned chapters and memorable motion. Each entry also carries technique tags, so Darkroom can find "a site that does frame scrubbing well" and the recipe that builds it.
+
+| Site | Category | Recognition |
+|---|---|---|
+| [Apple AirPods Pro](https://www.apple.com/airpods-pro/) | product-launch | The archetype product page |
+| [Firewatch](https://www.firewatchgame.com/) | product-launch | Classic layered-parallax hero |
+| [Lunarwheel](https://lunarwheel.it/) | product-launch | scrollytelling.ai "27 best" list |
+| [Rivian R2](https://rivian.com/r2) | product-launch | Author pick |
+| [Seasats](https://www.seasats.com/) | product-launch | Awwwards Site of the Day, Sep 2026 |
+| [Linear](https://linear.app/) | saas | Widely cited modern SaaS reference |
+| [Poly](https://poly.app/) | saas | scrollytelling.ai "27 best" list |
+| [Shopify Editions Winter '26](https://www.shopify.com/editions/winter2026) | saas | scrollytelling.ai "27 best" list |
+| [Lando Norris](https://landonorris.com/) | portfolio | Awwwards Site of the Year 2025 |
+| [Mat Voyce](https://matvoyce.tv/) | portfolio | Awwwards Site of the Day |
+| [Active Theory](https://activetheory.net/) | agency | Top WebGL studio |
+| [basement.studio](https://basement.studio/) | agency | Cited cinematic benchmark (DappaSol) |
+| [Immersive Garden](https://immersive-g.com/) | agency | Awwwards Agency of the Year 2025 |
+| [Iventions](https://iventions.com/) | agency | Awwwards Site of the Day + Developer Award |
+| [Lusion](https://lusion.co/) | agency | Awwwards Site of the Year 2023 |
+| [Obys](https://obys.agency/) | agency | Cited editorial-motion benchmark |
+| [Ribbit](https://ribbit.dk/) | agency | Author pick |
+| [Uncommon Design Group](https://uncommondesign.group/) | agency | Awwwards Site of the Day + Developer Award + FWA |
+| [Unseen Studio 2025](https://2025.unseen.co/) | agency | scrollytelling.ai "27 best" list |
+| [Apple iPhone hub](https://www.apple.com/iphone/) | e-commerce | Author pick (moved from bad to good) |
+| [DJI](https://www.dji.com/global) | e-commerce | Author pick (moved from bad to good) |
+| [Pangram Pangram Foundry](https://pangrampangram.com/) | e-commerce | Awwwards Site of the Year 2021 |
+| [Petralithe](https://petralithe.com/en) | e-commerce | scrollytelling.ai "27 best" list |
+| [Mana Yerba Maté](https://en.manayerbamate.com/) | food-drink | Awwwards Site of the Year 2023 |
+| [iCOMAT](https://icomat.co.uk/) | corporate | scrollytelling.ai "27 best" list |
+| [Inversa](https://inversa.com/) | corporate | scrollytelling.ai "27 best" list |
+| [A24 (concept by Ravi Klaassens)](https://a24.raviklaassens.com/) | events-culture | Awwwards Site of the Day + Developer Award, Oct 2026 (unofficial concept) |
+| [Porsche Motorsport](https://racing.porsche.com/) | events-culture | scrollytelling.ai top example |
+| [Awards Racing](https://awards.racing/) | experimental | Awwwards Site of the Day + Developer Award, Oct 2026 |
+| [Igloo Inc](https://www.igloo.inc/) | experimental | Awwwards Site of the Year 2024 |
+
+</details>
+
+<details>
+<summary><b>Bad: 25 more counter-examples</b> (added 2026-10-27: published "bad website" lists and scroll-storytelling sites, each confirmed by the author)</summary>
+
+Only problems that cost visitors something are recorded (content behind a gate, unreadable text, no idea what is sold, a broken phone layout). Several of these have striking ideas; the entries say what is still worth borrowing.
+
+| Site | Category |
+|---|---|
+| [Don't Board Me](https://dontboardme.com/) | landing-page |
+| [Headhunter Hairstyling](https://www.headhunterhairstyling.com/) | landing-page |
+| [AVATR Vision](https://vision.avatr.com/) | product-launch |
+| [Crypto.com](https://crypto.com/) | app-marketing |
+| [Minh Pham](https://minhpham.design/) | portfolio |
+| [YesNo](https://yesnowww.com/) | agency |
+| [Best Electronics (Atari)](https://www.best-electronics-ca.com/) | e-commerce |
+| [Gates and Fences](https://gatesnfences.com/) | e-commerce |
+| [TäbyPressen](https://www.oilpress.com/) | e-commerce |
+| [Märker Bowling](https://www.bowling-pirschheide.de/) | hospitality |
+| [BRUTØ](https://www.brutodenver.com/) | food-drink |
+| [The Wolf's Tailor](https://www.thewolfstailor.com/) | food-drink |
+| [Water on Wheels](https://wateronwheelz.com/) | food-drink |
+| [Bidwells: Driving Innovation at Speed](https://www.bidwells.co.uk/insights-reports-events/driving-innovation-at-speed/) | editorial |
+| [Edward Abbey](https://www.abbeyweb.net/) | editorial |
+| [HuffPost Highline: Poor Millennials](https://highline.huffingtonpost.com/articles/en/poor-millennials/) | editorial |
+| [Sparkella](https://www.sparkella.com/) | editorial |
+| [Accenture](https://www.accenture.com/en) | corporate |
+| [Empire Metal Products](https://empiremetalproducts.com/) | corporate |
+| [Industrial Painter](http://industrialpainter.com/) | corporate |
+| [National Library of Greece](https://www.nlg.gr/?lang=en) | corporate |
+| [NMG Group](https://nmg-group.com/) | corporate |
+| [Condo London](https://www.condocomplex.org/london/) | events-culture |
+| [The Room (movie)](https://theroommovie.com/) | events-culture |
+| [Messenger (abeto)](https://messenger.abeto.co/) | experimental |
+
+</details>
+
 ## 2. Lessons drawn from them
 
-A pattern seen in **three or more** entries becomes a *candidate* lesson in [`library/LESSONS.md`](skill/darkroom/library/LESSONS.md), with its evidence listed. A candidate only becomes a rule after the author approves it. 10 have been promoted so far. Examples:
+A pattern seen in **three or more** entries becomes a *candidate* lesson in [`library/LESSONS.md`](skill/darkroom/library/LESSONS.md), with its evidence listed. A candidate only becomes a rule after the author approves it. 12 have been promoted so far. Examples:
 
 - Colour lives in the media; the interface stays ink + ground + at most one accent (→ `references/color.md`).
 - The first frame must survive without JavaScript, WebGL or a loader.

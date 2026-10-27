@@ -10,7 +10,7 @@ Write: **"On this page, [something that belongs to the subject] becomes [the lay
 
 ## 2. Shortlist packs and read the library
 
-`styles/README.md`: choose one primary pack (owns layout and type) + up to two modifiers (palette, imagery, motion only). Offer the user's named pack plus one adjacent alternative and one deliberate contrast. Read `library/INDEX.md` and `library/LESSONS.md`; load ≤ 4 good + ≤ 2 bad matching entries. Entries are evidence, not templates; only lessons marked **promoted** are rules, **candidate** ones are prompts to think.
+`styles/README.md`: choose one primary pack (owns layout and type) + up to two modifiers (palette, imagery, motion only). Offer the user's named pack plus one adjacent alternative and one deliberate contrast. Read `library/INDEX.md` and `library/LESSONS.md`; load ≤ 4 good + ≤ 2 bad matching entries, matched first by the **technique** the motion level calls for (INDEX **By technique**; "like ScrollTide" or "scroll animation with frames" means `frame-scrub` or `pinned-chapters`), then by category, then by pack. A good entry's minor flaws don't disqualify it; borrow its idea and avoid only its medium-or-worse failures. Entries are evidence, not templates; only lessons marked **promoted** are rules, **candidate** ones are prompts to think.
 
 ## 3. Build two comps in code
 

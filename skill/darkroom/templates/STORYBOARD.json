@@ -14,6 +14,7 @@
       "cta": "secondary",
       "motion": { "what": "", "trigger": "", "range": [0, 0.12], "reducedMotion": "" },
       "technique": "DOM/CSS",
+      "ground": "",
       "reference": ".darkroom/refs/anchor.png",
       "assets": [],
       "mobile": "",

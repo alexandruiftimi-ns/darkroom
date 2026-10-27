@@ -45,9 +45,10 @@ Until assets exist: a flat ground plus one approved still; or a crop of a mockup
 darkroom media inspect assets/raw                         # dims, duration, codec, alpha, rotation, audio, decoded MiB/frame
 darkroom media derive hero.png --out public/img --widths 640,1280,1920 --formats avif,webp,jpg   # + <picture> snippet
 darkroom media frames dive.mp4 --out public/frames/dive --fps 24 --width 1600 --format webp       # sequence + manifest.json + poster
-darkroom media check public/frames/dive                    # order, checksums, sizes, memory warning
+darkroom media frames flight.mp4 --out public/frames/flight --width 1600 --format avif --mobile-width 900   # long product flight: AVIF + a phone set in mobile/
+darkroom media check public/frames/dive                    # order, checksums, sizes, memory warning (check mobile/ too)
 ```
 
-Engines are detected and reported: ffmpeg only if present (with the encoders it really has: the one bundled with Playwright has no WebP encoder), `sharp` if the project has it, then headless Chromium (WebP/JPEG/PNG; no AVIF). Strip audio from background video; cap video to ≤ 1080p desktop and 720p phone; every image gets `width`/`height` and a poster colour; hero ≲ 250 KB as a starting budget. Do not turn every video into hundreds of full-resolution frames: start at 48–72 frames and measure (`recipes/README.md`).
+Engines are detected and reported: ffmpeg only if present (with the encoders it really has: the one bundled with Playwright has no WebP encoder), `sharp` if the project has it, then headless Chromium (WebP/JPEG/PNG; no AVIF). `--format avif` needs `sharp` or ffmpeg with an AV1 encoder (libaom-av1 or libsvtav1) and says so if neither exists; `--mobile-width` writes a second set with the same frame count for phones, which `recipes/scrub-frames.js` picks below 1024 px. Strip audio from background video; cap video to ≤ 1080p desktop and 720p phone; every image gets `width`/`height` and a poster colour; hero ≲ 250 KB as a starting budget. Do not turn every video into hundreds of full-resolution frames: start at 48–72 frames and measure (`recipes/README.md`).
 
 Log every generation attempt (prompt, tool, cost, accepted/rejected + reason) in `ASSETS.json` `log`. Update `ASSETS.json` status only to `approved` after you have looked at the file in place on the page.

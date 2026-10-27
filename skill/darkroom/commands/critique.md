@@ -17,4 +17,6 @@ Method: `references/critique-method.md`. In short:
 
 Load `library/LESSONS.md` and the matching entries; a fix that echoes a `bad/` entry cites its slug. Apply fixes yourself through the QA loop. Only ask the user for a taste decision between two concrete alternatives.
 
+Judge like a designer, not a linter: rank findings by what they cost a visitor (critical, high, medium, low). Fix critical to medium; mention low ones once at most, and never trade a striking idea for a low-severity rule. A great design with minor flaws reads as a great site.
+
 Human preference is the only taste signal. When the user dislikes something, save it as a contextual preference for **this project** (bible Do/Don't), not as a universal ban.

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sprite clips demo</title>
+<style>
+  body { margin: 0; background: #f4f1ea; color: #15140f; font: 18px/1.5 system-ui, sans-serif; }
+  section { min-height: 100vh; display: grid; place-items: center; text-align: center; padding: 24px; box-sizing: border-box; }
+  h1 { font-size: clamp(36px, 6vw, 80px); font-weight: 400; margin: 0; }
+  .figure { position: relative; width: min(70vw, 640px); aspect-ratio: 16 / 9; }
+  .figure img, .figure canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+  .figure canvas { opacity: 0; } .figure canvas.on { opacity: 1; }
+</style>
+</head>
+<body>
+<main>
+  <section><h1>Scroll down to meet the character</h1></section>
+  <section id="meet" aria-label="Character">
+    <div>
+      <div class="figure">
+        <img src="demo-frames/poster.webp" alt="Test pattern standing in for a character">
+        <canvas id="c" aria-hidden="true"></canvas>
+      </div>
+      <p>Enter plays once, idle loops with pauses, leaving plays enter backwards.</p>
+    </div>
+  </section>
+  <section><h2>End</h2></section>
+</main>
+<script type="module">
+  import { createSpriteClips } from './sprite-clips.js';
+  window.__clips = await createSpriteClips({
+    canvas: document.getElementById('c'), section: document.getElementById('meet'),
+    manifestUrl: 'demo-frames/manifest.json', clips: { enter: [0, 23], idle: [16, 23] }, fps: 12, idlePause: [0.5, 1],
+    onState: (s) => { document.documentElement.dataset.clip = s; },
+  });
+</script>
+</body>
+</html>

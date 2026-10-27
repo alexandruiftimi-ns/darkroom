@@ -4,6 +4,18 @@ Darkroom uses [semantic versioning](https://semver.org): **major.minor.patch**.
 A **major** change breaks how projects or commands worked before, a **minor** one adds features, a **patch** fixes things.
 The installed version: `node ~/.claude/skills/darkroom/scripts/darkroom.mjs version` (or the `VERSION` file in the skill).
 
+## 1.5.0 · Scroll Stories · 2026-10-27
+
+Darkroom now designs scroll-animated pages from the techniques the best ones use, not just from sites in your line of business.
+
+- **55 new design reviews** in the example library, inspired by award-winning and widely praised sites (Seasats, Mana Yerba Maté, Iventions, Lando Norris, Linear, Apple, Firewatch, Immersive Garden and more), plus 25 sites with mistakes worth avoiding.
+- **Find designs by technique.** Ask for "a scroll story like ScrollTide", "frames that follow the scroll", parallax or a cursor effect, and Darkroom looks up the sites that do it well and the building block that makes it, before it looks at your business category.
+- **Design first.** A great design with small flaws is still a great reference. Reviews and critiques now rank problems by what they cost a visitor and only push the serious ones (content behind an "enter" button, unreadable text, no idea what is sold, a broken phone layout). Polish never overrules a strong idea.
+- **Two new design rules from the reviews:** never put a gate ("Enter", "Start", a mini-game) in front of the content, and brand-led pages may end on their wordmark at full width instead of another block of links.
+- **Long scroll stories get an arc:** the storyboard plans a background colour or time of day per chapter, like a sunrise turning into a sunset.
+- **Smoother frame animations:** a separate, smaller set of frames for phones, AVIF frames when your computer can make them, and a few spread-out frames kept ready so a fast scroll never lands on an empty picture.
+- **Two new building blocks:** characters that come alive per section (an entrance, a little idle loop, and the entrance played backwards when you scroll away), and an image that reveals a second one under your cursor (a tap on phones). Both show one calm still picture when someone has asked their device for less motion.
+
 ## 1.4.1 · 2026-10-26
 
 Recommendations now follow what you asked to see, for your kind of site.

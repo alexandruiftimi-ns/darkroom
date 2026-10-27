@@ -1,5 +1,7 @@
 # Cross-site lessons
 
+**Design first.** A great design with minor flaws is still a great reference: visitors judge a site by how it looks and whether it works, not by a pixel or a missing skip link. Entries record only failures that cost visitors something, with a severity (medium, high or critical): content behind a gate, text you can't read, no idea what is sold, a page that breaks on phones, a wait long enough to leave. Low-severity polish is left out on purpose, and it never turns a good design into a bad example. Use bad entries to avoid their serious mistakes, not to reject a bold idea.
+
 Patterns seen in **≥ 3 library entries**. Frequency supports a hypothesis, it does not prove transfer: the sample is award and dribbble sites (selection bias), a site is not wholly good or bad, and nothing here is evidence of conversion or usability. Only lessons marked **promoted** are rules; **candidate** lessons are prompts to think, never loaded as rules. Each lesson lists its evidence so it can be checked or retired. Lessons with enough evidence may be promoted into a style pack or `references/tells.md` — only with the maintainer's approval (`/darkroom learn` step 4).
 
 Format:
@@ -20,13 +22,13 @@ Format:
 
 ## Close the page on the wordmark at display scale
 - Applies to: all
-- Evidence: good/terreno-hotel, good/esr-bespoke, good/neutomni, good/signal-a-studio, good/almada-label, good/fried-egg-golf, good/deadly-ponies, good/forum-cases, good/mejuma-tuscany, good/sincro, good/theobroma, good/lenval-properties
+- Evidence: good/terreno-hotel, good/esr-bespoke, good/neutomni, good/signal-a-studio, good/almada-label, good/fried-egg-golf, good/deadly-ponies, good/forum-cases, good/mejuma-tuscany, good/sincro, good/theobroma, good/lenval-properties · 2026-10-27: good/iventions (the cropped mark opens and closes the page), good/seasats, good/basement-studio, good/uncommon-design-group
 - Rule: in brand-led pages (hospitality, fashion, agency, product launch) the footer may end on the brand mark at near full width instead of another link block; dense or task-led sites keep the directory. One closing image, live text or SVG with an accessible name.
-- Status: candidate
+- Status: promoted → references/reading-paths.md rule 9, 2026-10-27
 
 ## The first frame must survive without JS, WebGL or a loader
 - Applies to: cinematic, artsy, experimental (any site with a preloader, gate or canvas hero)
-- Evidence: good/edolus, good/tengile-malamala, good/santioni-spirits, good/twks, good/lidar-drone-scanning, good/later-made-you-look, good/mejuma-tuscany, good/colonia-zacamil, good/jesper-landberg, good/the-tie-break, good/forge-automotive, good/overworld-audio, good/maria-vasilyeva, good/huy-phan
+- Evidence: good/edolus, good/tengile-malamala, good/santioni-spirits, good/twks, good/lidar-drone-scanning, good/later-made-you-look, good/mejuma-tuscany, good/colonia-zacamil, good/jesper-landberg, good/the-tie-break, good/forge-automotive, good/overworld-audio, good/maria-vasilyeva, good/huy-phan · 2026-10-27: good/immersive-garden does it right (a typeset loading frame with one line of copy); good/active-theory and bad/messenger-abeto show nothing without WebGL; good/rivian-r2 and bad/accenture open on an empty box while video loads
 - Rule: ship an instant poster frame and a live h1 in the HTML; the loader/gate may sit over it, never replace it. Canvas/WebGL cores need an HTML fallback. Over a third of the award winners here opened on an empty first frame. That suggests a loading risk; test the real first frame on a throttled profile.
 - Status: promoted → references/tells.md, 2026-10-25
 
@@ -98,7 +100,7 @@ Format:
 
 ## Page weight: winners are often heavy, and it's a flaw, not a licence
 - Applies to: cinematic, experimental
-- Evidence: good/esr-bespoke (55.9 MB), good/edolus (49 MB), good/brandon-yasin (16.4 MB), good/emotion-agency (10.4 MB) · contrast bad/hacker-news (6 KB), bad/drudge-report (54 KB) — their faults are structure, not weight
+- Evidence: good/esr-bespoke (55.9 MB), good/edolus (49 MB), good/brandon-yasin (16.4 MB), good/emotion-agency (10.4 MB) · contrast bad/hacker-news (6 KB), bad/drudge-report (54 KB) — their faults are structure, not weight · 2026-10-27: bad/avatr-vision (62 MB), good/mat-voyce (32 MB), good/immersive-garden (21 MB), bad/empire-metal-products (21 MB), good/awards-racing (20 MB); good/lunarwheel blocks phones for seconds with live WebGL that a pre-rendered sequence would replace
 - Rule: poster first, responsive image sizes, video and frames after first interaction or consent; budget the first view (≤ ~1.5 MB) before the cinematic payload.
 - Status: candidate
 
@@ -149,3 +151,27 @@ Format:
 - Evidence: good/terreno-hotel (4), good/almada-label, good/banham, good/delice, good/forum-cases, good/jimo (3–4 families, 9–27 sizes)
 - Rule: budget 3 families with named roles (display, text, utility/wordmark); the craft is still in photography and grids. Four+, or two faces in one role, is a defect.
 - Status: promoted → font budget raised to 3 (references/typography.md, templates, audit default, packs), 2026-10-25
+
+## Never put a gate in front of the content
+- Applies to: all; strongest in cinematic, experimental and portfolio pages
+- Evidence: bad/avatr-vision (Enter the Experience), bad/dont-board-me (bounce a ball to enter), bad/minh-pham (START), bad/real-ultimate-power (YES/no) · counter-evidence: a sound on/off choice that also lets you scroll on (good/awards-racing, good/emotion-agency) is not a gate
+- Rule: the page scrolls and sells with no click. Intros, games and sound choices sit over or beside the content and can be skipped by scrolling. Severity: high.
+- Status: promoted → references/tells.md, 2026-10-27
+
+## A long scroll story needs an arc: change the ground or the time of day per chapter
+- Applies to: `story` and `hero-effect` pages, product launches, agencies
+- Evidence: good/seasats (dawn → mint → sunset), good/iventions (a pastel per service), good/porsche-motorsport (red chapters), good/shopify-editions-winter-26 (one painted world, a new scene per chapter), good/uncommon-design-group (dark → light for the practical part) · counter-evidence: none found; short pages don't need it
+- Rule: plan the colour of each chapter in the storyboard, not only its content; drive it with `recipes/scene-progress.js`. Keep text contrast on every ground.
+- Status: candidate (2026-10-27)
+
+## Pre-render the motion; live WebGL is a studio's choice, not a default
+- Applies to: product launches and brand pages that want ScrollTide-level motion
+- Evidence: good/seasats (511 pre-rendered frames, phone set, coarse-to-fine loading), good/ribbit (image-sequence clips), good/apple-airpods-pro (short videos) · versus good/lunarwheel (live 3D assembly, long blocking on phones), bad/highline-poor-millennials, bad/avatr-vision · counter-evidence: studio showreels (good/lusion, good/igloo-inc) where live 3D is the product
+- Rule: if the camera path is fixed, render it once and ship frames (`recipes/scrub-frames.js`) or video (`recipes/scrub-video.js`); use live WebGL only when the visitor steers the scene.
+- Status: candidate (2026-10-27)
+
+## The default kit reads as no brand
+- Applies to: saas, app-marketing, corporate
+- Evidence: bad/crypto-com (navy gradient, phone mockup, Inter), bad/empire-metal-products (blue rounded cards, Poppins, chat bubbles), bad/nmg-group (stock towers) · counter-evidence: good/linear also uses Inter and a dark UI and looks designed, because real product screens, spacing and contrast carry it
+- Rule: every page needs one owned device from its subject (bible). The font alone neither makes nor breaks it.
+- Status: candidate (2026-10-27)

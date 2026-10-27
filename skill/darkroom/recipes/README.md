@@ -8,9 +8,11 @@ Small, framework-free ES modules. Copy the one you need into the project (they h
 | Fixed-path photoreal motion (turntable, product reveal, dive) as images | `scrub-frames.js` + `darkroom media frames` | the clip has a locked camera, 48–120 frames carry it, and you want exact, reversible control | a 12-second film (use video) |
 | The same clip as a seekable video | `scrub-video.js` (all-intra or GOP ≤ 4 encode) | smaller download than frames matters | the file cannot be all-intra encoded; seeking stutters |
 | Slight pointer response on a product still or layers | `pointer-tilt.js` | one approved image, bounded ±3° / ±5° | you promised a 360° viewer (that needs views or a model) |
+| A character or object that comes alive per section: enter clip, idle loop with pauses, enter played backwards on leave | `sprite-clips.js` + `darkroom media frames` (one set holds every clip; clips are frame ranges) | mascots, products that "say hello", Ribbit-style studio pages | the frame must follow scroll position exactly (that is `scrub-frames.js`) |
+| A second image or colour showing through a soft circle that follows the pointer | `cursor-reveal.js` (`[data-reveal-top]` layer, `clip-path` only) | portfolios and galleries where browsing the work should feel tactile | the top layer carries text the page needs |
 | Headings, text, images, cards appearing as they scroll in (mode `animated`) | `reveal.js` + `reveal.css` (`data-reveal="up\|fade\|scale\|mask\|words"`, `data-reveal-stagger`, `data-reveal-delay`) | an ordinary landing page should feel alive | the content must be pinned or scrubbed (that is a scene) |
 
-Demos: `demo-scrub-frames.html` (+ `demo-frames/`), `demo-scrub-video.html` (+ `demo-clip.mp4`), `demo-portal.html`, `demo-reveal.html` (tested: below-the-fold items wait for scroll; reduced motion and no-JS show everything at once; word splitting keeps the heading text intact). Verify any page the same way:
+Demos: `demo-scrub-frames.html` (+ `demo-frames/`), `demo-scrub-video.html` (+ `demo-clip.mp4`), `demo-portal.html`, `demo-sprite-clips.html` (tested: off until the section reaches the middle band, enter → idle → enter backwards on leave, reduced motion shows one still), `demo-cursor-reveal.html` (tested: follows the pointer, closes on leave, tap on touch, reduced motion toggles on click without following), `demo-reveal.html` (tested: below-the-fold items wait for scroll; reduced motion and no-JS show everything at once; word splitting keeps the heading text intact). Verify any page the same way:
 
 ```bash
 node <skill>/scripts/darkroom.mjs capture recipes/demo-portal.html --scene "#portal" --steps 4 --viewports desktop-1440 --both
@@ -24,7 +26,7 @@ node <skill>/scripts/darkroom.mjs capture recipes/demo-portal.html --scene "#por
 4. **Reversible, interruptible.** Scrolling up replays backwards; fast wheel, resize, hidden tab and route changes are handled (paused off-screen and in hidden tabs, stale loads aborted).
 5. **Reduced motion = one calm composition.** Same content and CTAs, no scrubbing. Frame scenes show a single frame; CSS scenes show the finished or start state.
 6. **Never blank.** If the wanted frame is not decoded, the nearest decoded frame stays.
-7. **Budget first.** Start with 48–72 frames at 1280–1600 px wide; measure. See the memory table below.
+7. **Budget first.** Start with 48–72 frames at 1280–1600 px wide; measure. See the memory table below. Long product flights (hundreds of frames) need a phone set (`media frames --mobile-width 900`, picked below 1024 px by `scrub-frames.js`) and coarse-to-fine anchors (the recipe keeps 9 spread frames decoded so a fast scroll lands near a real frame). AVIF (`--format avif`) or WebP: compare both on the real clip; on Darkroom's synthetic test clip AVIF q40 and WebP q76 came out the same size.
 
 ## Frames vs video: decide with a prototype, not a rule
 

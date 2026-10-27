@@ -1,7 +1,7 @@
 {
   "name": "darkroom",
   "displayName": "Darkroom",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "Art-directed websites on ten platforms (Shopify, WooCommerce, WordPress, Astro, Next.js, Hugo, Jekyll, Ghost, PHP, plain HTML): Claude designs, builds, looks at the real browser output and fixes it. Run /darkroom:darkroom.",
   "author": { "name": "Darkroom contributors" },
   "homepage": "https://github.com/alexandruiftimi-ns/darkroom",

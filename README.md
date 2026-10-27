@@ -7,11 +7,11 @@
 <h3 align="center">Type <code>/darkroom</code>. Say what you want.<br>Get a designed website, built on the platform you need.</h3>
 
 <p align="center">
-  <a href="CHANGELOG.md"><img alt="Version 1.1.0, the Reasoning update" src="https://img.shields.io/badge/version-1.1.0%20·%20Reasoning%20update-ff7a3d?style=for-the-badge&labelColor=121110"></a>
+  <a href="CHANGELOG.md"><img alt="Version 1.5.0, Scroll Stories" src="https://img.shields.io/badge/version-1.5.0%20·%20Scroll%20Stories-ff7a3d?style=for-the-badge&labelColor=121110"></a>
   <a href="LICENSE"><img alt="MIT licence" src="https://img.shields.io/badge/licence-MIT-ff7a3d?style=for-the-badge&labelColor=121110"></a>
   <img alt="Claude Code skill" src="https://img.shields.io/badge/Claude%20Code-skill-ece6dc?style=for-the-badge&logo=anthropic&logoColor=ece6dc&labelColor=121110">
   <img alt="10 platforms" src="https://img.shields.io/badge/platforms-10-ff7a3d?style=for-the-badge&labelColor=121110">
-  <img alt="60 automated checks" src="https://img.shields.io/badge/tests-60%20passing-7ab55c?style=for-the-badge&labelColor=121110">
+  <img alt="63 automated checks" src="https://img.shields.io/badge/tests-63%20passing-7ab55c?style=for-the-badge&labelColor=121110">
   <img alt="Node 18+" src="https://img.shields.io/badge/node-18%2B-ece6dc?style=for-the-badge&logo=nodedotjs&logoColor=ece6dc&labelColor=121110">
 </p>
 
@@ -374,7 +374,7 @@ Every starter theme was run through **the platform's own tools**, not just Darkr
 | <picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/ghost-light.svg"><img src="assets/icons/ghost.svg" width="16" alt=""></picture> Ghost | gscan | **compatible with Ghost 6.x** |
 | <img src="assets/icons/wordpress.svg" width="16" alt=""> WordPress | a real WordPress (Playground), Site Editor block validation | **renders; 0 invalid blocks** in every template |
 | <img src="assets/icons/woocommerce.svg" width="30" alt=""> WooCommerce | WordPress + WooCommerce from wordpress.org, sample products | **shop and product pages render; 0 invalid blocks** |
-| All ten | Darkroom's structure check + **60 automated tests** | passing locally; CI runs them on Linux, Mac and Windows on every push |
+| All ten | Darkroom's structure check + **63 automated tests** | passing locally; run before every release |
 
 That run found real problems before you could: WooCommerce blocks that look self-closing but save HTML (the editor would have called them broken), missing side padding on phones, and new WooCommerce stores hiding behind "Coming soon". All fixed, and the checks now catch them.
 
@@ -383,12 +383,12 @@ That run found real problems before you could: WooCommerce blocks that look self
 
 | | |
 |---|---|
-| 🎨 **Art direction** | 13 style packs and looks inspired by brands you name. |
+| 🎨 **Art direction** | 13 style packs, looks inspired by brands you name, and 139 reviewed real sites it can look up by technique ("a scroll story like ScrollTide", parallax, a cursor effect). |
 | ♻️ **Redesign** | imports your current site (URL or folder): texts, menu, contacts, images with sizes, old addresses. |
 | 📱 **Phone preview** | your site on your phone over the same Wi-Fi, or a shareable link when you say yes. |
 | 📥 **Asset check** | measures what you drop in, suggests improvements, never rejects. |
 | 🧱 **Ten platforms** | dated profiles with the official docs to re-check, starters, a structure check, deploy steps. |
-| 🌊 **Scroll and motion** | tested recipes: reveals, scroll-scrubbed video, frame sequences, pinned scenes. Every one has a reduced-motion fallback. |
+| 🌊 **Scroll and motion** | tested recipes: reveals, scroll-scrubbed video, frame sequences (with a lighter set for phones), pinned scenes, characters that come alive per section, and an image that reveals another under your cursor. Every one has a reduced-motion fallback. |
 | 📷 **Real-browser QA** | Playwright captures at several screen sizes, contact sheets and crops, motion on and off; each run records the build it was taken from. |
 | 🔎 **Audits** | each check marked measured, heuristic or manual: accessibility, contrast from real pixels, clutter, word budgets, type scale, colour, keyboard, reduced motion. |
 | ⚖️ **Compliance checklist** | EU and US checklists for cookies, prices, disclosures and AI-image labelling. A checklist, not legal advice. |
@@ -403,9 +403,9 @@ That run found real problems before you could: WooCommerce blocks that look self
 
 ## 📚 Where the knowledge comes from
 
-<p align="center"><img src="assets/knowledge.svg" alt="84 real site designs that inspired it (66 good, 18 bad), 24 cross-site lessons with 10 promoted to rules, 32 research sources, 6 design tools, 60 automated checks, one human art director" width="100%"></p>
+<p align="center"><img src="assets/knowledge.svg" alt="139 real site designs that inspired it (96 good, 43 bad), 28 cross-site lessons with 12 promoted to rules, 32 research sources, 6 design tools, 63 automated checks, one human art director" width="100%"></p>
 
-Darkroom is **not a trained model**. It is written knowledge that Claude reads while it works, in plain files you can check: **inspiration from 84 real website designs** (kept as written lessons, never screenshots or copied code), **24 lessons** of which **10 became rules** after the author approved them, **32 research sources** (Nielsen Norman Group, WCAG 2.2, the European Accessibility Act, EU cookie and price rules, the AI Act), the **official docs of all ten platforms**, and the author's own taste calls.
+Darkroom is **not a trained model**. It is written knowledge that Claude reads while it works, in plain files you can check: **inspiration from 139 real website designs** (kept as written lessons, never screenshots or copied code), **28 lessons** of which **12 became rules** after the author approved them, **32 research sources** (Nielsen Norman Group, WCAG 2.2, the European Accessibility Act, EU cookie and price rules, the AI Act), the **official docs of all ten platforms**, and the author's own taste calls.
 
 **[→ The full list: every site, source and human decision](KNOWLEDGE.md)**
 

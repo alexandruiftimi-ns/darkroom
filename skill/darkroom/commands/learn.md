@@ -8,6 +8,8 @@ Run only from the Darkroom source repository (it contains `skill/darkroom/`), wi
 
 ## 1. Find what's new
 
+**Check the register first.** `library-src/CHECKED.md` lists every site ever checked, including rejected, unreachable and blocked ones. Before proposing or reviewing a site, look up its domain (`node library-src/_tools/checked-sync.mjs --has <url>`, exit 0 = already checked) and skip it unless the maintainer asks for a re-review. Every site you look at gets a row in the same pass (in the library or not, with the reason), and `checked-sync.mjs` re-syncs the library rows after entries change.
+
 Two kinds of input (layout and categories: `library-src/README.md`):
 
 - **Sites** — `library-src/<verdict>/sites/<slug>/notes.md` (format: `library-src/_template/notes.md`), optionally with images.
@@ -20,7 +22,7 @@ An example is **new** if `skill/darkroom/library/<verdict>/<slug>.md` doesn't ex
 1. Read the notes completely. The maintainer's verdict and reasons outrank your taste; if you disagree, say so in the entry's `Open question` line and lower `confidence`, don't overrule. A gallery verdict (Awwwards, colorlib…) is a strong prior, not a fact: award winners have flaws, listed "bad" sites can be deliberate art.
 2. If there's a URL and Playwright is available, from a folder where Playwright resolves run `node <repo>/skill/darkroom/scripts/darkroom.mjs study <url> --out <repo>/library-src/<verdict>/sites/<slug>/_study` (1440 + 390 px, five scroll points, consent banner dismissed, `study.json` with fonts, colour share, sections, words, zones, libraries, weight). Ask before installing anything. No URL / no Playwright / site down → signals are `estimated from images`.
 3. Open **every** image at full resolution (a filename is not an inspection) — the study shots and any provided images. Use the `/darkroom refs` checks: thesis, focal point, reading path, type, colour, density, baked UI, mobile re-composition. Take extra shots (`shoot --selector`) only where a key moment was missed.
-4. Write `skill/darkroom/library/<verdict>/<slug>.md` from `templates/LIBRARY_ENTRY.md`. Limits: ≤ 60 lines; every "works"/"fails" point names a **visible element**, a **principle** (`references/*` or a law) and a **transferable rule**. Mockups (Dribbble, Behance…) record `evidence: mockup` and can't claim production qualities (speed, real content). No copied body copy beyond a 6-word quote; no image files; no code. Write it as a designer's review of the design: never mention tools, files, screenshots, capture runs or blocked visits (a page that would not open is "not reviewed").
+4. Write `skill/darkroom/library/<verdict>/<slug>.md` from `templates/LIBRARY_ENTRY.md`. Limits: ≤ 60 lines; every "works"/"fails" point names a **visible element**, a **principle** (`references/*` or a law) and a **transferable rule**. "Fails" lists only what costs visitors something, each with a severity (medium, high, critical); low-severity polish stays out, and minor flaws never turn a good design into a bad example. Tag `techniques:` from the INDEX **By technique** table and add the slug to that row (new technique: new row, with the recipe that builds it or "none yet"). Mockups (Dribbble, Behance…) record `evidence: mockup` and can't claim production qualities (speed, real content). No copied body copy beyond a 6-word quote; no image files; no code. Write it as a designer's review of the design: never mention tools, files, screenshots, capture runs or blocked visits (a page that would not open is "not reviewed").
 
 ## 3. Update the index and lessons
 

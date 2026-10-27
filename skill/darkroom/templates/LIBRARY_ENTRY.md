@@ -5,6 +5,7 @@ verdict_source: <maintainer · Awwwards SOTD · Awwwards HM · Awwwards nominee 
 confidence: high | medium | low      # high = jury/maintainer verdict AND analysis agree
 category: <landing-page · product-launch · saas · app-marketing · dashboard · portfolio · agency · e-commerce · fashion-luxury · hospitality · food-drink · real-estate · architecture · editorial · corporate · events-culture · experimental · mobile-app>
 packs: [<primary pack>, <modifier>]
+techniques: [<tags from INDEX.md "By technique", or empty>]
 url: <url or "images only">
 evidence: design review | mockup (n) | published verdict only; design not reviewed
 added: YYYY-MM-DD

@@ -17,7 +17,8 @@ List the page as **claims with proof**, one line each. A section exists only if 
 | `words` | Body budget (`references/attention.md`: hero ≤ 30, feature ≤ 45, proof ≤ 60, closing ≤ 30). Headline ≤ 8 words. |
 | `cta` | none / secondary / primary, where the journey allows it. |
 | `motion` | The one motion (or none), trigger, range, reduced-motion fallback. |
-| `technique` | DOM/CSS · SVG · layers · canvas sequence · seeked video · WebGL: the least complex convincing one (`references/motion.md`). |
+| `technique` | DOM/CSS · SVG · layers · canvas sequence · seeked video · WebGL: the least complex convincing one (`references/motion.md`). For `hero-effect` and `story` pages, pick it from **By technique** in `library/INDEX.md` (frame-scrub, sprite-clips, pinned-chapters, layered-parallax, cursor-reveal…), read 1–2 of its good examples and build from the recipe the row names. |
+| `ground` | The chapter's background colour or time of day. A `story` page plans these as an arc across chapters (dawn → dusk, one colour per chapter), not one ground throughout (`library/LESSONS.md`). |
 | `assets` | Needed imagery: exists / to find / to generate / to build in code, and the interim placeholder. |
 | `mobile` | What changes on a phone. |
 | `status` | one of `planned` · `building` · `built` · `verified` · `blocked`. |

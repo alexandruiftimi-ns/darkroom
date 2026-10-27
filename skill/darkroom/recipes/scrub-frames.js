@@ -10,14 +10,24 @@
 // aborted; bitmaps outside the window are closed; drawing happens only when the shown frame changes; paused off-screen
 // and in hidden tabs; DPR is capped; reduced motion shows one still frame and never scrubs. Never draws a blank: if the
 // wanted frame is not decoded yet it keeps the nearest one that is.
+// Phones: when the manifest names a `mobile` set (`darkroom media frames --mobile-width`) and `mobileQuery` matches, that
+// set is used instead. Fast jumps: a few `anchors` spread coarse-to-fine (first, last, middle, quarters…) stay decoded,
+// so a fast scroll always lands near a real frame while the window catches up.
 
 export async function createFrameScrubber({
-  canvas, scene, manifestUrl, window: R = 12, dprCap = 2, ease = 0.14, concurrency = 4,
+  canvas, scene, manifestUrl, window: R = 12, dprCap = 2, ease = 0.14, concurrency = 4, anchors: anchorCount = 9,
+  mobileQuery = '(max-width: 1023px)',
   restFrame = 'last', reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches, onFrame,
 }) {
-  const manifest = await (await fetch(manifestUrl)).json();
+  let manifest = await (await fetch(manifestUrl)).json();
+  if (manifest.mobile && matchMedia(mobileQuery).matches) {
+    manifestUrl = new URL(manifest.mobile, new URL(manifestUrl, location.href)).href;
+    manifest = await (await fetch(manifestUrl)).json();
+  }
   const base = manifestUrl.slice(0, manifestUrl.lastIndexOf('/') + 1);
   const n = manifest.count;
+  const anchors = coarseToFine(n).slice(0, Math.min(anchorCount, n));
+  const anchorSet = new Set(anchors);
   const ctx = canvas.getContext('2d', { alpha: false });
   const bitmaps = new Array(n).fill(null);
   const loading = new Map(); // index -> AbortController
@@ -65,9 +75,10 @@ export async function createFrameScrubber({
 
   function manageWindow(centre) {
     const lo = centre - R, hi = centre + R;
-    for (const [i, ac] of loading) if (i < lo - 2 || i > hi + 2) ac.abort(); // stale decodes
-    for (let i = 0; i < n; i++) if (bitmaps[i] && (i < lo - R || i > hi + R) && i !== 0) { bitmaps[i].close(); bitmaps[i] = null; }
+    for (const [i, ac] of loading) if ((i < lo - 2 || i > hi + 2) && !anchorSet.has(i)) ac.abort(); // stale decodes
+    for (let i = 0; i < n; i++) if (bitmaps[i] && (i < lo - R || i > hi + R) && !anchorSet.has(i)) { bitmaps[i].close(); bitmaps[i] = null; }
     const order = []; for (let d = 0; d <= R; d++) { order.push(centre + d); if (d) order.push(centre - d); }
+    order.push(...anchors); // window first, then any anchor still missing
     let started = 0;
     for (const i of order) { if (loading.size >= concurrency) break; if (i >= 0 && i < n && !bitmaps[i] && !loading.has(i)) { load(i); started++; } }
     return started;
@@ -112,4 +123,23 @@ export async function createFrameScrubber({
   }
 
   return scrubber;
+}
+
+// 0, last, middle, then the middles of each half, and so on: any prefix covers the whole range evenly.
+function coarseToFine(n) {
+  if (n <= 0) return [];
+  const out = [0], seen = new Set([0]);
+  if (n > 1) { out.push(n - 1); seen.add(n - 1); }
+  let spans = [[0, n - 1]];
+  while (spans.length) {
+    const next = [];
+    for (const [a, b] of spans) {
+      if (b - a <= 1) continue;
+      const m = Math.floor((a + b) / 2);
+      if (!seen.has(m)) { out.push(m); seen.add(m); }
+      next.push([a, m], [m, b]);
+    }
+    spans = next;
+  }
+  return out;
 }
