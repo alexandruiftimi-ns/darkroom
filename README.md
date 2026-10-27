@@ -420,27 +420,20 @@ Requires [Claude Code](https://claude.com/claude-code) and Node 18+. Two ways, s
 **As a plugin** (easiest; updates with one command). Inside Claude Code:
 
 ```text
-/plugin install darkroom --marketplace alexandruiftimi-ns/darkroom
+/plugin marketplace add alexandruiftimi-ns/darkroom
+/plugin install darkroom@darkroom
 ```
 
 Or from your shell: `claude plugin marketplace add alexandruiftimi-ns/darkroom`, then `claude plugin install darkroom@darkroom`. Update later with `claude plugin update darkroom@darkroom`. Plugin commands carry the plugin's name, so you type **`/darkroom:darkroom`**.
 
-**As a plain skill** (you type **`/darkroom`**):
-
-```bash
-git clone https://github.com/alexandruiftimi-ns/darkroom.git && cd darkroom
-node install.mjs              # for all your projects  (~/.claude/skills/darkroom)
-node install.mjs --project    # or for the current project only
-```
-
-Or download `darkroom-skill.zip` from the [latest release](https://github.com/alexandruiftimi-ns/darkroom/releases/latest) and unzip it into `~/.claude/skills/`. Pick one way, not both, or Darkroom shows up twice.
+**As a plain skill** (you type **`/darkroom`**): copy the `skill/darkroom/` folder into `~/.claude/skills/` (all your projects) or `.claude/skills/` in one project. Pick one way, not both, or Darkroom shows up twice.
 
 1. **Restart Claude Code.**
 2. For screenshots and audits, Darkroom needs Playwright: `npm i -D playwright && npx playwright install chromium` in your project, or a global install. On Windows it can use the Edge browser you already have. ffmpeg is optional.
    Not sure what you have? `node ~/.claude/skills/darkroom/scripts/darkroom.mjs doctor` (plugin installs: ask Claude to run Darkroom's doctor) checks and prints the exact command for anything missing.
 3. Type `/darkroom` (plugin: `/darkroom:darkroom`) and describe your site.
 
-Platform tools (Shopify CLI, WordPress Playground, gscan, Astro, Hugo) are free, and Darkroom asks before it downloads any of them. To remove Darkroom: `node install.mjs --uninstall`, or `claude plugin uninstall darkroom@darkroom` for the plugin.
+Platform tools (Shopify CLI, WordPress Playground, gscan, Astro, Hugo) are free, and Darkroom asks before it downloads any of them. To remove Darkroom: `claude plugin uninstall darkroom@darkroom`, or delete the copied `darkroom` folder.
 
 <details>
 <summary>📁 <b>What is inside the repository</b></summary>
@@ -458,20 +451,7 @@ The skill is plain Markdown playbooks plus small Node scripts. There is no build
 | `skill/darkroom/styles/`, `library/`, `prompts/`, `recipes/` | style packs, written lessons from real sites, model prompts, tested motion code |
 | `skill/.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` | what makes the same skill installable as a Claude Code plugin |
 
-Only `skill/darkroom/` is installed. Tests, the example and CI stay in the repository.
-
-</details>
-
-<details>
-<summary>🛠️ <b>Develop and test</b></summary>
-
-```bash
-npm install && npx playwright install chromium
-npm test        # 60 checks against skill/darkroom; keep it green
-npm run pack    # dist/darkroom-skill.zip
-```
-
-Claude only sees the installed copy. After editing anything in `skill/darkroom/`, run `node install.mjs` again and restart Claude Code.
+Only `skill/darkroom/` is installed.
 
 </details>
 
