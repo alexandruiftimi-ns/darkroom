@@ -1,23 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 250" role="img" aria-label="Where Darkroom's knowledge comes from: 139 real site designs that inspired it (96 good, 43 bad), 28 cross-site lessons of which 12 became rules, 29 research sources, 7 design tools read for principles, 111 automated checks, and the author's taste decisions.">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 440" role="img" aria-label="Where Darkroom's knowledge comes from: 139 real site designs that inspired it (96 good, 43 bad), 28 cross-site lessons of which 12 became rules, 29 research sources, 7 design tools read for principles, 100 example sites with full build specs, 35 motion and media recipes tested in a real browser, 111 automated checks, and the author's taste decisions.">
   <style>
     text { font-family: Inter, Segoe UI, Helvetica, Arial, sans-serif; }
     .n { fill: #ece6dc; font-size: 46px; font-weight: 700; letter-spacing: -1px; }
-    .l { fill: #ece6dc; font-size: 14px; font-weight: 600; }
-    .s { fill: #a39b8f; font-size: 12.5px; }
+    .l { fill: #ece6dc; font-size: 15px; font-weight: 600; }
+    .s { fill: #a39b8f; font-size: 13px; }
     .in { animation: in 1s cubic-bezier(.22,1,.36,1) both; }
-    .d1 { animation-delay: .1s; } .d2 { animation-delay: .2s; } .d3 { animation-delay: .3s; } .d4 { animation-delay: .4s; } .d5 { animation-delay: .5s; }
+    .d1 { animation-delay: .08s; } .d2 { animation-delay: .16s; } .d3 { animation-delay: .24s; } .d4 { animation-delay: .32s; } .d5 { animation-delay: .4s; } .d6 { animation-delay: .48s; } .d7 { animation-delay: .56s; }
     @keyframes in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
     @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
   </style>
-  <rect width="1280" height="250" rx="16" fill="#121110"/>
+  <rect width="1280" height="440" rx="16" fill="#121110"/>
   <g fill="#1b1917" stroke="#2e2a26">
-    <rect x="30" y="30" width="190" height="190" rx="12"/><rect x="236" y="30" width="190" height="190" rx="12"/><rect x="442" y="30" width="190" height="190" rx="12"/>
-    <rect x="648" y="30" width="190" height="190" rx="12"/><rect x="854" y="30" width="190" height="190" rx="12"/><rect x="1060" y="30" width="190" height="190" rx="12" stroke="#ff7a3d" stroke-opacity=".6"/>
+    <rect x="30" y="30" width="293" height="180" rx="12"/><rect x="339" y="30" width="293" height="180" rx="12"/><rect x="648" y="30" width="293" height="180" rx="12"/><rect x="957" y="30" width="293" height="180" rx="12"/>
+    <rect x="30" y="230" width="293" height="180" rx="12"/><rect x="339" y="230" width="293" height="180" rx="12"/><rect x="648" y="230" width="293" height="180" rx="12"/><rect x="957" y="230" width="293" height="180" rx="12" stroke="#ff7a3d" stroke-opacity=".6"/>
   </g>
-  <g class="in"><text class="n" x="52" y="98">139</text><text class="l" x="52" y="132">designs as inspiration</text><text class="s" x="52" y="156">96 good · 43 bad</text><text class="s" x="52" y="174">kept as written</text><text class="s" x="52" y="192">lessons only</text></g>
-  <g class="in d1"><text class="n" x="258" y="98">28</text><text class="l" x="258" y="132">cross-site lessons</text><text class="s" x="258" y="156">12 promoted to rules,</text><text class="s" x="258" y="174">each approved by hand</text></g>
-  <g class="in d2"><text class="n" x="464" y="98">29</text><text class="l" x="464" y="132">research sources</text><text class="s" x="464" y="156">WCAG 2.2, NN/g,</text><text class="s" x="464" y="174">Awwwards criteria,</text><text class="s" x="464" y="192">EU consumer law</text></g>
-  <g class="in d3"><text class="n" x="670" y="98">7</text><text class="l" x="670" y="132">design tools</text><text class="s" x="670" y="156">principles only,</text><text class="s" x="670" y="174">rewritten, no code copied</text></g>
-  <g class="in d4"><text class="n" x="876" y="98">111</text><text class="l" x="876" y="132">automated checks</text><text class="s" x="876" y="156">catch false passes and</text><text class="s" x="876" y="174">false alarms; run on</text><text class="s" x="876" y="192">every change</text></g>
-  <g class="in d5"><text class="n" x="1082" y="98" fill="#ff7a3d">1</text><text class="l" x="1082" y="132">human art director</text><text class="s" x="1082" y="156">taste calls, dislikes,</text><text class="s" x="1082" y="174">approvals, test assets</text></g>
+  <g class="in"><text class="n" x="54" y="96">139</text><text class="l" x="54" y="130">designs as inspiration</text><text class="s" x="54" y="154">96 good · 43 bad, kept as</text><text class="s" x="54" y="173">written lessons only</text></g>
+  <g class="in d1"><text class="n" x="363" y="96">28</text><text class="l" x="363" y="130">cross-site lessons</text><text class="s" x="363" y="154">12 promoted to rules,</text><text class="s" x="363" y="173">each approved by hand</text></g>
+  <g class="in d2"><text class="n" x="672" y="96">29</text><text class="l" x="672" y="130">research sources</text><text class="s" x="672" y="154">WCAG 2.2, NN/g, Awwwards</text><text class="s" x="672" y="173">criteria, EU consumer law</text></g>
+  <g class="in d3"><text class="n" x="981" y="96">7</text><text class="l" x="981" y="130">design tools</text><text class="s" x="981" y="154">principles only,</text><text class="s" x="981" y="173">rewritten, no code copied</text></g>
+  <g class="in d4"><text class="n" x="54" y="296">100</text><text class="l" x="54" y="330">example sites</text><text class="s" x="54" y="354">a request + every value;</text><text class="s" x="54" y="373">read before each design</text></g>
+  <g class="in d5"><text class="n" x="363" y="296">35</text><text class="l" x="363" y="330">motion &amp; media recipes</text><text class="s" x="363" y="354">each run in a real browser,</text><text class="s" x="363" y="373">with a reduced-motion path</text></g>
+  <g class="in d6"><text class="n" x="672" y="296">111</text><text class="l" x="672" y="330">automated checks</text><text class="s" x="672" y="354">catch false passes and false</text><text class="s" x="672" y="373">alarms; run on every change</text></g>
+  <g class="in d7"><text class="n" x="981" y="296" fill="#ff7a3d">1</text><text class="l" x="981" y="330">human art director</text><text class="s" x="981" y="354">taste calls, dislikes,</text><text class="s" x="981" y="373">approvals, test assets</text></g>
 </svg>

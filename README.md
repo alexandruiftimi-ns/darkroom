@@ -465,7 +465,7 @@ That run found real problems before you could: WooCommerce blocks that look self
 | 📱 **Phone preview** | your site on your phone over the same Wi-Fi, or a shareable link when you say yes. |
 | 📥 **Asset check** | measures what you drop in, suggests improvements, never rejects. |
 | 🧱 **Ten platforms** | dated profiles with the official docs to re-check, starters, a structure check, deploy steps. Building in Lovable, v0, Bolt or Cursor? Darkroom writes the prompt for that tool and checks the builder's preview. |
-| 🌊 **Scroll and motion** | 34 tested building blocks: background video that never flashes, seamless loops, readable text over video, headline entrances, menus, buttons, grain, marquees, count-ups, word-by-word reveals, stacking cards, typewriter and rotating words, full-width wordmarks, phone swipe rails, magnetic buttons, parallax layers, spotlights, a depth carousel, frosted glass, mood-clip switchers, shader backdrops, a draggable 3D model, reveals, scroll-scrubbed video, frame sequences (with a lighter set for phones), pinned scenes, characters that come alive per section, and an image that reveals another under your cursor. Every one has a reduced-motion fallback. |
+| 🌊 **Scroll and motion** | 35 tested building blocks: background video that never flashes, seamless loops, readable text over video, headline entrances, menus, buttons, grain, marquees, count-ups, word-by-word reveals, stacking cards, typewriter and rotating words, full-width wordmarks, phone swipe rails, magnetic buttons, parallax layers, spotlights, a depth carousel, frosted glass, mood-clip switchers, shader backdrops, a draggable 3D model, reveals, scroll-scrubbed video, frame sequences (with a lighter set for phones), pinned scenes, characters that come alive per section, and an image that reveals another under your cursor. Every one has a reduced-motion fallback. |
 | 📷 **Real-browser QA** | Playwright captures at several screen sizes, contact sheets and crops, motion on and off; each run records the build it was taken from. |
 | 🔎 **Audits** | 33 checks, each marked measured, heuristic or manual: accessibility, contrast from real pixels, clutter, word budgets, type scale, colour, keyboard, reduced motion, white flash on load, hidden headlines, videos that don't play or jump on loop, fonts that didn't load, see-through frames in scroll films. |
 | ⚖️ **Compliance checklist** | EU and US checklists for cookies, prices, disclosures and AI-image labelling. A checklist, not legal advice. |
@@ -480,9 +480,9 @@ That run found real problems before you could: WooCommerce blocks that look self
 
 ## 📚 Where the knowledge comes from
 
-<p align="center"><img src="assets/knowledge.svg" alt="139 real site designs that inspired it (96 good, 43 bad), 28 cross-site lessons with 12 promoted to rules, 29 research sources, 7 design tools, 111 automated checks, one human art director" width="100%"></p>
+<p align="center"><img src="assets/knowledge.svg" alt="139 real site designs that inspired it (96 good, 43 bad), 28 cross-site lessons with 12 promoted to rules, 29 research sources, 7 design tools, 100 example sites, 35 tested recipes, 111 automated checks, one human art director" width="100%"></p>
 
-Darkroom is **not a trained model**. It is written knowledge that Claude reads while it works, in plain files you can check: **inspiration from 139 real website designs** (kept as written lessons, never screenshots or copied code), **28 lessons** of which **12 became rules** after the author approved them, **29 research sources** (Nielsen Norman Group, WCAG 2.2, the European Accessibility Act, EU cookie and price rules, the AI Act), the **official docs of all ten platforms**, and the author's own taste calls.
+Darkroom is **not a trained model**. It is written knowledge that Claude reads while it works, in plain files you can check: **inspiration from 139 real website designs** (kept as written lessons, never screenshots or copied code), **28 lessons** of which **12 became rules** after the author approved them, **29 research sources** (Nielsen Norman Group, WCAG 2.2, the European Accessibility Act, EU cookie and price rules, the AI Act), the **official docs of all ten platforms**, **100 example sites** written as full build specs (every font, size, colour and timing) that Darkroom reads before designing yours, **35 motion and media recipes** each tested in a real browser, **Values tables** for type, motion, spacing and colour, and the author's own taste calls. **111 automated checks** run on every change, so a rule that stops working gets noticed.
 
 **[→ The full list: every site, source and human decision](KNOWLEDGE.md)**
 
@@ -525,6 +525,7 @@ The skill is plain Markdown playbooks plus small Node scripts. There is no build
 | `skill/darkroom/scripts/` | `darkroom.mjs`: capture, audit, platform, media, assets, state |
 | `skill/darkroom/templates/platforms/` | the starter for each platform |
 | `skill/darkroom/references/` | colour, asset tools, modes, looks, motion toolkit, craft, compliance… |
+| `skill/darkroom/examples/` | 100 example requests, each with the full build spec Darkroom would write |
 | `skill/darkroom/styles/`, `library/`, `prompts/`, `recipes/` | style packs, written lessons from real sites, model prompts, tested motion code |
 | `skill/.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` | what makes the same skill installable as a Claude Code plugin |
 

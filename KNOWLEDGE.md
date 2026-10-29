@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/knowledge.svg" alt="139 real site designs that inspired it (96 good, 43 bad), 28 cross-site lessons with 12 promoted to rules, 29 research sources, 7 design tools, 111 automated checks, one human art director" width="100%"></p>
+<p align="center"><img src="assets/knowledge.svg" alt="139 real site designs that inspired it (96 good, 43 bad), 28 cross-site lessons with 12 promoted to rules, 29 research sources, 7 design tools, 100 example sites, 35 tested recipes, 111 automated checks, one human art director" width="100%"></p>
 
 # Where Darkroom's knowledge comes from
 
@@ -9,9 +9,10 @@
 | [Real websites](#1-real-websites-that-inspired-it) | 139 site designs: 96 good examples, 43 bad ones, searchable by technique | `library/` (one short written entry per site) |
 | [Lessons](#2-lessons-drawn-from-them) | 28 patterns seen across several sites; 12 promoted to rules | `library/LESSONS.md`, then `references/` |
 | [Research](#3-research-and-standards) | 29 sources: usability research, accessibility standards, EU law, award criteria | `references/sources.md` |
-| [Other tools](#4-other-design-tools-studied) | 6 open design skills and tools, read for principles only | `references/provenance.md` |
-| [Test pages](#5-test-pages-built-with-it) | 4 pages built end to end to find what broke | `examples/`, the test suite |
-| [Human input](#6-human-input) | the author's taste calls, dislikes, approvals and assets | everywhere |
+| [Other tools](#4-other-design-tools-studied) | 7 open design skills and tools, read for principles only | `references/provenance.md` |
+| [Examples and recipes](#5-examples-and-recipes) | 100 example sites written as full build specs; 35 motion and media recipes tested in a real browser; Values tables for type, motion, spacing and colour | `examples/`, `recipes/`, `references/` |
+| [Test pages](#6-test-pages-built-with-it) | 4 pages built end to end to find what broke | the test suite (111 checks) |
+| [Human input](#7-human-input) | the author's taste calls, dislikes, approvals and assets | everywhere |
 
 ---
 
@@ -56,7 +57,7 @@ Honest limits: award winners are a biased sample (they reward spectacle, not con
 | [Santioni Spirits](https://santionispirits.com/) | food-drink | Awwwards SOTD + Developer Award + Business & Services Honors |
 | [Theobroma Chocolat](https://theobromachocolat.com/) | food-drink | Awwwards nominee |
 | [KEY](https://key.co/) | hospitality | Awwwards nominee / HM (listing not verified) |
-| [Schlosshotel Kitzbühel](not recorded (no study.json)) | hospitality | Awwwards nominee |
+| Schlosshotel Kitzbühel | hospitality | Awwwards nominee |
 | [Tengile MalaMala Collection](https://tengilemalamala.com/) | hospitality | Awwwards SOTD + Developer Award |
 | [Terreno Barrio Hotel](https://www.terrenohotel.com/) | hospitality | Awwwards nominee |
 | [Velaa Private Island](https://www.velaaprivateisland.com/) | hospitality | Awwwards HM (2026-09-25) |
@@ -238,15 +239,21 @@ Read for principles, then rewritten in Darkroom's own words and code; **no code 
 | Anthropic `frontend-design` | the idea comes from the subject; spend the boldness in one place |
 | MotionSites Web Builder | write every value before the code; read close examples to match their precision; hero media whose edges match the page; a clear finish line for reviews (its example prompts were studied privately; Darkroom's 100 examples are its own) |
 
-## 5. Test pages built with it
+## 5. Examples and recipes
 
-Each build exposed gaps that became fixes or tests: **NorthShutter** (an AR headset concept, scroll-scrubbed hero film, lens dive), **Porsche 911 Turbo S** (unofficial concept, frame-sequence film and configurator), **Forno Cinco** (a fictional bakery, no assets at all), **Halden Kiln** (a fictional ceramics studio, scroll-driven kiln firing; in [`examples/`](examples/)). The 41-check test suite in [`tests/`](tests/) grew from what went wrong on them. Examples: text contrast measured from pixels, because a colour check passed text that was 5 % visible; and the scroll pass, because fade-in text hid problems from the audit.
+- **[100 example sites](skill/darkroom/examples/INDEX.md)**: shops, restaurants, clinics, schools, portfolios, festivals, publications, a redesign and an "apple.com-like" product page, on all ten platforms. Each is a request you could type after `/darkroom` plus the full build spec Darkroom would write: every font, size, colour, timing and media placement, a signature, and a "do not" list. Darkroom reads the two closest before writing a spec, to match their precision, never their copy. They are written, not built: the values are starting points.
+- **[35 recipes](skill/darkroom/recipes/README.md)**: framework-free motion, media and interface code (video layers, entrances, scroll-scrubbed frames and video, pinned scenes, menus, carousels and more). Every one runs in a real browser in the test suite, works without JavaScript, and has a reduced-motion path (the 3D model hero is tested for its fallback only).
+- **Values tables** in `references/typography.md`, `motion-craft.md`, `craft.md` and `color.md`: the numbers for type, motion, spacing and colour, so specs never guess.
 
-## 6. Human input
+## 6. Test pages built with it
+
+Each build exposed gaps that became fixes or tests: **NorthShutter** (an AR headset concept, scroll-scrubbed hero film, lens dive), **Porsche 911 Turbo S** (unofficial concept, frame-sequence film and configurator), **Forno Cinco** (a fictional bakery, no assets at all), **Halden Kiln** (a fictional ceramics studio, scroll-driven kiln firing). The test suite (111 checks today, kept with the maintainer's tools rather than in this repository) grew from what went wrong on them. Examples: text contrast measured from pixels, because a colour check passed text that was 5 % visible; and the scroll pass, because fade-in text hid problems from the audit.
+
+## 7. Human input
 
 Darkroom was directed by its author, acting as client and creative director while Claude did the research, writing and coding. Their input shaped it directly:
 
-- **The goal and the scope.** "$10k-looking" single landing pages, made autonomously. The human only makes taste calls, supplies facts and assets, and approves spend. Single pages only: no shops, blogs or apps.
+- **The goal and the scope.** "$10k-looking" single landing pages, made autonomously. The human only makes taste calls, supplies facts and assets, and approves spend. It started with single landing pages only; on 2026-10-26 the author widened it to websites on ten platforms (shops, blogs, publications), with web apps and dashboards still out.
 - **Approve before build.** No guessed looks: show options and get a yes. This became the checkpoints (look + motion, direction, slice, final).
 - **Dislikes became audit checks.** Font soup → the font-budget check. Text scattered so the eye jumps around → reading zones and eye travel. Brochure-length copy → word budgets. A rigid 60-30-10 colour rule when colour was asked for → the `expressive` colour mode.
 - **Curating the library.** Full entries for Awwwards Sites of the Day, short ones for the rest. Every colorlib site counted as bad. Each lesson that became a rule was approved by hand; the font budget was raised from 2 to 3 after review.
