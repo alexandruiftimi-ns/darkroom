@@ -184,6 +184,37 @@ export async function boomerang(source, opt = {}) {
   return { file: out, bytes, ...a };
 }
 
+/** media chain <clip> <clip> …: score every seam (last frame of a clip against the first frame of the next), then join
+ *  the clips into one H.264 file for `media frames` / scrub-video. A clean seam drops the next clip's first frame (it
+ *  repeats the last one: a connector made from the extracted frame). Seams are reported, never fixed silently. */
+export async function chain(sources, opt = {}) {
+  const eng = ffmpegOrThrow(true); const bin = eng.ffmpeg.bin;
+  const clips = sources.map((s) => path.resolve(s));
+  if (clips.length < 2) throw new Error('media chain needs two or more clips, in playing order');
+  for (const c of clips) if (!fs.existsSync(c)) throw new Error(`not found: ${c}`);
+  const seams = [];
+  for (let i = 0; i < clips.length - 1; i++) {
+    const a = grab(clips[i], 'last'); const b = grab(clips[i + 1], 'first');
+    const score = a && b ? seamScore(a, b) : null;
+    seams.push({ from: path.basename(clips[i]), to: path.basename(clips[i + 1]), seam: score, clean: score !== null && score <= SEAM_THRESHOLD });
+  }
+  const out = path.resolve(opt.out && opt.out !== true ? String(opt.out) : path.join(path.dirname(clips[0]), 'chain.mp4'));
+  if (clips.includes(out)) throw new Error('the output would overwrite a source clip; pass --out');
+  mkdirp(path.dirname(out));
+  const width = Number(opt.width ?? 1920); const fps = Number(opt.fps ?? 24); const crf = Number(opt.crf ?? 20);
+  const parts = clips.map((_, i) => `[${i}:v]fps=${fps},scale=${width}:-2:flags=lanczos,format=yuv420p,setsar=1${i > 0 && seams[i - 1].clean ? ',trim=start_frame=1' : ''},setpts=PTS-STARTPTS[v${i}]`);
+  const fc = `${parts.join(';')};${clips.map((_, i) => `[v${i}]`).join('')}concat=n=${clips.length}:v=1:a=0[v]`;
+  run(bin, ['-y', '-v', 'error', ...clips.flatMap((c) => ['-i', c]), '-filter_complex', fc, '-map', '[v]', '-an', '-c:v', 'libx264', '-preset', 'slow', '-crf', String(crf), '-profile:v', 'high', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', out]);
+  const bytes = fs.statSync(out).size;
+  const result = { file: out, mb: mb(bytes), clips: clips.length, seams, threshold: SEAM_THRESHOLD };
+  console.log(JSON.stringify(result, null, 2));
+  for (const s of seams) {
+    if (s.seam === null) console.log(`note  ${s.from} → ${s.to}: seam not measured`);
+    else if (!s.clean) console.log(`warn  ${s.from} → ${s.to}: seam ${s.seam} (> ${SEAM_THRESHOLD}): the picture jumps here. Make the next clip from the extracted last frame of ${s.from} (not the original still), keep one model for the whole chain, or crossfade 6–8 frames across the seam`);
+  }
+  return result;
+}
+
 // ---- looking ----
 /** media sheet <folder>: a numbered contact sheet (JPG) of every image and video first frame, plus a JSON index. */
 export async function sheet(dir, opt = {}) {

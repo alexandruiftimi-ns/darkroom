@@ -61,6 +61,7 @@ Format:
 - Evidence: bad/lipton, bad/real-ultimate-power, bad/tag-team-signs, bad/yahoo, bad/yale-school-of-art, bad/berkshire-hathaway, bad/hacker-news, bad/life-action-revival, bad/drudge-report · good counterparts good/forge-automotive, good/offfforum (one sentence)
 - Rule: one live-text h1 of ≤ 8 words that names the offer, above or beside the focal image, before any other copy.
 - Status: promoted → references/tells.md, 2026-10-25
+- 2026-10-29 evidence: bad/temple-ooo, bad/zia-restaurant, bad/gogh-with-the-flow, bad/mecha-warz, bad/kudanil (an empty sky first), bad/anotequest, bad/hi-nepal-treks · good counterparts good/wall-doctor (who, where, what and the phone number in the hero), good/meltkit, good/ru-x909 (product and price in the first frame)
 
 ## Show the thing sold (or the real task) in the first frame
 - Applies to: all; strongest in saas, e-commerce, food-drink, hospitality
@@ -103,6 +104,7 @@ Format:
 - Evidence: good/esr-bespoke (55.9 MB), good/edolus (49 MB), good/brandon-yasin (16.4 MB), good/emotion-agency (10.4 MB) · contrast bad/hacker-news (6 KB), bad/drudge-report (54 KB) — their faults are structure, not weight · 2026-10-27: bad/avatr-vision (62 MB), good/mat-voyce (32 MB), good/immersive-garden (21 MB), bad/empire-metal-products (21 MB), good/awards-racing (20 MB); good/lunarwheel blocks phones for seconds with live WebGL that a pre-rendered sequence would replace
 - Rule: poster first, responsive image sizes, video and frames after first interaction or consent; budget the first view (≤ ~1.5 MB) before the cinematic payload.
 - Status: candidate
+- 2026-10-29 evidence (AI-motion batch): good/royal-pop (35 MB of frames, read as jumpy), good/sideb (13 MB), good/coffee-aecync (8 MB) · bad/abstrakt-fable (48 MB), bad/sk-global-foods (29 MB), bad/exit-simulation (16 MB), bad/hex (24 autoplay videos) · counter-evidence good/astral-logistic (832 KB, one photograph). The audit now measures what loads before the first scroll (`first-scroll-weight`, ~4 MB budget for film pages).
 
 ## Label at the left edge, statement from ~50 %
 - Applies to: luxury, editorial-news, nature
@@ -157,6 +159,7 @@ Format:
 - Evidence: bad/avatr-vision (Enter the Experience), bad/dont-board-me (bounce a ball to enter), bad/minh-pham (START), bad/real-ultimate-power (YES/no) · counter-evidence: a sound on/off choice that also lets you scroll on (good/awards-racing, good/emotion-agency) is not a gate
 - Rule: the page scrolls and sells with no click. Intros, games and sound choices sit over or beside the content and can be skipped by scrolling. Severity: high.
 - Status: promoted → references/tells.md, 2026-10-27
+- 2026-10-29 evidence: bad/unfor-dev (ENTER), bad/bruno-simon, bad/gareth-heyes, bad/curllmooha (blow the dandelion first), bad/tides-of-time (three-step onboarding), bad/irfan-xp (boot screen), bad/pch-drive (Start); phone variant "best viewed on desktop": bad/shelby-kho (audit `phone-gate`) · counter-evidence: good/mattebso keeps a soft "turn your phone" card with "view anyway" and stays good
 
 ## A long scroll story needs an arc: change the ground or the time of day per chapter
 - Applies to: `story` and `hero-effect` pages, product launches, agencies
@@ -175,3 +178,34 @@ Format:
 - Evidence: bad/crypto-com (navy gradient, phone mockup, Inter), bad/empire-metal-products (blue rounded cards, Poppins, chat bubbles), bad/nmg-group (stock towers) · counter-evidence: good/linear also uses Inter and a dark UI and looks designed, because real product screens, spacing and contrast carry it
 - Rule: every page needs one owned device from its subject (bible). The font alone neither makes nor breaks it.
 - Status: candidate (2026-10-27)
+- 2026-10-29 evidence: bad/yaven, bad/spine-fellowship, bad/mahadeva-framer, bad/splitleaf, bad/notiqs, bad/ajkale · counter-evidence: good/uicraft, good/storywizard, good/homelab-studio, good/palettt, good/wall-doctor use the familiar template and stay good because the product or one owned accent carries them (next lesson)
+
+## Template polish is not a minus when the product carries it
+- Applies to: saas, app-marketing, agency, corporate
+- Evidence: good/uicraft, good/storywizard, good/homelab-studio, good/palettt, good/wall-doctor, good/usta-agency, good/meltkit · counter-evidence: bad/mahadeva-framer, bad/yaven, bad/splitleaf: the same template with nothing owned in it
+- Rule: a familiar, clean structure is fine (the maintainer's verdicts never mark it down for that). What it needs is one owned thing in the first frame: the product working, the real work, or one accent with one job.
+- Status: candidate (2026-10-29)
+
+## The product's own output is the hero image
+- Applies to: saas, app-marketing, tools
+- Evidence: good/todrawn (type a line, the pen draws it), good/refbox, good/vibecurb, good/designotion, good/meltkit (the app on its own live output), good/storywizard (its widget running on the page), good/uicraft (before/after) · counter-evidence: good/palettt uses an icon ring and is still good
+- Rule: for a tool, show what it makes, working, in the first frame; a static screenshot is the fallback, a stock illustration is the miss. Library technique `live-product`.
+- Status: candidate (2026-10-29)
+
+## One object or one world beats decoration
+- Applies to: agency, portfolio, product-launch, story pages
+- Evidence: good/outpost-dayemadnan (one folded-paper world), good/studio-jamoora (a spinning top), good/usta-agency (one particle object), good/railtec-new (a train on a track), good/jordan-gibbs, good/aniiashvili, good/mattebso (one lit room), good/die-antwoord (one device) · counter-evidence: bad/mecha-warz (one generated object, no message around it), bad/ohzi-labs (the object crowded by seven text zones)
+- Rule: pick one object or world from the subject and let every chapter happen to it or inside it; the message still sits in live text beside it.
+- Status: candidate (2026-10-29)
+
+## Retro, toy or hand-made dress loses on a serious offer
+- Applies to: all packs; the maintainer's taste and Darkroom's home ground
+- Evidence: bad/arthouse, bad/shelby-kho, bad/anotequest, bad/sienna-chen, bad/zippy-town, bad/gareth-heyes, bad/portkiller, bad/window-swap, bad/irfan-xp · counter-evidence: good/stuff-my-dog-loves (the site is a toy), good/jordan-gibbs (a retro TV shot like a product, polished)
+- Rule: Darkroom's home ground is modern and editorial-modern. Build retro or quirky looks when the user asks, after the one-line note; never propose them as the default.
+- Status: promoted → commands/concierge.md ("Darkroom's home ground"), styles/README.md, 2026-10-29 (maintainer's decision)
+
+## Faint "soft" text is a build check, not a verdict
+- Applies to: all
+- Evidence: good/formsuite, good/horizon-realestate, good/film-studio-framer, good/ru-x909, good/homelab-studio, good/astral-logistic, good/surfing-framer, good/vibecurb, good/refbox, good/palettt (labels or body at 40–60 % opacity, or same-hue text on a coloured ground) · counter-evidence: bad/pch-drive, where pale text on a pale sky is part of why the page fails
+- Rule: fix contrast in the build (`contrast` check); never let it decide whether a design direction is good.
+- Status: candidate (2026-10-29)

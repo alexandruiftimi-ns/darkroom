@@ -13,24 +13,32 @@ import { grabAsync, seamScore, SEAM_THRESHOLD } from './mediakit.mjs';
 export const CHECKS = [
   { id: 'fonts', sev: 'high', basis: 'measured', what: 'font families rendered vs budget', limits: 'visible text only; fallback-stack glyphs are not traced' },
   { id: 'type-scale', sev: 'medium', basis: 'heuristic', what: '> 9 distinct rendered font sizes', limits: 'fluid clamp() sizes inflate the count' },
-  { id: 'reading-zones', sev: 'high', basis: 'heuristic', what: 'text zones in the first viewport (> max+1 high, > max medium)', limits: 'first viewport only; zones are clustered by distance' },
+  { id: 'reading-zones', sev: 'high', basis: 'heuristic', what: 'text zones in the first viewport (> max+1 high, > max medium)', limits: 'first viewport only; zones are clustered by distance; tickers and marquees (a track over 1.4 viewports wide, or marked marquee/ticker) are not counted' },
   { id: 'eye-travel', sev: 'medium', basis: 'heuristic', what: 'reading path crosses the viewport > 2x', limits: 'document order is assumed to be reading order' },
   { id: 'corners', sev: 'medium', basis: 'heuristic', what: 'content in 3+ viewport corners', limits: '' },
   { id: 'overflow', sev: 'high', basis: 'measured', what: 'page wider than the viewport, naming up to 5 offending elements', limits: 'initial state only; offenders inside clipping ancestors are skipped' },
   { id: 'first-paint', sev: 'high', basis: 'measured', what: 'early frame at ~350 ms is >= 90 % one colour far (ΔE > 10) from the settled first screen (white flash / blank first frame), or the h1 is not visible 1.5 s after load', limits: 'desktop, default motion; colours compared at 64×40 px' },
   { id: 'video-playback', sev: 'high', basis: 'measured', what: 'autoplay <video> not playing after load: error, readyState < 2 or paused; codec gaps of the test browser reported as info', limits: 'videos with the autoplay attribute, or inside a [data-video-layer] (recipes/video-layer.js); other JS-started videos are not checked' },
   { id: 'loop-seam', sev: 'medium', basis: 'heuristic', what: 'a video that loops natively (loop attribute) whose first and last frames differ by more than 6 % (mean absolute difference): a visible jump on every loop', limits: 'needs ffmpeg; compares one frame at each end at 96×54; videos with data-video-loop (fade loop) are skipped' },
-  { id: 'frame-blend', sev: 'high', basis: 'measured', what: 'while scrolling with default motion, a full-size image is drawn on a canvas at partial opacity (globalAlpha between 0.03 and 0.97): one frame shows through another (ghosting)', limits: '2D canvas drawImage only (not WebGL, OffscreenCanvas or stacked <img> layers); one scroll pass from top to bottom; canvases inside [data-frame-blend="allow"] are skipped' },
+  { id: 'frame-blend', sev: 'high', basis: 'measured', what: 'while scrolling with default motion, a full-size image is drawn on a canvas at partial opacity (globalAlpha between 0.03 and 0.97): one frame shows through another (ghosting)', limits: '2D canvas drawImage only (not WebGL, OffscreenCanvas or stacked <img> layers); one scroll pass from top to bottom; canvases inside [data-frame-blend="allow"] are skipped; a canvas drawn onto a canvas (trails, feedback buffers) is not a film frame and is not counted' },
+  { id: 'scrub-fling', sev: 'high', basis: 'measured', what: 'phone view, CPU slowed 4x: fast flings down a canvas frame scene, back up, down and up again; the painted film changes direction 6+ times while the scroll does 3 times: far-away frames flash on fast scrolls and when scrolling back up', limits: 'frames are identified by the number in their file URL (fetch + createImageBitmap or <img> drawn on a 2D canvas); the scene is the nearest ancestor of the canvas that painted the frames at least 1.5 viewports tall; Chromium only (CPU throttling)' },
+  { id: 'scroll-glide', sev: 'high', basis: 'measured', what: 'in a canvas frame scene, the page moves its own scroll more than 30 px within 1.5 s after the user stops (snapping or gliding to a stop): it fights touch momentum and reads as a glitch', limits: 'one rest position at 37 % of the scene; CSS scroll-snap counts too' },
   { id: 'display-font', sev: 'high', basis: 'measured', what: "the h1's first font-family is declared (@font-face) but no face of it loaded: the headline shows in a fallback", limits: 'undeclared system fonts are reported as info' },
-  { id: 'motion-rest', sev: 'high', basis: 'measured', what: 'text in the first viewport at opacity < .05 or visibility hidden 2 s after load, and again with JavaScript disabled (high if the h1 or 3+ items, else medium)', limits: 'first viewport only; closed menus layered over the hero can be reported' },
+  { id: 'motion-rest', sev: 'high', basis: 'measured', what: 'text in the first viewport at opacity < .05 or visibility hidden 2 s after load, and again with JavaScript disabled (high if the h1 or 3+ items, else medium)', limits: 'first viewport only; closed menus layered over the hero can be reported; waiting slides (a hidden layer next to a visible sibling of the same kind, e.g. a carousel) are not counted' },
   { id: 'target-size', sev: 'medium', basis: 'measured', what: 'crowded interactive targets < 24x24 CSS px (WCAG 2.5.8 with spacing exception)', limits: 'inline-in-sentence links exempt' },
   { id: 'headline-length', sev: 'low', basis: 'heuristic', what: 'headline > 8 words', limits: '' },
-  { id: 'word-budget', sev: 'high', basis: 'heuristic', what: 'visible copy words vs section budget (> 2x high, > 1x medium); skipped for surface "read"', limits: 'excludes [data-darkroom-ignore] and aria-hidden subtrees; section boundaries are guessed from markup' },
+  { id: 'word-budget', sev: 'high', basis: 'heuristic', what: 'visible copy words vs section budget (> 2x high, > 1x medium), and single text blocks (paragraph, list item, quote, caption) over 60 words (medium); skipped for surface "read"', limits: 'excludes [data-darkroom-ignore] and aria-hidden subtrees; section boundaries are guessed from markup' },
+  { id: 'dead-scroll', sev: 'high', basis: 'measured', what: 'default motion, desktop: the page scrolled in half-screen steps; more than 2 screens of scroll in a row where the picture barely changes (< 1.5 % of pixels): nothing new to see or read (> 2 medium, > 4 high)', limits: 'compares 96×60 thumbnails 250 ms after each step; slow ambient motion counts as no change; pages that do not scroll the document are skipped' },
+  { id: 'glass-caption', sev: 'medium', basis: 'heuristic', what: 'the same frosted caption card (backdrop blur, 3+ words) repeated in 3 or more sections: an AI-film tell; one fixed card as a reading anchor is fine', limits: 'backdrop-filter blur only; cards inside one section (a grid) count once' },
+  { id: 'phone-gate', sev: 'high', basis: 'heuristic', what: 'phone view (390 px) shows a gate instead of the page ("best viewed on desktop", "rotate your device", "not available on mobile")', limits: 'English, German, French and Spanish phrases; a gate drawn as an image is not detected' },
+  { id: 'film-headline', sev: 'medium', basis: 'heuristic', what: 'first screen only: the h1 sits over full-bleed media (video, canvas or an image covering half the screen) and is smaller than 48 px desktop / 32 px phone', limits: 'later chapters may use subtitle-size text by design; media is found by size and overlap, not by looking at the picture' },
+  { id: 'first-scroll-weight', sev: 'high', basis: 'measured', what: 'bytes on the wire before the visitor scrolls (desktop, default motion, ~2 s after load, empty cache): > 4 MB medium, > 8 MB high', limits: 'Chromium network counters; media still streaming after 2 s is counted only up to then; a page served locally has no compression from a CDN' },
+  { id: 'chain-seam', sev: 'medium', basis: 'measured', what: 'chained clips (<video data-chain="name">, in page order): the last frame of one clip and the first frame of the next differ by more than 6 % (mean absolute difference): the film jumps at the join', limits: 'needs ffmpeg; one frame at each end compared at 96×54; frame sequences are checked when joined (darkroom media chain), not here' },
   { id: 'copy', sev: 'medium', basis: 'heuristic', what: 'genre words (unlock, seamless, ...)', limits: 'English only' },
   { id: 'urgency', sev: 'high', basis: 'heuristic', what: 'urgency / pressure copy', limits: 'English only; a real dated deadline is legitimate' },
   { id: 'page-length', sev: 'high', basis: 'heuristic', what: '> 1200 visible words; skipped for surface "read"', limits: '' },
   { id: 'colour', sev: 'medium', basis: 'heuristic', what: 'UI hue families / accent share vs colour mode', limits: 'imagery is hidden before measuring; computed colours only' },
-  { id: 'contrast', sev: 'high', basis: 'measured', what: 'text contrast from rendered pixels with effective alpha; per viewport', limits: 'varying backgrounds (photo, video, gradient) are reported as medium with the worst-case ratio; check the lightest video frame by eye' },
+  { id: 'contrast', sev: 'high', basis: 'measured', what: 'text contrast from rendered pixels with effective alpha; per viewport', limits: 'varying backgrounds (photo, video, gradient) are reported as medium with the worst-case ratio; check the lightest video frame by eye; decorative ghost type (64 px or more, not a heading, and aria-hidden or under 35 % opacity) is skipped' },
   { id: 'lang', sev: 'high', basis: 'measured', what: '<html lang> missing', limits: '' },
   { id: 'headings', sev: 'high', basis: 'measured', what: 'h1 count != 1 (high), level skips (low)', limits: '' },
   { id: 'alt', sev: 'high', basis: 'measured', what: 'img without alt attribute', limits: 'alt quality is not judged' },
@@ -97,10 +105,15 @@ function probeDom({ maxZones, wordBudgets, disclosure, surface }) {
     return n;
   };
 
-  // zones in first viewport (header/nav excluded)
+  // zones in first viewport (header/nav and tickers excluded: a marquee track is one moving line, not a reading zone)
+  const ticker = (el) => {
+    if (el.closest('marquee,[data-marquee],[class*="marquee" i],[class*="ticker" i]')) return true;
+    for (let a = el.parentElement, d = 0; a && a !== document.body && d < 6; a = a.parentElement, d++) if (Math.max(a.scrollWidth, a.getBoundingClientRect().width) > innerWidth * 1.4) return true;
+    return false;
+  };
   const boxes = [];
   textEls.forEach((el, i) => {
-    if (el.closest('header, nav, [role=banner], [role=navigation]')) return;
+    if (el.closest('header, nav, [role=banner], [role=navigation]') || ticker(el)) return;
     const r = el.getBoundingClientRect();
     if (r.bottom <= 0 || r.top >= innerHeight || r.right <= 0 || r.left >= innerWidth) return;
     boxes.push({ i, x1: r.left, y1: r.top, x2: r.right, y2: r.bottom });
@@ -235,7 +248,38 @@ function probeDom({ maxZones, wordBudgets, disclosure, surface }) {
     split.push(cur);
     if (split.length > sections.length) sections = split;
   }
+  // single text blocks over 60 words (a wall of text even inside a budget-respecting section)
+  const longBlocks = [...document.querySelectorAll('p, li, blockquote, figcaption, dd')]
+    .filter((el) => visibleCopyEl(el) && !el.querySelector('p, li, blockquote'))
+    .map((el) => ({ words: copyWords(el), text: el.innerText.trim().slice(0, 50) })).filter((b) => b.words > 60);
+
+  // frosted caption cards (backdrop blur) with copy, counted once per section
+  const secOf = (el) => el.closest('main > section, main > article, body > section, [data-section]') ?? el.parentElement;
+  const glassSecs = new Set(); let glassText = '';
+  for (const el of document.querySelectorAll('body *')) {
+    const s = getComputedStyle(el);
+    if (!/blur\(/.test(s.backdropFilter || s.webkitBackdropFilter || '') || s.position === 'fixed' || el.closest('header, nav, [role=banner], [role=navigation], dialog')) continue;
+    if (!vis(el) || copyWords(el) < 3) continue;
+    glassSecs.add(secOf(el)); glassText ||= el.innerText.trim().slice(0, 40);
+  }
+
+  // first screen: is the h1 set over full-bleed media?
+  const filmHeadline = (() => {
+    const h1 = document.querySelector('h1'); if (!h1 || !vis(h1)) return null;
+    const hr = h1.getBoundingClientRect(); if (hr.top >= innerHeight || hr.bottom <= 0) return null;
+    const area = (r) => Math.max(0, Math.min(r.right, innerWidth) - Math.max(r.left, 0)) * Math.max(0, Math.min(r.bottom, innerHeight) - Math.max(r.top, 0));
+    const overlap = (r) => Math.max(0, Math.min(r.right, hr.right) - Math.max(r.left, hr.left)) * Math.max(0, Math.min(r.bottom, hr.bottom) - Math.max(r.top, hr.top));
+    const media = [...document.querySelectorAll('video, canvas, img, picture, body *')].find((el) => {
+      const isMedia = /^(VIDEO|CANVAS|IMG|PICTURE)$/.test(el.tagName) || getComputedStyle(el).backgroundImage.includes('url(');
+      if (!isMedia) return false;
+      const r = el.getBoundingClientRect();
+      return area(r) >= 0.5 * innerWidth * innerHeight && overlap(r) >= 0.5 * hr.width * hr.height;
+    });
+    return media ? { size: Math.round(parseFloat(getComputedStyle(h1).fontSize)), over: media.tagName.toLowerCase(), text: h1.innerText.trim().slice(0, 40) } : null;
+  })();
+
   const bodyText = document.body.innerText;
+  const phoneGate = (bodyText.match(/(best (viewed|experienced|enjoyed) on (a )?(desktop|computer|laptop|larger screen)|(please )?(rotate|turn) your (device|phone|screen)|(only|not) available on (mobile|desktop)|desktop only|open (this|it) on (a )?(desktop|computer)|switch to (a )?desktop|auf dem desktop|sur (un )?ordinateur|en (un )?ordenador)/i) ?? [null])[0];
   const norm = (t) => t.replace(/\s+/g, ' ').trim().toLowerCase();
   const prices = bodyText.match(/(?:[€$£]\s?\d[\d.,]*|\d[\d.,]*\s?(?:€|EUR|USD|GBP|\$|£))/g) ?? [];
   const genre = [...new Set((bodyText.match(/\b(unlock|seamless(ly)?|supercharge|elevate|effortless(ly)?|cutting[- ]edge|next[- ]gen|synergy|revolutioni[sz]e|game[- ]chang(er|ing)|world[- ]class|all[- ]in[- ]one|lorem ipsum)\b/gi) ?? []).map((w) => w.toLowerCase()))];
@@ -246,6 +290,7 @@ function probeDom({ maxZones, wordBudgets, disclosure, surface }) {
     zones, travel: +(travel / diag).toFixed(2), corners: [...corners],
     smallTargets, targetCount: targets.length, h1s, skips, imgsNoAlt, unlabeled, nameless, skipLink, reducedMotionRule,
     sections, totalWords: copyWords(document.body), prices, genre, urgency, uiHues,
+    longBlocks: longBlocks.slice(0, 6), glassCaptions: { sections: glassSecs.size, text: glassText }, filmHeadline, phoneGate,
     disclosureFound: disclosure ? norm(bodyText).includes(norm(disclosure)) : null,
     overflow: document.documentElement.scrollWidth - innerWidth,
     overflowCulprits: (() => {
@@ -302,7 +347,9 @@ function collectTexts({ done, limit }) {
     for (let n = el; n && n.nodeType === 1; n = n.parentElement) opacity *= Number(getComputedStyle(n).opacity);
     const fill = resolve(s.webkitTextFillColor && s.webkitTextFillColor !== 'currentcolor' ? s.webkitTextFillColor : s.color);
     const size = parseFloat(s.fontSize);
-    out.push({ id, rects, rgba: fill, opacity, size, bold: Number(s.fontWeight) >= 700, gradientText: s.backgroundClip === 'text' || s.webkitBackgroundClip === 'text', label: (el.innerText || el.textContent).trim().slice(0, 40) });
+    // decorative ghost type: huge, faint or aria-hidden letters behind the content (a background, not something to read)
+    const ghost = size >= 64 && !el.closest('h1,h2,h3,a,button') && (!!el.closest('[aria-hidden="true"]') || fill[3] * opacity < 0.35);
+    out.push({ id, rects, rgba: fill, opacity, size, ghost, bold: Number(s.fontWeight) >= 700, gradientText: s.backgroundClip === 'text' || s.webkitBackgroundClip === 'text', label: (el.innerText || el.textContent).trim().slice(0, 40) });
   });
   return out;
 }
@@ -331,6 +378,7 @@ async function analyseContrast({ b64bg, b64fg, items, debug }) {
   return items.map((it) => {
     const a = it.rgba[3] * it.opacity;
     if (it.gradientText) return { id: it.id, label: it.label, skipped: 'gradient text: check by eye' };
+    if (it.ghost) return { id: it.id, label: it.label, skipped: 'decorative ghost type (large and faint): check by eye' };
     if (a < 0.02) return { id: it.id, label: it.label, skipped: 'invisible (alpha 0)' };
     const ratios = []; const bgl = [];
     for (const [x, y, w, h] of it.rects) {
@@ -507,9 +555,22 @@ function hiddenRestText() {
     const r = el.getBoundingClientRect();
     if (r.width < 2 || r.height < 2 || r.bottom <= 0 || r.top >= innerHeight || r.right <= 0 || r.left >= innerWidth) continue;
     let op = 1; for (let e = el; e && e.nodeType === 1; e = e.parentElement) op *= parseFloat(getComputedStyle(e).opacity);
-    if (op < 0.05 || getComputedStyle(el).visibility === 'hidden') out.push({ text: el.textContent.trim().replace(/\s+/g, ' ').slice(0, 40), h1: !!(h1 && (el === h1 || h1.contains(el))) });
+    if ((op < 0.05 || getComputedStyle(el).visibility === 'hidden') && !waitingSlide(el)) out.push({ text: el.textContent.trim().replace(/\s+/g, ' ').slice(0, 40), h1: !!(h1 && (el === h1 || h1.contains(el))) });
   }
   return out;
+  // A slide waiting its turn: the layer that hides it (own opacity < .05, or where visibility:hidden starts) has a
+  // visible sibling of the same kind with text (a carousel, stacked chapters). Not a rest-state failure.
+  function waitingSlide(el) {
+    const shown = (e) => { const s = getComputedStyle(e); return parseFloat(s.opacity) >= 0.05 && s.visibility !== 'hidden' && (e.textContent || '').trim(); };
+    for (let a = el, d = 0; a && a !== document.body && d < 10; a = a.parentElement, d++) {
+      const s = getComputedStyle(a); const ps = a.parentElement && getComputedStyle(a.parentElement);
+      const hidesHere = parseFloat(s.opacity) < 0.05 || (s.visibility === 'hidden' && ps && ps.visibility !== 'hidden');
+      if (!hidesHere) continue;
+      const kind = (e) => e.tagName + '.' + (e.classList[0] ?? '');
+      return [...(a.parentElement?.children ?? [])].some((sib) => sib !== a && kind(sib) === kind(a) && shown(sib));
+    }
+    return false;
+  }
 }
 function h1Visible() {
   const h = document.querySelector('h1'); if (!h) return null;
@@ -580,6 +641,7 @@ export function findings({ desk, mob, colour, motion, keyboard, contrast, ctx })
       if (sec.bodyWords > sec.budget * 2) add('high', 'word-budget', `${sec.id}: ${sec.bodyWords} words vs budget ${sec.budget}`);
       else if (sec.bodyWords > sec.budget) add('medium', 'word-budget', `${sec.id}: ${sec.bodyWords} words vs budget ${sec.budget}`);
     }
+    if (desk.longBlocks?.length) add('medium', 'word-budget', `${desk.longBlocks.length} single text block(s) over 60 words, e.g. "${desk.longBlocks[0].text}…" (${desk.longBlocks[0].words} words): split it, cut it, or move the detail lower`, desk.longBlocks);
     if (desk.totalWords > 1200) add('high', 'page-length', `${desk.totalWords} words on page — brochure territory (landing ≤ ~900)`);
     else add('info', 'page-length', `${desk.totalWords} words on page`);
   } else add('info', 'page-length', `${desk.totalWords} words (surface "read": word budgets not applied)`);
@@ -662,6 +724,31 @@ export function findings({ desk, mob, colour, motion, keyboard, contrast, ctx })
   }
   if (ex?.blend?.partial) add('high', 'frame-blend', `${ex.blend.partial} of ${ex.blend.draws} full-size image draws on ${ex.blend.canvases.join(', ')} were see-through: one frame shows through another (ghosting). Draw one frame at a time at full opacity; for smoother motion extract more frames, never blend neighbours or fade a still over the film`, ex.blend);
   else if (ex?.blend?.draws) add('info', 'frame-blend', `${ex.blend.draws} full-size canvas image draws while scrolling, all at full opacity`);
+  if (ex?.fling?.flips >= 6) add('high', 'scrub-fling', `fast fling on a phone (CPU x4): the film on ${ex.fling.canvas} changed direction ${ex.fling.flips} times while the scroll changed 3 times (${ex.fling.jumps} jumps of more than 12 frames): far-away frames flash. Show the closest decoded frame between the one on screen and the wanted one, keep fetched frames in memory, decode ahead in the direction of travel, cap the speed (recipes/scrub-frames.js, recipes/README.md rules 6 and 6a)`, ex.fling);
+  else if (ex?.fling?.draws) add('info', 'scrub-fling', `fast fling on a phone (CPU x4): the film on ${ex.fling.canvas} followed the scroll (${ex.fling.flips} direction changes for the scroll's 3, ${ex.fling.draws} frame draws)`);
+  if (ex?.fling?.glide > 30) add('high', 'scroll-glide', `the page moved its own scroll by ${ex.fling.glide} px after the scroll came to rest in the frame scene (snapping or gliding to a stop). Remove it; for breaking points hold the film on chosen frames instead (holdAt in recipes/scrub-frames.js, recipes/README.md rule 2)`, ex.fling);
+  if (ex?.dead) {
+    const d = ex.dead;
+    if (d.screens > 4) add('high', 'dead-scroll', `${d.screens} screens of scroll in a row with almost no visible change (from y ${d.fromY}): the visitor scrolls and nothing new appears. Shorten the pinned stretch, or give each screen something to see or read`, d);
+    else if (d.screens > 2) add('medium', 'dead-scroll', `${d.screens} screens of scroll with almost no visible change (from y ${d.fromY}): keep stretches without change under about two screens`, d);
+    else add('info', 'dead-scroll', `longest stretch without visible change: ${d.screens} screens`);
+  }
+  if (desk.glassCaptions?.sections >= 3) add('medium', 'glass-caption', `the same frosted caption card (e.g. "${desk.glassCaptions.text}") repeats in ${desk.glassCaptions.sections} sections: it reads as a template. Vary the text treatment by chapter, or keep one fixed card as a reading anchor`, desk.glassCaptions);
+  if (mob.phoneGate) add('high', 'phone-gate', `the phone view shows a gate ("${mob.phoneGate}") instead of the page: build the phone version (stacked chapters, stills instead of heavy scenes)`);
+  for (const [label, d, floor] of [['desktop', desk, 48], ['mobile', mob, 32]]) {
+    if (d.filmHeadline && d.filmHeadline.size < floor) add('medium', 'film-headline', `${label}: the first-screen h1 "${d.filmHeadline.text}" is ${d.filmHeadline.size} px over full-screen ${d.filmHeadline.over}: below the ${floor} px floor it loses to the picture. Later chapters may use smaller text`, d.filmHeadline, { viewport: label });
+  }
+  if (ex?.weight) {
+    const mbW = +(ex.weight.bytes / 1048576).toFixed(1);
+    if (mbW > 8) add('high', 'first-scroll-weight', `${mbW} MB on the wire before the visitor scrolls (${ex.weight.requests} requests): load the first chapter only and fetch the rest as the visitor approaches it (~4 MB budget)`, ex.weight);
+    else if (mbW > 4) add('medium', 'first-scroll-weight', `${mbW} MB before the first scroll (${ex.weight.requests} requests), over the ~4 MB budget: defer later chapters' frames, video and 3D`, ex.weight);
+    else add('info', 'first-scroll-weight', `${mbW >= 1 ? `${mbW} MB` : `${Math.round(ex.weight.bytes / 1024)} KB`} before the first scroll (${ex.weight.requests} requests)`);
+  }
+  for (const c of ex?.chains ?? []) for (const s of c.seams) {
+    if (s.seam === null) add('info', 'chain-seam', `chain "${c.name}" ${s.from} → ${s.to}: seam not measured (needs ffmpeg)`);
+    else if (s.seam > SEAM_THRESHOLD) add('medium', 'chain-seam', `chain "${c.name}": ${s.from} → ${s.to} jumps (seam ${s.seam} > ${SEAM_THRESHOLD}). Make the next clip from the extracted last frame of the one before, keep one model for the chain, or crossfade 6–8 frames (references/scroll-film.md)`, s);
+    else add('info', 'chain-seam', `chain "${c.name}": ${s.from} → ${s.to} seam ${s.seam} (clean)`);
+  }
   if (ex?.font) {
     const f = ex.font;
     if (f.declared > 0 && f.loaded === 0) add('high', 'display-font', `the h1 font "${f.family}" did not load (${f.declared} face(s) declared, ${f.failed} failed): the headline shows in a fallback`, f);
@@ -691,11 +778,52 @@ export function findings({ desk, mob, colour, motion, keyboard, contrast, ctx })
 async function revealPass(page) {
   const steps = await page.evaluate(() => Math.min(40, Math.ceil((document.documentElement.scrollHeight - innerHeight) / (innerHeight * 0.8))));
   for (let i = 1; i <= steps; i++) {
+    const before = await page.evaluate(() => scrollY);
     await page.evaluate((k) => scrollTo({ top: k * innerHeight * 0.8, behavior: 'instant' }), i);
     await page.waitForTimeout(90);
+    // a page that drives its own scroll (smooth-scroll wrapper) may ignore scrollTo: use the wheel, as a visitor would
+    if (await page.evaluate((b) => Math.abs(scrollY - b) < 1, before)) { const vp = page.viewportSize(); await page.mouse.move(vp.width / 2, vp.height / 2); await page.mouse.wheel(0, vp.height * 0.8); await page.waitForTimeout(250); }
   }
   await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
   await page.waitForTimeout(steps ? 400 : 0);
+}
+
+// Dead scroll: default motion, desktop. Scroll the document in half-screen steps, photograph each rest, and find the
+// longest stretch where the picture barely changed (< 1.5 % of 96×60 thumbnail pixels) although the page moved.
+async function deadScrollPass(page, browser) {
+  const vp = page.viewportSize();
+  const total = await page.evaluate(() => document.documentElement.scrollHeight - innerHeight);
+  if (total < vp.height) return null;
+  const step = vp.height / 2; const n = Math.min(60, Math.ceil(total / step));
+  const ys = []; const shots = [];
+  for (let i = 0; i <= n; i++) {
+    await page.evaluate((y) => scrollTo({ top: y, behavior: 'instant' }), Math.min(total, Math.round(i * step)));
+    await page.waitForTimeout(250);
+    ys.push(await page.evaluate(() => scrollY)); shots.push(await page.screenshot({ type: 'jpeg', quality: 60 }));
+  }
+  await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
+  const ctx = await browser.newContext(); const p = await ctx.newPage();
+  let changed;
+  try {
+    changed = await p.evaluate(async (list) => {
+      const px = await Promise.all(list.map(async (b64) => { const img = new Image(); img.src = 'data:image/jpeg;base64,' + b64; await img.decode(); const c = document.createElement('canvas'); c.width = 96; c.height = 60; const g = c.getContext('2d'); g.drawImage(img, 0, 0, 96, 60); return g.getImageData(0, 0, 96, 60).data; }));
+      return px.slice(1).map((d, i) => { const a = px[i]; let n = 0; for (let k = 0; k < d.length; k += 4) if (Math.abs(d[k] - a[k]) + Math.abs(d[k + 1] - a[k + 1]) + Math.abs(d[k + 2] - a[k + 2]) > 30) n++; return n / (d.length / 4); });
+    }, shots.map((b) => b.toString('base64')));
+  } finally { await ctx.close(); }
+  let run = 0; let runFrom = 0; let worst = { px: 0, from: 0 };
+  for (let i = 1; i < ys.length; i++) {
+    const moved = ys[i] - ys[i - 1];
+    if (moved < step * 0.4) { run = 0; continue; } // the page did not really move here (the end, or a scroll lock)
+    if (changed[i - 1] < 0.015) { if (!run) runFrom = ys[i - 1]; run += moved; if (run > worst.px) worst = { px: run, from: runFrom }; } else run = 0;
+  }
+  return { screens: +(worst.px / vp.height).toFixed(1), fromY: Math.round(worst.from), steps: n };
+}
+
+// Chained clips: <video data-chain="name">, grouped by name in page order.
+function chainState() {
+  const groups = {};
+  for (const v of document.querySelectorAll('video[data-chain]')) (groups[v.dataset.chain] ??= []).push(v.currentSrc || v.src || v.querySelector('source')?.src || '');
+  return Object.entries(groups).filter(([, l]) => l.length > 1).map(([name, urls]) => ({ name, urls }));
 }
 
 // Init script: records full-size canvas image draws and the ones made at partial opacity (a frame over a frame = ghosting).
@@ -706,7 +834,9 @@ function blendProbe() {
   CanvasRenderingContext2D.prototype.drawImage = function (img, ...a) {
     try {
       const c = this.canvas;
-      if (c instanceof HTMLCanvasElement && img !== c && c.clientWidth * c.clientHeight >= 0.15 * innerWidth * innerHeight) {
+      // a canvas drawn onto a canvas is a trail or feedback buffer, not a film frame
+      const buffer = img instanceof HTMLCanvasElement || (typeof OffscreenCanvas !== 'undefined' && img instanceof OffscreenCanvas);
+      if (c instanceof HTMLCanvasElement && !buffer && c.clientWidth * c.clientHeight >= 0.15 * innerWidth * innerHeight) {
         const dw = a.length >= 4 ? a[a.length - 2] : (img.videoWidth || img.width), dh = a.length >= 4 ? a[a.length - 1] : (img.videoHeight || img.height);
         const m = this.getTransform();
         if (Math.abs(dw * dh * m.a * m.d) >= 0.5 * c.width * c.height) {
@@ -722,6 +852,80 @@ function blendProbe() {
     } catch { /* never break the page */ }
     return orig.call(this, img, ...a);
   };
+}
+
+// Init script for the fling pass: which film frame the largest canvas paints. A frame is the number at the end of the
+// file name it came from (seq_0042.webp → 42), followed through fetch → blob → createImageBitmap, or an <img>'s src.
+function flingTagProbe() {
+  const rec = window.__drFling = { last: null, draws: 0, canvas: null };
+  const num = (u) => { try { const m = /(?:^|[^\d.])(\d+)\.\w+$/.exec(new URL(u, location.href).pathname); return m ? +m[1] : null; } catch { return null; } };
+  const tag = new WeakMap();
+  const blob = Response.prototype.blob;
+  Response.prototype.blob = async function () { const b = await blob.call(this); const n = num(this.url); if (n !== null) tag.set(b, n); return b; };
+  const cib = window.createImageBitmap;
+  window.createImageBitmap = async function (src, ...a) {
+    const bmp = await cib.call(this, src, ...a);
+    try { const n = tag.get(src) ?? (src instanceof HTMLImageElement ? num(src.currentSrc || src.src) : null); if (n !== null && n !== undefined) tag.set(bmp, n); } catch { /* never break the page */ }
+    return bmp;
+  };
+  const di = CanvasRenderingContext2D.prototype.drawImage;
+  CanvasRenderingContext2D.prototype.drawImage = function (img, ...a) {
+    try {
+      const c = this.canvas;
+      if (c instanceof HTMLCanvasElement && this.globalAlpha >= 0.5 && c.clientWidth * c.clientHeight >= 0.15 * innerWidth * innerHeight) {
+        const n = tag.get(img) ?? (img instanceof HTMLImageElement ? num(img.currentSrc || img.src) : null);
+        if (n !== null && n !== undefined) { rec.last = n; rec.draws++; rec.el = c; rec.canvas = c.id ? `canvas#${c.id}` : c.classList.length ? `canvas.${[...c.classList].join('.')}` : 'canvas'; }
+      }
+    } catch { /* never break the page */ }
+    return di.call(this, img, ...a);
+  };
+}
+
+// Phone view, CPU slowed 4x: fling down the frame scene, rest, fling back up, rest; sample the painted frame every
+// animation frame and count how often the film changes direction (the scroll does once). Then rest mid-scene and see
+// whether the page moves its own scroll (snapping / gliding to a stop).
+async function flingPass(browser, url) {
+  const ctx = await browser.newContext({ ...contextFor(VIEWPORTS['mobile-390']), reducedMotion: 'no-preference' });
+  try {
+    const page = await ctx.newPage();
+    await page.addInitScript(flingTagProbe);
+    await page.goto(url, { waitUntil: 'load', timeout: 45000 });
+    if (!await page.evaluate(() => !!document.querySelector('canvas'))) return null;
+    await settle(page);
+    await page.waitForTimeout(2500); // frame files arrive
+    try { const cdp = await ctx.newCDPSession(page); await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 }); } catch { /* not Chromium: unthrottled */ }
+    return await page.evaluate(async () => {
+      const c = window.__drFling.el; // the canvas that painted film frames
+      if (!c) return null;
+      let scene = c.parentElement;
+      while (scene && scene !== document.body && scene.offsetHeight < 1.5 * innerHeight) scene = scene.parentElement;
+      if (!scene || scene === document.body) return null;
+      const top = scene.getBoundingClientRect().top + scrollY, end = top + scene.offsetHeight - innerHeight;
+      const raf = () => new Promise((r) => requestAnimationFrame(r));
+      const to = (y) => scrollTo({ top: y, behavior: 'instant' });
+      const seq = [];
+      const fling = async (from, dest, frames) => {
+        for (let i = 1; i <= frames; i++) { to(from + (dest - from) * (1 - (1 - i / frames) ** 3)); await raf(); seq.push(window.__drFling.last); }
+        for (let i = 0; i < 90; i++) { await raf(); seq.push(window.__drFling.last); }
+      };
+      to(top); for (let i = 0; i < 30; i++) await raf();
+      const before = window.__drFling.draws;
+      const at = (k) => top + (end - top) * k;
+      await fling(top, end, 45); // the whole scene in ~0.75 s, then back and forth: the scroll changes direction 3 times
+      await fling(end, at(0.3), 30);
+      await fling(at(0.3), at(0.8), 20);
+      await fling(at(0.8), top, 25);
+      let flips = 0, jumps = 0, prev = null, sign = 0;
+      for (const f of seq) {
+        if (typeof f !== 'number') continue;
+        if (prev !== null && f !== prev) { const s = Math.sign(f - prev); if (sign && s !== sign) flips++; sign = s; if (Math.abs(f - prev) > 12) jumps++; }
+        prev = f;
+      }
+      const rest = Math.round(top + (end - top) * 0.37);
+      to(rest); await new Promise((r) => setTimeout(r, 1500));
+      return { canvas: window.__drFling.canvas, draws: window.__drFling.draws - before, flips, jumps, glide: Math.round(Math.abs(scrollY - rest)) };
+    });
+  } catch (e) { if (process.env.DARKROOM_DEBUG) console.error('fling pass:', e.message); return null; } finally { await ctx.close(); }
 }
 
 // ---------- run ----------
@@ -746,6 +950,15 @@ export async function audit(target, opt, { resolveSettings, study = false } = {}
     page.on('pageerror', (e) => errors.push(e.message));
     page.on('requestfailed', (r) => errors.push(`request failed: ${r.url().slice(0, 100)}`));
     if (early) await page.addInitScript(blendProbe);
+    // bytes on the wire per request (Chromium network counters), read once before the first scroll
+    const net = new Map();
+    if (early) {
+      try {
+        const cdp = await ctx.newCDPSession(page); await cdp.send('Network.enable');
+        cdp.on('Network.dataReceived', (e) => net.set(e.requestId, (net.get(e.requestId) ?? 0) + (e.encodedDataLength || 0)));
+        cdp.on('Network.loadingFinished', (e) => net.set(e.requestId, Math.max(net.get(e.requestId) ?? 0, e.encodedDataLength || 0)));
+      } catch { /* not Chromium: weight not measured */ }
+    }
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
     const t0 = Date.now(); const extra = {};
     if (!js) { await settle(page); extra.restNoJs = await page.evaluate(hiddenRestText); await ctx.close(); return extra; }
@@ -759,15 +972,26 @@ export async function audit(target, opt, { resolveSettings, study = false } = {}
     if (early) {
       await page.waitForTimeout(Math.max(0, 2000 - (Date.now() - t0)));
       extra.settledShot = await page.screenshot({ type: 'png' });
+      extra.weight = net.size ? { bytes: [...net.values()].reduce((s, n) => s + n, 0), requests: net.size } : null;
       extra.restJs = await page.evaluate(hiddenRestText);
       extra.video = await page.evaluate(videoState);
       for (const v of extra.video.videos) if (v.loop && !v.managedLoop && /^https?:/.test(v.url)) { try { const a = await grabAsync(v.url, 'first'); const b = a && await grabAsync(v.url, 'last'); v.seam = a && b ? seamScore(a, b) : null; } catch { v.seam = null; } }
+      extra.chains = await page.evaluate(chainState);
+      for (const c of extra.chains) {
+        c.seams = [];
+        for (let i = 0; i < c.urls.length - 1; i++) {
+          let seam = null;
+          try { const a = /^https?:/.test(c.urls[i]) && await grabAsync(c.urls[i], 'last'); const b = a && await grabAsync(c.urls[i + 1], 'first'); seam = a && b ? seamScore(a, b) : null; } catch { seam = null; }
+          c.seams.push({ from: c.urls[i].split('/').pop(), to: c.urls[i + 1].split('/').pop(), seam });
+        }
+      }
     }
     if (full && (study || opt.dismiss)) consent = await dismissConsent(page, { allowAccept: !!opt['accept-consent'] });
     if (full) await revealPass(page);
     await page.waitForTimeout(700);
     const motionNow = await page.evaluate(motionState);
     if (early && await page.evaluate(() => !!document.querySelector('canvas'))) { await revealPass(page); extra.blend = await page.evaluate(() => window.__drBlend ?? null); }
+    if (early) { try { extra.dead = await deadScrollPass(page, browser); } catch (e) { if (process.env.DARKROOM_DEBUG) console.error('dead-scroll pass:', e.message); } }
     if (!full) { await ctx.close(); return { motion: motionNow, extra }; }
     const dom = await page.evaluate(probeDom, probeArgs);
     const contrast = await pixelContrast(page, vp);
@@ -777,12 +1001,13 @@ export async function audit(target, opt, { resolveSettings, study = false } = {}
     await ctx.close();
     return { dom, colour, contrast, keyboard, font, motion: motionNow };
   };
-  let d; let m; let normal; let noJs; let frames = null;
+  let d; let m; let normal; let noJs; let frames = null; let fling = null;
   try {
     d = await run(VIEWPORTS['desktop-1440']);
     m = await run(VIEWPORTS['mobile-390']);
     normal = await run(VIEWPORTS['desktop-1440'], { motion: 'no-preference', full: false, early: true });
     noJs = await run(VIEWPORTS['desktop-1440'], { js: false });
+    fling = await flingPass(browser, url);
     if (normal.extra.earlyShot && normal.extra.settledShot) frames = await frameStats(browser, [normal.extra.earlyShot, normal.extra.settledShot]);
   } finally { await browser.close(); await served.close(); }
   const scriptLibs = {
@@ -794,7 +1019,7 @@ export async function audit(target, opt, { resolveSettings, study = false } = {}
     url, date: new Date().toISOString(),
     capture: { mode: 'prefers-reduced-motion: reduce (plus one default-motion pass for the motion comparison)', viewports: ['desktop-1440', 'mobile-390'], consent, tools: toolVersions(null) },
     config: { source, problem }, settings,
-    findings: findings({ desk: d.dom, mob: m.dom, colour: d.colour, motion: { reduce: d.motion, normal: normal.motion }, keyboard: d.keyboard, contrast: { desktop: d.contrast, mobile: m.contrast }, ctx: { settings, fonts: opt.fonts, mode: opt.mode, hosts, host, errors, problem, extra: { frames, h1At1500: normal.extra.h1At1500, video: normal.extra.video, restJs: normal.extra.restJs, restNoJs: noJs.restNoJs, font: d.font, blend: normal.extra.blend } } }),
+    findings: findings({ desk: d.dom, mob: m.dom, colour: d.colour, motion: { reduce: d.motion, normal: normal.motion }, keyboard: d.keyboard, contrast: { desktop: d.contrast, mobile: m.contrast }, ctx: { settings, fonts: opt.fonts, mode: opt.mode, hosts, host, errors, problem, extra: { frames, h1At1500: normal.extra.h1At1500, video: normal.extra.video, restJs: normal.extra.restJs, restNoJs: noJs.restNoJs, font: d.font, blend: normal.extra.blend, fling, weight: normal.extra.weight, chains: normal.extra.chains, dead: normal.extra.dead } } }),
     desktop: d.dom, mobile: { zones: m.dom.zones, travel: m.dom.travel, smallTargets: m.dom.smallTargets, overflow: m.dom.overflow, nameless: m.dom.nameless, unlabeled: m.dom.unlabeled },
     colour: d.colour, contrast: { desktop: d.contrast, mobile: m.contrast }, keyboard: d.keyboard, motion: { reduce: d.motion, normal: normal.motion },
   };

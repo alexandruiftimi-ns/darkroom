@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/knowledge.svg" alt="139 real site designs that inspired it (96 good, 43 bad), 28 cross-site lessons with 12 promoted to rules, 29 research sources, 7 design tools, 100 example prompts with their specs, 35 tested recipes, 111 automated checks, one human art director" width="100%"></p>
+<p align="center"><img src="assets/knowledge.svg" alt="228 real site designs that inspired it (131 good, 97 bad), 32 cross-site lessons with 13 promoted to rules, 29 research sources, 7 design tools, 100 example prompts with their specs, 35 tested recipes, 127 automated checks, one human art director" width="100%"></p>
 
 # Where Darkroom's knowledge comes from
 
@@ -6,12 +6,12 @@
 
 | | What | Where it lives in the skill |
 |---|---|---|
-| [Real websites](#1-real-websites-that-inspired-it) | 139 site designs: 96 good examples, 43 bad ones, searchable by technique | `library/` (one short written entry per site) |
-| [Lessons](#2-lessons-drawn-from-them) | 28 patterns seen across several sites; 12 promoted to rules | `library/LESSONS.md`, then `references/` |
+| [Real websites](#1-real-websites-that-inspired-it) | 228 site designs: 131 good examples, 97 bad ones, searchable by technique; the newest 89 also judged on design, build and technique separately | `library/` (one short written entry per site) |
+| [Lessons](#2-lessons-drawn-from-them) | 32 patterns seen across several sites; 13 promoted to rules | `library/LESSONS.md`, then `references/` |
 | [Research](#3-research-and-standards) | 29 sources: usability research, accessibility standards, EU law, award criteria | `references/sources.md` |
 | [Other tools](#4-other-design-tools-studied) | 7 open design skills and tools, read for principles only | `references/provenance.md` |
 | [Examples and recipes](#5-examples-and-recipes) | 100 example prompts, each with the full build spec it leads to; 35 motion and media recipes tested in a real browser; Values tables for type, motion, spacing and colour | `examples/`, `recipes/`, `references/` |
-| [Test pages](#6-test-pages-built-with-it) | 4 pages built end to end to find what broke | the test suite (111 checks) |
+| [Test pages](#6-test-pages-built-with-it) | 4 pages built end to end to find what broke | the test suite (127 checks) |
 | [Human input](#7-human-input) | the author's taste calls, dislikes, approvals and assets | everywhere |
 
 ---
@@ -207,17 +207,127 @@ Only problems that cost visitors something are recorded (content behind a gate, 
 
 </details>
 
+<details>
+<summary><b>Good: 35 AI-era motion sites</b> (added 2026-10-29: AI-made and AI-motion websites people shared and argued about on Reddit, each marked good by the author)</summary>
+
+Chosen to learn how today's AI-made motion sites are designed and built, and where they go wrong. Each entry is judged three ways (the design, the build: weight, phones, smoothness; and the technique as a reusable idea), so a beautiful but heavy page and a plain page with a clever trick both teach the right thing.
+
+| Site | Category | Split |
+|---|---|---|
+| [Aadi Design Studio](https://www.aadii.design/) | portfolio | design good · build mixed · technique good |
+| [aecync (handheld navigator concept)](https://demo.aecync.com/) | product-launch | design good · build mixed · technique good |
+| [Aecync coffee demo](https://coffee-demo.aecync.com/) | food-drink | design mixed · build bad · technique good |
+| [Ani Iashvili (designer portfolio)](https://aniiashvili.com/) | portfolio | design good · build mixed · technique good |
+| [Astral Logistics](https://astral-logistic.vercel.app/) | corporate | design good · build mixed · technique mixed |
+| [Capitals Trainer](https://capitals.elen.red/) | app-marketing | design good · build good · technique good |
+| [Designotion](https://www.designotion.com/) | agency | design good · build mixed · technique good |
+| [Die Antwoord](https://dieantwoord.com/) | events-culture | design good · build mixed · technique good |
+| [Formsuite](https://formsuite.co/) | saas | design good · build mixed · technique good |
+| [HomeLab Brand Studio](https://homelabstudio.framer.website/) | agency | design good · build mixed · technique mixed |
+| [Horizon (real-estate template)](https://horizon-realestate.framer.website/) | real-estate | design good · build mixed · technique good |
+| [Jordan Gibbs (portfolio)](https://jordangibbs.xyz/) | portfolio | design good · build mixed · technique good |
+| [Kigo Studio](https://kigo.studio/) | agency | design good · build mixed · technique good |
+| [Matt Ebso](https://mattebso.com/) | portfolio | design good · build mixed · technique good |
+| [MeltKit](https://meltkit.com/) | app-marketing | design good · build mixed · technique good |
+| [Native Foreign (AI storytelling studio)](https://nativeforeign.co/) | agency | design good · build mixed · technique good |
+| [Outpost (remote-work travel series)](https://outpost.dayemadnan.com/) | editorial | design good · build mixed · technique good |
+| [Palettt](https://palettt.com/) | saas | design good · build mixed · technique good |
+| [Panel/Press (comic cover archive)](https://www.panelpress.online/) | editorial | design good · build mixed · technique good |
+| [Rail-Tec (rail-wagon service, Switzerland)](https://railtec-s29r.jtakeit.site/) | corporate | design good · build good · technique good |
+| [Refbox](https://ref.box/) | app-marketing | design good · build mixed · technique good |
+| [Royal Pop (unofficial concept)](https://royal-pop-website.vercel.app/) | product-launch | design good · build bad · technique good |
+| [RU-X909 (concept XR glasses)](https://ru-x909.xyz/) | product-launch | design good · build bad · technique good |
+| [Shōmei (film studio concept)](https://numerous-line-471160.framer.app/) | agency | design good · build mixed · technique good |
+| [Side B](https://www.sideb.world/) | food-drink | design good · build mixed · technique good |
+| [Story Wizard (story widget for websites)](https://storywizard.online/) | saas | design good · build mixed · technique good |
+| [Studio Jamoora](https://studiojamoora.com/) | agency | design good · build mixed · technique good |
+| [Stuff My Dog Loves](https://stuffmydogloves.com/) | experimental | design good · build good · technique good |
+| [Surfing (Framer template)](https://surfing-template.framer.website/) | landing-page | design good · build mixed · technique mixed |
+| [SwarmOne (GPU inference tuning)](https://swarmone.ai/) | saas | design good · build mixed · technique good |
+| [The Wall Doctor (Bellevue contractor)](https://www.thewalldoctor.com/) | corporate | design good · build good · technique mixed |
+| [todrawn](https://todrawn.com/) | saas | design good · build mixed · technique good |
+| [uicraft](https://uicraft.app/) | saas | design good · build good · technique good |
+| [USTA agency](https://usta.agency/) | agency | design good · build mixed · technique good |
+| [VibeCurb](https://vibecurb.pages.dev/) | saas | design good · build mixed · technique good |
+
+</details>
+
+<details>
+<summary><b>Bad: 54 AI-era counter-examples</b> (added 2026-10-29: from the same review, each marked bad by the author)</summary>
+
+Mostly the same AI look repeated (frosted caption boxes, one film doing all the talking, heavy first loads, "best viewed on desktop" screens). Many still have a technique worth borrowing; the split says which part failed.
+
+| Site | Category | Split |
+|---|---|---|
+| [Adem Othman](https://www.ademothman.dev/) | portfolio | design mixed · build mixed · technique bad |
+| [ajkale (backend engineer portfolio)](https://ajkale.com/) | portfolio | design bad · build mixed · technique bad |
+| [AnoteQuest](https://anotequest.com/) | saas | design bad · build mixed · technique mixed |
+| [Arthouse](https://www.madebyarthouse.com/) | agency | design bad · build mixed · technique mixed |
+| [Astronomia Semplice](https://astronomiasemplice.it/) | editorial | design mixed · build good · technique good |
+| [Atlas UI kit (pacifio)](https://ui.pacifio.dev/) | saas | design bad · build mixed · technique bad |
+| [Bruno Simon (drivable 3D portfolio)](https://bruno-simon.com/) | portfolio | design bad · build mixed · technique good |
+| [Cinetale](https://cinetaleai.com/) | saas | design bad · build mixed · technique bad |
+| [codedgar (frontend design engineer portfolio)](https://codedgar.com/) | portfolio | design mixed · build bad · technique bad |
+| [curllmooha](https://curllmooha.com/) | portfolio | design mixed · build bad · technique mixed |
+| [Emmpo](https://emmpo.com/) | landing-page | design not reviewed · build not reviewed · technique not reviewed |
+| [Exit Simulation (developer portfolio)](https://www.exitsimulation.com/) | portfolio | design mixed · build bad · technique mixed |
+| [Flowspark — background zoom demo](https://www.flowspark.co/animations/image-background-zoom) | experimental | design bad · build bad · technique mixed |
+| [Forty News](https://forty.news/) | editorial | design bad · build mixed · technique mixed |
+| [Gareth Heyes (3D CSS portfolio)](https://garethheyes.co.uk/) | portfolio | design bad · build bad · technique mixed |
+| [Gogh with the Flow (art-history scroll)](https://notbigmuzzy.github.io/goghwiththeflow/) | experimental | design mixed · build bad · technique mixed |
+| [Good Company (pet-care concept)](https://www.aashishthakuri.com/projects/goodcompany/) | landing-page | design not reviewed · build bad · technique bad |
+| [HEX](https://www.hex.inc/) | agency | design mixed · build bad · technique bad |
+| [Hi Nepal Travels & Treks](https://hinepaltreks.com/) | hospitality | design bad · build mixed · technique bad |
+| [How to shrink a raspberry (SOG explainer)](https://abstrakt.sh/sog-explained/fable) | editorial | design mixed · build bad · technique good |
+| [IDE portfolio (Arnav)](https://arnofrxdd.github.io/ide-portfolio/) | portfolio | design bad · build mixed · technique mixed |
+| [Integrity Index](https://www.integrityindex.us/) | dashboard | design bad · build mixed · technique mixed |
+| [Irfan Subasi XP (developer portfolio)](https://irfansubasi.com/) | portfolio | design bad · build mixed · technique mixed |
+| [Kudanil Explorer](https://www.kudanil.com/) | hospitality | design mixed · build bad · technique bad |
+| [lucasch.me (portfolio)](https://lucasch.me/) | portfolio | design mixed · build mixed · technique mixed |
+| [Mahadeva (AI agency template)](https://mahadeva.framer.ai/) | agency | design bad · build mixed · technique mixed |
+| [Máuhan](https://mauhan.com/) | portfolio | design mixed · build bad · technique bad |
+| [Mecha Warz Arena](https://coaxnim.github.io/mecha-warz-arena/) | experimental | design bad · build bad · technique mixed |
+| [Naypache Studio](https://www.naypache-studio.com/) | agency | design mixed · build mixed · technique good |
+| [Nitro Studio](https://nitrostudio.co/) | portfolio | design mixed · build good · technique bad |
+| [Notiqs (music-theory app)](https://notiqs.app/) | saas | design bad · build mixed · technique bad |
+| [Oakwood UAE](https://oakwooduae.com/) | corporate | design mixed · build bad · technique mixed |
+| [OHZI Labs (studio experiments hub)](https://labs.ohzi.io/) | experimental | design mixed · build bad · technique good |
+| [Oku (reading tracker)](https://oku.io/) | app-marketing | design not reviewed · build not reviewed · technique not reviewed |
+| [Pacific Coast Highway (Pit Stop app)](https://www.pit-stop-app.com/viz/pch) | app-marketing | design mixed · build bad · technique good |
+| [PortKiller](https://portkiller.app/) | app-marketing | design bad · build mixed · technique bad |
+| [Prompture](https://prompture.framer.website/) | saas | design bad · build bad · technique mixed |
+| [Roborock (S7 MaxV Ultra link, German shop)](https://de.roborock.com/pages/roborock-s7-max-ultra) | e-commerce | design mixed · build bad · technique bad |
+| [Shelby Kho](https://shelbykho.com/) | portfolio | design mixed · build bad · technique mixed |
+| [Ship or Die (startup roast tool)](https://shipordie.club/roast/startup) | saas | design mixed · build mixed · technique mixed |
+| [Shree Krishna (SK Global Foods)](https://www.skglobalfoods.com/) | food-drink | design mixed · build bad · technique mixed |
+| [Sienna Chen's World](https://siennachen.com/) | portfolio | design mixed · build mixed · technique mixed |
+| [Sitegeist (AI website benchmark)](https://sitegeist.kian.im/) | experimental | design mixed · build good · technique bad |
+| [Spine Anaesthesiology Fellowship](https://spineanesthesiafellowship.com/) | corporate | design mixed · build bad · technique bad |
+| [Splitleaf (local CMS and site builder)](https://splitleaf.eu/) | saas | design bad · build mixed · technique mixed |
+| [Stylized Rainy](https://stylized.cortiz.dev/rainy) | experimental | design mixed · build bad · technique mixed |
+| [temple.ooo (personal portfolio)](https://temple.ooo/) | portfolio | design mixed · build bad · technique mixed |
+| [Tides of Time](https://tidesoftime.app/) | experimental | design mixed · build mixed · technique bad |
+| [Unfor Dev](https://unfor-dev.vercel.app/) | portfolio | design bad · build bad · technique bad |
+| [Unicorn Studio Framer demo](https://unicornstudio.framer.ai/) | experimental | design mixed · build bad · technique mixed |
+| [WindowSwap (window views from around the world)](https://www.window-swap.com/) | experimental | design bad · build bad · technique good |
+| [Yaven](https://www.yaven.us/) | saas | design mixed · build bad · technique mixed |
+| [Zia (restaurant, Rome)](https://ziarestaurant.com/) | food-drink | design mixed · build bad · technique bad |
+| [Zippy Town 3D](https://zippy.town/) | app-marketing | design bad · build mixed · technique good |
+
+</details>
+
 ## 2. Lessons drawn from them
 
-A pattern seen in **three or more** entries becomes a *candidate* lesson in [`library/LESSONS.md`](skill/darkroom/library/LESSONS.md), with its evidence listed. A candidate only becomes a rule after the author approves it. 12 have been promoted so far. Examples:
+A pattern seen in **three or more** entries becomes a *candidate* lesson in [`library/LESSONS.md`](skill/darkroom/library/LESSONS.md), with its evidence listed. A candidate only becomes a rule after the author approves it. 13 have been promoted so far. Examples:
 
 - Colour lives in the media; the interface stays ink + ground + at most one accent (→ `references/color.md`).
 - The first frame must survive without JavaScript, WebGL or a loader.
 - Recompose for phones; don't squeeze the desktop layout.
 - Sound is always opt-in (→ `references/motion.md`).
 - Awards do not mean accessible (→ `references/myths-and-facts.md`).
+- Retro, toy or hand-made dress loses on a serious offer: Darkroom's home ground is modern and editorial-modern, and it says so before building another look you ask for (→ `commands/concierge.md`).
 
-The "AI-made look" tells in [`references/tells.md`](skill/darkroom/references/tells.md) come from the bad examples plus practitioner write-ups on generic AI design.
+The "AI-made look" tells in [`references/tells.md`](skill/darkroom/references/tells.md) come from the bad examples plus practitioner write-ups on generic AI design; a separate "AI-era motion sites" section lists the tells of the chained-AI-film look (one film doing all the talking, the same frosted caption box in every chapter, a heavy first load).
 
 ## 3. Research and standards
 
@@ -247,7 +357,7 @@ Read for principles, then rewritten in Darkroom's own words and code; **no code 
 
 ## 6. Test pages built with it
 
-Each build exposed gaps that became fixes or tests: **NorthShutter** (an AR headset concept, scroll-scrubbed hero film, lens dive), **Porsche 911 Turbo S** (unofficial concept, frame-sequence film and configurator), **Forno Cinco** (a fictional bakery, no assets at all), **Halden Kiln** (a fictional ceramics studio, scroll-driven kiln firing). The test suite (111 checks today, kept with the maintainer's tools rather than in this repository) grew from what went wrong on them. Examples: text contrast measured from pixels, because a colour check passed text that was 5 % visible; and the scroll pass, because fade-in text hid problems from the audit.
+Each build exposed gaps that became fixes or tests: **NorthShutter** (an AR headset concept, scroll-scrubbed hero film, lens dive), **Porsche 911 Turbo S** (unofficial concept, frame-sequence film and configurator), **Forno Cinco** (a fictional bakery, no assets at all), **Halden Kiln** (a fictional ceramics studio, scroll-driven kiln firing). The test suite (127 checks today, kept with the maintainer's tools rather than in this repository) grew from what went wrong on them. Examples: text contrast measured from pixels, because a colour check passed text that was 5 % visible; and the scroll pass, because fade-in text hid problems from the audit.
 
 ## 7. Human input
 

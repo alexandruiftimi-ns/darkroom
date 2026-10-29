@@ -8,11 +8,11 @@
 
 <p align="center">
   <a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/"><img alt="Live showcase: 5 demos" src="https://img.shields.io/badge/%E2%96%B6%20live%20showcase-5%20demos-ff7a3d?style=for-the-badge&labelColor=ff7a3d&color=121110"></a>
-  <a href="CHANGELOG.md"><img alt="Version 1.6.0, Precision" src="https://img.shields.io/badge/version-1.6.0%20·%20Precision-ff7a3d?style=for-the-badge&labelColor=121110"></a>
+  <a href="CHANGELOG.md"><img alt="Version 1.7.0, Smooth Scroll" src="https://img.shields.io/badge/version-1.7.0%20·%20Smooth%20Scroll-ff7a3d?style=for-the-badge&labelColor=121110"></a>
   <a href="LICENSE"><img alt="MIT licence" src="https://img.shields.io/badge/licence-MIT-ff7a3d?style=for-the-badge&labelColor=121110"></a>
   <img alt="Claude Code skill" src="https://img.shields.io/badge/Claude%20Code-skill-ece6dc?style=for-the-badge&logo=anthropic&logoColor=ece6dc&labelColor=121110">
   <img alt="10 platforms" src="https://img.shields.io/badge/platforms-10-ff7a3d?style=for-the-badge&labelColor=121110">
-  <img alt="111 automated checks" src="https://img.shields.io/badge/tests-111%20passing-7ab55c?style=for-the-badge&labelColor=121110">
+  <img alt="127 automated checks" src="https://img.shields.io/badge/tests-127%20passing-7ab55c?style=for-the-badge&labelColor=121110">
   <img alt="Node 18+" src="https://img.shields.io/badge/node-18%2B-ece6dc?style=for-the-badge&logo=nodedotjs&logoColor=ece6dc&labelColor=121110">
 </p>
 
@@ -41,7 +41,7 @@
   <img src="assets/icons/html5.svg" width="34" alt="HTML" title="Plain HTML">
 </p>
 
-Darkroom is a [Claude Code](https://claude.com/claude-code) skill that turns Claude into **your art director and developer**. You bring the facts, your photos and your taste. Darkroom picks the design, writes the code **on the platform you need**: a Shopify store, a WooCommerce shop, a WordPress site you can edit, Astro on Cloudflare, Next.js on Vercel, Hugo, Jekyll, a Ghost publication, PHP, or plain HTML you can host for free. Then it **opens the result in a real browser, screenshots it, audits it and fixes what it sees.** You need no design vocabulary: ask for "animations when I scroll" and it answers in plain words, with one recommendation and a short list of what it needs from you.
+Darkroom is a [Claude Code](https://claude.com/claude-code) skill that turns Claude into **your art director and developer**. You bring the facts, your photos and your taste. Darkroom picks the design, writes the code **on the platform you need**: a Shopify store, a WooCommerce shop, a WordPress site you can edit, Astro on Cloudflare, Next.js on Vercel, Hugo, Jekyll, a Ghost publication, PHP, or plain HTML you can host for free. Then it **opens the result in a real browser, screenshots it, audits it and fixes what it sees.** The preview you have open reloads by itself as it works, and when it waits for something (clips you are making in an AI tool, a site starting up) it carries on the moment they arrive, without being nudged. You need no design vocabulary: ask for "animations when I scroll" and it answers in plain words, with one recommendation and a short list of what it needs from you.
 
 > [!IMPORTANT]
 > Darkroom **only starts when you type `/darkroom`**. Mentioning websites in another task never starts it by accident. Put what you want after the command, then just talk normally. In a new session, type `/darkroom` again and it continues where you left off. [How to ask for changes later ↓](#changes)
@@ -199,7 +199,7 @@ Bring your brand colours, let Darkroom **suggest three palettes drawn from your 
 
 ### 📸 Your photos, or prompts for AI tools
 
-Have your own pictures and video? Darkroom designs around them. Don't? It writes **ready-to-paste prompts** for the tools you use, says which mode to use, what to attach, how to tell a good result from a bad one, and what ships if the asset never arrives. It never spends your credits.
+Have your own pictures and video? Darkroom designs around them. Don't? It writes **ready-to-paste prompts** for the tools you use, says which mode to use, what to attach, how to tell a good result from a bad one, and what ships if the asset never arrives. It never spends your credits. Prefer free media? Darkroom suggests sources (free photo and video libraries, AI-made clip libraries, or a moving backdrop drawn in code, which loads faster than video) and **uses whichever you pick**.
 
 | Mode | Use it for | Tools it writes prompts for (examples) |
 |---|---|---|
@@ -245,6 +245,9 @@ Say *"like apple.com"*, *"like Rolex"* or *"like Cartier"*: Darkroom measures th
 
 </details>
 
+> [!NOTE]
+> **Darkroom's home ground is modern and editorial-modern.** Ask for retro, quirky or hand-made and it says so in one line, then builds it anyway if that is what you want.
+
 ### How it moves: four levels
 
 <p align="center"><img src="assets/modes.svg" alt="The four motion levels as small animated browser windows: calm, animated, one hero effect, scroll story" width="100%"></p>
@@ -255,6 +258,19 @@ Say *"like apple.com"*, *"like Rolex"* or *"like Cartier"*: Darkroom measures th
 | 🌊 **Animated** | headings rise, text fades in, pictures open as you scroll | nothing extra |
 | 💥 **One hero effect** | one memorable moment (a product that turns, a dive into a lens), then a normal page | usually one clip or one strong image |
 | 📖 **Scroll story** | chapters on a pinned stage; scroll back to replay | a few sentences per chapter, plus the media each one needs |
+
+<details>
+<summary>🎞️ <b>Scroll story, "moves as I scroll", or an AI film? Three different things</b></summary>
+
+| You ask for | Darkroom builds | An AI film? |
+|---|---|---|
+| **A scroll story** | chapters told with your own words, pictures, type and effects | at most one ingredient, never the whole story |
+| **"Something that moves as I scroll"** | picks from the effect menu: frames that follow the scroll, parallax, reveals, a pinned scene… | one option among several |
+| **"Like those AI websites" / "with Kling or Veo"** | a film made of chained AI clips, scrubbed by scroll | yes, with its own rules: one look locked from the first still, each clip starting exactly where the last one ended, every join scored, and a light first screen |
+
+</details>
+
+**Smooth on phones.** Scroll films keep their frames in memory, prepare the next ones in the direction you scroll, never flash a frame from the wrong place on a fast flick, and ignore the phone's address bar growing and shrinking. Pauses on key moments are built into the film; the page never scrolls by itself. Smooth-scroll libraries stay off on touch screens.
 
 Every effect has a reduced-motion version and works without JavaScript. Which library suits which job (GSAP, Motion, Lenis, three.js, Lottie, CSS scroll animations): [`motion-toolkit.md`](skill/darkroom/references/motion-toolkit.md).
 
@@ -331,6 +347,15 @@ Open Claude Code in an empty folder (or your project) and type one. Click a grou
 /darkroom I want scroll storytelling for my coffee roastery: from the farm to the cup. What do you need from me?
 ```
 **What you get first:** a chapter plan and a "what I need from you" list. Each item says the best way to make it (your phone, Blender, an AI tool, with the prompt), the cost class, and what ships if it never arrives.
+</details>
+
+<details>
+<summary>🎞️ <b>The AI-film look, on request</b></summary>
+
+```text
+/darkroom a landing page for my perfume brand like those AI motion websites: one continuous film as you scroll, from the bottle on a dune at dawn into a night garden. I'll make the clips in Kling, write me the prompts.
+```
+**What happens:** it locks one look from a first still, writes a prompt per clip where each clip starts on the exact last frame of the one before, waits for your clips and picks them up as they land, joins them into one film, tells you which join jumps and how to fix it, and keeps the first screen light enough to load fast on a phone.
 </details>
 
 <details>
@@ -422,7 +447,7 @@ Open Claude Code in an empty folder (or your project) and type one. Click a grou
 
 <p align="center"><img src="assets/flow.svg" alt="Intake, look and motion, direction, slice, build, check and fix, final. You confirm the look and motion, pick the direction, approve the slice and decide at the end." width="100%"></p>
 
-You are asked at **four moments only**: the first questions, choosing between two directions, approving a working slice, and the final result. If you chose *home page first*, it asks once more before building the other pages. Everything between is Claude's job, and you can say "just go" at any time.
+You are asked at **four moments only**: the first questions, choosing between two directions, approving a working slice, and the final result. If you chose *home page first*, it asks once more before building the other pages. Everything between is Claude's job, and you can say "just go" at any time. The preview stays open and **reloads by itself** at the same scroll position while Darkroom works (a colour or spacing change updates without a reload at all).
 
 <details>
 <summary>🔍 <b>What happens at each stage</b></summary>
@@ -477,7 +502,7 @@ Every starter theme was run through **the platform's own tools**, not just Darkr
 | <picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/ghost-light.svg"><img src="assets/icons/ghost.svg" width="16" alt=""></picture> Ghost | gscan | **compatible with Ghost 6.x** |
 | <img src="assets/icons/wordpress.svg" width="16" alt=""> WordPress | a real WordPress (Playground), Site Editor block validation | **renders; 0 invalid blocks** in every template |
 | <img src="assets/icons/woocommerce.svg" width="30" alt=""> WooCommerce | WordPress + WooCommerce from wordpress.org, sample products | **shop and product pages render; 0 invalid blocks** |
-| All ten | Darkroom's structure check + **111 automated tests** | passing locally; run before every release |
+| All ten | Darkroom's structure check + **127 automated tests** | passing locally; run before every release |
 
 That run found real problems before you could: WooCommerce blocks that look self-closing but save HTML (the editor would have called them broken), missing side padding on phones, and new WooCommerce stores hiding behind "Coming soon". All fixed, and the checks now catch them.
 
@@ -486,16 +511,16 @@ That run found real problems before you could: WooCommerce blocks that look self
 
 | | |
 |---|---|
-| 🎨 **Art direction** | 14 style packs, a build spec with every value before the code, 100 example prompts to match (each with its full spec), looks inspired by brands you name, and 139 reviewed real sites it can look up by technique ("a scroll story like ScrollTide", parallax, a cursor effect). |
+| 🎨 **Art direction** | 14 style packs, a build spec with every value before the code, 100 example prompts to match (each with its full spec), looks inspired by brands you name, and 228 reviewed real sites it can look up by technique ("a scroll story like ScrollTide", parallax, a cursor effect, chained AI clips), the newest 89 judged separately on design, build and technique. |
 | ♻️ **Redesign** | imports your current site (URL or folder): texts, menu, contacts, images with sizes, old addresses. |
 | 📱 **Phone preview** | your site on your phone over the same Wi-Fi, or a shareable link when you say yes. |
 | 📥 **Asset check** | measures what you drop in, suggests improvements, never rejects. |
 | 🧱 **Ten platforms** | dated profiles with the official docs to re-check, starters, a structure check, deploy steps. Building in Lovable, v0, Bolt or Cursor? Darkroom writes the prompt for that tool and checks the builder's preview. |
-| 🌊 **Scroll and motion** | 35 tested building blocks: background video that never flashes, seamless loops, readable text over video, headline entrances, menus, buttons, grain, marquees, count-ups, word-by-word reveals, stacking cards, typewriter and rotating words, full-width wordmarks, phone swipe rails, magnetic buttons, parallax layers, spotlights, a depth carousel, frosted glass, mood-clip switchers, shader backdrops, a draggable 3D model, reveals, scroll-scrubbed video, frame sequences (with a lighter set for phones), pinned scenes, characters that come alive per section, and an image that reveals another under your cursor. Every one has a reduced-motion fallback. |
-| 📷 **Real-browser QA** | Playwright captures at several screen sizes, contact sheets and crops, motion on and off; each run records the build it was taken from. |
-| 🔎 **Audits** | 33 checks, each marked measured, heuristic or manual: accessibility, contrast from real pixels, clutter, word budgets, type scale, colour, keyboard, reduced motion, white flash on load, hidden headlines, videos that don't play or jump on loop, fonts that didn't load, see-through frames in scroll films. |
+| 🌊 **Scroll and motion** | 35 tested building blocks: background video that never flashes, seamless loops, readable text over video, headline entrances, menus, buttons, grain, marquees, count-ups, word-by-word reveals, stacking cards, typewriter and rotating words, full-width wordmarks, phone swipe rails, magnetic buttons, parallax layers, spotlights, a depth carousel, frosted glass, mood-clip switchers, shader backdrops, a draggable 3D model, reveals, scroll-scrubbed video, frame sequences that stay smooth on a fast phone flick (with a lighter set for phones), pinned scenes, characters that come alive per section, and an image that reveals another under your cursor. Every one has a reduced-motion fallback. |
+| 📷 **Real-browser QA** | Playwright captures at several screen sizes, contact sheets and crops, motion on and off (also pages that scroll inside their own box or only on the mouse wheel); each run records the build it was taken from. A live preview that reloads by itself while Darkroom works. |
+| 🔎 **Audits** | 41 checks, each marked measured, heuristic or manual: accessibility, contrast from real pixels, clutter, word budgets, type scale, colour, keyboard, reduced motion, white flash on load, hidden headlines, videos that don't play or jump on loop, fonts that didn't load, see-through frames in scroll films, films that jump on a fast phone flick, pages that scroll by themselves, dead stretches of scroll, the same frosted caption box in every chapter, "best viewed on desktop" screens, a small headline lost over full-screen film, too much weight before the first scroll, and chained clips that jump at the join. |
 | ⚖️ **Compliance checklist** | EU and US checklists for cookies, prices, disclosures and AI-image labelling. A checklist, not legal advice. |
-| 🎞️ **Media** | probes media, makes responsive images, turns video into a frame sequence, makes videos web-ready (desktop, phone, still frame), measures edge colour and loop jumps, and draws free moving backdrops in your colours (8 styles + 3 textures). |
+| 🎞️ **Media** | probes media, makes responsive images, turns video into a frame sequence, makes videos web-ready (desktop, phone, still frame), measures edge colour and loop jumps, joins chained AI clips into one film and scores every join, and draws free moving backdrops in your colours (8 styles + 3 textures). |
 | ✍️ **Image and video prompts** | for ChatGPT, Midjourney, Kling, Seedance, Veo and others, with acceptance criteria. |
 
 </details>
@@ -506,9 +531,9 @@ That run found real problems before you could: WooCommerce blocks that look self
 
 ## 📚 Where the knowledge comes from
 
-<p align="center"><img src="assets/knowledge.svg" alt="139 real site designs that inspired it (96 good, 43 bad), 28 cross-site lessons with 12 promoted to rules, 29 research sources, 7 design tools, 100 example prompts with their specs, 35 tested recipes, 111 automated checks, one human art director" width="100%"></p>
+<p align="center"><img src="assets/knowledge.svg" alt="228 real site designs that inspired it (131 good, 97 bad), 32 cross-site lessons with 13 promoted to rules, 29 research sources, 7 design tools, 100 example prompts with their specs, 35 tested recipes, 127 automated checks, one human art director" width="100%"></p>
 
-Darkroom is **not a trained model**. It is written knowledge that Claude reads while it works, in plain files you can check: **inspiration from 139 real website designs** (kept as written lessons, never screenshots or copied code), **28 lessons** of which **12 became rules** after the author approved them, **29 research sources** (Nielsen Norman Group, WCAG 2.2, the European Accessibility Act, EU cookie and price rules, the AI Act), the **official docs of all ten platforms**, **100 example prompts**, each with the full build spec it leads to (every font, size, colour and timing), which Darkroom reads before designing yours, **35 motion and media recipes** each tested in a real browser, **Values tables** for type, motion, spacing and colour, and the author's own taste calls. **111 automated checks** run on every change, so a rule that stops working gets noticed.
+Darkroom is **not a trained model**. It is written knowledge that Claude reads while it works, in plain files you can check: **inspiration from 228 real website designs** (kept as written lessons, never screenshots or copied code; the newest 89 are AI-made and AI-motion sites, each judged on design, build and technique separately), **32 lessons** of which **13 became rules** after the author approved them, **29 research sources** (Nielsen Norman Group, WCAG 2.2, the European Accessibility Act, EU cookie and price rules, the AI Act), the **official docs of all ten platforms**, **100 example prompts**, each with the full build spec it leads to (every font, size, colour and timing), which Darkroom reads before designing yours, **35 motion and media recipes** each tested in a real browser, **Values tables** for type, motion, spacing and colour, and the author's own taste calls. **127 automated checks** run on every change, so a rule that stops working gets noticed.
 
 **[→ The full list: every site, source and human decision](KNOWLEDGE.md)**
 

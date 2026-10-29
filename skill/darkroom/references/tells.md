@@ -57,8 +57,19 @@ These hit award winners as often as slop — they're failures, not style. Eviden
 - **A gate in front of the content (2026-10-27).** "Enter the experience", a START button or a mini-game the visitor must finish before anything scrolls (bad/avatr-vision, bad/dont-board-me, bad/minh-pham, bad/real-ultimate-power). The page scrolls and sells with no click; intros, games and sound choices sit over or beside the content and scrolling skips them. A sound on/off choice that still lets you scroll is not a gate. Severity: high.
 - **Text that needs the media to load.** White copy over a lazy photo or video, reveals that leave blank bands, hotlinked images. Copy gets its own ground or scrim; media boxes reserve `aspect-ratio` and a poster colour.
 
+## AI-era motion sites (library, 2026-10-29)
+From the maintainer's review of 102 AI-made and AI-motion pages (evidence in `library/`; lessons in `library/LESSONS.md`). The verdicts show these tells sink a page only together, or when nothing owned replaces them: good/uicraft, good/storywizard and good/native-foreign keep a pill badge or an italic accent word and are still good, because the product or the work carries them.
+- **The "cosmic" default:** violet-black space, a lavender italic serif second line, spaced-caps chapter labels (bad/astronomia-semplice). Also the chrome AI head in neon rain (bad/exit-simulation) and neon-green-on-black terminal cosplay with glitch text (bad/integrity-index, bad/portkiller).
+- **The AI-startup hero:** centred claim, lavender pill button, a stock doodle crowd, blue-pink glass gradient cards (bad/yaven); badge hero + stat counters + pill tags + identical icon cards (bad/spine-fellowship); falling pastel blocks with no owner (bad/mahadeva-framer); near-black + one neon + centred claim over a screenshot (bad/splitleaf).
+- **The same frosted caption card in every chapter** of a film page. One fixed card as a reading anchor is fine (audit `glass-caption`).
+- **A film you scroll through where nothing changes** for screens at a time, or that weighs tens of MB before the first scroll (bad/abstrakt-fable, bad/hex, good/royal-pop as a heavy-but-good warning; audit `dead-scroll`, `first-scroll-weight`).
+- **"Best viewed on desktop"** instead of a phone page (bad/shelby-kho; audit `phone-gate`).
+- **Placeholders left live:** "Logo Ipsum", lorem ipsum, a placeholder logo wall (bad/unicorn-framer, bad/kudanil, bad/prompture).
+- **A headline that waits for its entrance or a loader** (bad/prompture, bad/curllmooha; audit `motion-rest`, `first-paint`). A designed loader that already shows the product is tolerated (good/coffee-aecync).
+- **Retro, toy or hand-made dress on a serious offer** reads as a costume (bad/anotequest, bad/sienna-chen, bad/irfan-xp, bad/window-swap); fine when the site is a toy (good/stuff-my-dog-loves) or the retro object is shot like a product (good/jordan-gibbs). Outside Darkroom's home ground (`commands/concierge.md`).
+
 ## What `audit` measures vs what needs eyes
-`darkroom.mjs audit` catches font count, colour share, contrast, word budgets, zones, alt/labels, third-party requests. Gradient text, card stripes, badge-over-H1, emoji icons, placeholder strings and generic headlines need the critique pass (`/darkroom critique`) — read the hero aloud: if it fits a competitor, rewrite it.
+`darkroom.mjs audit` catches font count, colour share, contrast, word budgets, zones, alt/labels, third-party requests, dead scroll, repeated glass captions, phone gates, the first-screen headline over film, weight before the first scroll and seams between chained clips. Gradient text, card stripes, badge-over-H1, emoji icons, placeholder strings and generic headlines need the critique pass (`/darkroom critique`) — read the hero aloud: if it fits a competitor, rewrite it.
 
 ## Why removal isn't enough
 A page with the tells deleted and nothing put in their place is empty. Replace with substance: an idea from the subject, real pictures, committed type, one layout primitive repeated until it becomes the signature, full and specific content. Ship with an opinion — one bold choice (a colour, a typeface, an uncommon layout), committed to.

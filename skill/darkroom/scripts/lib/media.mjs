@@ -318,6 +318,8 @@ export async function media(pos, opt) {
                                       H.264 web copy + phone copy (faststart, no audio) + poster; reports MB, edge colour, loop seam, calm zone
   boomerang <clip> [--out file.mp4] [--width 1920] [--fps 24] [--crf 23]
                                       one ping-pong copy (forward then backward) that loops with no seam
+  chain <clip> <clip> [...] [--out chain.mp4] [--width 1920] [--fps 24] [--crf 20]
+                                      score every seam between chained clips (last frame → next first frame), then join them into one clip
   sheet <folder> [--out sheet.jpg] [--cols 4] [--tile 320]
                                       numbered contact sheet of every image and video first frame (+ JSON index): look, then pick by number
   measure <file>                      edge colour, loop seam (video), calmest zone for the words (heuristics)
@@ -329,9 +331,10 @@ export async function media(pos, opt) {
   else if (sub === 'derive') await derive(target, opt);
   else if (sub === 'frames') await frames(target, opt);
   else if (sub === 'check') await check(target);
-  else if (['web', 'boomerang', 'sheet', 'make', 'measure'].includes(sub)) {
+  else if (['web', 'boomerang', 'sheet', 'make', 'measure', 'chain'].includes(sub)) {
     const kit = await import('./mediakit.mjs');
     if (sub === 'measure') console.log(JSON.stringify({ file: target, ...kit.analyse(path.resolve(target)) }, null, 2));
+    else if (sub === 'chain') await kit.chain(pos.slice(1), opt);
     else await kit[sub](target, opt);
   }
   else throw new Error(`unknown media command ${sub}`);

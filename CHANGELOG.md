@@ -4,6 +4,26 @@ Darkroom uses [semantic versioning](https://semver.org): **major.minor.patch**.
 A **major** change breaks how projects or commands worked before, a **minor** one adds features, a **patch** fixes things.
 The installed version: `node ~/.claude/skills/darkroom/scripts/darkroom.mjs version` (or the `VERSION` file in the skill).
 
+## 1.7.0 · Smooth Scroll · 2026-10-29
+
+Scroll films now stay smooth on phones, even on a fast flick or when you scroll back up, and the preview updates by itself while Darkroom works. Darkroom also learned from a review of 102 AI-made motion websites: what makes them good, and what makes them look like every other AI site.
+
+- **No more jumping films on phones.** On a fast flick, frame animations could flash a frame from somewhere else in the film and jump back and forth. Darkroom now keeps the frames in memory, prepares the ones ahead in the direction you are scrolling, never shows a frame from the wrong side, and limits how fast the picture can move, so it catches up smoothly instead of skipping.
+- **Steady when the address bar moves.** On phones the browser bar grows and shrinks each time you change direction, which nudged the film by itself. The film now follows the scene, not the window height, and resizing no longer causes a stutter mid-scroll.
+- **The page never scrolls by itself.** Pauses on key moments are now built into the film as short holds, instead of the page gliding to a stop, which fought your finger on phones.
+- **Two new checks:** one flicks a phone-sized page up and down and fails a film that jumps back and forth, and one fails a page that moves itself after you stop scrolling.
+- **The preview reloads by itself.** While Darkroom changes your page, the open preview refreshes at the same scroll position; a style-only change updates without a reload at all.
+- **No more silent waiting.** When Darkroom waits for something (images you are making elsewhere, a site starting up), it keeps working and carries on by itself the moment they arrive, instead of stopping until you say so.
+- **89 new examples from the AI-motion era.** Written lessons from AI-made and AI-motion websites, each judged three ways: the design, the build (weight, phones, smoothness) and the technique as a reusable idea, so a beautiful but heavy page and a plain page with a clever trick both teach the right thing. The library now holds 228 examples.
+- **Three kinds of moving pages, kept apart.** A scroll story is told with your own chapters, pictures, type and effects, never only with one AI film. "Something that moves as I scroll" gets the effect menu, where an AI film is one option. A film made of chained AI clips (the "AI website" look) is built only when you ask for it, with its own rules: one look locked from the first still, clips that start exactly where the last one ended, and a light first screen.
+- **Chained clips joined and checked.** Darkroom joins your clips into one film and scores every join, telling you where the picture jumps and how to fix it.
+- **Six new checks:** stretches of scrolling where nothing changes; the same frosted caption box repeated in every chapter; a "best viewed on desktop" screen instead of a phone page; a small first headline lost over full-screen film; more than about 4 MB loading before the first scroll; and chained clips that jump at the join. Single paragraphs over 60 words are now flagged too.
+- **Fewer false alarms:** a starfield with trails is no longer called ghosting, slides waiting in a carousel no longer count as hidden text, a moving logo strip no longer counts as extra reading zones, and huge faint decorative letters no longer fail contrast.
+- **Better looks at other sites:** pages that scroll inside their own box or only move on the mouse wheel are now captured all the way down, and newsletter pop-ups are closed with their own close button (nothing else is ever clicked).
+- **Darkroom's home ground, said out loud.** Darkroom is tuned for modern and editorial-modern pages. Ask for retro, quirky or hand-made and it says so in one line, then builds it anyway if you want.
+- **You choose where free media comes from.** Darkroom suggests sources (now including AI-made clip libraries, and code-made backgrounds that load faster than video) but uses whichever you pick.
+- **Smooth-scroll libraries stay off on touch screens,** where they made scrolling feel sticky.
+
 ## 1.6.0 · Precision · 2026-10-28
 
 Darkroom now writes every value down before it writes code, and comes with 100 example prompts to match.

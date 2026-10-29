@@ -29,11 +29,11 @@ capture (both motion modes, desktop + phone, scene progress for scrubbed parts)
 
 Judge the captures through the ten lenses (`references/critique-method.md`); the bar there is the finish line, and every fix lands in `BUILD_SPEC.md` before the code. Stop when the acceptance points are met, or when two passes in a row show no material improvement: present the best result and the trade-off as a concrete choice. Keep the last acceptable revision (a commit or a copy) before a risky visual change. After every fix check that the target improved and nothing accepted regressed (other viewports, reduced motion). Fix every **high** audit finding; keep a medium only with a one-line reason in the bible's exceptions log.
 
-Acceptance for the slice: matches the approved composition (documented differences only) · no high audit findings · keyboard usable with visible focus · phone composed, not squeezed · reduced-motion path works · scrub, reverse, fast wheel and resize behave · frame sequences show one whole frame at a time at full opacity, never two blended (`recipes/README.md` rule 6b) · no console errors · assets logged · text readable over the *worst* frame of any media.
+Acceptance for the slice: matches the approved composition (documented differences only) · no high audit findings · keyboard usable with visible focus · phone composed, not squeezed · reduced-motion path works · scrub, reverse, fast wheel and resize behave · frame sequences show one whole frame at a time at full opacity, never two blended (`recipes/README.md` rule 6b) · a fast fling down and back up on a phone plays through the film without flashing far-away frames, and the page never moves its own scroll (audit `scrub-fling`, `scroll-glide`; rules 2, 6, 6a; a hand-written scrubber is held to the same rules) · no console errors · assets logged · text readable over the *worst* frame of any media.
 
 ## 3. Checkpoint B
 
-Show the user a runnable preview, the sheets for desktop / phone / reduced motion, the decisions made, remaining asset constraints and known gaps. Ask approve / adjust (`AskUserQuestion`). Record with `darkroom state --approve slice`. Do not ask the user to run commands.
+Show the user the live preview (already running, law 10), the sheets for desktop / phone / reduced motion, the decisions made, remaining asset constraints and known gaps. Ask approve / adjust (`AskUserQuestion`). Record with `darkroom state --approve slice`. Do not ask the user to run commands.
 
 ## 4. Build-out
 

@@ -9,12 +9,48 @@ import { resolveTarget, revisionOf } from './serve.mjs';
 const stamp = () => new Date().toISOString().replace(/[-:]/g, '').replace(/\..*/, '').replace('T', '-');
 const pad = (n, w = 3) => String(n).padStart(w, '0');
 
+// What scrolls this page? 'document' (the usual), 'element' (the document is fixed and an inner box scrolls: smooth-
+// scroll wrappers, app shells; tagged data-dr-scroller) or 'wheel' (nothing scrolls: a stage that moves on wheel events,
+// e.g. three.js scenes; progress is virtual, 8 viewports of wheel for the whole page).
+function findScroller() {
+  const docMax = document.documentElement.scrollHeight - innerHeight;
+  if (docMax >= 8) return { kind: 'document', max: docMax };
+  document.querySelectorAll('[data-dr-scroller]').forEach((e) => e.removeAttribute('data-dr-scroller'));
+  let best = null; let bestArea = 0;
+  for (const el of document.querySelectorAll('body *')) {
+    const s = getComputedStyle(el);
+    if (!/auto|scroll|overlay/.test(s.overflowY) || el.scrollHeight - el.clientHeight < 200) continue;
+    const r = el.getBoundingClientRect(); const area = Math.max(0, Math.min(r.right, innerWidth) - Math.max(r.left, 0)) * Math.max(0, Math.min(r.bottom, innerHeight) - Math.max(r.top, 0));
+    if (area >= 0.5 * innerWidth * innerHeight && area > bestArea) { best = el; bestArea = area; }
+  }
+  if (best) { best.setAttribute('data-dr-scroller', ''); return { kind: 'element', max: best.scrollHeight - best.clientHeight }; }
+  return { kind: 'wheel', max: 8 * innerHeight };
+}
+const readPos = (page, sc) => sc?.kind === 'element' ? page.evaluate(() => document.querySelector('[data-dr-scroller]')?.scrollTop ?? 0) : page.evaluate(() => scrollY);
+
 // Wheel the page to a target scroll offset the way a visitor does, so Lenis / ScrollTrigger scrubs and smooth-scroll
-// CSS run their real code paths. Falls back to an instant jump if the wheel did not get there.
-async function scrollTo(page, y, vp) {
-  const max = await page.evaluate(() => document.documentElement.scrollHeight - innerHeight);
+// CSS run their real code paths. Falls back to an instant jump if the wheel did not get there. For a wheel-driven
+// stage (sc.kind 'wheel') the position is virtual: the wheel distance sent so far.
+async function scrollTo(page, y, vp, sc = { kind: 'document' }) {
+  if (sc.kind === 'wheel') {
+    const target = Math.max(0, Math.min(Math.round(y), sc.max));
+    await page.mouse.move(vp.width / 2, vp.height / 2);
+    while (Math.abs(target - (sc.pos ?? 0)) > 2) { const step = Math.sign(target - (sc.pos ?? 0)) * Math.min(240, Math.abs(target - (sc.pos ?? 0))); await page.mouse.wheel(0, step); sc.pos = (sc.pos ?? 0) + step; await page.waitForTimeout(40); }
+    await page.waitForTimeout(600); // the stage eases toward the wheel position
+    return { scrollY: sc.pos ?? 0, max: sc.max, virtual: true };
+  }
+  const max = sc.kind === 'element' ? sc.max : await page.evaluate(() => document.documentElement.scrollHeight - innerHeight);
   const target = Math.max(0, Math.min(Math.round(y), max));
   await page.mouse.move(vp.width / 2, vp.height / 2);
+  if (sc.kind === 'element') {
+    let cur = await readPos(page, sc); let guard = 0;
+    while (Math.abs(target - cur) > 2 && guard++ < 400) {
+      await page.mouse.wheel(0, Math.sign(target - cur) * Math.min(300, Math.abs(target - cur))); await page.waitForTimeout(24);
+      const next = await readPos(page, sc); if (Math.abs(next - cur) < 1 && guard > 3) break; cur = next;
+    }
+    if (Math.abs(await readPos(page, sc) - target) > 4) { await page.evaluate((t) => { const e = document.querySelector('[data-dr-scroller]'); if (e) e.scrollTop = t; }, target); await page.waitForTimeout(150); }
+    return { scrollY: await readPos(page, sc), max };
+  }
   let cur = await page.evaluate(() => scrollY);
   let guard = 0;
   while (Math.abs(target - cur) > 2 && guard++ < 400) {
@@ -60,8 +96,8 @@ function planStates(opt) {
   return pts.map((p) => ({ id: `p${pad(Math.round(p * 100))}`, scroll: p }));
 }
 
-async function stateOffset(page, s, vp) {
-  const max = await page.evaluate(() => document.documentElement.scrollHeight - innerHeight);
+async function stateOffset(page, s, vp, sc = null) {
+  const max = sc && sc.kind !== 'document' ? sc.max : await page.evaluate(() => document.documentElement.scrollHeight - innerHeight);
   if (s.scene) {
     const g = await page.evaluate((sel) => { const e = document.querySelector(sel); if (!e) return null; const r = e.getBoundingClientRect(); return { top: r.top + scrollY, h: r.height }; }, s.scene.selector);
     if (!g) throw new Error(`scene not found: ${s.scene.selector}`);
@@ -121,19 +157,23 @@ export async function capture(target, opt, { defaultModes = ['no-preference', 'r
           const stepPx = vp.height / 3; const n = Math.min(60, Math.ceil(total / stepPx));
           states = Array.from({ length: n + 1 }, (_, i) => ({ id: `film-${pad(i)}`, y: Math.min(total, i * stepPx) }));
         }
-        const scrollable = await page.evaluate(() => document.documentElement.scrollHeight - innerHeight);
-        if (scrollable < 8) states = states.filter((s, i) => i === 0 || !(typeof s.scroll === 'number' || typeof s.y === 'number' || s.scene)); // nothing to scroll: one state, not five identical shots
+        const sc = await page.evaluate(findScroller);
+        if (sc.kind === 'wheel' && (plan.film || states.some((s) => s.scene))) states = states.filter((s, i) => i === 0 || !(typeof s.y === 'number' || s.scene)); // film/scene need real offsets
+        let prevShot = null; let stalled = false;
         for (const s of states) {
-          const y = await stateOffset(page, s, vp);
-          let pos = { scrollY: await page.evaluate(() => scrollY), max: 0 };
-          if (y !== null) pos = await scrollTo(page, y, vp);
+          if (stalled) break;
+          const y = await stateOffset(page, s, vp, sc);
+          let pos = { scrollY: await readPos(page, sc), max: 0 };
+          if (y !== null) pos = await scrollTo(page, y, vp, sc);
           await runActions(page, s.actions);
           await page.waitForTimeout(Number(opt.wait ?? (motion === 'no-preference' ? 500 : 150)));
           const base = `${vpName}__${motion === 'reduce' ? 'reduced' : 'motion'}__${s.id}`;
           const file = path.join(runDir, `${base}.png`);
           if (s.crop || opt.crop) await page.locator(String(s.crop ?? opt.crop)).first().screenshot({ path: file });
           else await page.screenshot({ path: file });
-          files.push({ file: path.relative('.', file).split(path.sep).join('/'), viewport: vpName, motion, state: s.id, scrollY: Math.round(pos.scrollY), maxScroll: Math.round(pos.max), progress: pos.max ? +(pos.scrollY / pos.max).toFixed(3) : 0 });
+          // a page that neither scrolls nor answers the wheel: keep one shot, not five identical ones
+          if (sc.kind === 'wheel' && y !== null) { const buf = fs.readFileSync(file); if (prevShot && buf.equals(prevShot)) { fs.rmSync(file); stalled = true; break; } prevShot = buf; }
+          files.push({ file: path.relative('.', file).split(path.sep).join('/'), viewport: vpName, motion, state: s.id, scrollY: Math.round(pos.scrollY), maxScroll: Math.round(pos.max), progress: pos.max ? +(pos.scrollY / pos.max).toFixed(3) : 0, ...(sc.kind !== 'document' ? { scroller: sc.kind } : {}) });
           if (!opt['no-sheet']) tiles.push({ b64: (await page.screenshot({ type: 'jpeg', quality: 60 })).toString('base64'), label: `${s.id} · y${Math.round(pos.scrollY)}` });
         }
         await ctx.close();

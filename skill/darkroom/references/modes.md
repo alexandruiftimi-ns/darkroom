@@ -20,6 +20,14 @@ Record: `darkroom state --set mode=animated,look=like:cartier` (or `look=pack:lu
 | "one wow moment at the top", "the hero should do something" | `hero-effect` | from the brief |
 | nothing said about motion | `animated` for most packs; `calm` for trust and editorial; never `story` unless the subject and assets carry it | from the brief |
 
+### Three kinds of moving pages (route by the words the user used)
+
+| The user asks for | What it is | Route |
+|---|---|---|
+| a **scroll story** ("tell our story as you scroll", chapters, "like Apple's product pages") | `story` mode: chapters, pinned scenes, type, photos, illustration, drawn motion, 3D, filmed or generated moments | built from the chapters' own media (asset plan below). **Never defaults to, and never consists only of, a chained AI film.** One generated clip may be one chapter's moment. |
+| **something that moves as I scroll** (no story asked for) | `hero-effect` or `animated` | the effect menu (`references/effects.md`); an AI film / frame sequence may be **suggested** as one option, never the only one |
+| **an AI film explicitly** ("like the AI websites", "with Kling / Veo / Seedance", "a scroll film", "chained clips") | the scroll-film route | `references/scroll-film.md`: anchor still, chained clips from extracted frames, seam score, ~4 MB before the first scroll, text checks |
+
 If two readings are plausible, recommend one and name the other in a line ("I'd do an animated page; if you want the product to turn as you scroll, that's a scroll story and needs a video from you").
 
 ## The four motion levels

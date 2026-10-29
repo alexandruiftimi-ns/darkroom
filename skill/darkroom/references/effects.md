@@ -150,6 +150,8 @@ What the visitor sees: they scroll and the camera moves through a scene, an obje
 
 Drawn in code (shapes and gradients only) does not look 3D: offer it only as the no-cost option, last, with that sentence.
 
+Route A makes **moments** inside a story. A whole page that is one chained film is a different request (the "AI website" look): build it only when the user asks for it by name, from `references/scroll-film.md` (routing: `references/modes.md`, "Three kinds of moving pages").
+
 Which route fits which site (recommend from this, then adjust to their assets):
 
 | Site | Recommend | Why |

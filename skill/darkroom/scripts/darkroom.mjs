@@ -31,8 +31,12 @@ const USAGE = `darkroom <command>   (Darkroom ${VERSION})
   import <url|folder> [--list] [--pages /,/about] [--take text,images] [--max 40] [--ignore-robots] [--out .darkroom/import]
                                the user's existing site: texts in reading order, navigation, contacts, images with sizes,
                                suggestions; --list only lists the pages (ask which to bring over first)
-  preview <folder|http://127.0.0.1:port> [--port 8800] [--host 0.0.0.0]
-                               open the site on a phone on the same Wi-Fi (relays a dev server); runs until stopped
+  preview <folder|http://127.0.0.1:port> [--port 8800] [--host 0.0.0.0] [--watch dir] [--no-live]
+                               serve the site to this computer and phones on the same Wi-Fi (relays a dev server); open pages
+                               reload when files change, keeping their scroll (--watch: the folder to watch when relaying); runs until stopped
+  wait --files <folder> [--match "*.webp"] [--count N] [--stable 5] [--recursive] [--every 2] [--timeout 7200] | --url <http…>
+                               exit as soon as files have landed and stopped changing, or a server answers; run it in the
+                               background so Claude is woken when it is ready (exit 2 = timed out)
   platform list | scaffold <id> [--out dir] [--name "Site name"] | check [dir] [--platform id] [--json out.json]
            | content [dir] [--out dir] [--site https://…] [--theme theme-dir]
                                the platforms Darkroom builds for, a starter per platform, an offline structure check, and
@@ -48,7 +52,15 @@ async function study(target) {
   const out = opt.out ?? `.darkroom/study/${String(target).replace(/^https?:\/\//, '').replace(/[^\w.-]/g, '_').slice(0, 60)}`;
   mkdirp(out);
   const manifest = await capture(target, { ...opt, out, scroll: opt.scroll ?? '0,0.25,0.5,0.75,1', viewports: opt.viewports ?? 'desktop-1440,mobile-390', dismiss: true, motion: true }, { quiet: true });
-  const data = await audit(target, { ...opt, dismiss: true }, { resolveSettings, study: true });
+  // Some pages break the browser's data passing (every evaluate returns undefined): keep the capture, say why the audit is missing.
+  let data;
+  try { data = await audit(target, { ...opt, dismiss: true }, { resolveSettings, study: true }); } catch (e) {
+    const summary = { url: target, capture: { manifest: path.join(out, 'manifest.json'), consent: manifest.consent, modes: manifest.modes }, auditError: e.message, findings: [] };
+    fs.writeFileSync(path.join(out, 'study.json'), JSON.stringify(summary, null, 2));
+    console.error(`audit failed, capture kept: ${e.message}`);
+    console.log(path.join(out, 'study.json'));
+    return;
+  }
   const summary = {
     url: data.url, capture: { manifest: path.join(out, 'manifest.json'), consent: manifest.consent, modes: manifest.modes },
     fonts: { families: data.desktop.families, sizes: data.desktop.sizes, declaredUse: data.desktop.declared, weights: data.desktop.weights },
@@ -78,12 +90,13 @@ try {
     else CHECKS.forEach((c) => console.log(`${c.id.padEnd(15)} ${c.sev.padEnd(7)} ${c.basis.padEnd(10)} ${c.what}`));
   } else if (cmd === 'assets') { const { assets } = await import('./lib/assets.mjs'); await assets(pos, opt); }
   else if (cmd === 'import') { const { importSite } = await import('./lib/importsite.mjs'); await importSite(pos[0], opt); }
+  else if (cmd === 'wait') { const { wait } = await import('./lib/wait.mjs'); process.exitCode = await wait(opt); }
   else if (cmd === 'preview') { const { preview } = await import('./lib/preview.mjs'); await preview(pos[0], opt); }
   else if (cmd === 'platform') { const { platform } = await import('./lib/platforms.mjs'); await platform(pos, opt, SKILL_DIR); }
   else if (cmd === 'spec') { const { spec } = await import('./lib/spec.mjs'); await spec(pos, opt); }
   else if (cmd === 'media') { const { media } = await import('./lib/media.mjs'); await media(pos, opt); }
   else { console.log(USAGE); process.exitCode = cmd ? 1 : 0; }
 } catch (e) {
-  console.error(e.message);
+  console.error(process.env.DARKROOM_DEBUG ? e.stack : e.message);
   process.exit(1);
 }
