@@ -16,7 +16,6 @@
 </p>
 
 <p align="center">
-  <a href="#new">🆕 <b>New in 1.6</b></a> &nbsp;·&nbsp;
   <a href="#see-it">🎬 <b>See it</b></a> &nbsp;·&nbsp;
   <a href="#platforms">🧱 <b>Platforms</b></a> &nbsp;·&nbsp;
   <a href="#redesign">♻️ <b>Redesign</b></a> &nbsp;·&nbsp;
@@ -44,26 +43,6 @@ Darkroom is a [Claude Code](https://claude.com/claude-code) skill that turns Cla
 
 > [!IMPORTANT]
 > Darkroom **only starts when you type `/darkroom`**. Mentioning websites in another task never starts it by accident. Put what you want after the command, then just talk normally. In a new session, type `/darkroom` again and it continues where you left off. [How to ask for changes later ↓](#changes)
-
----
-
-<a id="new"></a>
-
-## 🆕 New in 1.6 · Precision
-
-Every value is written down before any code, so pages stop guessing. [Full changelog →](CHANGELOG.md)
-
-| | What changed | What you notice |
-|---|---|---|
-| 📐 | **A build spec before the code.** Fonts, sizes, spacing, colours, timings and where each picture sits, as numbers. A built-in check rejects "premium" or "smooth" without the values behind them. | the page matches what was agreed, section by section |
-| 📚 | **[100 example sites](skill/darkroom/examples/INDEX.md)**, each a request you can copy plus the full spec Darkroom would write. Darkroom reads the two closest before designing yours. | a clear picture of what you'll get before you ask |
-| ⭐ | **One signature per page.** Every design names the one thing it will be remembered for, keeps the rest quiet and allows at most one heavy effect. | less clutter, one moment people remember |
-| 🎞️ | **Better hero media.** Prompts ask for footage whose edges fade into your page colour and that leaves calm space for your words. Videos are made web-ready for desktop and phone, loops are checked for jumps, and moving backdrops can be drawn in code for free. | video that blends in, never flashes and never jumps |
-| 🧩 | **27 new building blocks**: entrances, menus, buttons, marquees, count-ups, stacking cards, typewriter text, magnetic buttons, a depth carousel, frosted glass, mood switchers, shader backdrops, a 3D model hero and more, each tested in a real browser (for the 3D hero, only its fallback so far). | effects that work on phones and with reduced motion |
-| 🔍 | **New checks**: a white flash on first paint, a headline hidden by an entrance that never finishes, background videos that don't play, a headline font that didn't load, the exact element that makes a phone page scroll sideways, and **see-through frames** in scroll films. | problems caught before you see them |
-| 🔟 | **A ten-lens review** (first glance, signature, type, composition, colour, media, motion, phone, copy, polish), each pass, weak or fail, with fixes written as values. | a clear finish line instead of "looks good to me" |
-| ⚡ | **"Just a hero" fast lane.** Ask for a quick concept: no questions, one file, shown, then the offer to take it further. | a first look in one step |
-| 🤖 | **Prompts for AI builders.** Building in Lovable, v0, Bolt or Cursor? Darkroom writes the prompt for that tool, then checks the builder's preview. | the same design rules, in the tool you already use |
 
 ---
 
@@ -326,6 +305,66 @@ Open Claude Code in an empty folder (or your project) and type one. Click a grou
 /darkroom I want scroll storytelling for my coffee roastery: from the farm to the cup. What do you need from me?
 ```
 **What you get first:** a chapter plan and a "what I need from you" list. Each item says the best way to make it (your phone, Blender, an AI tool, with the prompt), the cost class, and what ships if it never arrives.
+</details>
+
+<details>
+<summary>🎬 <b>Showpiece launches</b></summary>
+
+```text
+/darkroom a product launch page for our open-back headphones: as you scroll, the headphones come apart into their parts (driver, grille, pads, headband) floating in space, then come back together. Black background, very precise. Pre-order.
+```
+```text
+/darkroom a product page for our e-reader that looks like apple.com: huge product shots, big short headlines, the device turning as you scroll, then features one by one. But it has to be clearly our own brand, not a copy.
+```
+```text
+/darkroom a B2B landing page for our drone survey company: as you scroll, an aerial photo of a building site turns into the 3D measurement map we deliver, with contour lines and numbers appearing. Then services, accuracy, and a quote request.
+```
+**See the full specs:** [headphones](skill/darkroom/examples/064-aural-one-headphones.md) · [e-reader](skill/darkroom/examples/100-folio-ereader-like-apple.md) · [drone survey](skill/darkroom/examples/097-overhead-drone-survey.md)
+</details>
+
+<details>
+<summary>🌲 <b>Travel, places and stories</b></summary>
+
+```text
+/darkroom a booking site for forest cabins. In the hero you can switch the view between four moods (morning mist, rain, snow, firelight), the videos crossfade, and the cabin window frame stays in front of them. Book a stay.
+```
+```text
+/darkroom a scroll story for our mountain guiding company: one classic route told day by day as you scroll, the altitude line drawing itself, and the photos of each day. Then all our trips with levels and dates. Book a trip.
+```
+```text
+/darkroom a landing page for a sleeper train that runs above the Arctic Circle in winter. Two full-screen parts: first the train under the northern lights, then inside the cabin. Both with looping video. Book a berth.
+```
+**See the full specs:** [cabins](skill/darkroom/examples/016-fernhollow-cabins.md) · [mountain guides](skill/darkroom/examples/072-high-col-mountain-guides.md) · [night train](skill/darkroom/examples/006-polar-night-rail.md)
+</details>
+
+<details>
+<summary>🏪 <b>Everyday businesses</b></summary>
+
+```text
+/darkroom a one-page site for my sourdough bakery in Lisbon: what we bake each day, opening hours, where we are, and pre-order for Saturday. Warm, floury, not cutesy. Free hosting.
+```
+```text
+/darkroom a website for our dental practice on our PHP hosting. Calm, reassuring, not clinical-cold. New patients should find prices, the emergency number and the booking form fast. We have photos of the team and the rooms.
+```
+```text
+/darkroom a WooCommerce site for our independent bookshop: staff picks with a handwritten-note feel, an events calendar for author readings, and you can order books for collection or delivery.
+```
+**See the full specs:** [bakery](skill/darkroom/examples/041-crumb-and-kiln-bakery.md) · [dental practice](skill/darkroom/examples/044-brightside-dental.md) · [bookshop](skill/darkroom/examples/049-the-margin-bookshop.md)
+</details>
+
+<details>
+<summary>🎨 <b>Creative and loud</b></summary>
+
+```text
+/darkroom a loud, colourful site for our forest music festival: the line-up as huge type in different sizes by billing, each day with its own colour, tickets with tiers, and practical info. It should feel like the poster.
+```
+```text
+/darkroom a launch page for our indie game: a hand-painted world with layers that move a little with the mouse, the trailer, wishlist buttons, screenshots, and a press kit link. It should feel like the game, not like a tech site.
+```
+```text
+/darkroom a website for our small type foundry: each typeface gets a big type tester where you can type your own words and change size and weight, a specimen page, and licence prices for desktop and web.
+```
+**See the full specs:** [festival](skill/darkroom/examples/054-fernwave-festival.md) · [indie game](skill/darkroom/examples/083-lanternfall-indie-game.md) · [type foundry](skill/darkroom/examples/096-glyphwell-type-foundry.md)
 </details>
 
 <details>
