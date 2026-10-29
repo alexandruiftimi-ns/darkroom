@@ -7,8 +7,8 @@
 <h3 align="center">Type <code>/darkroom</code>. Say what you want.<br>Get a designed website, built on the platform you need.</h3>
 
 <p align="center">
-  <a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/"><img alt="Live showcase: 5 demos" src="https://img.shields.io/badge/%E2%96%B6%20live%20showcase-5%20demos-ff7a3d?style=for-the-badge&labelColor=ff7a3d&color=121110"></a>
-  <a href="CHANGELOG.md"><img alt="Version 1.7.0, Smooth Scroll" src="https://img.shields.io/badge/version-1.7.0%20·%20Smooth%20Scroll-ff7a3d?style=for-the-badge&labelColor=121110"></a>
+  <a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/"><img alt="Live showcase: 7 demos" src="https://img.shields.io/badge/%E2%96%B6%20live%20showcase-7%20demos-ff7a3d?style=for-the-badge&labelColor=ff7a3d&color=121110"></a>
+  <a href="CHANGELOG.md"><img alt="Version 1.7.1, Smooth Scroll" src="https://img.shields.io/badge/version-1.7.1%20·%20Smooth%20Scroll-ff7a3d?style=for-the-badge&labelColor=121110"></a>
   <a href="LICENSE"><img alt="MIT licence" src="https://img.shields.io/badge/licence-MIT-ff7a3d?style=for-the-badge&labelColor=121110"></a>
   <img alt="Claude Code skill" src="https://img.shields.io/badge/Claude%20Code-skill-ece6dc?style=for-the-badge&logo=anthropic&logoColor=ece6dc&labelColor=121110">
   <img alt="10 platforms" src="https://img.shields.io/badge/platforms-10-ff7a3d?style=for-the-badge&labelColor=121110">
@@ -71,24 +71,33 @@ Darkroom is a [Claude Code](https://claude.com/claude-code) skill that turns Cla
 ## 🌐 Live demos you can scroll
 
 <p align="center">
-  <a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/"><img src="assets/showcase/showcase-preview.jpg" alt="The Darkroom showcase: five cinematic website templates, each with a live demo" width="100%"></a>
+  <a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/"><img src="assets/showcase/showcase-preview.jpg" alt="The Darkroom showcase: seven website templates, each with a live demo and its build prompt" width="100%"></a>
 </p>
 
 <p align="center">
   <a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/"><img alt="Open the live showcase" src="https://img.shields.io/badge/%E2%96%B6%20%20Open%20the%20live%20showcase-ff7a3d?style=for-the-badge&labelColor=ff7a3d"  height="44"></a>
 </p>
 
-<p align="center"><b>Five templates built with Darkroom, all live on free GitHub Pages hosting.</b><br><sub>No screenshots to trust: open any of them and scroll it yourself.</sub></p>
+<p align="center"><b>Seven templates built with Darkroom, all live on free GitHub Pages hosting.</b><br><sub>No screenshots to trust: open any of them and scroll it yourself.</sub></p>
 
 <table>
   <tr>
-    <td width="20%" align="center"><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/style-up/"><img src="assets/showcase/style-up.jpg" alt="Style Up live demo"></a><br><sub><b><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/style-up/">Style Up</a></b><br>Storefront · fashion</sub></td>
-    <td width="20%" align="center"><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/coffee-shop/"><img src="assets/showcase/coffee-shop.jpg" alt="Coffee Shop live demo"></a><br><sub><b><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/coffee-shop/">Coffee Shop</a></b><br>Storefront · café</sub></td>
-    <td width="20%" align="center"><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/humming-bird/"><img src="assets/showcase/humming-bird.jpg" alt="Humming Bird live demo"></a><br><sub><b><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/humming-bird/">Humming Bird</a></b><br>Cinematic · story</sub></td>
-    <td width="20%" align="center"><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/cyber-awareness/"><img src="assets/showcase/cyber-awareness.jpg" alt="Cyber Awareness live demo"></a><br><sub><b><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/cyber-awareness/">Cyber Awareness</a></b><br>Cinematic · education</sub></td>
-    <td width="20%" align="center"><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/mesa/"><img src="assets/showcase/maison-solene.jpg" alt="Mesa · Maison Solène live demo"></a><br><sub><b><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/mesa/">Mesa · Maison Solène</a></b><br>Cinematic · luxury</sub></td>
+    <td width="25%" align="center"><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/style-up/"><img src="assets/showcase/style-up.jpg" alt="Style Up live demo"></a><br><sub><b><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/style-up/">Style Up</a></b><br>Storefront · fashion</sub></td>
+    <td width="25%" align="center"><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/coffee-shop/"><img src="assets/showcase/coffee-shop.jpg" alt="Coffee Shop live demo"></a><br><sub><b><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/coffee-shop/">Coffee Shop</a></b><br>Storefront · café</sub></td>
+    <td width="25%" align="center"><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/humming-bird/"><img src="assets/showcase/humming-bird.jpg" alt="Humming Bird live demo"></a><br><sub><b><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/humming-bird/">Humming Bird</a></b><br>Cinematic · story</sub></td>
+    <td width="25%" align="center"><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/nightwatch/"><img src="assets/showcase/nightwatch.jpg" alt="Nightwatch live demo"></a><br><sub><b><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/nightwatch/">Nightwatch</a></b><br>Cinematic · education</sub></td>
+  </tr>
+  <tr>
+    <td width="25%" align="center"><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/maison-solene/"><img src="assets/showcase/maison-solene.jpg" alt="Maison Solène live demo"></a><br><sub><b><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/maison-solene/">Maison Solène</a></b><br>Cinematic · luxury</sub></td>
+    <td width="25%" align="center"><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/iris/"><img src="assets/showcase/iris.jpg" alt="IRIS/09 live demo"></a><br><sub><b><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/iris/">IRIS/09</a></b><br>Cinematic · WebGL</sub></td>
+    <td width="25%" align="center"><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/little-gills/"><img src="assets/showcase/little-gills.jpg" alt="Little Gills live demo"></a><br><sub><b><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/little-gills/">Little Gills</a></b><br>Storefront · aquariums</sub></td>
   </tr>
 </table>
+
+> [!TIP]
+> **Take the prompt behind a demo.** Each card on the showcase has a **Copy prompt** button. It copies the full build prompt for that template: the slots for your own photos and video, every design value, the copy and the checks to run. Paste it into your coding agent and swap in your own media. Five templates have one so far (Style Up, Coffee Shop, Maison Solène, IRIS/09, Little Gills); on the others the button says the prompt is not available yet.
+>
+> **Assets are still in progress.** The **Assets** button will hand you the media for each template. It is not ready yet, so for now it tells you the files are on the way.
 
 ---
 

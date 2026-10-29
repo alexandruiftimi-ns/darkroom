@@ -4,6 +4,17 @@ Darkroom uses [semantic versioning](https://semver.org): **major.minor.patch**.
 A **major** change breaks how projects or commands worked before, a **minor** one adds features, a **patch** fixes things.
 The installed version: `node ~/.claude/skills/darkroom/scripts/darkroom.mjs version` (or the `VERSION` file in the skill).
 
+## 1.7.1 · Smooth Scroll · 2026-10-30
+
+A fix for the README: the live showcase had grown and moved on, and the page still described the old one.
+
+- **All seven live demos listed.** The README now shows Style Up, Coffee Shop, Humming Bird, Nightwatch, Maison Solène, IRIS/09 and Little Gills, each linking to its demo, with a fresh showcase picture.
+- **Fixed broken demo links.** Two templates were renamed (Cyber Awareness is now Nightwatch, Mesa is now Maison Solène), so their old links in the README led nowhere.
+- **Copy the prompt behind a demo.** The showcase cards now have a Copy prompt button that copies the full build prompt for that template, ready to paste into your coding agent with your own media. Five templates have one so far.
+- **Assets: in progress.** Each card also has an Assets button for the template's media. The media isn't ready yet; the button says so for now.
+
+No changes to the skill itself.
+
 ## 1.7.0 · Smooth Scroll · 2026-10-29
 
 Scroll films now stay smooth on phones, even on a fast flick or when you scroll back up, and the preview updates by itself while Darkroom works. Darkroom also learned from a review of 102 AI-made motion websites: what makes them good, and what makes them look like every other AI site.
