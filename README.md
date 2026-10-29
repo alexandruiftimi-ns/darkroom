@@ -64,6 +64,21 @@ Darkroom is a [Claude Code](https://claude.com/claude-code) skill that turns Cla
 
 <sub>Both are <b>unofficial fictional concepts</b>, not affiliated with Porsche, Rockstar Games or Take-Two Interactive. The laptop and phone frames are AI-generated presentation art.</sub>
 
+### Live demos you can scroll
+
+<p align="center">
+  <a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/"><b>▶ Open the Darkroom showcase</b></a>
+  <br><sub>Five templates built with Darkroom, all live on free GitHub Pages hosting. Open any of them and scroll it yourself.</sub>
+</p>
+
+| Template | Kind | Live demo |
+| --- | --- | --- |
+| Style Up | Storefront · fashion | [Open ↗](https://alexandruiftimi-ns.github.io/darkroom-showcase/style-up/) |
+| Coffee Shop | Storefront · café | [Open ↗](https://alexandruiftimi-ns.github.io/darkroom-showcase/coffee-shop/) |
+| Humming Bird | Cinematic · story | [Open ↗](https://alexandruiftimi-ns.github.io/darkroom-showcase/humming-bird/) |
+| Cyber Awareness | Cinematic · education | [Open ↗](https://alexandruiftimi-ns.github.io/darkroom-showcase/cyber-awareness/) |
+| Mesa (Maison Solène) | Cinematic · luxury | [Open ↗](https://alexandruiftimi-ns.github.io/darkroom-showcase/mesa/) |
+
 ---
 
 <a id="platforms"></a>
