@@ -7,6 +7,7 @@
 <h3 align="center">Type <code>/darkroom</code>. Say what you want.<br>Get a designed website, built on the platform you need.</h3>
 
 <p align="center">
+  <a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/"><img alt="Live showcase: 5 demos" src="https://img.shields.io/badge/%E2%96%B6%20live%20showcase-5%20demos-ff7a3d?style=for-the-badge&labelColor=ff7a3d&color=121110"></a>
   <a href="CHANGELOG.md"><img alt="Version 1.6.0, Precision" src="https://img.shields.io/badge/version-1.6.0%20·%20Precision-ff7a3d?style=for-the-badge&labelColor=121110"></a>
   <a href="LICENSE"><img alt="MIT licence" src="https://img.shields.io/badge/licence-MIT-ff7a3d?style=for-the-badge&labelColor=121110"></a>
   <img alt="Claude Code skill" src="https://img.shields.io/badge/Claude%20Code-skill-ece6dc?style=for-the-badge&logo=anthropic&logoColor=ece6dc&labelColor=121110">
@@ -17,6 +18,7 @@
 
 <p align="center">
   <a href="#see-it">🎬 <b>See it</b></a> &nbsp;·&nbsp;
+  <a href="#live-demos">🌐 <b>Live demos</b></a> &nbsp;·&nbsp;
   <a href="#platforms">🧱 <b>Platforms</b></a> &nbsp;·&nbsp;
   <a href="#redesign">♻️ <b>Redesign</b></a> &nbsp;·&nbsp;
   <a href="#questions">💬 <b>How it asks</b></a> &nbsp;·&nbsp;
@@ -64,20 +66,29 @@ Darkroom is a [Claude Code](https://claude.com/claude-code) skill that turns Cla
 
 <sub>Both are <b>unofficial fictional concepts</b>, not affiliated with Porsche, Rockstar Games or Take-Two Interactive. The laptop and phone frames are AI-generated presentation art.</sub>
 
-### Live demos you can scroll
+<a id="live-demos"></a>
+
+## 🌐 Live demos you can scroll
 
 <p align="center">
-  <a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/"><b>▶ Open the Darkroom showcase</b></a>
-  <br><sub>Five templates built with Darkroom, all live on free GitHub Pages hosting. Open any of them and scroll it yourself.</sub>
+  <a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/"><img src="assets/showcase/showcase-preview.jpg" alt="The Darkroom showcase: five cinematic website templates, each with a live demo" width="100%"></a>
 </p>
 
-| Template | Kind | Live demo |
-| --- | --- | --- |
-| Style Up | Storefront · fashion | [Open ↗](https://alexandruiftimi-ns.github.io/darkroom-showcase/style-up/) |
-| Coffee Shop | Storefront · café | [Open ↗](https://alexandruiftimi-ns.github.io/darkroom-showcase/coffee-shop/) |
-| Humming Bird | Cinematic · story | [Open ↗](https://alexandruiftimi-ns.github.io/darkroom-showcase/humming-bird/) |
-| Cyber Awareness | Cinematic · education | [Open ↗](https://alexandruiftimi-ns.github.io/darkroom-showcase/cyber-awareness/) |
-| Mesa (Maison Solène) | Cinematic · luxury | [Open ↗](https://alexandruiftimi-ns.github.io/darkroom-showcase/mesa/) |
+<p align="center">
+  <a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/"><img alt="Open the live showcase" src="https://img.shields.io/badge/%E2%96%B6%20%20Open%20the%20live%20showcase-ff7a3d?style=for-the-badge&labelColor=ff7a3d"  height="44"></a>
+</p>
+
+<p align="center"><b>Five templates built with Darkroom, all live on free GitHub Pages hosting.</b><br><sub>No screenshots to trust: open any of them and scroll it yourself.</sub></p>
+
+<table>
+  <tr>
+    <td width="20%" align="center"><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/style-up/"><img src="assets/showcase/style-up.jpg" alt="Style Up live demo"></a><br><sub><b><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/style-up/">Style Up</a></b><br>Storefront · fashion</sub></td>
+    <td width="20%" align="center"><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/coffee-shop/"><img src="assets/showcase/coffee-shop.jpg" alt="Coffee Shop live demo"></a><br><sub><b><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/coffee-shop/">Coffee Shop</a></b><br>Storefront · café</sub></td>
+    <td width="20%" align="center"><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/humming-bird/"><img src="assets/showcase/humming-bird.jpg" alt="Humming Bird live demo"></a><br><sub><b><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/humming-bird/">Humming Bird</a></b><br>Cinematic · story</sub></td>
+    <td width="20%" align="center"><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/cyber-awareness/"><img src="assets/showcase/cyber-awareness.jpg" alt="Cyber Awareness live demo"></a><br><sub><b><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/cyber-awareness/">Cyber Awareness</a></b><br>Cinematic · education</sub></td>
+    <td width="20%" align="center"><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/mesa/"><img src="assets/showcase/maison-solene.jpg" alt="Mesa · Maison Solène live demo"></a><br><sub><b><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/mesa/">Mesa · Maison Solène</a></b><br>Cinematic · luxury</sub></td>
+  </tr>
+</table>
 
 ---
 
