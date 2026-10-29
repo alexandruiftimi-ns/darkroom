@@ -241,7 +241,7 @@ Every effect has a reduced-motion version and works without JavaScript. Which li
 Open Claude Code in an empty folder (or your project) and type one. Click a group to open it.
 
 > [!TIP]
-> **📚 100 more in [`skill/darkroom/examples/`](skill/darkroom/examples/INDEX.md)**: a bakery, a dental practice, a Ghost magazine, a WooCommerce furniture shop, a festival line-up, a school, a food bank, a type foundry, a site redesign, an "apple.com-like" product page and 90 others, on all ten platforms. Each has a request to copy (change the details to your business) and the full build spec Darkroom would write, so you can see exactly what you'll get. Written as references; not built yet.
+> **📚 100 more example prompts in [`skill/darkroom/examples/`](skill/darkroom/examples/INDEX.md)**: a bakery, a dental practice, a Ghost magazine, a WooCommerce furniture shop, a festival line-up, a school, a food bank, a type foundry, a site redesign, an "apple.com-like" product page and 90 others, on all ten platforms. Each has a request to copy (change the details to your business) and the full build spec Darkroom would write, so you can see exactly what you'll get. These are prompts and specs, not finished sites: Darkroom builds yours when you ask.
 
 <details open>
 <summary>🛒 <b>Shops</b></summary>
@@ -460,7 +460,7 @@ That run found real problems before you could: WooCommerce blocks that look self
 
 | | |
 |---|---|
-| 🎨 **Art direction** | 14 style packs, a build spec with every value before the code, 100 example sites to match, looks inspired by brands you name, and 139 reviewed real sites it can look up by technique ("a scroll story like ScrollTide", parallax, a cursor effect). |
+| 🎨 **Art direction** | 14 style packs, a build spec with every value before the code, 100 example prompts to match (each with its full spec), looks inspired by brands you name, and 139 reviewed real sites it can look up by technique ("a scroll story like ScrollTide", parallax, a cursor effect). |
 | ♻️ **Redesign** | imports your current site (URL or folder): texts, menu, contacts, images with sizes, old addresses. |
 | 📱 **Phone preview** | your site on your phone over the same Wi-Fi, or a shareable link when you say yes. |
 | 📥 **Asset check** | measures what you drop in, suggests improvements, never rejects. |
@@ -480,9 +480,9 @@ That run found real problems before you could: WooCommerce blocks that look self
 
 ## 📚 Where the knowledge comes from
 
-<p align="center"><img src="assets/knowledge.svg" alt="139 real site designs that inspired it (96 good, 43 bad), 28 cross-site lessons with 12 promoted to rules, 29 research sources, 7 design tools, 100 example sites, 35 tested recipes, 111 automated checks, one human art director" width="100%"></p>
+<p align="center"><img src="assets/knowledge.svg" alt="139 real site designs that inspired it (96 good, 43 bad), 28 cross-site lessons with 12 promoted to rules, 29 research sources, 7 design tools, 100 example prompts with their specs, 35 tested recipes, 111 automated checks, one human art director" width="100%"></p>
 
-Darkroom is **not a trained model**. It is written knowledge that Claude reads while it works, in plain files you can check: **inspiration from 139 real website designs** (kept as written lessons, never screenshots or copied code), **28 lessons** of which **12 became rules** after the author approved them, **29 research sources** (Nielsen Norman Group, WCAG 2.2, the European Accessibility Act, EU cookie and price rules, the AI Act), the **official docs of all ten platforms**, **100 example sites** written as full build specs (every font, size, colour and timing) that Darkroom reads before designing yours, **35 motion and media recipes** each tested in a real browser, **Values tables** for type, motion, spacing and colour, and the author's own taste calls. **111 automated checks** run on every change, so a rule that stops working gets noticed.
+Darkroom is **not a trained model**. It is written knowledge that Claude reads while it works, in plain files you can check: **inspiration from 139 real website designs** (kept as written lessons, never screenshots or copied code), **28 lessons** of which **12 became rules** after the author approved them, **29 research sources** (Nielsen Norman Group, WCAG 2.2, the European Accessibility Act, EU cookie and price rules, the AI Act), the **official docs of all ten platforms**, **100 example prompts**, each with the full build spec it leads to (every font, size, colour and timing), which Darkroom reads before designing yours, **35 motion and media recipes** each tested in a real browser, **Values tables** for type, motion, spacing and colour, and the author's own taste calls. **111 automated checks** run on every change, so a rule that stops working gets noticed.
 
 **[→ The full list: every site, source and human decision](KNOWLEDGE.md)**
 

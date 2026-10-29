@@ -6,10 +6,10 @@ The installed version: `node ~/.claude/skills/darkroom/scripts/darkroom.mjs vers
 
 ## 1.6.0 · Precision · 2026-10-28
 
-Darkroom now writes every value down before it writes code, and comes with 100 example sites to match.
+Darkroom now writes every value down before it writes code, and comes with 100 example prompts to match.
 
 - **A build spec before the code.** For the first slice and every section after it, Darkroom writes the exact fonts, sizes, spacing, colours, timings and media placement first, then builds exactly that. Words like "premium" or "smooth" are no longer allowed without the numbers that make them, and a built-in check flags them.
-- **100 example sites you can start from.** Each one is a request you could type after `/darkroom` plus the full spec Darkroom would write: shops, restaurants, clinics, schools, portfolios, festivals, publications, a site redesign and an "apple.com-like" product page, on all ten platforms. Change the details to your own business. Darkroom reads the two closest before designing yours. (Written, not yet built: the values are defaults.)
+- **100 example prompts you can start from.** Each one is a prompt you could type after `/darkroom` plus the full spec Darkroom would write: shops, restaurants, clinics, schools, portfolios, festivals, publications, a site redesign and an "apple.com-like" product page, on all ten platforms. Change the details to your own business. Darkroom reads the two closest before designing yours. (Prompts and specs only, not finished sites: Darkroom builds yours when you ask. The values are defaults.)
 - **Numbers for taste.** Type sizes, line heights and letter spacing by role; stagger, durations and easing for motion; spacing, section padding and text over video, so pages no longer guess them.
 - **Better hero media.** Darkroom now asks for footage whose edges fade into your page colour and that leaves calm space for your words, and writes that into every image and video prompt. A list of free, licence-clean photo, video and 3D sources (it asks before downloading anything).
 - **New checks:** a white flash at the first paint, a headline hidden by an entrance that never finishes (also with JavaScript off), background videos that don't play, a headline font that didn't load, and exactly which element makes the phone page scroll sideways.

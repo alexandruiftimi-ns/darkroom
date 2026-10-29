@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/knowledge.svg" alt="139 real site designs that inspired it (96 good, 43 bad), 28 cross-site lessons with 12 promoted to rules, 29 research sources, 7 design tools, 100 example sites, 35 tested recipes, 111 automated checks, one human art director" width="100%"></p>
+<p align="center"><img src="assets/knowledge.svg" alt="139 real site designs that inspired it (96 good, 43 bad), 28 cross-site lessons with 12 promoted to rules, 29 research sources, 7 design tools, 100 example prompts with their specs, 35 tested recipes, 111 automated checks, one human art director" width="100%"></p>
 
 # Where Darkroom's knowledge comes from
 
@@ -10,7 +10,7 @@
 | [Lessons](#2-lessons-drawn-from-them) | 28 patterns seen across several sites; 12 promoted to rules | `library/LESSONS.md`, then `references/` |
 | [Research](#3-research-and-standards) | 29 sources: usability research, accessibility standards, EU law, award criteria | `references/sources.md` |
 | [Other tools](#4-other-design-tools-studied) | 7 open design skills and tools, read for principles only | `references/provenance.md` |
-| [Examples and recipes](#5-examples-and-recipes) | 100 example sites written as full build specs; 35 motion and media recipes tested in a real browser; Values tables for type, motion, spacing and colour | `examples/`, `recipes/`, `references/` |
+| [Examples and recipes](#5-examples-and-recipes) | 100 example prompts, each with the full build spec it leads to; 35 motion and media recipes tested in a real browser; Values tables for type, motion, spacing and colour | `examples/`, `recipes/`, `references/` |
 | [Test pages](#6-test-pages-built-with-it) | 4 pages built end to end to find what broke | the test suite (111 checks) |
 | [Human input](#7-human-input) | the author's taste calls, dislikes, approvals and assets | everywhere |
 
@@ -241,7 +241,7 @@ Read for principles, then rewritten in Darkroom's own words and code; **no code 
 
 ## 5. Examples and recipes
 
-- **[100 example sites](skill/darkroom/examples/INDEX.md)**: shops, restaurants, clinics, schools, portfolios, festivals, publications, a redesign and an "apple.com-like" product page, on all ten platforms. Each is a request you could type after `/darkroom` plus the full build spec Darkroom would write: every font, size, colour, timing and media placement, a signature, and a "do not" list. Darkroom reads the two closest before writing a spec, to match their precision, never their copy. They are written, not built: the values are starting points.
+- **[100 example prompts](skill/darkroom/examples/INDEX.md)** (prompts and specs, not finished sites) for shops, restaurants, clinics, schools, portfolios, festivals, publications, a redesign and an "apple.com-like" product page, on all ten platforms. Each is a request you could type after `/darkroom` plus the full build spec Darkroom would write: every font, size, colour, timing and media placement, a signature, and a "do not" list. Darkroom reads the two closest before writing a spec, to match their precision, never their copy. No site files are included: Darkroom builds a site when you ask, and the values are starting points.
 - **[35 recipes](skill/darkroom/recipes/README.md)**: framework-free motion, media and interface code (video layers, entrances, scroll-scrubbed frames and video, pinned scenes, menus, carousels and more). Every one runs in a real browser in the test suite, works without JavaScript, and has a reduced-motion path (the 3D model hero is tested for its fallback only).
 - **Values tables** in `references/typography.md`, `motion-craft.md`, `craft.md` and `color.md`: the numbers for type, motion, spacing and colour, so specs never guess.
 
