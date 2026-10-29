@@ -1,0 +1,22 @@
+/* First-screen entrance that cannot leave a blank page (pairs with entrance.js, which is optional).
+   The animation is pure CSS and ends visible, so a failed or blocked script still shows everything by about 1.5 s.
+   Order (references/motion-craft.md): nav from above, eyebrow → H1 → sub → CTA → strip from below, logos and fine
+   print fade only. Blur-rise: 16 px and 8 px of blur, 700 ms, 120 ms apart.
+
+   <header data-enter="down" style="--i:0">…</header>
+   <p data-enter style="--i:1">Eyebrow</p> <h1 data-enter style="--i:2">…</h1> <p data-enter style="--i:3">…</p>
+   <div data-enter style="--i:4">CTAs</div> <ul data-enter="fade" style="--i:5">logos</ul>
+   --i is the order; entrance.js fills it from document order when missing and releases the animation when done
+   (so hover transforms on buttons work afterwards). */
+:root { --enter-dur: 700ms; --enter-step: 120ms; --enter-start: 80ms; --enter-travel: 16px; --enter-blur: 8px; --enter-ease: cubic-bezier(.22, 1, .36, 1); }
+
+[data-enter] { animation: enter-rise var(--enter-dur) var(--enter-ease) both; animation-delay: calc(var(--enter-start) + var(--i, 0) * var(--enter-step)); }
+[data-enter="down"] { animation-name: enter-drop; } /* for a fixed nav: no filter, and released at the end (see nav.css) */
+[data-enter="fade"] { animation-name: enter-fade; }
+[data-enter].is-entered { animation: none; }
+
+@keyframes enter-rise { from { opacity: 0; transform: translateY(var(--enter-travel)); filter: blur(var(--enter-blur)); } to { opacity: 1; transform: none; filter: none; } }
+@keyframes enter-drop { from { opacity: 0; transform: translateY(calc(var(--enter-travel) * -1)); } to { opacity: 1; transform: none; } }
+@keyframes enter-fade { from { opacity: 0; } to { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) { [data-enter] { animation: none; } }

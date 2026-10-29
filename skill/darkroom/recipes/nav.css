@@ -1,0 +1,48 @@
+/* Navigation: a floating pill bar (or a plain bar) plus a mobile menu that doesn't have the usual bugs.
+   Pairs with nav.js. Without JS the menu links are still reachable: the panel is a normal list below the bar.
+
+   <header class="nav nav--pill" data-nav>
+     <a class="nav-mark" href="/">Mark</a>
+     <nav aria-label="Main"><ul class="nav-links" id="nav-panel" data-nav-panel> <li><a href="#work">Work</a></li> … </ul></nav>
+     <a class="nav-cta btn" href="#contact">Contact</a>
+     <button class="nav-burger" type="button" aria-controls="nav-panel" aria-expanded="false" data-nav-toggle hidden>
+       <span class="nav-burger-lines" aria-hidden="true"></span><span class="nav-sr">Menu</span></button>
+   </header>
+   Panel styles on phones: data-nav-style="overlay" (full screen, default) · "drawer" (from the right) · "sheet" (bottom sheet). */
+:root { --nav-h: 64px; --nav-bg: rgb(12 12 12 / .55); --nav-fg: #f4f2ee; --nav-panel-bg: #0c0c0c; --nav-ease: cubic-bezier(.32, .72, 0, 1); --nav-break: 860px; }
+
+.nav { position: fixed; z-index: 50; inset: 0 0 auto 0; height: var(--nav-h); display: flex; align-items: center; gap: 24px;
+  padding: 0 clamp(20px, 4vw, 48px); color: var(--nav-fg); }
+/* The glass sits on a pseudo-element: backdrop-filter, filter or transform on .nav itself would become the containing
+   block of the fixed mobile panel and trap it inside the 64 px bar. Keep all three off .nav. */
+.nav--pill { inset: 14px 0 auto 0; margin: 0 auto; width: min(1080px, calc(100% - 28px)); border-radius: 999px; padding: 0 10px 0 22px; }
+.nav--pill::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: var(--nav-bg);
+  backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .08); }
+.nav-mark { font-weight: 600; text-decoration: none; color: inherit; margin-right: auto; }
+.nav-links { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; }
+.nav-links a { color: inherit; text-decoration: none; opacity: .8; transition: opacity 200ms; }
+.nav-links a:hover, .nav-links a:focus-visible { opacity: 1; }
+.nav-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* Burger that morphs into a cross (two lines, 280 ms). */
+.nav-burger { position: relative; width: 44px; height: 44px; border: 0; border-radius: 50%; background: transparent; color: inherit; cursor: pointer; }
+.nav-burger-lines, .nav-burger-lines::before { position: absolute; left: 12px; right: 12px; height: 1.5px; background: currentColor; transition: transform 280ms var(--nav-ease), top 280ms var(--nav-ease); }
+.nav-burger-lines { top: 18px; }
+.nav-burger-lines::before { content: ""; left: 0; right: 0; top: 7px; }
+[aria-expanded="true"] > .nav-burger-lines { top: 21px; transform: rotate(45deg); }
+[aria-expanded="true"] > .nav-burger-lines::before { top: 0; transform: rotate(-90deg); }
+
+/* Phones: nav.js adds .nav--compact below --nav-break and un-hides the burger. */
+.nav--compact .nav-cta { display: none; }
+.nav--compact .nav-links { position: fixed; z-index: -1; flex-direction: column; gap: 6px; padding: calc(var(--nav-h) + 40px) 28px 40px;
+  background: var(--nav-panel-bg); font-size: clamp(28px, 8vw, 40px); visibility: hidden; transition: transform 420ms var(--nav-ease), opacity 320ms ease, visibility 0s 420ms; }
+.nav--compact[data-nav-style="overlay"] .nav-links, .nav--compact:not([data-nav-style]) .nav-links { inset: 0; opacity: 0; transform: translateY(-12px); }
+.nav--compact[data-nav-style="drawer"] .nav-links { inset: 0 0 0 auto; width: min(86vw, 420px); transform: translateX(100%); }
+.nav--compact[data-nav-style="sheet"] .nav-links { inset: auto 0 0 0; max-height: 82vh; border-radius: 24px 24px 0 0; padding-top: 36px; transform: translateY(100%); }
+.nav--compact.is-open .nav-links { visibility: visible; opacity: 1; transform: none; transition: transform 420ms var(--nav-ease), opacity 320ms ease, visibility 0s; }
+.nav--compact.nav--pill.is-open { border-radius: 999px; }
+.nav-scrim { position: fixed; inset: 0; z-index: 40; background: rgb(0 0 0 / .4); opacity: 0; pointer-events: none; transition: opacity 320ms; }
+.nav.is-open ~ .nav-scrim, .nav-scrim.is-on { opacity: 1; pointer-events: auto; }
+html.nav-locked, html.nav-locked body { overflow: hidden; }
+
+@media (prefers-reduced-motion: reduce) { .nav *, .nav-links { transition-duration: 0s !important; } }

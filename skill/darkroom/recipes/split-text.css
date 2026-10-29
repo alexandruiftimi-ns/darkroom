@@ -1,0 +1,24 @@
+/* Pairs with split-text.js. Hidden only under html.js (an inline script in <head>), shown anyway after 2.5 s if the
+   module never ran. Durations: lines 800 ms / 110 ms apart, words 700 ms / 70 ms, chars 500 ms / 30 ms. */
+:root { --split-dur: 800ms; --split-ease: cubic-bezier(.22, 1, .36, 1); }
+
+.js [data-split]:not(.is-split):not(.is-done) { opacity: 0; animation: split-failsafe 0s linear 2.5s forwards; }
+@keyframes split-failsafe { to { opacity: 1; } }
+
+.split-word, .split-char, .split-line, .split-line-inner { display: inline-block; }
+.split-space { letter-spacing: normal; white-space: pre; }
+.split-line { overflow: hidden; vertical-align: top; padding-bottom: .08em; margin-bottom: -.08em; }
+
+[data-split].is-split:not(.is-done) .split-line-inner { transform: translateY(105%); }
+[data-split="words"].is-split:not(.is-done) .split-word { opacity: 0; transform: translateY(.45em); }
+[data-split="chars"].is-split:not(.is-done) .split-char { opacity: 0; transform: translateY(.3em); }
+[data-split="blur"].is-split:not(.is-done) .split-word { opacity: 0; filter: blur(10px); }
+
+.split-line-inner, .split-word, .split-char { transition: transform var(--split-dur) var(--split-ease), opacity var(--split-dur) var(--split-ease), filter var(--split-dur) var(--split-ease); transition-delay: var(--split-delay, 0ms); }
+[data-split="chars"] .split-char { transition-duration: 500ms; }
+[data-split].is-playing .split-line-inner, [data-split].is-playing .split-word, [data-split].is-playing .split-char { opacity: 1; transform: none; filter: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-split] { opacity: 1 !important; animation: none !important; }
+  .split-line-inner, .split-word, .split-char { transition: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
+}

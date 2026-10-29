@@ -7,15 +7,16 @@
 <h3 align="center">Type <code>/darkroom</code>. Say what you want.<br>Get a designed website, built on the platform you need.</h3>
 
 <p align="center">
-  <a href="CHANGELOG.md"><img alt="Version 1.5.0, Scroll Stories" src="https://img.shields.io/badge/version-1.5.0%20·%20Scroll%20Stories-ff7a3d?style=for-the-badge&labelColor=121110"></a>
+  <a href="CHANGELOG.md"><img alt="Version 1.6.0, Precision" src="https://img.shields.io/badge/version-1.6.0%20·%20Precision-ff7a3d?style=for-the-badge&labelColor=121110"></a>
   <a href="LICENSE"><img alt="MIT licence" src="https://img.shields.io/badge/licence-MIT-ff7a3d?style=for-the-badge&labelColor=121110"></a>
   <img alt="Claude Code skill" src="https://img.shields.io/badge/Claude%20Code-skill-ece6dc?style=for-the-badge&logo=anthropic&logoColor=ece6dc&labelColor=121110">
   <img alt="10 platforms" src="https://img.shields.io/badge/platforms-10-ff7a3d?style=for-the-badge&labelColor=121110">
-  <img alt="63 automated checks" src="https://img.shields.io/badge/tests-63%20passing-7ab55c?style=for-the-badge&labelColor=121110">
+  <img alt="111 automated checks" src="https://img.shields.io/badge/tests-111%20passing-7ab55c?style=for-the-badge&labelColor=121110">
   <img alt="Node 18+" src="https://img.shields.io/badge/node-18%2B-ece6dc?style=for-the-badge&logo=nodedotjs&logoColor=ece6dc&labelColor=121110">
 </p>
 
 <p align="center">
+  <a href="#new">🆕 <b>New in 1.6</b></a> &nbsp;·&nbsp;
   <a href="#see-it">🎬 <b>See it</b></a> &nbsp;·&nbsp;
   <a href="#platforms">🧱 <b>Platforms</b></a> &nbsp;·&nbsp;
   <a href="#redesign">♻️ <b>Redesign</b></a> &nbsp;·&nbsp;
@@ -43,6 +44,26 @@ Darkroom is a [Claude Code](https://claude.com/claude-code) skill that turns Cla
 
 > [!IMPORTANT]
 > Darkroom **only starts when you type `/darkroom`**. Mentioning websites in another task never starts it by accident. Put what you want after the command, then just talk normally. In a new session, type `/darkroom` again and it continues where you left off. [How to ask for changes later ↓](#changes)
+
+---
+
+<a id="new"></a>
+
+## 🆕 New in 1.6 · Precision
+
+Every value is written down before any code, so pages stop guessing. [Full changelog →](CHANGELOG.md)
+
+| | What changed | What you notice |
+|---|---|---|
+| 📐 | **A build spec before the code.** Fonts, sizes, spacing, colours, timings and where each picture sits, as numbers. A built-in check rejects "premium" or "smooth" without the values behind them. | the page matches what was agreed, section by section |
+| 📚 | **[100 example sites](skill/darkroom/examples/INDEX.md)**, each a request you can copy plus the full spec Darkroom would write. Darkroom reads the two closest before designing yours. | a clear picture of what you'll get before you ask |
+| ⭐ | **One signature per page.** Every design names the one thing it will be remembered for, keeps the rest quiet and allows at most one heavy effect. | less clutter, one moment people remember |
+| 🎞️ | **Better hero media.** Prompts ask for footage whose edges fade into your page colour and that leaves calm space for your words. Videos are made web-ready for desktop and phone, loops are checked for jumps, and moving backdrops can be drawn in code for free. | video that blends in, never flashes and never jumps |
+| 🧩 | **27 new building blocks**: entrances, menus, buttons, marquees, count-ups, stacking cards, typewriter text, magnetic buttons, a depth carousel, frosted glass, mood switchers, shader backdrops, a 3D model hero and more, each tested in a real browser (for the 3D hero, only its fallback so far). | effects that work on phones and with reduced motion |
+| 🔍 | **New checks**: a white flash on first paint, a headline hidden by an entrance that never finishes, background videos that don't play, a headline font that didn't load, the exact element that makes a phone page scroll sideways, and **see-through frames** in scroll films. | problems caught before you see them |
+| 🔟 | **A ten-lens review** (first glance, signature, type, composition, colour, media, motion, phone, copy, polish), each pass, weak or fail, with fixes written as values. | a clear finish line instead of "looks good to me" |
+| ⚡ | **"Just a hero" fast lane.** Ask for a quick concept: no questions, one file, shown, then the offer to take it further. | a first look in one step |
+| 🤖 | **Prompts for AI builders.** Building in Lovable, v0, Bolt or Cursor? Darkroom writes the prompt for that tool, then checks the builder's preview. | the same design rules, in the tool you already use |
 
 ---
 
@@ -198,7 +219,7 @@ Every project is **three choices**: where it lives, how it **looks** and how it 
 Say *"like apple.com"*, *"like Rolex"* or *"like Cartier"*: Darkroom measures the live site (type sizes, spacing, rhythm, palette roles, motion) and applies that **design language** to *your* brand. It never copies their logo, photos, text or font files, and it checks that nobody could mistake your site for theirs.
 
 <details>
-<summary>🎭 <b>Or pick one of 13 style packs</b> (each changes the rules, so a luxury page and a bold page are not judged the same way)</summary>
+<summary>🎭 <b>Or pick one of 14 style packs</b> (each changes the rules, so a luxury page and a bold page are not judged the same way)</summary>
 
 | Pack | Feels | Typical use |
 |---|---|---|
@@ -215,6 +236,7 @@ Say *"like apple.com"*, *"like Rolex"* or *"like Cartier"*: Darkroom measures th
 | Artsy | experimental, playful, colourful | creative studios, festivals, illustrators |
 | Family | warm, safe, easy | kids, schools, community |
 | Trust | credible, calm, competent | finance, legal, medical, B2B |
+| Glass cinema *(on request)* | dark, frosted, a film behind everything | AI launches, studios, events: when you want to fit that crowd, not stand out |
 
 </details>
 
@@ -238,6 +260,9 @@ Every effect has a reduced-motion version and works without JavaScript. Which li
 ## 🗣️ Try these prompts
 
 Open Claude Code in an empty folder (or your project) and type one. Click a group to open it.
+
+> [!TIP]
+> **📚 100 more in [`skill/darkroom/examples/`](skill/darkroom/examples/INDEX.md)**: a bakery, a dental practice, a Ghost magazine, a WooCommerce furniture shop, a festival line-up, a school, a food bank, a type foundry, a site redesign, an "apple.com-like" product page and 90 others, on all ten platforms. Each has a request to copy (change the details to your business) and the full build spec Darkroom would write, so you can see exactly what you'll get. Written as references; not built yet.
 
 <details open>
 <summary>🛒 <b>Shops</b></summary>
@@ -309,6 +334,19 @@ Open Claude Code in an empty folder (or your project) and type one. Click a grou
 ```text
 /darkroom a landing page for my dog-walking service. Just go: you decide everything, show me the result at the end.
 ```
+```text
+/darkroom just a quick hero concept for my candle shop, dark and warm
+```
+**What happens:** the fast lane. No questions: one file, built, screenshotted and shown, then the offer to turn it into the full site.
+</details>
+
+<details>
+<summary>🤖 <b>Building in Lovable, v0, Bolt or Cursor</b></summary>
+
+```text
+/darkroom write me a Lovable prompt for a landing page for my yoga studio, calm and natural
+```
+**What you get:** one prompt in that tool's format, with every value spelled out and a "do not" list at the end. Paste it in; send Darkroom the preview link and it checks the result like any other page.
 </details>
 
 ---
@@ -328,9 +366,9 @@ You are asked at **four moments only**: the first questions, choosing between tw
 |---|---|
 | **Intake** | Reads your message, assets, references and your current site (what it is built with); re-checks the platform's docs when its notes are over a month old; decides where to build the first design; asks one or two rounds of questions. |
 | **Direction** | Finds the one idea of the site and codes two versions of the first screen, with real copy, on desktop and phone. |
-| **Slice** | Builds the first screen, its key motion and the transition into the next section, working, on the real platform when it can run locally. |
+| **Slice** | Writes the build spec (every value, matched against the two closest examples), then builds the first screen, its key motion and the transition into the next section, working, on the real platform when it can run locally. |
 | **Build** | Writes the rest of the pages and templates from a short design bible: palette, type, motion, copy budgets. |
-| **Check + fix** | Captures real browser states, runs the audits and the platform's validator, fixes what shows up. |
+| **Check + fix** | Captures real browser states, runs the audits and the platform's validator, scores the page through ten lenses, fixes what shows up. |
 | **Final** | You review. Nothing is called done without a capture of the current build, and the deploy steps are written for you. |
 
 </details>
@@ -374,7 +412,7 @@ Every starter theme was run through **the platform's own tools**, not just Darkr
 | <picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/ghost-light.svg"><img src="assets/icons/ghost.svg" width="16" alt=""></picture> Ghost | gscan | **compatible with Ghost 6.x** |
 | <img src="assets/icons/wordpress.svg" width="16" alt=""> WordPress | a real WordPress (Playground), Site Editor block validation | **renders; 0 invalid blocks** in every template |
 | <img src="assets/icons/woocommerce.svg" width="30" alt=""> WooCommerce | WordPress + WooCommerce from wordpress.org, sample products | **shop and product pages render; 0 invalid blocks** |
-| All ten | Darkroom's structure check + **63 automated tests** | passing locally; run before every release |
+| All ten | Darkroom's structure check + **111 automated tests** | passing locally; run before every release |
 
 That run found real problems before you could: WooCommerce blocks that look self-closing but save HTML (the editor would have called them broken), missing side padding on phones, and new WooCommerce stores hiding behind "Coming soon". All fixed, and the checks now catch them.
 
@@ -383,16 +421,16 @@ That run found real problems before you could: WooCommerce blocks that look self
 
 | | |
 |---|---|
-| 🎨 **Art direction** | 13 style packs, looks inspired by brands you name, and 139 reviewed real sites it can look up by technique ("a scroll story like ScrollTide", parallax, a cursor effect). |
+| 🎨 **Art direction** | 14 style packs, a build spec with every value before the code, 100 example sites to match, looks inspired by brands you name, and 139 reviewed real sites it can look up by technique ("a scroll story like ScrollTide", parallax, a cursor effect). |
 | ♻️ **Redesign** | imports your current site (URL or folder): texts, menu, contacts, images with sizes, old addresses. |
 | 📱 **Phone preview** | your site on your phone over the same Wi-Fi, or a shareable link when you say yes. |
 | 📥 **Asset check** | measures what you drop in, suggests improvements, never rejects. |
-| 🧱 **Ten platforms** | dated profiles with the official docs to re-check, starters, a structure check, deploy steps. |
-| 🌊 **Scroll and motion** | tested recipes: reveals, scroll-scrubbed video, frame sequences (with a lighter set for phones), pinned scenes, characters that come alive per section, and an image that reveals another under your cursor. Every one has a reduced-motion fallback. |
+| 🧱 **Ten platforms** | dated profiles with the official docs to re-check, starters, a structure check, deploy steps. Building in Lovable, v0, Bolt or Cursor? Darkroom writes the prompt for that tool and checks the builder's preview. |
+| 🌊 **Scroll and motion** | 34 tested building blocks: background video that never flashes, seamless loops, readable text over video, headline entrances, menus, buttons, grain, marquees, count-ups, word-by-word reveals, stacking cards, typewriter and rotating words, full-width wordmarks, phone swipe rails, magnetic buttons, parallax layers, spotlights, a depth carousel, frosted glass, mood-clip switchers, shader backdrops, a draggable 3D model, reveals, scroll-scrubbed video, frame sequences (with a lighter set for phones), pinned scenes, characters that come alive per section, and an image that reveals another under your cursor. Every one has a reduced-motion fallback. |
 | 📷 **Real-browser QA** | Playwright captures at several screen sizes, contact sheets and crops, motion on and off; each run records the build it was taken from. |
-| 🔎 **Audits** | each check marked measured, heuristic or manual: accessibility, contrast from real pixels, clutter, word budgets, type scale, colour, keyboard, reduced motion. |
+| 🔎 **Audits** | 33 checks, each marked measured, heuristic or manual: accessibility, contrast from real pixels, clutter, word budgets, type scale, colour, keyboard, reduced motion, white flash on load, hidden headlines, videos that don't play or jump on loop, fonts that didn't load, see-through frames in scroll films. |
 | ⚖️ **Compliance checklist** | EU and US checklists for cookies, prices, disclosures and AI-image labelling. A checklist, not legal advice. |
-| 🎞️ **Media** | probes media, makes responsive images, turns video into a frame sequence. |
+| 🎞️ **Media** | probes media, makes responsive images, turns video into a frame sequence, makes videos web-ready (desktop, phone, still frame), measures edge colour and loop jumps, and draws free moving backdrops in your colours (8 styles + 3 textures). |
 | ✍️ **Image and video prompts** | for ChatGPT, Midjourney, Kling, Seedance, Veo and others, with acceptance criteria. |
 
 </details>
@@ -403,9 +441,9 @@ That run found real problems before you could: WooCommerce blocks that look self
 
 ## 📚 Where the knowledge comes from
 
-<p align="center"><img src="assets/knowledge.svg" alt="139 real site designs that inspired it (96 good, 43 bad), 28 cross-site lessons with 12 promoted to rules, 28 research sources, 6 design tools, 63 automated checks, one human art director" width="100%"></p>
+<p align="center"><img src="assets/knowledge.svg" alt="139 real site designs that inspired it (96 good, 43 bad), 28 cross-site lessons with 12 promoted to rules, 29 research sources, 7 design tools, 111 automated checks, one human art director" width="100%"></p>
 
-Darkroom is **not a trained model**. It is written knowledge that Claude reads while it works, in plain files you can check: **inspiration from 139 real website designs** (kept as written lessons, never screenshots or copied code), **28 lessons** of which **12 became rules** after the author approved them, **28 research sources** (Nielsen Norman Group, WCAG 2.2, the European Accessibility Act, EU cookie and price rules, the AI Act), the **official docs of all ten platforms**, and the author's own taste calls.
+Darkroom is **not a trained model**. It is written knowledge that Claude reads while it works, in plain files you can check: **inspiration from 139 real website designs** (kept as written lessons, never screenshots or copied code), **28 lessons** of which **12 became rules** after the author approved them, **29 research sources** (Nielsen Norman Group, WCAG 2.2, the European Accessibility Act, EU cookie and price rules, the AI Act), the **official docs of all ten platforms**, and the author's own taste calls.
 
 **[→ The full list: every site, source and human decision](KNOWLEDGE.md)**
 

@@ -4,6 +4,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { inspect } from './media.mjs';
+import { analyse, heroSuggestions } from './mediakit.mjs';
 import { mkdirp } from './browser.mjs';
 
 const cells = (line) => line.trim().replace(/^\||\|$/g, '').split('|').map((c) => c.trim());
@@ -40,6 +41,14 @@ export function suggestions(f, purpose) {
   return { better, info };
 }
 
+// Hero media (videos and wide pictures): edge colour → --ground, loop seam, calm zone for the words (references/hero-media.md).
+function withHero(f, s, purpose) {
+  if (purpose === 'logo' || purpose === 'portrait' || !(f.kind === 'video' || purpose === 'wide')) return s;
+  let a; try { a = analyse(f.file); } catch { return s; }
+  const h = heroSuggestions(a);
+  return { better: [...s.better, ...h.better], info: [...s.info, ...h.info], hero: a.measured ? a : undefined };
+}
+
 export async function intake(dir, opt) {
   const raw = dir ?? 'assets/raw';
   const needsFile = opt.needs && opt.needs !== true ? String(opt.needs) : 'NEEDS.md';
@@ -56,9 +65,9 @@ export async function intake(dir, opt) {
     const f = files.find((x) => x.file.endsWith(put.replace(/^\.?\//, '')) || path.basename(x.file) === path.basename(put));
     if (!f) { report.push({ need: what, putIn: put, status: 'waiting', row: r }); continue; }
     matched.add(f.file);
-    report.push({ need: what, putIn: put, file: f.file, status: 'arrived', ...suggestions(f, use(`${what} ${put}`)), size: f.width ? `${f.width}×${f.height}` : null, row: r });
+    report.push({ need: what, putIn: put, file: f.file, status: 'arrived', ...withHero(f, suggestions(f, use(`${what} ${put}`)), use(`${what} ${put}`)), size: f.width ? `${f.width}×${f.height}` : null, row: r });
   }
-  const extras = files.filter((f) => !matched.has(f.file)).map((f) => ({ file: f.file, status: 'arrived, not requested', size: f.width ? `${f.width}×${f.height}` : null, ...suggestions(f, use(f.file)) }));
+  const extras = files.filter((f) => !matched.has(f.file)).map((f) => ({ file: f.file, status: 'arrived, not requested', size: f.width ? `${f.width}×${f.height}` : null, ...withHero(f, suggestions(f, use(f.file)), use(f.file)) }));
 
   if (needs && needs.header >= 0 && report.length) {
     const L = needs.lines;

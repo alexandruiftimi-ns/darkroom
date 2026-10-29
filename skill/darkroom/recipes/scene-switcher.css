@@ -1,0 +1,18 @@
+/* Pairs with scene-switcher.js. Scenes are stacked; the shown scene's wrapper fades in over 1 s (never the <video>
+   itself). Text tone follows data-tone on the section. */
+.ss { --ss-dark-fg: #f4f1ec; --ss-light-fg: #15130f; position: relative; isolation: isolate; color: var(--ss-dark-fg); transition: color 600ms ease; }
+.ss[data-tone="light"] { color: var(--ss-light-fg); }
+.ss-media { position: absolute; inset: 0; z-index: -1; background: var(--ss-ground, #0c0c0c); }
+.ss-scene { position: absolute; inset: 0; opacity: 0; }
+.ss-scene > video { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* a keyframe, not a transition: a fast double switch never strands a half-faded scene */
+.ss-scene.is-on { opacity: 1; z-index: 1; animation: ss-in 1s ease both; }
+.ss-scene.was-on { opacity: 1; z-index: 0; }
+@keyframes ss-in { from { opacity: 0; } to { opacity: 1; } }
+.ss-tabs { display: inline-flex; justify-self: start; align-self: start; width: max-content; gap: 6px; padding: 4px; border-radius: 999px; background: rgb(0 0 0 / .25); }
+.ss[data-tone="light"] .ss-tabs { background: rgb(255 255 255 / .45); }
+.ss-tabs button { min-height: 40px; padding: 0 16px; border: 0; border-radius: 999px; background: transparent; color: inherit; font: inherit; cursor: pointer; }
+.ss-tabs button[aria-pressed="true"] { color: var(--ss-light-fg); background: var(--ss-dark-fg); }
+.ss[data-tone="light"] .ss-tabs button[aria-pressed="true"] { color: var(--ss-dark-fg); background: var(--ss-light-fg); }
+.ss-tabs button:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .ss-scene.is-on { animation: none; } .ss { transition: none; } }

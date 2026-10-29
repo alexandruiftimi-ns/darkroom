@@ -7,6 +7,7 @@ import path from 'node:path';
 import { VIEWPORTS, contextFor, launch, settle, mkdirp, toolVersions } from './browser.mjs';
 import { dismissConsent } from './consent.mjs';
 import { resolveTarget } from './serve.mjs';
+import { grabAsync, seamScore, SEAM_THRESHOLD } from './mediakit.mjs';
 
 // ---------- check registry (docs and tests read this; keep it the single source of severity) ----------
 export const CHECKS = [
@@ -15,7 +16,13 @@ export const CHECKS = [
   { id: 'reading-zones', sev: 'high', basis: 'heuristic', what: 'text zones in the first viewport (> max+1 high, > max medium)', limits: 'first viewport only; zones are clustered by distance' },
   { id: 'eye-travel', sev: 'medium', basis: 'heuristic', what: 'reading path crosses the viewport > 2x', limits: 'document order is assumed to be reading order' },
   { id: 'corners', sev: 'medium', basis: 'heuristic', what: 'content in 3+ viewport corners', limits: '' },
-  { id: 'overflow', sev: 'high', basis: 'measured', what: 'page wider than the viewport', limits: 'initial state only' },
+  { id: 'overflow', sev: 'high', basis: 'measured', what: 'page wider than the viewport, naming up to 5 offending elements', limits: 'initial state only; offenders inside clipping ancestors are skipped' },
+  { id: 'first-paint', sev: 'high', basis: 'measured', what: 'early frame at ~350 ms is >= 90 % one colour far (ΔE > 10) from the settled first screen (white flash / blank first frame), or the h1 is not visible 1.5 s after load', limits: 'desktop, default motion; colours compared at 64×40 px' },
+  { id: 'video-playback', sev: 'high', basis: 'measured', what: 'autoplay <video> not playing after load: error, readyState < 2 or paused; codec gaps of the test browser reported as info', limits: 'videos with the autoplay attribute, or inside a [data-video-layer] (recipes/video-layer.js); other JS-started videos are not checked' },
+  { id: 'loop-seam', sev: 'medium', basis: 'heuristic', what: 'a video that loops natively (loop attribute) whose first and last frames differ by more than 6 % (mean absolute difference): a visible jump on every loop', limits: 'needs ffmpeg; compares one frame at each end at 96×54; videos with data-video-loop (fade loop) are skipped' },
+  { id: 'frame-blend', sev: 'high', basis: 'measured', what: 'while scrolling with default motion, a full-size image is drawn on a canvas at partial opacity (globalAlpha between 0.03 and 0.97): one frame shows through another (ghosting)', limits: '2D canvas drawImage only (not WebGL, OffscreenCanvas or stacked <img> layers); one scroll pass from top to bottom; canvases inside [data-frame-blend="allow"] are skipped' },
+  { id: 'display-font', sev: 'high', basis: 'measured', what: "the h1's first font-family is declared (@font-face) but no face of it loaded: the headline shows in a fallback", limits: 'undeclared system fonts are reported as info' },
+  { id: 'motion-rest', sev: 'high', basis: 'measured', what: 'text in the first viewport at opacity < .05 or visibility hidden 2 s after load, and again with JavaScript disabled (high if the h1 or 3+ items, else medium)', limits: 'first viewport only; closed menus layered over the hero can be reported' },
   { id: 'target-size', sev: 'medium', basis: 'measured', what: 'crowded interactive targets < 24x24 CSS px (WCAG 2.5.8 with spacing exception)', limits: 'inline-in-sentence links exempt' },
   { id: 'headline-length', sev: 'low', basis: 'heuristic', what: 'headline > 8 words', limits: '' },
   { id: 'word-budget', sev: 'high', basis: 'heuristic', what: 'visible copy words vs section budget (> 2x high, > 1x medium); skipped for surface "read"', limits: 'excludes [data-darkroom-ignore] and aria-hidden subtrees; section boundaries are guessed from markup' },
@@ -241,6 +248,22 @@ function probeDom({ maxZones, wordBudgets, disclosure, surface }) {
     sections, totalWords: copyWords(document.body), prices, genre, urgency, uiHues,
     disclosureFound: disclosure ? norm(bodyText).includes(norm(disclosure)) : null,
     overflow: document.documentElement.scrollWidth - innerWidth,
+    overflowCulprits: (() => {
+      if (document.documentElement.scrollWidth - innerWidth <= 0) return [];
+      const out = [];
+      const clipped = (el) => { for (let e = el.parentElement; e && e !== document.body; e = e.parentElement) if (/hidden|clip|auto|scroll/.test(getComputedStyle(e).overflowX)) return true; return false; };
+      for (const el of document.body.querySelectorAll('*')) {
+        if (getComputedStyle(el).position === 'fixed') continue;
+        const r = el.getBoundingClientRect();
+        if (r.width === 0 || r.right <= innerWidth + 1) continue;
+        const p = el.parentElement;
+        if (p && p !== document.body && p.getBoundingClientRect().right > innerWidth + 1) continue; // report the outermost offender
+        if (clipped(el)) continue;
+        out.push(el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + (el.classList.length ? '.' + [...el.classList].slice(0, 2).join('.') : '') + ` (right edge ${Math.round(r.right)}px)`);
+        if (out.length >= 5) break;
+      }
+      return out;
+    })(),
     maxZones, surface,
     libs: {
       gsap: !!window.gsap, scrollTrigger: !!window.ScrollTrigger, three: !!window.THREE,
@@ -473,6 +496,61 @@ const stripWww = (h) => h.replace(/^www\./, '').replace(/:\d+$/, '');
 const sameSite = (a, b) => { const x = stripWww(a); const y = stripWww(b); return x === y || x.endsWith('.' + y) || y.endsWith('.' + x); };
 
 // ---------- findings ----------
+// ---------- first paint, video, display font, rest state ----------
+function hiddenRestText() {
+  const out = []; const h1 = document.querySelector('h1'); const skip = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT', 'TEMPLATE']); const seen = new Set();
+  const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT); // no filter callback: it cannot run with JavaScript disabled
+  while (w.nextNode()) {
+    const el = w.currentNode.parentElement;
+    if (!w.currentNode.nodeValue.trim() || !el || skip.has(el.tagName) || seen.has(el) || el.closest('[aria-hidden="true"],[hidden],[inert],[data-darkroom-ignore],dialog:not([open])')) continue;
+    seen.add(el);
+    const r = el.getBoundingClientRect();
+    if (r.width < 2 || r.height < 2 || r.bottom <= 0 || r.top >= innerHeight || r.right <= 0 || r.left >= innerWidth) continue;
+    let op = 1; for (let e = el; e && e.nodeType === 1; e = e.parentElement) op *= parseFloat(getComputedStyle(e).opacity);
+    if (op < 0.05 || getComputedStyle(el).visibility === 'hidden') out.push({ text: el.textContent.trim().replace(/\s+/g, ' ').slice(0, 40), h1: !!(h1 && (el === h1 || h1.contains(el))) });
+  }
+  return out;
+}
+function h1Visible() {
+  const h = document.querySelector('h1'); if (!h) return null;
+  const r = h.getBoundingClientRect(); let op = 1; for (let e = h; e && e.nodeType === 1; e = e.parentElement) op *= parseFloat(getComputedStyle(e).opacity);
+  return { visible: op >= 0.05 && getComputedStyle(h).visibility !== 'hidden' && r.width > 1 && r.height > 1 && r.top < innerHeight, opacity: +op.toFixed(2) };
+}
+function videoState() {
+  const h264 = document.createElement('video').canPlayType('video/mp4; codecs="avc1.42E01E"') !== '';
+  // autoplay videos, and background videos started by script (recipes/video-layer.js removes the autoplay attribute)
+  return { h264, videos: [...document.querySelectorAll('video')].filter((v) => v.autoplay || v.closest('[data-video-layer]')).map((v) => ({ src: (v.currentSrc || v.src || v.querySelector('source')?.src || '').slice(0, 160), url: v.currentSrc || v.src || '', readyState: v.readyState, paused: v.paused, error: v.error ? v.error.code : null, loop: v.loop, managedLoop: v.hasAttribute('data-video-loop') })) };
+}
+function displayFont() {
+  const h1 = document.querySelector('h1'); if (!h1) return null;
+  const fam = getComputedStyle(h1).fontFamily.split(',')[0].trim().replace(/["']/g, '');
+  const faces = [...document.fonts].filter((f) => f.family.replace(/["']/g, '').toLowerCase() === fam.toLowerCase());
+  return { family: fam, declared: faces.length, loaded: faces.filter((f) => f.status === 'loaded').length, failed: faces.filter((f) => f.status === 'error').length };
+}
+// Screenshots → dominant colour (the most common 16-level bucket and its share) at 64×40, decoded in a scratch page.
+async function frameStats(browser, pngs) {
+  const ctx = await browser.newContext(); const p = await ctx.newPage();
+  try {
+    return await p.evaluate(async (list) => Promise.all(list.map(async (b64) => {
+      const img = new Image(); img.src = 'data:image/png;base64,' + b64; await img.decode();
+      const c = document.createElement('canvas'); c.width = 64; c.height = 40; const g = c.getContext('2d'); g.drawImage(img, 0, 0, 64, 40);
+      const d = g.getImageData(0, 0, 64, 40).data; const buckets = new Map();
+      for (let i = 0; i < d.length; i += 4) { const k = `${d[i] >> 4},${d[i + 1] >> 4},${d[i + 2] >> 4}`; const b = buckets.get(k) ?? { n: 0, r: 0, g: 0, b: 0 }; b.n++; b.r += d[i]; b.g += d[i + 1]; b.b += d[i + 2]; buckets.set(k, b); }
+      const top = [...buckets.values()].sort((a, b) => b.n - a.n)[0];
+      return { share: top.n / (d.length / 4), colour: [top.r / top.n, top.g / top.n, top.b / top.n].map(Math.round) };
+    })), pngs.map((b) => b.toString('base64')));
+  } finally { await ctx.close(); }
+}
+const toLab = ([r, g, b]) => {
+  const lin = (v) => { v /= 255; return v > 0.04045 ? ((v + 0.055) / 1.055) ** 2.4 : v / 12.92; };
+  const [R, G, B] = [lin(r), lin(g), lin(b)];
+  const f = (t) => (t > 0.008856 ? Math.cbrt(t) : 7.787 * t + 16 / 116);
+  const x = f((R * 0.4124 + G * 0.3576 + B * 0.1805) / 0.95047), y = f(R * 0.2126 + G * 0.7152 + B * 0.0722), z = f((R * 0.0193 + G * 0.1192 + B * 0.9505) / 1.08883);
+  return [116 * y - 16, 500 * (x - y), 200 * (y - z)];
+};
+export const deltaE = (a, b) => { const [p, q] = [toLab(a), toLab(b)]; return Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - q[2]); };
+const hex = (c) => '#' + c.map((v) => v.toString(16).padStart(2, '0')).join('');
+
 export function findings({ desk, mob, colour, motion, keyboard, contrast, ctx }) {
   const F = [];
   const add = (sev, check, msg, data, extra = {}) => F.push({ sev, check, basis: CHECKS.find((c) => c.id === check)?.basis ?? 'measured', msg, ...extra, ...(data ? { data } : {}) });
@@ -491,7 +569,7 @@ export function findings({ desk, mob, colour, motion, keyboard, contrast, ctx })
     else if (d.zones.length > maxZ) add('medium', 'reading-zones', `${label}: ${d.zones.length} text zones (max ${maxZ})`, d.zones.map((z) => z.text), { viewport: label });
     if (d.travel > 2) add('medium', 'eye-travel', `${label}: reading path crosses the screen ${d.travel}× (zig-zag > 2)`, null, { viewport: label });
     if (d.corners.length >= 3) add('medium', 'corners', `${label}: content in ${d.corners.length} corners (${d.corners.join(', ')}) — the eye orbits`, null, { viewport: label });
-    if (d.overflow > 0) add('high', 'overflow', `${label}: page ${d.overflow}px wider than the viewport`, null, { viewport: label });
+    if (d.overflow > 0) add('high', 'overflow', `${label}: page ${d.overflow}px wider than the viewport${d.overflowCulprits?.length ? `; caused by ${d.overflowCulprits.join(', ')}` : ''}`, d.overflowCulprits ?? null, { viewport: label });
     if (d.smallTargets.length) add('medium', 'target-size', `${label}: ${d.smallTargets.length} crowded targets < 24px, e.g. ${d.smallTargets.slice(0, 4).map((t) => `${t.el} "${t.text}" ${t.w}×${t.h}`).join('; ')}`, d.smallTargets, { viewport: label });
   }
   add('info', 'reading-zones', `desktop zones in order: ${desk.zones.map((z) => `[${z.text}]`).join(' → ')} · travel ${desk.travel}`);
@@ -557,6 +635,43 @@ export function findings({ desk, mob, colour, motion, keyboard, contrast, ctx })
     add('info', 'reduced-motion', `animations running: ${n.running} by default → ${r.running} with reduced motion (videos ${n.videosPlaying} → ${r.videosPlaying}); static rule present: ${desk.reducedMotionRule}`);
   }
 
+  const ex = ctx.extra;
+  if (ex?.frames) {
+    const [early, settled] = ex.frames; const dE = Math.round(deltaE(early.colour, settled.colour));
+    if (early.share >= 0.9 && dE > 10) add('high', 'first-paint', `at ~350 ms the first screen is ${Math.round(early.share * 100)} % ${hex(early.colour)}, far from the settled screen (${hex(settled.colour)}, ΔE ${dE}): a white flash or blank first frame. Paint the ground on html/body and give media a poster colour`);
+    else add('info', 'first-paint', `early frame ${Math.round(early.share * 100)} % ${hex(early.colour)} vs settled ${hex(settled.colour)} (ΔE ${dE})`);
+  }
+  if (ex?.h1At1500 && !ex.h1At1500.visible) add('high', 'first-paint', `the h1 is not visible 1.5 s after load (opacity ${ex.h1At1500.opacity}): an entrance or loader hides the first frame`);
+  if (ex?.video) {
+    for (const v of ex.video.videos) {
+      const name = v.src.split('/').pop() || '(no source)';
+      const failed = ctx.errors.some((e) => e.includes('request failed') && v.src && e.includes(name));
+      if (v.error && failed) add('high', 'video-playback', `video ${name} failed to load (error ${v.error})`, v);
+      else if (v.error === 4 && !ex.video.h264) add('info', 'video-playback', `video ${name}: codec not decodable in this test browser (no H.264 in bundled Chromium): not a page bug; check in Chrome`, v);
+      else if (v.error) add('high', 'video-playback', `video ${name} has a media error (code ${v.error})`, v);
+      else if (v.readyState < 2) add('high', 'video-playback', `video ${name} is not ready after load (readyState ${v.readyState}): no frame to show`, v);
+      else if (v.paused) add('high', 'video-playback', `autoplay video ${name} is paused after load (add muted and playsinline)`, v);
+    }
+    for (const v of ex.video.videos.filter((x) => x.loop && !x.managedLoop)) {
+      const name = (v.src.split('/').pop() || 'video').slice(0, 60);
+      if (v.seam === null || v.seam === undefined) add('info', 'loop-seam', `looping video ${name}: seam not measured (needs ffmpeg)`);
+      else if (v.seam > SEAM_THRESHOLD) add('medium', 'loop-seam', `looping video ${name}: first and last frame differ (seam ${v.seam}), so every loop jumps. Use recipes/video-loop.js (fade at the end), a boomerang copy (darkroom media boomerang) or --loop crossfade (darkroom media web)`, { seam: v.seam });
+      else add('info', 'loop-seam', `looping video ${name}: seam ${v.seam} (clean)`);
+    }
+    if (ex.video.videos.length) add('info', 'video-playback', `${ex.video.videos.length} autoplay video(s) checked; H.264 in this browser: ${ex.video.h264}`);
+  }
+  if (ex?.blend?.partial) add('high', 'frame-blend', `${ex.blend.partial} of ${ex.blend.draws} full-size image draws on ${ex.blend.canvases.join(', ')} were see-through: one frame shows through another (ghosting). Draw one frame at a time at full opacity; for smoother motion extract more frames, never blend neighbours or fade a still over the film`, ex.blend);
+  else if (ex?.blend?.draws) add('info', 'frame-blend', `${ex.blend.draws} full-size canvas image draws while scrolling, all at full opacity`);
+  if (ex?.font) {
+    const f = ex.font;
+    if (f.declared > 0 && f.loaded === 0) add('high', 'display-font', `the h1 font "${f.family}" did not load (${f.declared} face(s) declared, ${f.failed} failed): the headline shows in a fallback`, f);
+    else if (f.declared === 0) add('info', 'display-font', `the h1 uses "${f.family}", not loaded by the page (a system or generic font)`);
+  }
+  for (const [when, list] of [['2 s after load', ex?.restJs], ['with JavaScript disabled', ex?.restNoJs]]) {
+    if (!list?.length) continue;
+    add(list.some((x) => x.h1) || list.length >= 3 ? 'high' : 'medium', 'motion-rest', `${when}: ${list.length} text item(s) in the first viewport are invisible: ${list.slice(0, 4).map((x) => `"${x.text}"`).join(', ')}. The rest state must show the content`, list);
+  }
+
   const first = ctx.hosts.size ? [...ctx.hosts].filter((h) => !sameSite(h, ctx.host)) : [];
   const trackers = first.filter((h) => TRACKERS.test(h));
   if (trackers.length) add('high', 'third-party', `loaded before consent: ${trackers.join(', ')} (self-host fonts; consent-gate trackers/embeds)`);
@@ -583,6 +698,32 @@ async function revealPass(page) {
   await page.waitForTimeout(steps ? 400 : 0);
 }
 
+// Init script: records full-size canvas image draws and the ones made at partial opacity (a frame over a frame = ghosting).
+// Sizes are in canvas pixels after the context transform; a draw counts when it covers half the canvas or more.
+function blendProbe() {
+  const rec = window.__drBlend = { draws: 0, partial: 0, canvases: [] };
+  const orig = CanvasRenderingContext2D.prototype.drawImage;
+  CanvasRenderingContext2D.prototype.drawImage = function (img, ...a) {
+    try {
+      const c = this.canvas;
+      if (c instanceof HTMLCanvasElement && img !== c && c.clientWidth * c.clientHeight >= 0.15 * innerWidth * innerHeight) {
+        const dw = a.length >= 4 ? a[a.length - 2] : (img.videoWidth || img.width), dh = a.length >= 4 ? a[a.length - 1] : (img.videoHeight || img.height);
+        const m = this.getTransform();
+        if (Math.abs(dw * dh * m.a * m.d) >= 0.5 * c.width * c.height) {
+          rec.draws++;
+          const al = this.globalAlpha;
+          if (al > 0.03 && al < 0.97 && !c.closest('[data-frame-blend="allow"]')) {
+            rec.partial++;
+            const id = c.id ? `canvas#${c.id}` : c.classList.length ? `canvas.${[...c.classList].join('.')}` : 'canvas';
+            if (!rec.canvases.includes(id)) rec.canvases.push(id);
+          }
+        }
+      }
+    } catch { /* never break the page */ }
+    return orig.call(this, img, ...a);
+  };
+}
+
 // ---------- run ----------
 export async function audit(target, opt, { resolveSettings, study = false } = {}) {
   const { settings, source, problem } = resolveSettings(opt.bible);
@@ -597,32 +738,52 @@ export async function audit(target, opt, { resolveSettings, study = false } = {}
   const host = new URL(url).host;
   const hosts = new Set(); const errors = []; const urls = [];
   let consent = { action: 'none' };
-  const run = async (vp, { motion = 'reduce', full = true } = {}) => {
-    const ctx = await browser.newContext({ ...contextFor(vp), reducedMotion: motion });
+  const run = async (vp, { motion = 'reduce', full = true, early = false, js = true } = {}) => {
+    const ctx = await browser.newContext({ ...contextFor(vp), reducedMotion: motion, javaScriptEnabled: js });
     const page = await ctx.newPage();
     page.on('request', (r) => { try { hosts.add(new URL(r.url()).host); urls.push(r.url()); } catch { /* data: */ } });
     page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
     page.on('pageerror', (e) => errors.push(e.message));
     page.on('requestfailed', (r) => errors.push(`request failed: ${r.url().slice(0, 100)}`));
+    if (early) await page.addInitScript(blendProbe);
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
+    const t0 = Date.now(); const extra = {};
+    if (!js) { await settle(page); extra.restNoJs = await page.evaluate(hiddenRestText); await ctx.close(); return extra; }
+    if (early) {
+      await page.waitForTimeout(Math.max(0, 350 - (Date.now() - t0)));
+      extra.earlyShot = await page.screenshot({ type: 'png' });
+      await page.waitForTimeout(Math.max(0, 1500 - (Date.now() - t0)));
+      extra.h1At1500 = await page.evaluate(h1Visible);
+    }
     await settle(page);
+    if (early) {
+      await page.waitForTimeout(Math.max(0, 2000 - (Date.now() - t0)));
+      extra.settledShot = await page.screenshot({ type: 'png' });
+      extra.restJs = await page.evaluate(hiddenRestText);
+      extra.video = await page.evaluate(videoState);
+      for (const v of extra.video.videos) if (v.loop && !v.managedLoop && /^https?:/.test(v.url)) { try { const a = await grabAsync(v.url, 'first'); const b = a && await grabAsync(v.url, 'last'); v.seam = a && b ? seamScore(a, b) : null; } catch { v.seam = null; } }
+    }
     if (full && (study || opt.dismiss)) consent = await dismissConsent(page, { allowAccept: !!opt['accept-consent'] });
     if (full) await revealPass(page);
     await page.waitForTimeout(700);
     const motionNow = await page.evaluate(motionState);
-    if (!full) { await ctx.close(); return { motion: motionNow }; }
+    if (early && await page.evaluate(() => !!document.querySelector('canvas'))) { await revealPass(page); extra.blend = await page.evaluate(() => window.__drBlend ?? null); }
+    if (!full) { await ctx.close(); return { motion: motionNow, extra }; }
     const dom = await page.evaluate(probeDom, probeArgs);
     const contrast = await pixelContrast(page, vp);
     const colour = vp.width >= 1024 ? await uiColourShare(page) : null;
     const keyboard = vp.width >= 1024 ? await keyboardProbe(page) : null;
+    const font = vp.width >= 1024 ? await page.evaluate(displayFont) : null;
     await ctx.close();
-    return { dom, colour, contrast, keyboard, motion: motionNow };
+    return { dom, colour, contrast, keyboard, font, motion: motionNow };
   };
-  let d; let m; let normal;
+  let d; let m; let normal; let noJs; let frames = null;
   try {
     d = await run(VIEWPORTS['desktop-1440']);
     m = await run(VIEWPORTS['mobile-390']);
-    normal = await run(VIEWPORTS['desktop-1440'], { motion: 'no-preference', full: false });
+    normal = await run(VIEWPORTS['desktop-1440'], { motion: 'no-preference', full: false, early: true });
+    noJs = await run(VIEWPORTS['desktop-1440'], { js: false });
+    if (normal.extra.earlyShot && normal.extra.settledShot) frames = await frameStats(browser, [normal.extra.earlyShot, normal.extra.settledShot]);
   } finally { await browser.close(); await served.close(); }
   const scriptLibs = {
     gsap: urls.some((u) => /gsap|scrolltrigger/i.test(u)), lenis: urls.some((u) => /lenis/i.test(u)),
@@ -633,7 +794,7 @@ export async function audit(target, opt, { resolveSettings, study = false } = {}
     url, date: new Date().toISOString(),
     capture: { mode: 'prefers-reduced-motion: reduce (plus one default-motion pass for the motion comparison)', viewports: ['desktop-1440', 'mobile-390'], consent, tools: toolVersions(null) },
     config: { source, problem }, settings,
-    findings: findings({ desk: d.dom, mob: m.dom, colour: d.colour, motion: { reduce: d.motion, normal: normal.motion }, keyboard: d.keyboard, contrast: { desktop: d.contrast, mobile: m.contrast }, ctx: { settings, fonts: opt.fonts, mode: opt.mode, hosts, host, errors, problem } }),
+    findings: findings({ desk: d.dom, mob: m.dom, colour: d.colour, motion: { reduce: d.motion, normal: normal.motion }, keyboard: d.keyboard, contrast: { desktop: d.contrast, mobile: m.contrast }, ctx: { settings, fonts: opt.fonts, mode: opt.mode, hosts, host, errors, problem, extra: { frames, h1At1500: normal.extra.h1At1500, video: normal.extra.video, restJs: normal.extra.restJs, restNoJs: noJs.restNoJs, font: d.font, blend: normal.extra.blend } } }),
     desktop: d.dom, mobile: { zones: m.dom.zones, travel: m.dom.travel, smallTargets: m.dom.smallTargets, overflow: m.dom.overflow, nameless: m.dom.nameless, unlabeled: m.dom.unlabeled },
     colour: d.colour, contrast: { desktop: d.contrast, mobile: m.contrast }, keyboard: d.keyboard, motion: { reduce: d.motion, normal: normal.motion },
   };

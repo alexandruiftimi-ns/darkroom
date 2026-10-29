@@ -9,6 +9,10 @@ These are visual editors: their sites are built inside the product, and there is
 - what each builder allows as code: custom CSS (Squarespace, Webflow), custom code embeds (Webflow, Framer code components, Wix Velo), so small effects can be pasted in;
 - or, if they want Darkroom to build it: move to `static` (free hosting) or `wordpress`.
 
+## AI builders (Lovable, v0, Bolt, Cursor, Replit, Manus, AI Studio, Kimi)
+
+These take a prompt, not a theme. Use the `prompt` platform (`platforms/prompt.md`): Darkroom does the design, writes `PROMPT.md` for that tool, checks it with `darkroom platform check --platform prompt`, and when the builder shows a preview URL, captures and audits it and writes one fix prompt per defect.
+
 ## Candidates considered (2026-10-26)
 
 The bar for a new platform: used by millions of sites or developers, a documented way to build it as code, a way to preview it locally so Darkroom can look at it, and a job none of the current platforms does as well.

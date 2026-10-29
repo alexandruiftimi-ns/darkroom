@@ -14,6 +14,7 @@ Colour: ground <hex>, surface <hex>, ink <hex>, secondary <hex>, accent <hex> (p
 Imagery: <subject>, <light>, <lens>, <grade>, <materials>; <product silhouette lock lines if product>.
 Copy exactly: headline "<…>", body "<…>", button "<…>".
 Bottom of frame: <one quiet element or nothing>.
+The photographic scene's edges fall off to flat <ground hex>, the page background; the <left 36 %> behind the headline stays calm and uncluttered.
 
 Do not include: price, preorder, logos of other companies, handwriting, extra feature cards, gradient text, more than 3 text groups.
 ```

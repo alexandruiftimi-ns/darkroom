@@ -20,8 +20,9 @@ const USAGE = `darkroom <command>   (Darkroom ${VERSION})
         [--approve id --note "…"] [--open type:id[:blocking]] [--close id] [--root dir]
                                where the project is, what is approved against which build revision, which evidence is stale
   capture <url|dir|file> [--out dir] [--label x] [--viewports desktop-1440,mobile-390] [--scroll 0,.25,.5,.75,1]
-          [--scene "#id" --steps 10] [--film] [--states states.json] [--motion|--reduce|--both] [--dpr 2] [--crop css] [--wait ms] [--dismiss]
-                               named states with real wheel input; default = both motion and reduced-motion; contact sheets + manifest.json
+          [--scene "#id" --steps 10] [--film] [--states states.json] [--motion|--reduce|--both] [--dpr 2] [--crop css] [--wait ms] [--dismiss] [--no-early]
+                               named states with real wheel input; default = both motion and reduced-motion; contact sheets + manifest.json;
+                               desktop motion runs start with an \`early\` shot at ~350 ms (white flash, blank band, hidden h1)
   shoot <url|dir|file> …       legacy alias of capture (reduced motion unless --motion)
   compare <reference.png> <shot.png> [--out sheet.png]
   audit <url|dir|file> [--bible file] [--fonts 3] [--mode disciplined|expressive|monochrome] [--json out.json] [--dismiss]
@@ -36,6 +37,8 @@ const USAGE = `darkroom <command>   (Darkroom ${VERSION})
            | content [dir] [--out dir] [--site https://…] [--theme theme-dir]
                                the platforms Darkroom builds for, a starter per platform, an offline structure check, and
                                WordPress content (paste files + content.xml for Tools → Import) from content/content.json
+  spec <BUILD_SPEC.md|folder> [--json out.json]
+                               lint a build spec: required sections, signature, "Do not" list, bare adjectives, placeholders, hotlinks
   media inspect|derive|frames|check …   probe, derive, frame sequences (see: darkroom media)
   assets search|get|credits|intake …    openly licensed images with provenance; intake = check what the user dropped in
 viewports: ${Object.keys(VIEWPORTS).join(', ')}
@@ -77,6 +80,7 @@ try {
   else if (cmd === 'import') { const { importSite } = await import('./lib/importsite.mjs'); await importSite(pos[0], opt); }
   else if (cmd === 'preview') { const { preview } = await import('./lib/preview.mjs'); await preview(pos[0], opt); }
   else if (cmd === 'platform') { const { platform } = await import('./lib/platforms.mjs'); await platform(pos, opt, SKILL_DIR); }
+  else if (cmd === 'spec') { const { spec } = await import('./lib/spec.mjs'); await spec(pos, opt); }
   else if (cmd === 'media') { const { media } = await import('./lib/media.mjs'); await media(pos, opt); }
   else { console.log(USAGE); process.exitCode = cmd ? 1 : 0; }
 } catch (e) {

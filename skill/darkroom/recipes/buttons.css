@@ -1,0 +1,37 @@
+/* Buttons with a physical feel: a text roll with an arrow chip, a sliding fill, a 0.97 press.
+   Hover effects run only on devices that hover ((hover:hover) and (pointer:fine)), so a tap on a phone never
+   leaves a button stuck half-rolled. Focus is always visible. Pure CSS; the label stays one real text node
+   (the rolled copy is a text-shadow, so screen readers and copy-paste see the label once).
+
+   <a class="btn btn--roll" href="#start"><span class="btn-label"><span>Book a table</span></span><span class="btn-chip" aria-hidden="true">→</span></a>
+   <a class="btn btn--fill" href="#menu"><span class="btn-label">See the menu</span></a>
+   Tokens: --btn-bg, --btn-fg, --btn-fill (the sliding colour), --btn-radius (pill = 999px, the pack decides). */
+.btn { --btn-bg: #f2efe9; --btn-fg: #111; --btn-fill: #111; --btn-fill-fg: #f2efe9; --btn-radius: 999px;
+  position: relative; display: inline-flex; align-items: center; gap: .75em; min-height: 44px; padding: .8em 1.4em;
+  border-radius: var(--btn-radius); background: var(--btn-bg); color: var(--btn-fg); font: inherit; font-weight: 500;
+  line-height: 1.1; text-decoration: none; border: 0; cursor: pointer; overflow: hidden; isolation: isolate;
+  transition: transform 160ms cubic-bezier(.4, 0, .2, 1), color 350ms cubic-bezier(.4, 0, .2, 1); -webkit-tap-highlight-color: transparent; }
+.btn:active { transform: scale(.97); }
+.btn:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.btn--ghost { --btn-bg: transparent; --btn-fg: currentColor; box-shadow: inset 0 0 0 1px currentColor; }
+
+/* Text roll: the label slides up and an identical copy rises from below (500 ms). */
+.btn--roll .btn-label { display: inline-block; overflow: hidden; height: 1.1em; }
+.btn--roll .btn-label > span { display: inline-block; text-shadow: 0 1.4em 0 currentColor; transition: transform 500ms cubic-bezier(.22, 1, .36, 1); }
+.btn-chip { display: inline-grid; place-items: center; width: 1.9em; height: 1.9em; margin-right: -.6em; border-radius: 50%;
+  background: var(--btn-fg); color: var(--btn-bg); font-size: .85em; transition: transform 350ms cubic-bezier(.22, 1, .36, 1); }
+
+/* Sliding fill: a second colour wipes in from the bottom. */
+.btn--fill::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--btn-fill); border-radius: inherit;
+  transform: translateY(101%); transition: transform 450ms cubic-bezier(.22, 1, .36, 1); }
+
+@media (hover: hover) and (pointer: fine) {
+  .btn--roll:hover .btn-label > span { transform: translateY(-1.4em); }
+  .btn--roll:hover .btn-chip { transform: translateX(3px) rotate(-45deg); }
+  .btn--fill:hover { color: var(--btn-fill-fg); }
+  .btn--fill:hover::before { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn, .btn::before, .btn-label > span, .btn-chip { transition: none !important; }
+  .btn:active { transform: none; }
+}

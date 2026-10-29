@@ -1,0 +1,23 @@
+/* Shared CSS for typewriter.js, rotating-word.js and scramble.js. All three reserve their final size before anything
+   moves (zero reflow): the words are stacked in one grid cell, and the widest one holds the space invisibly.
+   Without JS each shows its first (or only) text as plain words. */
+.tm-slot { display: inline-grid; vertical-align: bottom; }
+.tm-slot > * { grid-area: 1 / 1; white-space: nowrap; }
+.tm-ghost { visibility: hidden; }
+.tm-live { text-align: inherit; }
+
+/* typewriter caret: a thin bar that blinks only while idle */
+.tw-caret::after { content: ""; display: inline-block; width: .06em; height: .9em; margin-left: .06em; vertical-align: -.08em; background: currentColor; animation: tw-blink 1s steps(1) infinite; }
+.tw-typing.tw-caret::after { animation: none; }
+@keyframes tw-blink { 50% { opacity: 0; } }
+
+/* rotating word: the outgoing word rises out, the next rises in */
+.rw-slot { overflow: hidden; padding-bottom: .1em; margin-bottom: -.1em; }
+.rw-word { transition: transform 600ms cubic-bezier(.22, 1, .36, 1), opacity 600ms cubic-bezier(.22, 1, .36, 1); }
+.rw-word[aria-hidden="true"] { transform: translateY(100%); opacity: 0; }
+.rw-word.rw-out { transform: translateY(-100%); opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tw-caret::after { animation: none; }
+  .rw-word { transition: none; }
+}

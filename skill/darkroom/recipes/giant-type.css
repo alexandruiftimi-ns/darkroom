@@ -1,0 +1,13 @@
+/* Giant type: an edge-to-edge wordmark (the closing "wordmark bookend", library/INDEX.md) and a ghost word behind a
+   cut-out subject. Live text, never an image of text. giant-type.js fits the word exactly to its container's width;
+   without it, the CSS estimate below gets close (set --chars to the number of characters and tune --fit per font).
+
+   <footer class="giant" aria-label="Halde"><span class="giant-word" data-giant style="--chars:5">Halde</span></footer>
+   <section class="giant giant--ghost"><span class="giant-word" data-giant aria-hidden="true">BREAD</span><img class="giant-subject" src="loaf.webp" alt="A rye loaf"></section> */
+.giant { container-type: inline-size; position: relative; overflow: hidden; }
+.giant-word { display: block; width: max-content; white-space: nowrap; line-height: .8; letter-spacing: -.045em; font-weight: var(--giant-weight, 600);
+  font-size: calc(100cqi / var(--chars, 6) * var(--fit, 1.62)); margin: 0 0 -.06em; }
+/* Ghost: the word sits behind a cut-out (PNG/WebP with alpha), low contrast, so the subject reads first. */
+.giant--ghost { display: grid; place-items: center; isolation: isolate; }
+.giant--ghost > .giant-word { grid-area: 1 / 1; z-index: -1; opacity: var(--ghost-opacity, .12); }
+.giant--ghost > .giant-subject { grid-area: 1 / 1; width: min(70%, 720px); height: auto; }

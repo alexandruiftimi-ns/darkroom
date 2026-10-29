@@ -3,7 +3,7 @@
 ```bash
 node <skill>/scripts/darkroom.mjs capture <url | dir | file.html> [--label hero] [--viewports desktop-1440,mobile-390]
      [--scroll 0,0.25,0.5,0.75,1] | [--scene "#story" --steps 10] | [--film] | [--states states.json]
-     [--motion | --reduce | --both] [--dpr 2] [--crop "css selector"] [--wait ms] [--dismiss]
+     [--motion | --reduce | --both] [--dpr 2] [--crop "css selector"] [--wait ms] [--dismiss] [--no-early]
 node <skill>/scripts/darkroom.mjs compare <reference.png> <capture.png> [--out sheet.png]
 ```
 
@@ -14,6 +14,7 @@ node <skill>/scripts/darkroom.mjs compare <reference.png> <capture.png> [--out s
 - **Real wheel input.** Scroll positions are reached with mouse-wheel events, so Lenis, ScrollTrigger scrubs and `scroll-behavior: smooth` run their real code. It waits for the scroll to come to rest, and only falls back to an instant jump if the wheel did not reach the target.
 - **Both experiences by default.** Default-motion and reduced-motion captures are separate files (`…__motion__…`, `…__reduced__…`). The reduced-motion shot is the *fallback*; judge a scroll story from the motion shots.
 - **Scenes.** `--scene "#id" --steps 10` photographs a pinned or scrubbed section at 0, 10 … 100 % of its own progress. This is the check for lens dives, turntables and exploded views.
+- **Early frame.** Desktop motion runs with scroll positions start with `early` (`…__motion__early.png`, first tile on the sheet): the first screen ~350 ms after the HTML arrived, before fonts, video and entrances settle. Look for a white or black flash, an empty band where the video will be, a headline still hidden or in a fallback font. `--no-early` skips it.
 - **Film.** `--film` takes a frame every third of a screen over the whole page. Look for blank bands, pop-in and hard cuts that a few scroll percentages miss.
 - **Named states.** `--states file.json` (an array of `{ "id", "scroll" | "y" | "selector" | "scene", "crop", "actions" }`; actions are `{click}`, `{hover}`, `{focus}`, `{press}`, `{wait}`). Use it for an open menu, a hovered card, a focused field, an error state.
 - **Crops.** `--crop ".hero h1"` (or `crop` in a state) saves the element only; add `--dpr 2` to inspect type and edges at 1:1. A full-page image hides 2–4 px faults; the crop does not.
@@ -24,7 +25,7 @@ Runs go to `.darkroom/qa/<timestamp>-<label>/`. Nothing is overwritten.
 
 ## Reading the result
 
-Open the sheet first, then the individual images that matter, then the crops. Write each gap as a defect record:
+Open the sheet first, then the individual images that matter, then the crops. The audit also photographs the first screen at ~350 ms (`first-paint`): a white or empty early frame on a dark or media-led page is a flash to fix before anything else (ground on `html`/`body`, poster colour on the media box, no entrance that hides the h1). Write each gap as a defect record:
 
 ```
 State:    hero / mobile-390 / motion

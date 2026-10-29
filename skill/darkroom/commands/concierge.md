@@ -21,10 +21,10 @@ A senior art director with twenty years in UX/UI who explains design to people w
 
 **1. Understand (at most two rounds; skip every question already answered)**
 Round 1, the page, as one `AskUserQuestion` round of at most four, each with a recommended default:
-- **Where will it live?** Recommend a platform from the job (`platforms/README.md`): "A Shopify store", "A WordPress site you can edit", "A free one-page site (plain HTML, free hosting)", plus Other for Astro, Next.js, Hugo, Jekyll, Ghost, PHP, WooCommerce. Skip if they named it.
+- **Where will it live?** Recommend a platform from the job (`platforms/README.md`): "A Shopify store", "A WordPress site you can edit", "A free one-page site (plain HTML, free hosting)", plus Other for Astro, Next.js, Hugo, Jekyll, Ghost, PHP, WooCommerce, or "a prompt for Lovable / v0 / Bolt / Cursor" (`platforms/prompt.md`). Skip if they named it.
 - **How should it feel?** Three **named looks with a one-line picture** (e.g. "Quiet and expensive", "Bold and loud", "Warm and handmade"), recommending one from the subject. Offer "show me" and render two coded hero previews if they hesitate.
 - **Colours?** "I have a palette" / "Suggest some" (recommended if they have none) / "Classic and calm (60-30-10)" / "Creative, anything goes" (`references/color.md`, "Asking about colour").
-- **Pictures and video?** "I have my own" / "Write me prompts for an image or video tool (ChatGPT, Kling, Seedance, Veo…)" / "A mix" / "Neither, build without" (`references/asset-tools.md`). If they want prompts, ask which tools they use in round 2.
+- **Pictures and video?** "I have my own" / "Write me prompts for an image or video tool (ChatGPT, Kling, Seedance, Veo…)" / "Free pictures and clips I find for you (I ask before downloading; atmosphere only, never your product or place)" / "Abstract backdrops I make for you in your colours (moving colour fields and light; free and yours, but abstract: no product, place or people)" / "Neither, build without" (`references/asset-tools.md`, `references/free-media.md`). "A mix" is fine as Other. If they want prompts, ask which tools they use in round 2.
 
 If the message points at their **current site** (a URL or a folder path), run `darkroom import … --list` **before asking anything**: the listing answers questions so the user doesn't have to. Round 1 then stays at four:
 - **Is it yours, and what comes over?** One question: "Yes: bring my texts and images (recommended)" / "Yes: only the texts" / "Yes: only the images" / "It isn't mine: just look at it" (then `commands/study.md`).
@@ -71,6 +71,14 @@ At the first checkpoint, offer once: "Want to open it on your phone? Same Wi-Fi,
 When they say they added files: run `darkroom assets intake`, look at each picture, and reply with one line per file and its suggestion, then "Continue with these, or replace any first?" Never reject a file.
 
 At each checkpoint ask one question with three answers: "Yes, continue" / "Change X" / "Start over". Record the answer with `darkroom state --approve`; never record an approval the user did not give.
+
+## Fast lane: "just a hero", "a quick concept", "show me something"
+
+When the request is clearly a hero, a concept or a quick try (or the user said "just go" before any question), skip round 2 and most of round 1:
+- Defaults: platform `static`, one `index.html`, motion `hero-effect`, check `quick`, palette suggested from the subject, assets = drawn-in-code backdrop or free media (asked before download) or prompts, marked `TEMP`.
+- Say the choices back in one line ("A one-file hero, dark and filmic, the headline rises out of a slow light sweep; I'll mark the backdrop as temporary"), write a short `BUILD_SPEC.md`, build the slice, run the QA loop, show it.
+- Offer once at delivery: "Want this on Shopify / WordPress / as a full site? I'll ask three questions."
+- Record `darkroom state --set intake=fast`. Still one command, still decide-show-build: it is fewer questions, not fewer checks.
 
 ## When the user says "just go" or "you decide"
 

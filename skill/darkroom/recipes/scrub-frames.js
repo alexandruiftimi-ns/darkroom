@@ -9,7 +9,8 @@
 // Behaviour: poster first; only frames near the target are decoded (sliding window of +/- `window`); stale loads are
 // aborted; bitmaps outside the window are closed; drawing happens only when the shown frame changes; paused off-screen
 // and in hidden tabs; DPR is capped; reduced motion shows one still frame and never scrubs. Never draws a blank: if the
-// wanted frame is not decoded yet it keeps the nearest one that is.
+// wanted frame is not decoded yet it keeps the nearest one that is. One whole frame at full opacity per draw: never
+// blend neighbours or fade a still over the film (ghosting; the audit's `frame-blend` check fails it). Smoother = more frames.
 // Phones: when the manifest names a `mobile` set (`darkroom media frames --mobile-width`) and `mobileQuery` matches, that
 // set is used instead. Fast jumps: a few `anchors` spread coarse-to-fine (first, last, middle, quarters…) stay decoded,
 // so a fast scroll always lands near a real frame while the window catches up.

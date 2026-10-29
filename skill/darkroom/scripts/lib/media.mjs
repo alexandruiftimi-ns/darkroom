@@ -306,19 +306,33 @@ export async function check(dir) {
 export async function media(pos, opt) {
   const [sub, target] = pos;
   if (sub === 'doctor') { console.log(JSON.stringify(engines(), null, 2)); return; }
-  if (!sub || !target) {
+  if (!sub || (!target && sub !== 'make')) {
     console.log(`darkroom media <command>
   doctor                              which engines exist (ffmpeg + real encoders, sharp, chromium)
   inspect <file|dir>                  dimensions, duration, codec, alpha, rotation, decoded memory per frame, checksums
   derive <image> [--out dir] [--widths 640,1280,1920] [--formats webp,jpg,avif] [--quality 78]
   frames <video> [--out dir] [--fps 24] [--width 1600] [--format webp|jpg|png|avif] [--quality 76] [--start s --end s] [--sharpen 0.6] [--engine ffmpeg|chromium]
          [--mobile-width 900]         also write a smaller phone set to <out>/mobile/ (same frame count); avif needs sharp or ffmpeg with AV1
-  check <frames dir>                  validate manifest, files, order, checksums, sizes; warn on memory`);
+  check <frames dir>                  validate manifest, files, order, checksums, sizes; warn on memory
+  web <clip> [--out dir] [--name hero] [--width 1920] [--mobile-width 960] [--fps 24] [--crf 23] [--loop crossfade|boomerang] [--cutout]
+                                      H.264 web copy + phone copy (faststart, no audio) + poster; reports MB, edge colour, loop seam, calm zone
+  boomerang <clip> [--out file.mp4] [--width 1920] [--fps 24] [--crf 23]
+                                      one ping-pong copy (forward then backward) that loops with no seam
+  sheet <folder> [--out sheet.jpg] [--cols 4] [--tile 320]
+                                      numbered contact sheet of every image and video first frame (+ JSON index): look, then pick by number
+  measure <file>                      edge colour, loop seam (video), calmest zone for the words (heuristics)
+  make <gradient-mesh|light-sweep|aurora|particles|topo-lines|noise-terrain|orbit-rings|fluted-glass|grain|halftone|dot-grid> [--colours ground,ink,accent] [--size 1920x1080] [--seconds 8] [--fps 24] [--empty left|right|top|bottom] [--out assets/generated] [--name x] [--crf 20]
+                                      an abstract backdrop drawn in code in your colours: seamless loop, edges = ground, recorded in ASSETS.json as your own`);
     return;
   }
   if (sub === 'inspect') await inspect(target, opt);
   else if (sub === 'derive') await derive(target, opt);
   else if (sub === 'frames') await frames(target, opt);
   else if (sub === 'check') await check(target);
+  else if (['web', 'boomerang', 'sheet', 'make', 'measure'].includes(sub)) {
+    const kit = await import('./mediakit.mjs');
+    if (sub === 'measure') console.log(JSON.stringify({ file: target, ...kit.analyse(path.resolve(target)) }, null, 2));
+    else await kit[sub](target, opt);
+  }
   else throw new Error(`unknown media command ${sub}`);
 }

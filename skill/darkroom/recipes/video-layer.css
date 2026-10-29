@@ -1,0 +1,19 @@
+/* Background video layer (pairs with video-layer.js). The ground colour is the clip's edge colour, so the page never
+   flashes white or black before the first frame. Only the .vl-media wrapper animates; <video> itself never has a
+   CSS transition. --vl-focus re-aims the subject per breakpoint; --vl-oversize lets text and subject stop colliding
+   by moving the media, not shrinking the type (references/craft.md "Composition"). */
+.vl { position: relative; overflow: hidden; background: var(--vl-ground, #0a0a0a); isolation: isolate; }
+.vl-media { position: absolute; inset: 0; opacity: 0; transform: scale(1.06); transform-origin: var(--vl-focus, 50% 50%);
+  transition: opacity 500ms ease, transform 1.8s cubic-bezier(.22, 1, .36, 1); }
+.vl.is-ready .vl-media, .vl[data-vl-state="still"] .vl-media { opacity: 1; transform: none; }
+.vl-media > video, .vl-media > .vl-poster { position: absolute; inset: 0; width: 100%; height: calc(100% * var(--vl-oversize, 1));
+  object-fit: cover; object-position: var(--vl-focus, 50% 50%); }
+.vl-media > .vl-poster { z-index: 0; }
+.vl-media > video { z-index: 1; }
+.vl[data-vl-state="error"] .vl-media > video, .vl[data-vl-state="blocked"] .vl-media > video { visibility: hidden; }
+/* A poster shows before the video is ready, so the wrapper is visible at once when there is one. */
+.vl:has(.vl-poster) .vl-media { opacity: 1; }
+/* Content placed on top of the layer. */
+.vl > :not(.vl-media):not(.scrim) { position: relative; z-index: 2; }
+
+@media (prefers-reduced-motion: reduce) { .vl-media { transition: none; transform: none; } }

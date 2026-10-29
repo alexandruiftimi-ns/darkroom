@@ -22,7 +22,13 @@ Settings (font budget, colour mode, word budgets, `surface`, disclosure) come fr
 | `reading-zones` | high | heuristic | text zones in the first viewport (> max+1 high, > max medium) | first viewport only; zones are clustered by distance |
 | `eye-travel` | medium | heuristic | reading path crosses the viewport > 2x | document order is assumed to be reading order |
 | `corners` | medium | heuristic | content in 3+ viewport corners | — |
-| `overflow` | high | measured | page wider than the viewport | initial state only |
+| `overflow` | high | measured | page wider than the viewport, naming up to 5 offending elements | initial state only; offenders inside clipping ancestors are skipped |
+| `first-paint` | high | measured | early frame at ~350 ms is >= 90 % one colour far (ΔE > 10) from the settled first screen (white flash / blank first frame), or the h1 is not visible 1.5 s after load | desktop, default motion; colours compared at 64×40 px |
+| `video-playback` | high | measured | autoplay <video> not playing after load: error, readyState < 2 or paused; codec gaps of the test browser reported as info | videos with the autoplay attribute, or inside a `[data-video-layer]` (`recipes/video-layer.js`); other JS-started videos are not checked |
+| `loop-seam` | medium | heuristic | a video that loops natively (`loop` attribute) whose first and last frames differ by more than 6 % (mean absolute difference): a visible jump on every loop. Fix: `recipes/video-loop.js`, `darkroom media boomerang`, or `media web --loop crossfade` | needs ffmpeg (else reported as not measured); one frame at each end at 96×54; videos with `data-video-loop` are skipped |
+| `frame-blend` | high | measured | while scrolling with default motion, a full-size image is drawn on a canvas at partial opacity (`globalAlpha` between 0.03 and 0.97): one frame shows through another (ghosting). Fix: one whole frame per draw at full opacity; smoother motion = more frames (`recipes/README.md`, rule 6b) | 2D canvas `drawImage` only (not WebGL, OffscreenCanvas or stacked `<img>` layers); one scroll pass from top to bottom; canvases inside `[data-frame-blend="allow"]` are skipped |
+| `display-font` | high | measured | the h1's first font-family is declared (@font-face) but no face of it loaded: the headline shows in a fallback | undeclared system fonts are reported as info |
+| `motion-rest` | high | measured | text in the first viewport at opacity < .05 or visibility hidden 2 s after load, and again with JavaScript disabled (high if the h1 or 3+ items, else medium) | first viewport only; closed menus layered over the hero can be reported |
 | `target-size` | medium | measured | crowded interactive targets < 24x24 CSS px (WCAG 2.5.8 with spacing exception) | inline-in-sentence links exempt |
 | `headline-length` | low | heuristic | headline > 8 words | — |
 | `word-budget` | high | heuristic | visible copy words vs section budget (> 2x high, > 1x medium); skipped for surface "read" | excludes [data-darkroom-ignore] and aria-hidden subtrees; section boundaries are guessed from markup |
@@ -53,6 +59,10 @@ Settings (font budget, colour mode, word budgets, `surface`, disclosure) come fr
 - **Keyboard**: Tab through the first 40 stops; a stop whose computed outline/box-shadow/colours do not change on focus has no visible indicator.
 - **Visible text** means rendered, on the page, not collapsed, not clipped to 1 px, not pushed off the page origin, not `opacity:0` (including ancestors).
 - **Words** are counted once, one way: visible text outside `[data-darkroom-ignore]` and `aria-hidden="true"` subtrees. Use those markers only for genuinely decorative or duplicated content; never to make an audit pass.
+
+## First paint, video, display font and rest state
+
+The default-motion pass loads the page once more and photographs it **~350 ms** after the document is ready, then again after it settles: a first screen that is almost one colour and far from the settled one (ΔE > 10) is a white flash or a lost first frame. At 1.5 s the h1 must be visible. At 2 s, and again in a load with JavaScript **disabled**, no text in the first viewport may sit at opacity < .05 or visibility hidden (the rest state shows the content; entrances only decorate it). Autoplay videos must have a frame (readyState ≥ 2), be playing and have no media error; when the test browser cannot decode H.264 the finding is info, not a page bug. The h1's font must have loaded when the page declares it. Overflow names up to five outermost elements past the right edge.
 
 ## Limits
 

@@ -18,7 +18,7 @@ Two genuinely different directions (different idea and composition, not differen
 
 Use a generated image only to settle imagery you cannot code: write one prompt (`commands/imagine.md`), ask the user to generate it, and continue with the rest meanwhile.
 
-For each direction write ≤ 8 lines: name + idea; type (display + text, weights, H1 size); palette (4–6 named hex with roles, colour mode); motion signature (the one move); switches on/off; risk.
+For each direction write ≤ 8 lines: name + idea + **signature in one line** a non-designer can picture ("A: the film scrubs as you scroll; B: the name is the image");  type (display + text, weights, H1 size); palette (4–6 named hex with roles, colour mode); motion signature (the one move); switches on/off; risk.
 
 ## 4. Show
 

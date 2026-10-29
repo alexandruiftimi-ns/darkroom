@@ -1,6 +1,6 @@
 ---
 name: darkroom
-description: "Art-directed websites on the platform you need: landing pages, portfolios, shops, blogs. Shopify and WooCommerce themes, WordPress block themes, Astro on Cloudflare, Next.js on Vercel, Hugo, Jekyll, Ghost, PHP, or plain HTML for free hosting. Start from scratch or from your current site (a URL or a folder). Claude decides the design, builds it, looks at the real browser output and fixes it, and you can open it on your phone; you supply facts, assets and taste. Any look (13 style packs, or 'like apple.com / Rolex / Cartier'), any motion level (calm, animated on scroll, one hero effect, scroll story). Asks about colours (your palette, suggestions, 60-30-10 or creative) and assets (yours, or prompts for ChatGPT, Kling, Seedance, Veo). Type /darkroom followed by what you want."
+description: "Art-directed websites on the platform you need: landing pages, portfolios, shops, blogs. Shopify and WooCommerce themes, WordPress block themes, Astro on Cloudflare, Next.js on Vercel, Hugo, Jekyll, Ghost, PHP, or plain HTML for free hosting. Start from scratch or from your current site (a URL or a folder). Claude decides the design, builds it, looks at the real browser output and fixes it, and you can open it on your phone; you supply facts, assets and taste. Any look (14 style packs, or 'like apple.com / Rolex / Cartier'), any motion level (calm, animated on scroll, one hero effect, scroll story). Asks about colours (your palette, suggestions, 60-30-10 or creative) and assets (yours, or prompts for ChatGPT, Kling, Seedance, Veo). Type /darkroom followed by what you want."
 user-invocable: true
 disable-model-invocation: true
 argument-hint: "[describe the site, e.g. a Shopify store for my ceramics that feels like Cartier, with animations on scroll]"
@@ -48,7 +48,7 @@ The user may know nothing about design. They describe what they want in their ow
               + colours + own assets or prompts + check depth + brief; live docs check for the platform  (commands/start.md, commands/platform.md)
 1 Direction   subject inventory → the idea → two coded comps of the hero (real copy, 1440 + 390)  (commands/style.md)
               ★ CHECKPOINT A (taste): user picks / steers. Skipped if the brief already fixes the look.
-2 Slice       bible (concise) → build hero + its one key interaction + transition to the next section, with
+2 Slice       bible (concise) → BUILD_SPEC.md (every value, matched to 2 examples) → build hero + its one key interaction + transition to the next section, with
               desktop / phone / reduced-motion paths, real copy, placeholder assets marked TEMP     (commands/build.md)
               auto-QA loop until clean → ★ CHECKPOINT B (taste): runnable preview + captures
 3 Asset asks  start as soon as a need is known, not at the end: batched, ranked, with acceptance criteria (commands/plates.md)
@@ -92,11 +92,13 @@ If the project already has `PROJECT_BLUEPRINT.md` / `DESIGN.md` / a `CLAUDE.md` 
 | `preview <folder\|url>` | open it on a phone on the same Wi-Fi (relays dev servers) | `commands/preview.md` |
 | `assets intake` | match arrived files to NEEDS.md, measure, suggest (never reject), update its Status column | `references/asset-tools.md` |
 | `platform list\|scaffold\|check` | the ten platforms; a starter per platform; offline structure check (then the platform's own validator) | `commands/platform.md` |
+| `spec [BUILD_SPEC.md\|folder]` | lint a build spec: sections, signature, "Do not" list, bare adjectives, placeholders, hotlinks | `references/spec-precision.md` |
 | `media inspect\|derive\|frames\|check` | probe media, make responsive stills, video → frame sequence + manifest, validate | `recipes/README.md` |
+| `media web\|boomerang\|measure\|sheet\|make` | web-ready video (desktop + phone + poster), seamless ping-pong copy, edge colour / loop seam / calm zone, numbered contact sheet, abstract backdrops drawn in code | `references/hero-media.md` |
 | `study <url>` | capture + audit of a reference page | `commands/study.md` |
 | `compare <ref> <capture>` | reference over capture for composition review | `commands/shoot.md` |
 
-Playbooks (`commands/*.md`) are how-to guides for each stage, loaded when you reach it: `concierge` (how to talk to the user), `start`, `style`, `lookalike` ("like <brand>"), `platform` (build on Shopify, WordPress…), `import` (start from their current site), `preview` (on their phone), `bible`, `storyboard`, `plates`, `imagine`, `refs`, `build`, `critique`, `comply`, `study`, `handoff`, `learn` (maintainer). Knowledge lives in `references/` (load what the playbook points to), `platforms/` (one dated profile per platform), `styles/` (packs and switches), `recipes/` (tested scroll/motion code), `library/` (observations from real sites: evidence, never templates), `prompts/` (image/video model templates).
+Playbooks (`commands/*.md`) are how-to guides for each stage, loaded when you reach it: `concierge` (how to talk to the user), `start`, `style`, `lookalike` ("like <brand>"), `platform` (build on Shopify, WordPress…), `import` (start from their current site), `preview` (on their phone), `bible`, `storyboard`, `plates`, `imagine`, `refs`, `build`, `critique`, `comply`, `study`, `handoff`, `learn` (maintainer). Knowledge lives in `references/` (load what the playbook points to), `platforms/` (one dated profile per platform, plus `prompt.md` for AI builders such as Lovable, v0, Bolt), `styles/` (packs and switches), `recipes/` (tested motion, media and interface code: video layer, entrance, split text, nav, buttons, marquee and more; `recipes/README.md`), `library/` (observations from real sites: evidence, never templates), `examples/` (100 example requests, each with a full build spec: read the two closest before writing `BUILD_SPEC.md` and match their precision, never their copy; `examples/INDEX.md`), `prompts/` (image/video model templates). Values for type, motion, spacing and colour: the "Values" sections of `references/typography.md`, `references/motion-craft.md`, `references/craft.md` and `references/color.md`; hero media: `references/hero-media.md`; free media: `references/free-media.md`.
 
 ## Self-containment
 

@@ -11,9 +11,29 @@
 
 - 5–6 sizes, far apart (ratio ≥ 1.25 at body, larger jumps at display). Nine similar sizes = noise.
 - Fluid: `clamp(min, vw-based, max)` for display; body 16–20 px; never below 16 px for inputs on mobile (iOS zoom).
-- Display: line-height 0.9–1.05, tracking slightly negative (−0.01 to −0.03em; never tighter than −0.04em). Body: 1.4–1.6 (serifs a little more), measure 45–75ch.
+- Display: line-height 0.9–1.05, tracking slightly negative (−0.01 to −0.03em; never tighter than −0.04em for headings). **Scoped exception:** vw-sized mega words and wordmarks (14–28vw) may go to −0.04 to −0.07em, because tracking that looks right at 60 px leaves holes at 300 px (good/lando-norris, good/almada-label wordmark closers). Body: 1.4–1.6 (serifs a little more), measure 45–75ch.
 - Tracked uppercase only for short labels (≤ 4 words), tracking 0.08–0.4em, and only if the pack switches labels on.
 - One emphasis device per page family: colour on one word, *or* italic, *or* weight. Never gradient text.
+
+## Values (defaults for packs that say nothing; the pack wins)
+
+| Role | Size | Line-height | Tracking | Weight |
+|---|---|---|---|---|
+| Display / H1 | `clamp(40px, 7vw, 112px)`: 72–96 px desktop, 36–48 px phone | 0.9–1.05 (0.95 sweet spot) | −0.02 to −0.04em | 400–500; 300 for huge numerals on dark |
+| Mega / wordmark (vw) | 14–28vw | 0.75–0.88 | −0.04 to −0.07em (scoped exception above) | 500–900 |
+| H2 / section | `clamp(32px, 4.5vw, 64px)` | 1.0–1.1 | −0.01 to −0.03em | 400–600 |
+| Lede / sub | 18–22 px | 1.4–1.5 | 0 to −0.01em | 300–400 |
+| Body | 16–20 px | 1.5–1.6 | 0 to −0.01em | 300–400 |
+| Labels | 10–13 px | 1–1.3 | +0.15 to +0.3em when tracked caps are on, else 0 | 500–600 |
+| Buttons | 14–16 px | 1 | 0 to +0.02em | 500 |
+
+- H1 is about **5–6× the body** at desktop (the audit's `type-scale` check reads the ratio; a pack may ask for more).
+- **Break headlines by hand** into 2–3 lines on desktop (`<span class="line">` with `white-space: nowrap` from 1024 px up); let them wrap freely on phones with `text-wrap: balance`.
+- Load **only the weights used** (each file is a request); one variable file beats four statics when 3+ weights are used.
+- `font-variant-numeric: tabular-nums` on any number that changes (count-ups, prices, timers, scores).
+- Micro-label formats are **switch values**, not decoration: `[ 02 ] Studio`, `02 ——`, `Work⁽¹²⁾` map to `index-numerals`; `MONO 11px/1.2 +0.08em` maps to `mono-labels`. Off unless the pack switches them on.
+- Over media, text gets a shadow before it gets a box (`references/craft.md`, "Text over media").
+- Values marked here are Darkroom defaults (unverified as a set); single values carry library evidence where cited.
 
 ## Choosing the display face (procedure, not taste)
 

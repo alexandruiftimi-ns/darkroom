@@ -64,6 +64,15 @@ If two readings are plausible, recommend one and name the other in a line ("I'd 
 
 Name the tool class and cost before any spend; the user chooses the tool. Specific products and their trade-offs: `references/motion-toolkit.md` ("Making the assets").
 
+## One signature per page (every motion level)
+
+Every page names **the ONE thing it will be remembered for**: a media moment, an interaction or a type moment. Everything else stays quiet: **2–4 supporting techniques** (one entrance, one material, one type move, one reveal family). Budget:
+
+- At most **one heavy technique** per page (scrubbed frames or video, a 3D model, a shader, a pinned multi-scene story counts as the page's heavy one). Cost tags: `recipes/README.md`.
+- Never more than **three motion hooks in one viewport**; if two compete for the same attention (a spotlight, a magnet and a parallax), cut one.
+- `calm` pages have a signature too: a type moment, a crop, a colour field.
+- Write it in the bible (§9 *Motion grammar*, "Signature"), in `STORYBOARD.json` (`"signature": true` on exactly one section) and as line 1 of `BUILD_SPEC.md`.
+
 ## What changes per mode in the flow
 
 | | calm | animated | hero-effect | story |

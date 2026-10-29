@@ -81,7 +81,7 @@ async function contactSheet(page, tiles, file, cols, tileW) {
   await page.screenshot({ path: file, fullPage: true, type: 'png' });
 }
 
-// opt: out, label, viewports, scroll, scene, steps, film, states, motion|reduce|both, dismiss, wait, dpr, crop
+// opt: out, label, viewports, scroll, scene, steps, film, states, motion|reduce|both, dismiss, wait, dpr, crop, no-early
 export async function capture(target, opt, { defaultModes = ['no-preference', 'reduce'], quiet = false } = {}) {
   const served = await resolveTarget(target);
   const revision = revisionOf(served.root);
@@ -103,6 +103,16 @@ export async function capture(target, opt, { defaultModes = ['no-preference', 'r
         page.on('console', (m) => m.type() === 'error' && errors.push(`[${vpName}/${motion}] ${m.text()}`));
         page.on('pageerror', (e) => errors.push(`[${vpName}/${motion}] ${e.message}`));
         await page.goto(served.url, { waitUntil: 'domcontentloaded', timeout: 45000 });
+        const t0 = Date.now(); const tiles = [];
+        // `early`: the first screen ~350 ms after DOMContentLoaded (desktop, motion), before anything settles. It shows a
+        // white flash, a blank band before the video's first frame, or an entrance that hides the h1. First on the sheet.
+        if (!opt['no-early'] && vp.width >= 1024 && motion === 'no-preference' && !opt.scene && !opt.states && !plan.film) {
+          await page.waitForTimeout(Math.max(0, 350 - (Date.now() - t0)));
+          const file = path.join(runDir, `${vpName}__motion__early.png`);
+          await page.screenshot({ path: file });
+          files.push({ file: path.relative('.', file).split(path.sep).join('/'), viewport: vpName, motion, state: 'early', ms: Date.now() - t0, scrollY: 0, maxScroll: 0, progress: 0 });
+          if (!opt['no-sheet']) tiles.push({ b64: (await page.screenshot({ type: 'jpeg', quality: 60 })).toString('base64'), label: 'early · ~350 ms' });
+        }
         await settle(page);
         if (opt.dismiss) consent = await dismissConsent(page, { allowAccept: !!opt['accept-consent'] });
         let states = plan;
@@ -113,7 +123,6 @@ export async function capture(target, opt, { defaultModes = ['no-preference', 'r
         }
         const scrollable = await page.evaluate(() => document.documentElement.scrollHeight - innerHeight);
         if (scrollable < 8) states = states.filter((s, i) => i === 0 || !(typeof s.scroll === 'number' || typeof s.y === 'number' || s.scene)); // nothing to scroll: one state, not five identical shots
-        const tiles = [];
         for (const s of states) {
           const y = await stateOffset(page, s, vp);
           let pos = { scrollY: await page.evaluate(() => scrollY), max: 0 };

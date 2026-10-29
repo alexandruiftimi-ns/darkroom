@@ -1,0 +1,14 @@
+/* Desktop grid → phone scroll-snap rail, pure CSS. For pricing, feature or product cards that would otherwise stack
+   into one very long column on a phone. The next card peeks (about 12 % of its width) so people see there is more.
+   Native scrolling only: swipe, trackpad and Tab all work; nothing is captured.
+
+   <ul class="snap-rail" role="list" aria-label="Plans"><li>…</li><li>…</li><li>…</li></ul> */
+.snap-rail { --rail-gap: 24px; --rail-cols: 3; --rail-card: 82%; display: grid; grid-template-columns: repeat(var(--rail-cols), minmax(0, 1fr));
+  gap: var(--rail-gap); list-style: none; margin: 0; padding: 0; }
+@media (max-width: 767px) {
+  .snap-rail { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: var(--rail-card); overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; scroll-padding-inline: 20px; padding: 0 20px 12px; margin: 0 -20px; scrollbar-width: none; }
+  .snap-rail::-webkit-scrollbar { display: none; }
+  .snap-rail > * { scroll-snap-align: start; }
+}
+@media (prefers-reduced-motion: no-preference) { .snap-rail { scroll-behavior: smooth; } }

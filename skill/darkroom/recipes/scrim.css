@@ -1,0 +1,32 @@
+/* Text over video or photographs that stays readable without a flat black wash.
+   Order of preference: (1) media with a calm empty zone where the words sit (references/hero-media.md),
+   (2) an edge-blend scrim that fades into the ground, (3) a text-shadow preset, (4) a progressive bottom blur.
+   A flat 50 % black overlay is never the answer: it greys the footage and still fails contrast on bright frames.
+   Run `darkroom audit` after: the contrast check samples the text over the real frame.
+
+   <div class="vl" data-video-layer> …media… <div class="scrim scrim--bottom" aria-hidden="true"></div> <h1 class="ts-display">…</h1></div>
+   Set --scrim-ground to the page ground (the clip's edge colour) so the blend lands on the next section without a seam. */
+:root { --scrim-ground: 10 10 10; /* RGB triplet of the ground */ --scrim-strength: .85; }
+
+.scrim { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+/* Bottom fade to the ground: the hero melts into the next section. */
+.scrim--bottom { background: linear-gradient(to top, rgb(var(--scrim-ground) / var(--scrim-strength)) 0%, rgb(var(--scrim-ground) / calc(var(--scrim-strength) * .45)) 28%, rgb(var(--scrim-ground) / 0) 55%); }
+/* Top fade: keeps a light nav readable over a bright sky. */
+.scrim--top { background: linear-gradient(to bottom, rgb(var(--scrim-ground) / calc(var(--scrim-strength) * .7)) 0%, rgb(var(--scrim-ground) / 0) 30%); }
+/* Directional side fade: copy in the left column, subject on the right. Flip with .scrim--right. */
+.scrim--left { background: linear-gradient(to right, rgb(var(--scrim-ground) / var(--scrim-strength)) 0%, rgb(var(--scrim-ground) / calc(var(--scrim-strength) * .5)) 35%, rgb(var(--scrim-ground) / 0) 62%); }
+.scrim--right { background: linear-gradient(to left, rgb(var(--scrim-ground) / var(--scrim-strength)) 0%, rgb(var(--scrim-ground) / calc(var(--scrim-strength) * .5)) 35%, rgb(var(--scrim-ground) / 0) 62%); }
+/* Soft radial pool behind a centred stack. */
+.scrim--pool { background: radial-gradient(60% 45% at 50% 55%, rgb(var(--scrim-ground) / calc(var(--scrim-strength) * .55)) 0%, rgb(var(--scrim-ground) / 0) 70%); }
+
+/* Progressive bottom blur: frosted only where the copy sits, sharp above. Costs a backdrop-filter: one per page. */
+.scrim--blur { top: auto; height: var(--scrim-blur-height, 38%); backdrop-filter: blur(var(--scrim-blur, 14px)); -webkit-backdrop-filter: blur(var(--scrim-blur, 14px));
+  mask-image: linear-gradient(to top, #000 0%, #000 35%, transparent 100%); -webkit-mask-image: linear-gradient(to top, #000 0%, #000 35%, transparent 100%); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .scrim--blur { background: linear-gradient(to top, rgb(var(--scrim-ground) / .6), transparent); } }
+
+/* Text-shadow presets: soft, wide, low opacity. They lift words off busy frames without a visible box. */
+.ts-body { text-shadow: 0 2px 18px rgb(0 0 0 / .42); }
+.ts-display { text-shadow: 0 16px 38px rgb(0 0 0 / .32); }
+.ts-label { text-shadow: 0 1px 8px rgb(0 0 0 / .5); }
+/* On light media with dark text, use a light halo instead. */
+.ts-halo { text-shadow: 0 0 24px rgb(255 255 255 / .55); }

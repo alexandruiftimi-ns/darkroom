@@ -1,6 +1,8 @@
 # Assets: the user's own, or prompts for an image or video tool
 
-Ask once, at intake, in the same question round (`commands/concierge.md`): **"Do you have your own pictures and video, or should I write prompts for you to generate them?"** Answers: *I have my own* · *Write me prompts* (then: which tools do you use?) · *A mix* · *Neither: build without* (then: drawn-in-code graphics, type-led layout, openly licensed images with credits, `commands/plates.md`).
+Ask once, at intake, in the same question round (`commands/concierge.md`): **"Do you have your own pictures and video, or should I write prompts for you to generate them?"** Answers: *I have my own* · *Write me prompts* (then: which tools do you use?) · *A mix* · *Free pictures and clips you find for me* (`references/free-media.md`; Darkroom asks before each download) · *Neither: build without* (then: drawn-in-code graphics, type-led layout, openly licensed images with credits, `commands/plates.md`).
+
+Whatever the source, a hero photo or clip follows `references/hero-media.md`: edges that fall off to the page ground, an empty zone for the copy, one continuous shot, loopable. Every hero prompt Darkroom writes carries those lines.
 
 Darkroom never generates paid media itself and never spends the user's credits. It writes the prompt, says which tool and mode it is for, what to attach, how to tell a good result from a bad one, where to save it, and what ships if it never arrives (`templates/NEEDS.md`).
 
@@ -57,7 +59,8 @@ It matches each file to its row in `NEEDS.md`, measures it (size, shape, length,
 
 1. Open each picture yourself (you can see images): text or logos baked in, subject cut off at an edge, a different product than the brief. Add what you see to the suggestions; the script cannot see content.
 2. Tell the user in one short message, one line per file, suggestions phrased as options ("the hero is 1400 px wide: it works; a 2400 px version would be sharper on big screens"), then ask once: **"Continue with these, or replace any first?"** Recommended: continue.
-3. Continue means use them now: `darkroom media derive` for responsive images, `media frames` for scroll sequences, and update `.darkroom/ASSETS.json`. A replacement later simply goes through intake again.
+Hero candidates (videos, wide pictures) also get the hero-media measurements: edge colour → `--ground`, calmest zone for the words, loop seam (`references/hero-media.md`). With many candidates, `darkroom media sheet assets/raw` gives one numbered sheet to look at.
+3. Continue means use them now: `darkroom media derive` for responsive images, `media frames` for scroll sequences, `media web` for background video (desktop + phone copy + poster), and update `.darkroom/ASSETS.json`. A replacement later simply goes through intake again.
 
 ## Rights
 

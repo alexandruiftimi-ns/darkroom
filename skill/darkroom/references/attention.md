@@ -28,6 +28,15 @@ A scroller moves roughly one viewport every 3–6 seconds. Each viewport needs a
 
 Repetition kills cadence: the same block (feature strip, icon row, card grid) in 3+ sections reads as filler. Two consecutive sections of the same layout family is a flag.
 
+## Shapes that work (write toward these)
+
+- **Headline:** 3–9 words over 2–3 lines. Shapes: a two-beat statement ("Slow bread. Fast mornings."), a contrast pair ("Built for storms, made for Sundays"), a three-word staccato ("Fired. Glazed. Yours."). Emphasis by a muted colour or the page's one device (`references/typography.md`), never by bold. Specific, with a point of view.
+- **Sub:** 1–2 sentences, 15–30 words: one concrete benefit plus one texture detail (a place, a number, a material). Set in ink-60/80.
+- **Nav:** 3–5 links of 1–2 words; warm labels beat defaults (Studio, Work, Journal, Visit, Inquire).
+- **CTA:** 2–3 words, verb first. The primary is direct (Book a table, Start a trial, Order the set); the secondary is softer (Watch the film, See the menu). **The primary's label repeats in the nav.**
+- **Microcopy texture (only if true):** coordinates, the live local time ("09:41 in Lisbon"), "Taking projects from March" with a status dot, index numbers, opening hours.
+- The test stays: read the hero aloud; if it fits a competitor, rewrite it.
+
 ## How to cut copy
 
 1. Write the section claim in one sentence. Delete everything that doesn't support it.

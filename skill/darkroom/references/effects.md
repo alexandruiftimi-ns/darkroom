@@ -179,13 +179,27 @@ Which route fits which site (recommend from this, then adjust to their assets):
 ## Effect: Video background that loops
 
 ### Route A: A short muted loop, with a still image first (recommended)
-- You provide: a clip of 5 to 15 seconds that loops without a visible jump, and a still frame.
+- You provide: a clip of 5 to 15 seconds, ideally one that loops without a visible jump (if it jumps, I fade the loop or make a forward-and-back copy), and I make the still frame and the phone version from it.
 - Pros: instant atmosphere; simple.
 - Cons: heavy if long or high resolution; text over video needs care to stay readable; phones may skip it to save data, so the still image matters.
 - Effort for you: medium.
 - Choose when: mood matters and the footage is beautiful.
 
-### Route B: A single still with a slow, subtle drift
+### Route B: A free clip I find for you
+- You provide: a yes before I download anything.
+- Pros: real footage at no cost; I check the licence and record it.
+- Cons: stock looks like stock; it shows atmosphere, never your product, place or people; its edges rarely match your colours, so I plan the page colour or a soft shade from the clip.
+- Effort for you: none.
+- Choose when: mood matters more than showing the real thing.
+
+### Route C: An abstract moving backdrop I make in your colours
+- You provide: nothing.
+- Pros: free and yours; loops with no jump; its edges are exactly your page colour, so there's no flash and no visible frame; I keep a calm area for the words.
+- Cons: abstract only (moving colour fields, light): it can't show a product, a place or a person.
+- Effort for you: none.
+- Choose when: a tech, finance or studio page wants a living first screen without footage.
+
+### Route D: A single still with a slow, subtle drift
 - You provide: one strong image.
 - Pros: light and robust; always readable.
 - Cons: less dramatic.
@@ -204,3 +218,28 @@ Which route fits which site (recommend from this, then adjust to their assets):
 ## When the user asks for something not on this menu
 
 Say what the nearest menu item is, what is different, and what it would cost in assets and risk. If it needs a tool or an expense the user has not approved, ask first.
+
+---
+
+## For Claude: the recipe behind each common moment
+
+Not for the user. When a route above or the build spec needs one of these moments, start from the recipe (`recipes/README.md` has the markup and the "not when"). Cost: light = CSS or a small script; medium = decoded media or a rAF loop; heavy = frames, seeked video or 3D (at most one per page, `references/modes.md`).
+
+| Moment | Recipe | Cost |
+|---|---|---|
+| Video behind the hero | `video-layer.js` (+ `video-loop.js` for a seam, `scrim.css` for readability) | medium |
+| Headline entrance | `split-text.js` · first-screen order `entrance.css` | light |
+| Things appearing on scroll | `reveal.js` | light |
+| Scroll-linked scene (mask, scale, colour) | `scene-progress.js` | light |
+| Object that turns or flies with scroll | `scrub-frames.js` (frames) · `scrub-video.js` (video) | heavy |
+| Character or product that comes alive per section | `sprite-clips.js` | medium |
+| Image showing through a circle under the pointer | `cursor-reveal.js` | light |
+| Slight tilt toward the pointer | `pointer-tilt.js` | light |
+| Nav and phone menu · buttons · grain | `nav.js` · `buttons.css` · `grain.css` | light |
+| Logo strip · stats · manifesto · process cards | `marquee.js` · `count-up.js` · `scroll-words.js` · `stack-cards.js` | light · light · light · medium |
+| A changing word · typing · decoding text · full-width wordmark | `rotating-word.js` · `typewriter.js` · `scramble.js` · `giant-type.js` | light |
+| Layers in depth · a leaning button · a spotlight onto a second picture | `parallax-layers.js` · `magnetic.js` · `spotlight-mask.js` | light |
+| A few products in depth · cards that swipe on phones · a product window in code | `depth-carousel.js` · `snap-rail.css` · `ui-mockup.css` | medium · light · light |
+| Turning a product with the mouse · switching mood clips | `cursor-scrub-video.js` · `scene-switcher.js` | medium |
+| A living shader backdrop · a draggable 3D model | `shader-backdrop.js` · `model-hero.js` | heavy |
+| Frosted glass (glass-cinema pack) | `liquid-glass.css` | medium |

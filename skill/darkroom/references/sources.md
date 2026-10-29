@@ -10,6 +10,7 @@ Graded: **P** primary (standard, law, the organisation itself, peer-reviewed), *
 - S — taste-skill v2 (247-site study, dated tells registry): https://github.com/Leonxlnx/taste-skill
 - S — Emil Kowalski skills (motion): https://github.com/emilkowalski/skills
 - S — awesome-design-md (brand DESIGN.md examples): https://github.com/VoltAgent/awesome-design-md
+- O — MotionSites Web Builder skill (build spec before code, value tables, review rubric; MIT parts only, read 2026-10-28; its example prompts were read privately for study only, and nothing from them or its media is included): https://github.com/Motionsites-AI/claude-skill
 - S — GSAP ScrollTrigger & image-sequence helper: https://gsap.com/docs/v3/Plugins/ScrollTrigger/
 - S — Playwright visual comparisons: https://playwright.dev/docs/test-snapshots
 - O — Codrops case studies (scroll-driven storytelling, e.g. Jan–May 2026 archive): https://tympanus.net/codrops/

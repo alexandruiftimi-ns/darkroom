@@ -13,6 +13,7 @@
       "words": 30,
       "cta": "secondary",
       "motion": { "what": "", "trigger": "", "range": [0, 0.12], "reducedMotion": "" },
+      "signature": false,
       "technique": "DOM/CSS",
       "ground": "",
       "reference": ".darkroom/refs/anchor.png",

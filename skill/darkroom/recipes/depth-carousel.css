@@ -1,0 +1,23 @@
+/* Pairs with depth-carousel.js. Without JS (no .dc-ready): a plain horizontal scroll row. With JS: slots in depth. */
+.dc { --dc-stage: #e9e6df; --dc-dur: 700ms; --dc-ease: cubic-bezier(.22, 1, .36, 1); position: relative; background: var(--dc-stage);
+  transition: background-color 900ms ease; overflow: hidden; padding: 48px 0 88px; }
+.dc-track { display: flex; gap: 24px; overflow-x: auto; list-style: none; margin: 0; padding: 0 24px; scroll-snap-type: x mandatory; }
+.dc-item { flex: 0 0 min(70vw, 420px); scroll-snap-align: center; margin: 0; text-align: center; }
+.dc-item img { width: 100%; height: auto; display: block; }
+.dc-prev, .dc-next { display: none; }
+.dc-status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+
+.dc.dc-ready .dc-track { display: grid; place-items: center; overflow: visible; height: min(62vh, 560px); padding: 0; }
+.dc.dc-ready .dc-item { grid-area: 1 / 1; width: min(46vw, 460px); transition: transform var(--dc-dur) var(--dc-ease), opacity var(--dc-dur) var(--dc-ease), filter var(--dc-dur) var(--dc-ease); }
+.dc-ready [data-slot="active"] { transform: none; z-index: 3; }
+.dc-ready [data-slot="prev"] { transform: translateX(-62%) scale(.72); opacity: .55; filter: saturate(.6); z-index: 2; }
+.dc-ready [data-slot="next"] { transform: translateX(62%) scale(.72); opacity: .55; filter: saturate(.6); z-index: 2; }
+.dc-ready [data-slot="far-prev"] { transform: translateX(-104%) scale(.5); opacity: 0; z-index: 1; }
+.dc-ready [data-slot="far-next"] { transform: translateX(104%) scale(.5); opacity: 0; z-index: 1; }
+.dc-ready [data-slot="parked"] { transform: scale(.4); opacity: 0; z-index: 0; }
+.dc-ready [data-slot]:not([data-slot="active"]) h3 { opacity: 0; }
+.dc.dc-ready .dc-prev, .dc.dc-ready .dc-next { display: grid; place-items: center; position: absolute; bottom: 24px; width: 48px; height: 48px; border-radius: 50%;
+  border: 1px solid currentColor; background: var(--dc-stage); color: inherit; cursor: pointer; font: 18px/1 system-ui; z-index: 5; }
+.dc-prev { left: calc(50% - 60px); } .dc-next { left: calc(50% + 12px); }
+@media (max-width: 767px) { .dc.dc-ready .dc-item { width: 64vw; } .dc-ready [data-slot="prev"], .dc-ready [data-slot="next"] { opacity: .35; } }
+@media (prefers-reduced-motion: reduce) { .dc, .dc.dc-ready .dc-item { transition: none; } }

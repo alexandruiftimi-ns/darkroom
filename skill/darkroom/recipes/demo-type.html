@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Type and layout recipes demo</title>
+<link rel="stylesheet" href="type-motion.css"><link rel="stylesheet" href="giant-type.css"><link rel="stylesheet" href="snap-rail.css"><link rel="stylesheet" href="ui-mockup.css">
+<style>
+body{margin:0;background:#f2efe8;color:#191714;font:18px/1.55 system-ui,sans-serif}
+section{padding:12vh clamp(20px,6vw,64px)}
+h1{font-size:clamp(40px,6.5vw,92px);line-height:1;letter-spacing:-.03em;margin:0;font-weight:600}
+h2{font-size:clamp(28px,4vw,52px);line-height:1.05;margin:0 0 24px;font-weight:600;letter-spacing:-.02em}
+.mono{font:600 clamp(20px,3vw,32px)/1.2 ui-monospace,Consolas,monospace;letter-spacing:.06em}
+.snap-rail li{background:#fff;border-radius:10px;padding:28px;min-height:200px}
+.dark{background:#0b0c0e;color:#f2efe8}
+.giant{padding:0;background:#191714;color:#f2efe8}
+.giant-word{font-family:Georgia,serif;font-weight:400}
+</style></head><body>
+<main>
+<section><h1 id="tw-h">We build <span id="tw" data-typewriter="websites|shops|booking pages" data-tw-speed="40" data-tw-hold="900">websites</span></h1></section>
+<section><h2 id="rw-h">Coffee for <span id="rw" data-rotate="slow mornings|long meetings|late trains" data-rotate-every="1200">slow mornings</span></h2></section>
+<section class="dark"><p class="mono"><span id="scr" data-scramble data-scramble-ms="600">SYSTEM ONLINE</span></p><p><a id="scr-h" href="#docs" data-scramble="hover">Read the docs</a></p></section>
+<section><h2>Plans</h2><ul class="snap-rail" id="rail" aria-label="Plans"><li>Starter</li><li>Studio</li><li>Agency</li></ul></section>
+<section class="dark" id="docs"><figure class="ui-window" id="ui" aria-label="The Orbit reports screen">
+  <div class="ui-bar"><span class="ui-dots" aria-hidden="true"></span><span class="ui-title">orbit.app/reports</span></div>
+  <div class="ui-body"><nav class="ui-side"><a href="#docs" aria-current="page">Reports</a><a href="#docs">Clients</a><a href="#docs">Invoices</a></nav>
+  <div class="ui-main"><div class="ui-row"><span>Fjord Bakery · March</span><span class="ui-chip">Sent</span></div><div class="ui-row"><span>Saltbu Café · March</span><span class="ui-chip">Draft</span></div></div></div>
+</figure></section>
+<footer class="giant" id="giant" aria-label="Halde"><span class="giant-word" data-giant style="--chars:5">Halde</span></footer>
+</main>
+<script type="module">
+import { typewriter } from './typewriter.js'; import { rotatingWord } from './rotating-word.js'; import { scramble } from './scramble.js'; import { giantType } from './giant-type.js';
+typewriter(); rotatingWord(); scramble(); giantType(); window.__ready = true;
+</script>
+</body></html>

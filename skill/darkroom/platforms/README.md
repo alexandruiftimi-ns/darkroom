@@ -14,6 +14,7 @@ Darkroom designs once and ships it on the platform the user needs. Each profile 
 | `woocommerce` | WooCommerce (WordPress shop) | a shop on WordPress, the client owns everything, no platform fee | needs a WordPress host; payments cost per transaction | `scaffold woocommerce` |
 | `shopify` | Shopify theme | a shop that must just work: payments, tax, shipping handled | no: a paid Shopify plan (free development store to build) | `scaffold shopify` |
 | `ghost` | Ghost theme | a publication or newsletter with paid members | Ghost(Pro) is paid; self-hosting is free but needs a server | `scaffold ghost` |
+| `prompt` | Prompt for an AI builder (Lovable, v0, Bolt, Cursor, Replit, Manus, AI Studio, Kimi) | the user builds in one of those and wants a prompt to paste; Darkroom designs, writes `PROMPT.md`, then captures the builder's preview and writes the fix prompts | the builder's own plans | `scaffold prompt` (a `PROMPT.md` to fill) |
 
 Not supported as code, and why: `builders.md` (Wix, Squarespace, Webflow, Framer: closed editors; Darkroom delivers a design kit instead). Candidates considered and the bar for adding one: also `builders.md`.
 
@@ -21,7 +22,7 @@ Not supported as code, and why: `builders.md` (Wix, Squarespace, Webflow, Framer
 
 1. If the user names a platform, use it. Never argue them out of it; say the one catch if there is one ("Vercel's free plan is non-commercial").
 2. **If their current site already runs on one** (`darkroom import` prints "built with"), recommend staying on it: their posts, products, plugins, logins and search rankings stay where they are. Recommend moving only for a reason they gave (cost, speed, a feature), and say what a move costs: content re-entered or exported, redirects for every old address (`commands/import.md`). A closed builder (Wix, Squarespace, Webflow, Framer) stays a design kit unless they want to leave it (`builders.md`).
-3. Otherwise recommend from the job: sells products → `shopify` (wants it simple) or `woocommerce` (already on WordPress, or wants no platform fee); a client edits it → `wordpress`; one page or a portfolio, free → `static`; several content pages, free → `astro`; blog on GitHub → `jekyll`; newsletter or members → `ghost`.
+3. Otherwise recommend from the job: sells products → `shopify` (wants it simple) or `woocommerce` (already on WordPress, or wants no platform fee); a client edits it → `wordpress`; one page or a portfolio, free → `static`; several content pages, free → `astro`; blog on GitHub → `jekyll`; newsletter or members → `ghost`; they build in Lovable, v0, Bolt, Cursor or similar and want a prompt → `prompt`.
 4. State it in one line with the hosting cost, then record it: `darkroom state --set platform=<id>`.
 
 ## The live-docs check (before the first line of platform code)

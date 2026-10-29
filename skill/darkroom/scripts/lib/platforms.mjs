@@ -5,6 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { mkdirp } from './browser.mjs';
+import { PLACEHOLDER, bareAdjectives } from './spec.mjs';
 
 // id → profile in platforms/<id>.md. `scaffold: 'files'` copies templates/platforms/<id>; 'generator' uses the official CLI.
 export const PLATFORMS = {
@@ -18,6 +19,8 @@ export const PLATFORMS = {
   woocommerce: { name: 'WooCommerce store (block theme)', scaffold: 'files', base: 'wordpress', kinds: 'online shop on WordPress', host: 'WordPress host with WooCommerce' },
   shopify: { name: 'Shopify theme', scaffold: 'files', kinds: 'online shop, product launch, catalog', host: 'Shopify (paid plan; free development store to build)' },
   ghost: { name: 'Ghost theme', scaffold: 'files', kinds: 'publication, newsletter, membership blog', host: 'Ghost(Pro) or self-hosted Ghost' },
+  // not a place a site lives: the deliverable is PROMPT.md for an AI builder (platforms/prompt.md). Never auto-detected.
+  prompt: { name: 'Prompt for an AI builder', scaffold: 'prompt', kinds: 'Lovable, v0, Bolt, Cursor, Replit, Manus, AI Studio: a prompt to paste', host: "the builder's own publish (or export to GitHub)" },
 };
 
 const GENERATORS = {
@@ -288,13 +291,36 @@ function nextjs(dir) {
   return out;
 }
 
-const CHECKERS = { static: staticSite, php: phpSite, shopify, wordpress: (d) => wordpress(d), woocommerce: (d) => wordpress(d, true), ghost, jekyll, hugo, astro, nextjs };
+// PROMPT.md for an AI builder: a Tool line, exact copy (no slots or placeholders), numbers not adjectives, only the
+// user's own media, and the "Do not" block last (builders weigh the end of a prompt). Heuristic: it reads words.
+const TOOLS = /^Tool:\s*(lovable|v0|bolt|cursor|claude code|replit|manus|ai studio|google ai studio|kimi)\b/im;
+const STOCK_HOSTS = /(pexels|pixabay|unsplash|mixkit|coverr|shutterstock|istockphoto|gettyimages|stock\.adobe|freepik|videvo)/i;
+function promptFile(dir) {
+  const f = firstOf(dir, ['PROMPT.md', 'prompt.md']);
+  if (!f) return [finding('high', 'structure', 'no PROMPT.md (start from templates/platforms/prompt/PROMPT.md)')];
+  const text = read(path.join(dir, f)); const out = [];
+  if (!TOOLS.test(text)) out.push(finding('high', 'tool', 'no "Tool: <Lovable | v0 | Bolt | Cursor | Claude Code | Replit | Manus | AI Studio | Kimi>" line'));
+  const slot = text.match(/\[\[fill[^\]]*\]\]/) ?? text.match(PLACEHOLDER);
+  if (slot) out.push(finding('high', 'copy', `unfilled slot or placeholder "${slot[0].slice(0, 40)}": builders invent what the prompt leaves open`));
+  const heads = [...text.matchAll(/^#{1,3}\s+(.+)$/gm)].map((m) => m[1].trim());
+  const dn = heads.findIndex((h) => /^do not\b/i.test(h));
+  if (dn < 0) out.push(finding('high', 'constraints', 'no "## Do not" block'));
+  else if (dn !== heads.length - 1) out.push(finding('high', 'constraints', '"Do not" is not the last block: put the constraints at the end'));
+  for (const m of text.matchAll(/https?:\/\/[^\s)>"'`]+/g)) if (STOCK_HOSTS.test(m[0])) out.push(finding('high', 'assets', `media hotlinked from ${m[0].split('/')[2]}: download it (with a yes), upload it to the builder or the user's storage, and name that file`));
+  const bare = bareAdjectives(text);
+  if (bare.length) out.push(finding('medium', 'numbers', `bare adjective${bare.length > 1 ? 's' : ''} with no value nearby: ${[...new Set(bare)].join(', ')}`, 'heuristic'));
+  if (text.length < 3000) out.push(finding('medium', 'size', `${text.length} characters: under ~3k usually leaves the builder guessing`, 'heuristic'));
+  if (text.length > 15000) out.push(finding('medium', 'size', `${text.length} characters: over ~15k, builders drop parts; send the hero first and the rest as follow-ups`, 'heuristic'));
+  return out;
+}
+
+const CHECKERS = { static: staticSite, php: phpSite, shopify, wordpress: (d) => wordpress(d), woocommerce: (d) => wordpress(d, true), ghost, jekyll, hugo, astro, nextjs, prompt: promptFile };
 
 export function checkPlatform(dir, id) {
-  const platform = id ?? detect(dir);
+  const platform = id ?? detect(dir) ?? (firstOf(dir, ['PROMPT.md']) ? 'prompt' : null);
   if (!platform) return { dir, platform: null, findings: [finding('high', 'structure', 'could not tell which platform this is; pass --platform <id>')] };
   if (!CHECKERS[platform]) throw new Error(`unknown platform ${platform}; one of ${Object.keys(PLATFORMS).join(', ')}`);
-  return { dir, platform, findings: [...CHECKERS[platform](dir), ...common(dir)] };
+  return { dir, platform, findings: platform === 'prompt' ? CHECKERS.prompt(dir) : [...CHECKERS[platform](dir), ...common(dir)] };
 }
 
 // Copies templates/platforms/<id> into out, filling {{name}} and {{slug}}. Never overwrites a file that exists.

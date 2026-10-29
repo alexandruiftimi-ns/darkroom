@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hero recipes demo</title>
+<script>document.documentElement.classList.add('js')</script>
+<link rel="stylesheet" href="video-layer.css"><link rel="stylesheet" href="scrim.css"><link rel="stylesheet" href="entrance.css">
+<link rel="stylesheet" href="split-text.css"><link rel="stylesheet" href="nav.css"><link rel="stylesheet" href="buttons.css"><link rel="stylesheet" href="grain.css">
+<style>
+:root{--scrim-ground:14 15 16}
+html{background:#0e0f10}
+body{margin:0;background:#0e0f10;color:#f2efe9;font:18px/1.55 system-ui,sans-serif}
+.skip{position:absolute;left:-999px}.skip:focus{left:16px;top:16px;background:#fff;color:#000;padding:8px;z-index:99}
+.hero{min-height:100svh;display:grid;align-content:end;gap:22px;padding:0 clamp(20px,6vw,64px) 12vh;--vl-ground:#0e0f10}
+.eyebrow{font-size:12px;letter-spacing:.2em;text-transform:uppercase;margin:0;opacity:.8}
+h1{font-size:clamp(44px,8vw,112px);line-height:.95;letter-spacing:-.035em;margin:0;font-weight:500;max-width:12ch}
+.lede{max-width:46ch;margin:0;opacity:.85}
+.ctas{display:flex;gap:12px;flex-wrap:wrap}
+.next{min-height:80vh;padding:12vh clamp(20px,6vw,64px)}
+</style></head><body class="grain">
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav nav--pill" data-nav data-nav-style="sheet" data-enter="down" style="--i:0">
+  <a class="nav-mark" href="#top">Halde</a>
+  <nav aria-label="Main"><ul class="nav-links" id="nav-panel" data-nav-panel><li><a href="#work">Work</a></li><li><a href="#studio">Studio</a></li><li><a href="#journal">Journal</a></li></ul></nav>
+  <a class="nav-cta btn btn--fill" href="#contact"><span class="btn-label">Contact</span></a>
+  <button class="nav-burger" type="button" aria-controls="nav-panel" aria-expanded="false" data-nav-toggle hidden><span class="nav-burger-lines" aria-hidden="true"></span><span class="nav-sr">Menu</span></button>
+</header>
+<main id="main">
+<section class="hero vl" id="top" data-video-layer>
+  <div class="vl-media"><video muted playsinline preload="none" data-src="demo-clip.mp4" data-video-loop data-loop-fade="0.4" aria-hidden="true"></video></div>
+  <div class="scrim scrim--bottom" aria-hidden="true"></div>
+  <p class="eyebrow ts-label" data-enter style="--i:1">Ceramics studio, Bergen</p>
+  <h1 class="ts-display" data-split="lines" data-split-delay="250">Quiet objects for loud kitchens</h1>
+  <p class="lede ts-body" data-enter style="--i:3">Stoneware thrown in small runs, glazed by hand, made to be used every day.</p>
+  <div class="ctas" data-enter style="--i:4">
+    <a class="btn btn--roll" id="cta" href="#work"><span class="btn-label"><span>See the work</span></span><span class="btn-chip" aria-hidden="true">→</span></a>
+    <a class="btn btn--ghost btn--fill" href="#studio"><span class="btn-label">Visit the studio</span></a>
+  </div>
+</section>
+<section class="next" id="work"><h2>Work</h2><p>The section after the hero.</p></section>
+<section class="next" id="studio"><h2>Studio</h2></section>
+<section class="next" id="journal"><h2>Journal</h2></section>
+<section class="next" id="contact"><h2>Contact</h2></section>
+</main>
+<script type="module">
+import { videoLayer } from './video-layer.js'; import { videoLoop } from './video-loop.js'; import { entrance } from './entrance.js';
+import { splitText } from './split-text.js'; import { nav } from './nav.js';
+videoLayer(); videoLoop(); splitText(); window.__nav = nav(); window.__entrance = entrance();
+</script>
+</body></html>

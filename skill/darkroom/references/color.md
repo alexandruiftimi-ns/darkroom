@@ -36,6 +36,13 @@ The strongest pattern across the example library (20+ award sites and mockups, `
 4. Dark themes: ground not pure #000 (use a hue-tinted near-black), `color-scheme: dark`, `theme-color` meta.
 5. Choose light vs dark from the **use scene** (who, where, what light), not the category.
 
+## Values (defaults)
+
+- **Ground = the hero media's edge colour.** When the hero is a photo or a clip, sample its outer edge and make that `--ground` (`references/hero-media.md`): no seam, no overlay, no white flash. If the media must change, change the ground with it.
+- **Opacity hierarchy** instead of more greys: ink at 100 / 80 / 60 / 40 % for headline / body / secondary / disabled; lines and borders at 10–20 % of ink.
+- **HSL-triplet tokens** when opacity steps are needed: `--ink: 40 12% 94%` then `color: hsl(var(--ink) / .6)`. Hex tokens are fine when no step is needed.
+- Starting points, not rules: near-blacks `#050505–#0c0c0c`, off-whites `#f0f0ee–#fcfcfc`. A pack that prefers hue-tinted grounds (cinematic: `#080B13`) keeps its own word.
+
 ## Defaults that read as generated (avoid unless chosen with a reason)
 
 Violet/indigo gradients; near-black with one neon accent and glow; cream + terracotta/rust; gradient text; every button a different colour; rainbow charts.

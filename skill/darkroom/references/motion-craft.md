@@ -33,6 +33,30 @@ Purposes: **orient** (where did this come from), **explain** (what changes into 
 - Prefer CSS transitions for interruptible UI (they retarget mid-flight); keyframes for one-way sequences.
 - Blur/fade can mask a cross-fade between two states that are not aligned; do not use it to hide a bad cut.
 
+## 4b. Values (defaults; a pack may change them, and says so)
+
+| What | Value |
+|---|---|
+| Stagger | characters 30 ms · nav items 50 ms · words and text blocks 60–80 ms · cards and stats 100–150 ms (cap 6–8 items) |
+| Hovers | 150–350 ms (colour 150, transform 250–350) |
+| Button text-roll | 500 ms `cubic-bezier(.22,1,.36,1)` |
+| Panel and section wipes | 400–700 ms |
+| Menus open / close | 280–500 ms open, 200–300 ms close |
+| Carousels | 640–800 ms per step, input locked for the same time |
+| Crossfades (images, video moods) | 1 s |
+| Count-ups | 1.5–2 s, ease-out, final value in the HTML |
+| Video fade-in on `loadeddata` | 500 ms opacity |
+| Media settle (scale 1.06 → 1) | 1.8 s ease-out |
+| Hero entrance, whole sequence | done by ~1.5 s; never blocks reading or the first click |
+| Lerp factors (per frame) | .1 cursor spotlight · .12 pointer parallax and cursor-scrubbed video · .14 pinned stages |
+| Ambient loops | orbits 30–60 s per turn · marquees 20–40 s per loop (≈ 40–60 px/s) |
+
+**Easing set (name them as tokens):** entrance `--ease-out: cubic-bezier(.22,1,.36,1)` or `cubic-bezier(.16,1,.3,1)` · state change `--ease-state: cubic-bezier(.4,0,.2,1)` · sheet / drawer `--ease-sheet: cubic-bezier(.32,.72,0,1)` · spring overshoot `cubic-bezier(.34,1.56,.64,1)` for playful packs only (artsy, family).
+
+**Direction rule:** the nav enters from above, content from below, secondary items sideways, logos and fine print only fade. Things never enter from two directions at once in one viewport.
+
+**What is not animated:** backgrounds and decorative layers (the media is the ambient motion), headlines with shimmer or gradient sweeps, `<video>` elements with CSS transitions (fade a wrapper instead), anything that moved already in the same viewport.
+
 ## 5. Interruption and reversal
 
 Every scroll-linked effect runs backwards. Every timeline can be interrupted by a faster wheel, a resize, a click, a hidden tab. Define the end state of an interrupted motion (snap, or settle) and test it: fast wheel, reverse, resize mid-scene, tab away and back, back/forward navigation (scroll restoration).

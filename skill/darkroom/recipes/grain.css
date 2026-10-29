@@ -1,0 +1,26 @@
+/* Film grain over gradients and video: breaks colour banding and gives flat grounds a material.
+   An inline SVG fractal-noise tile, no request, no script. pointer-events:none, so it never blocks a click.
+   Opacity 0.04–0.15: start at .06 on dark grounds, .04 on light; above .15 it reads as dirt, not film.
+
+   <body class="grain">            whole page (fixed, does not scroll)
+   <section class="grain-local">   one section only
+   Static by default. .grain--alive shifts the tile in 8 steps (≈ 12 fps): use only on cinematic packs, and it stops
+   under reduced motion. */
+:root { --grain-opacity: .06; --grain-size: 180px; }
+
+.grain::after, .grain-local::after {
+  content: ""; inset: 0; pointer-events: none; z-index: 9999; opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 1.4 -.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: var(--grain-size) var(--grain-size); mix-blend-mode: overlay;
+}
+.grain::after { position: fixed; }
+.grain-local { position: relative; isolation: isolate; }
+.grain-local::after { position: absolute; z-index: 3; }
+
+.grain--alive::after { animation: grain-shift .66s steps(8) infinite; }
+@keyframes grain-shift {
+  0% { background-position: 0 0; } 25% { background-position: -37px 21px; } 50% { background-position: 53px -44px; }
+  75% { background-position: -18px 66px; } 100% { background-position: 0 0; }
+}
+@media (prefers-reduced-motion: reduce) { .grain--alive::after { animation: none; } }
+@media (forced-colors: active) { .grain::after, .grain-local::after { display: none; } }

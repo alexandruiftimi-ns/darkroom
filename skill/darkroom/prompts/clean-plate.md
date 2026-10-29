@@ -6,6 +6,7 @@ Attach the approved section frame (for composition) and the anchor (for product/
 Recreate ONLY the photographic scene of the attached website section, with absolutely no text, letters, numbers, logos, buttons, navigation, captions, HUD panels, watermarks or handwriting anywhere. <W×H> px.
 Keep the same camera angle, focal length, lighting, colour grade and the same <product/subject> in the same position and size.
 Leave the <left 40 % | top third> calm and dark/uncluttered so live text can sit there.
+Let every edge fall off to flat <ground hex> (the page background), with no other colour at the border.
 Extend the scene naturally where text used to be.
 Photoreal, high detail, no artefacts.
 ```

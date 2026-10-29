@@ -9,6 +9,13 @@ Pick the **lightest thing that does the job**, starting from what the project al
 | **`recipes/reveal.js`** | on-scroll reveals of headings, text, images, cards (mode `animated`) | timelines with many overlapping tweens | ~2 KB, no dependency | ships with Darkroom (MIT) |
 | **`recipes/scene-progress.js`** | pinned CSS scenes driven by scroll (`--p` 0..1): masks, scale, opacity | photoreal motion | < 1 KB | MIT |
 | **`recipes/scrub-frames.js` / `scrub-video.js`** | filmed turntables, dives, exploded views scrubbed by scroll | free rotation | < 4 KB + the media | MIT |
+| **`recipes/video-layer.js` + `video-loop.js`, `scrim.css`** | background video heroes: no white flash, pause off screen, loop seam hidden, readable text over footage | video that follows scroll (scrub recipes) | ~3 KB + the media | MIT |
+| **`recipes/entrance.css` / `split-text.js`** | first-screen entrance and headline line/word/char reveals, fail-safe without JS | timelines with many overlapping tweens (GSAP SplitText) | ~3 KB | MIT |
+| **`recipes/nav.js`, `buttons.css`, `grain.css`** | nav bar and phone menu, CTA buttons with weight, film grain | | ~3 KB | MIT |
+| **`recipes/marquee.js`, `count-up.js`, `scroll-words.js`, `stack-cards.js`** | logo strips, stats, manifesto paragraph, stacking process cards | | ~1 KB each | MIT |
+| **`recipes/typewriter.js`, `rotating-word.js`, `scramble.js`, `giant-type.js`** | type moments with zero layout shift; full-width wordmarks | | ~1 KB each | MIT |
+| **`recipes/magnetic.js`, `parallax-layers.js`, `spotlight-mask.js`, `depth-carousel.js`** | weighted hovers, depth, spotlight reveals, a 3–6 product carousel | | ~1–2 KB each | MIT |
+| **`recipes/cursor-scrub-video.js`, `scene-switcher.js`, `shader-backdrop.js`, `model-hero.js`** | pointer-scrubbed turntables, switchable mood clips, a WebGL colour field, a draggable GLB (three.js supplied by the project) | | 1–4 KB each + media (+ three.js for the model) | MIT |
 | **CSS scroll-driven animations** (`animation-timeline: view()` / `scroll()`) | simple reveals and progress bars with zero JS | anything that must work in every browser today: support is Chromium and recent Safari; check caniuse at build time and wrap in `@supports` as an enhancement | 0 KB | web standard |
 | **GSAP + ScrollTrigger** (SplitText, Flip) | complex scroll timelines, many tweens per scene, precise pinning, SVG morphs | a page that only needs reveals (use `reveal.js`) | ~25–70 KB | free for commercial use under GSAP's own licence (not MIT); read its terms if the product is itself a site builder |
 | **Motion** (motion.dev, formerly Framer Motion) | React/Vue projects that already use it; layout animations, gestures, `inView`/`scroll` helpers | adding React to a plain page just for motion | ~5–35 KB | MIT |
@@ -17,7 +24,7 @@ Pick the **lightest thing that does the job**, starting from what the project al
 | **Spline** (embed or export) | quick, simple 3D scenes made by a non-coder | performance-critical heroes (heavy runtime) | heavy runtime; editor freemium | check plan terms |
 | **Lottie** (lottie-web / dotLottie) | vector illustrations and icon animations made in After Effects or LottieFiles | photographic motion | 60 KB+ player | player MIT; each animation file has its own licence |
 | **Rive** | interactive vector animation with states (buttons, mascots) | photography | runtime MIT; editor freemium | |
-| **Splitting.js** | splitting text into lines/chars for CSS effects | word reveals (`reveal.js` does it) | ~1.5 KB | MIT |
+| **Splitting.js** | splitting text into lines/chars for CSS effects | word and line reveals (`split-text.js` and `reveal.js` do it) | ~1.5 KB | MIT |
 | **AOS (Animate On Scroll)** | legacy projects already using it | new work (`reveal.js` is smaller and safer: no hidden content without JS) | ~14 KB | MIT |
 | **ScrollReveal** | avoid | closed client work unless a commercial licence is bought | | GPL-3.0 or paid |
 | **Theatre.js** | authoring a complex 3D/scroll timeline visually | small pages; check project activity first | | core Apache-2.0, studio AGPL-3.0 (authoring only) |
@@ -30,7 +37,7 @@ Rules for any library: respect `prefers-reduced-motion` in the same pass; never 
 |---|---|---|
 | calm | CSS transitions | never needed |
 | animated | `reveal.js` | the project already ships GSAP or Motion |
-| hero-effect | the matching recipe | the effect is real 3D (three.js) |
+| hero-effect | the matching recipe (`video-layer.js`, `split-text.js`, `cursor-reveal.js`…) | the effect is real 3D (three.js) |
 | story | `scene-progress.js` + scrub recipes | scenes need many overlapping tweens (GSAP ScrollTrigger); inertial scroll is part of the brief (Lenis, tested) |
 
 ## Making the assets (the user's side)

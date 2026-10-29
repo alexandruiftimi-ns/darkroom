@@ -1,0 +1,17 @@
+/* Seamless marquee for logo strips and word bands (pairs with marquee.js, which duplicates the track and adds the pause
+   button). Without JS it is a static row that wraps. Speed 40–60 px/s; marquee.js sets --marquee-dur from the width.
+   WCAG 2.2.2: anything that moves for more than 5 s needs a pause control; the script adds one. */
+.marquee { --marquee-gap: 56px; --marquee-fade: 72px; position: relative; overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, #000 var(--marquee-fade), #000 calc(100% - var(--marquee-fade)), transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--marquee-fade), #000 calc(100% - var(--marquee-fade)), transparent); }
+.marquee-track { display: flex; flex-wrap: wrap; gap: var(--marquee-gap); list-style: none; margin: 0; padding: 0; align-items: center; justify-content: center; }
+.marquee.is-running .marquee-track { flex-wrap: nowrap; width: max-content; justify-content: flex-start; animation: marquee-x var(--marquee-dur, 30s) linear infinite; }
+.marquee[data-marquee-direction="right"].is-running .marquee-track { animation-direction: reverse; }
+.marquee.is-paused .marquee-track { animation-play-state: paused; }
+.marquee-track > * { flex: none; }
+@keyframes marquee-x { to { transform: translateX(calc(-50% - var(--marquee-gap) / 2)); } }
+/* The button sits after the strip (outside its edge mask), right-aligned. */
+.marquee-pause { display: block; margin: 12px 0 0 auto; width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid currentColor; background: transparent; color: inherit; opacity: .55; cursor: pointer; font: 12px/1 system-ui; }
+.marquee-pause:hover, .marquee-pause:focus-visible { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .marquee.is-running .marquee-track { animation: none; flex-wrap: wrap; width: auto; justify-content: center; } .marquee-pause { display: none; } }

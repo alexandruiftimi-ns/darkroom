@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Interaction recipes demo</title>
+<link rel="stylesheet" href="depth-carousel.css"><link rel="stylesheet" href="liquid-glass.css">
+<style>
+body{margin:0;background:#101114;color:#f2efe8;font:18px/1.55 system-ui,sans-serif}
+section{padding:10vh clamp(20px,6vw,64px)}
+h2{font-size:clamp(28px,4vw,52px);line-height:1.05;margin:0 0 24px;font-weight:600}
+.cta{display:inline-grid;place-items:center;width:120px;height:120px;border-radius:50%;background:#e2a35b;color:#101114;text-decoration:none;font-weight:600}
+.scene{position:relative;height:60vh;overflow:hidden;border-radius:12px;background:#1b2330}
+.scene>div{position:absolute;inset:-40px;border-radius:12px}
+.l1{background:radial-gradient(40% 30% at 30% 30%,#3c5a7a,transparent)}
+.l2{background:radial-gradient(30% 25% at 60% 60%,#7a5a3c,transparent)}
+.l3{background:radial-gradient(12% 16% at 50% 50%,#f2efe8,transparent)}
+.spot{position:relative;height:50vh;border-radius:12px;overflow:hidden}
+.spot>div{position:absolute;inset:0}
+.base{background:linear-gradient(135deg,#d9d2c3,#a89a80)}
+.night{background:linear-gradient(135deg,#0d1a33,#2b3f66)}
+.glass-stage{height:50vh;border-radius:12px;display:grid;place-items:center;background:conic-gradient(from 90deg,#e2a35b,#5fb3a1,#3b2f7a,#e2a35b)}
+.glass{padding:32px 40px;color:#fff}
+.dc-item .art{aspect-ratio:4/5;border-radius:12px}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="glass-refract"><feTurbulence type="fractalNoise" baseFrequency=".012" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="18"/></filter></svg>
+<main>
+<section><a class="cta" id="mag" href="#book" data-magnetic data-magnetic-radius="80">Book</a></section>
+<section><div class="scene" id="par" data-parallax="pointer" data-parallax-max="24"><div class="l1" data-depth="0.2"></div><div class="l2" data-depth="0.6"></div><div class="l3" data-depth="1"></div></div></section>
+<section><div class="spot" id="spot" data-spotlight data-spot-radius="160"><div class="base" role="img" aria-label="The harbour by day"></div><div class="night" data-spot-top aria-hidden="true"></div></div></section>
+<section id="book"><section class="dc" id="dc" data-depth-carousel aria-roledescription="carousel" aria-label="Our bikes">
+  <ul class="dc-track">
+    <li class="dc-item" data-colour="#c9d6c2"><div class="art" style="background:#5d7a52"></div><h3>Commuter</h3></li>
+    <li class="dc-item" data-colour="#d8c7b4"><div class="art" style="background:#8a5a3c"></div><h3>Cargo</h3></li>
+    <li class="dc-item" data-colour="#c4cad6"><div class="art" style="background:#3c4f7a"></div><h3>Folding</h3></li>
+    <li class="dc-item" data-colour="#e0d4c0"><div class="art" style="background:#a8803c"></div><h3>Gravel</h3></li>
+  </ul>
+  <button class="dc-prev" type="button" aria-label="Previous">←</button><button class="dc-next" type="button" aria-label="Next">→</button>
+  <p class="dc-status" aria-live="polite"></p>
+</section></section>
+<section><div class="glass-stage"><div class="glass glass--refract" id="glass"><h2>Glass panel</h2><p>Frosted, with an edge highlight.</p></div></div></section>
+</main>
+<script type="module">
+import { magnetic } from './magnetic.js'; import { parallaxLayers } from './parallax-layers.js'; import { spotlightMask } from './spotlight-mask.js'; import { depthCarousel } from './depth-carousel.js';
+magnetic(); parallaxLayers(); spotlightMask(); depthCarousel(); window.__ready = true;
+</script>
+</body></html>

@@ -27,6 +27,32 @@ Re-check: phone initial state, nearby widths, long heading, image-load failure
 
 Name the visible element, the principle (a law, a reference file, a library entry), and the fix. "Feels premium" is not a defect and not a pass.
 
+## The ten lenses (the finish line, without numbers)
+
+Judge each lens **pass / weak / fail** from the captures; every weak or fail gets a defect record.
+
+1. **First glance:** the 3-second test; one focal point; who and what is clear.
+2. **Signature:** the one memorable thing is there and nothing competes with it (`references/modes.md`).
+3. **Typography:** roles, sizes, leading, tracking per the Values tables; line breaks chosen.
+4. **Composition and space:** anchor pattern, empty zone respected, rhythm between sections.
+5. **Colour and light:** ground = media edge, one accent with one job, contrast on the worst frame.
+6. **Media integration:** no seam, no flash, subject not colliding with copy, loop invisible.
+7. **Motion:** purposeful, quiet, interruptible, reduced-motion path composed.
+8. **Mobile:** re-composed, not stacked: re-cropped, rescaled, signature kept.
+9. **Copy:** specific, short, fits nobody else (`references/attention.md`, "Shapes that work").
+10. **Polish:** states, focus, metadata, nothing placeholder (`references/craft.md`).
+
+**The bar:** no fail, at most two weak, and every blocking defect fixed: console errors, failed assets, phone overflow, a white flash at first paint, unreadable text, fonts not loaded, broken layout, placeholder copy.
+
+**A fix pass** takes the three weakest lenses and writes each change **in values**, into `BUILD_SPEC.md` first: "H1 from 64 px to `clamp(56px,8vw,128px)`, tracking −0.035em"; "a ground-to-transparent gradient over the bottom 30 % of the video at 40 %".
+
+**Fixes that usually move a weak lens:**
+- Looks generic → bigger type, fewer words, a stronger signature, remove something.
+- Looks busy → remove decoration, one radius everywhere, +1 spacing step, palette cut to ground / ink / muted / accent.
+- Looks flat → depth from a media layer, a scrim, grain or light fall-off; never from ornaments.
+- Text fights the video → move the text into the empty zone, add an edge scrim, or choose a calmer clip.
+- Phone broken → re-aim `object-position`, `clamp()` display type, hide secondary nav.
+
 ## Loop discipline
 
 Fix the top two to four **connected** issues per pass; keep the previous acceptable revision; recapture the same states; confirm the target improved and accepted states did not regress. Stop when acceptance is met or two passes show no material gain. At a plateau, show the best result and the one concrete trade-off as a choice.

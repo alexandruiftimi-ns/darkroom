@@ -1,0 +1,16 @@
+/* Sticky stacking cards: each card pins under the previous one and the cards behind shrink slightly and dim.
+   Native position:sticky does the pinning, so scrolling is never captured; stack-cards.js only sets --stack-p
+   (0 → 1 as the next card covers this one). Without JS the cards still stack, just without the shrink.
+   Phones: the same, with less top offset. Reduced motion: a plain list (no sticky, no scaling).
+
+   <ol class="stack" data-stack-cards>
+     <li class="stack-card" style="--n:0">…</li> <li class="stack-card" style="--n:1">…</li> …
+   </ol>
+   4–6 cards. Each card is at most 80vh tall, or its bottom would be hidden under the next one. */
+.stack { --stack-top: clamp(72px, 12vh, 120px); --stack-offset: 14px; --stack-shrink: .06; list-style: none; margin: 0; padding: 0;
+  display: grid; gap: 28vh; padding-bottom: 12vh; }
+.stack-card { position: sticky; top: calc(var(--stack-top) + var(--n, 0) * var(--stack-offset)); min-height: min(64vh, 560px); max-height: 80vh;
+  border-radius: 28px; transform-origin: 50% 0; transform: scale(calc(1 - var(--stack-p, 0) * var(--stack-shrink)));
+  filter: brightness(calc(1 - var(--stack-p, 0) * .25)); will-change: transform; }
+@media (max-width: 767px) { .stack { --stack-top: 64px; --stack-offset: 8px; gap: 18vh; } .stack-card { border-radius: 20px; } }
+@media (prefers-reduced-motion: reduce) { .stack { gap: 24px; padding-bottom: 0; } .stack-card { position: static; transform: none; filter: none; will-change: auto; max-height: none; } }

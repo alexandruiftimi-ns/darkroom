@@ -17,6 +17,7 @@ A pack is a set of **defaults and switches**, not a template. It tells Darkroom 
 | [artsy](artsy.md) | experimental, playful, colourful | expressive | varies | playful, cursor | creative studios, festivals, illustrators |
 | [family](family.md) | warm, safe, easy | expressive (soft) | medium | gentle feedback | kids, schools, community, family health |
 | [trust](trust.md) | credible, calm, competent | disciplined | medium | minimal | finance, legal, medical, B2B, public sector |
+| [glass-cinema](glass-cinema.md) | the polished AI-startup look you see everywhere | disciplined | very low | one slow film, blur-rise entrance | only on request: AI launches, studios, events; use it to fit in with that crowd, not to stand out |
 
 **Reference looks.** "Like apple.com / Rolex / Cartier" is a look too: start from `references/looks.md`, measure the live site, and follow `commands/lookalike.md`. Map it to the nearest pack for switches (Apple → modern, Rolex → cinematic + luxury, Cartier → luxury). The motion level is chosen separately (`references/modes.md`).
 

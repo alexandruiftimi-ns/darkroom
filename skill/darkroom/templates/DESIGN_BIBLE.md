@@ -61,7 +61,8 @@ Max zones per viewport: <3> · zone order · CTA placement
 Subject · light · lens · grade · crops · never shown · **silhouette lock** (if product)
 
 ## 9. Motion grammar
-Signature move · easings · durations · max simultaneous motions · techniques · reduced-motion
+**Signature** (the ONE thing this page is remembered for): <…> · **Supporting, quiet (2–4):** <entrance, material, type move, reveal> · heavy techniques: ≤ 1 · motion hooks per viewport: ≤ 3
+Easings · durations · max simultaneous motions · techniques · reduced-motion
 
 ## 10. Components
 Primary button · secondary · link · nav · forms · focus ring · selection · scrollbar

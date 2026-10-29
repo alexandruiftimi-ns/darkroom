@@ -34,5 +34,23 @@ A checklist to sweep before a checkpoint. Items are things a visitor feels witho
 - Hero image or poster ≲ 250 KB as a starting budget, preloaded when it is the LCP; responsive `srcset` and modern formats; heavy media after first interaction; `loading="lazy"` below the fold; no hotlinked assets; third-party scripts behind consent.
 - Animate `transform`, `opacity`, `clip-path`, `filter` only; no `transition: all`; `will-change` only while moving.
 
+## Composition (the first screen)
+- **One idea per first screen:** mark + nav + one H1 + one sub + 1–2 CTAs + one media plane + at most one quiet strip (a credit line, three logos, a scroll cue). Anything else waits for the second viewport.
+- **Four anchor patterns:** centred stack · bottom-anchored (H1 low-left over the media, the media owns the top) · left column (copy in 5 of 12 columns, subject right) · editorial four corners (mark, nav, H1 and a fact pinned to the corners). The pack picks one; **centred is the safe default, not the best**.
+- **Text and subject never collide:** move the media first (`object-position`, oversize to 110–120 % and offset, a phone re-crop), shrink the text last.
+- **Inset frame** variant: the hero media sits in a rounded frame with a 12–24 px margin of ground around it; good for light grounds and product photos that do not bleed.
+
+## Spacing values (defaults)
+- Content max-width 64–80rem; lede and sub 440–540 px wide; body measure 45–75ch.
+- Gutters 20–24 px phone, 48–64 px desktop (`clamp(20px, 4vw, 64px)`).
+- Section padding 128–176 px desktop, 80–112 px phone (`clamp(80px, 12vw, 176px)`).
+- **Sheet transition** between sections: the next section rises over the last with `border-radius: 40–60px 40–60px 0 0; margin-top: -40…-56px` and its own ground.
+- Single-frame heroes get height rules: `@media (max-height: 850px)` and `(max-height: 720px)` shrink the H1 one step and pull the CTA up, so a laptop never cuts the button off.
+
+## Text over media
+- Text shadow before boxes: body `0 2px 18px rgba(0,0,0,.42)`, display `0 16px 38px rgba(0,0,0,.32)` (dark media; for light media use the ground colour at .5).
+- Edge-blend scrims instead of a flat wash: bottom fade from `--ground` to transparent over the bottom 30–40 %, or a directional side fade under the copy column. **Never a flat 50 % black wash** over the whole frame.
+- Check legibility on the **brightest frame** of the clip, not the poster.
+
 ## Honest placeholders
 Anything not yet real is marked (`TEMP`, a labelled flat field) and listed in `ASSETS.json`. A placeholder that looks real is a defect.

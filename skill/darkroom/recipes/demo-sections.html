@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Section recipes demo</title>
+<link rel="stylesheet" href="marquee.css"><link rel="stylesheet" href="stack-cards.css">
+<style>
+body{margin:0;background:#f3f0ea;color:#1a1917;font:18px/1.55 system-ui,sans-serif}
+section{padding:14vh clamp(20px,6vw,64px)}
+h2{font-size:clamp(30px,4.5vw,56px);line-height:1.05;margin:0 0 32px;font-weight:600;letter-spacing:-.02em}
+.intro{min-height:100vh;display:grid;align-content:center}
+.logos li{font-weight:600;font-size:22px;letter-spacing:-.01em;opacity:.75}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px;margin:0}
+.stats div{border-top:1px solid #1a191733;padding-top:16px}
+.stats dd{margin:0;font-size:clamp(40px,5vw,72px);font-weight:500;letter-spacing:-.03em;line-height:1}
+.stats dt{opacity:.7;font-size:15px}
+.manifesto{font-size:clamp(26px,3.4vw,44px);line-height:1.25;letter-spacing:-.015em;max-width:26ch;margin:0}
+.stack-card{background:#1a1917;color:#f3f0ea;padding:40px}
+.stack-card:nth-child(2){background:#5b4636}.stack-card:nth-child(3){background:#2f3d35}.stack-card:nth-child(4){background:#7b6a58}
+.tail{min-height:100vh}
+</style></head><body>
+<main>
+<section class="intro"><h2>Sections that move with care</h2><p>Scroll down.</p></section>
+<section aria-labelledby="clients-h"><h2 id="clients-h">Kitchens that cook with us</h2>
+  <div class="marquee logos" id="logos" data-marquee data-marquee-speed="60" aria-label="Clients">
+    <ul class="marquee-track"><li>Fjord</li><li>Saltbu</li><li>Nordlys</li><li>Havn</li><li>Lindeby</li><li>Kveld</li><li>Brygga</li></ul>
+  </div>
+</section>
+<section aria-labelledby="stats-h"><h2 id="stats-h">In numbers</h2>
+  <dl class="stats"><div><dd id="s1" data-count-up>12,480</dd><dt>plates thrown</dt></div><div><dd id="s2" data-count-up>4.9</dd><dt>average review</dt></div><div><dd id="s3" data-count-up>98%</dd><dt>still in use after five years</dt></div></dl>
+</section>
+<section><p class="manifesto" id="manifesto" data-scroll-words>We make plates for kitchens that are used, not photographed. Every glaze is mixed here, every rim is checked by hand, and nothing leaves the studio until it has held a real meal.</p></section>
+<section aria-labelledby="process-h"><h2 id="process-h">How a plate is made</h2>
+  <ol class="stack" id="stack" data-stack-cards>
+    <li class="stack-card"><h3>01 Throw</h3><p>Clay from Hordaland, thrown on the wheel in runs of forty.</p></li>
+    <li class="stack-card"><h3>02 Trim</h3><p>Feet and rims trimmed when leather-hard.</p></li>
+    <li class="stack-card"><h3>03 Glaze</h3><p>Dipped by hand in glazes mixed in the studio.</p></li>
+    <li class="stack-card"><h3>04 Fire</h3><p>Two firings, the second to 1280 °C.</p></li>
+  </ol>
+</section>
+<section class="tail"><h2>End</h2></section>
+</main>
+<script type="module">
+import { marquee } from './marquee.js'; import { countUp } from './count-up.js'; import { scrollWords } from './scroll-words.js'; import { stackCards } from './stack-cards.js';
+marquee(); countUp(); scrollWords(); stackCards(); window.__ready = true;
+</script>
+</body></html>

@@ -22,7 +22,7 @@ Goal: a confirmed `.darkroom/BRIEF.md` in **at most two question rounds**, then 
 - **Asset tier** (what is actually available, which sets the achievable visual ceiling):
   - **A: own photography / footage / product renders / 3D exist** → design around them; process them with `darkroom media`.
   - **B: some assets** (logo, a few photos, a short clip, UI screenshots) → build the strongest page those carry; list the 3–5 assets that would lift it most.
-  - **C: nothing but words** → type-led composition, real UI built in code, drawn-in-code graphics, openly licensed archival/found imagery with provenance (`commands/plates.md`), and generated plates if the user can make them. Say plainly what this tier can and cannot reach.
+  - **C: nothing but words** → in this order: type-led composition, real UI built in code, drawn-in-code backdrops in the page's colours (`darkroom media make <preset>`: gradient-mesh, light-sweep, aurora, particles, topo-lines, noise-terrain, orbit-rings, fluted-glass; stills grain, halftone, dot-grid; seamless, edges = ground, the user's own; abstract only), free licence-clean photos and clips (`references/free-media.md`, ask before downloading), openly licensed archival imagery with provenance (`commands/plates.md`), and generated plates if the user can make them. Say plainly what this tier can and cannot reach. Any hero media follows `references/hero-media.md`.
   - Ask once: can the user generate images (which tool), video (which tool, budget), 3D? Their answer changes the motion plan, so it comes before direction, not after the storyboard. A user who will generate media from your prompts is planned at the tier those prompts deliver (stills and clips), not at C.
 - **Look and motion level** (`references/modes.md`): the look is a style pack or `like:<brand>` (then follow `commands/lookalike.md`); the motion level is `calm` / `animated` / `hero-effect` / `story`. Pick the technique that delivers the look they asked for on their kind of site (`references/effects.md`), then the cheapest of those that do; their assets decide what they must provide, not a downgrade of the look (`references/motion.md`, `references/motion-toolkit.md`). Record: `darkroom state --set mode=<level>,look=<pack:name|like:brand>`.
 - **References:** record each with a role (borrow: mood / type / colour / layout / motion; not: …). Never treat "I like this site" as a request to clone it.
@@ -45,6 +45,8 @@ Fill from the material; ask only for real gaps.
 | 10 | Constraints: deadline, budget, stack, markets, languages, brand, disclosures | feasibility, regulation |
 
 Also: **colour mode** (`disciplined` · `expressive` · `monochrome`), **font budget** (default 3), **content inventory**, **asset reality**.
+
+**Fast lane:** a request for just a hero, a quick concept or "show me something" skips round 2 and uses the defaults in `commands/concierge.md` ("Fast lane"); `--set intake=fast`.
 
 ## 4. Ask (only if gaps remain)
 
