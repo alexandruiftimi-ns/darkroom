@@ -44,7 +44,8 @@ Until assets exist: a flat ground plus one approved still; or a crop of a mockup
 ```bash
 darkroom media inspect assets/raw                         # dims, duration, codec, alpha, rotation, audio, decoded MiB/frame
 darkroom media derive hero.png --out public/img --widths 640,1280,1920 --formats avif,webp,jpg   # + <picture> snippet
-darkroom media frames dive.mp4 --out public/frames/dive --fps 24 --width 1600 --format webp       # sequence + manifest.json + poster
+darkroom media frames dive.mp4 --out public/frames/dive --fps 24 --width 1600 --format webp       # sequence + manifest.json + poster; a re-run replaces the old sequence
+darkroom media frames soft.mp4 --out public/frames/soft --sharpen 0.6                             # light unsharp mask (0.3–1.0) for clips that came out soft; ffmpeg engine only
 darkroom media frames flight.mp4 --out public/frames/flight --width 1600 --format avif --mobile-width 900   # long product flight: AVIF + a phone set in mobile/
 darkroom media check public/frames/dive                    # order, checksums, sizes, memory warning (check mobile/ too)
 darkroom media chain ch1.mp4 ch2.mp4 ch3.mp4 --out film.mp4 # chained clips: seam score per join, one joined clip (--width 1920 --fps 24 --crf 20)

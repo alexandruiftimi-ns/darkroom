@@ -1,0 +1,11 @@
+/* Dark Motions · Drawn path (R09) · CSS
+   A winding line draws itself down the page exactly as far as you have scrolled, linking the steps.
+   Use: process / timeline sections, journeys, roadmaps · Visitor: scroll inside
+   Markup: put the snippet in demo.html#drawn-path inside <div data-dm="drawn-path">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="drawn-path"] .sc{position:absolute;inset:0;overflow:auto;scrollbar-width:thin}
+[data-dm="drawn-path"] .in{position:relative;height:1000px}
+[data-dm="drawn-path"] svg{position:absolute;left:50%;top:50px;width:300px;height:900px;margin-left:-150px;overflow:visible}
+[data-dm="drawn-path"] path{fill:none;stroke-width:3;stroke-linecap:round}[data-dm="drawn-path"] .bg{stroke:#ffffff12}[data-dm="drawn-path"] .fg{stroke:var(--dm-a);stroke-dasharray:1;stroke-dashoffset:calc(1 - var(--p,0))}
+[data-dm="drawn-path"] span{position:absolute;left:50%;transform:translateX(-50%);background:#18181c;border:1px solid #ffffff1c;border-radius:999px;padding:6px 14px;font-size:13px;white-space:nowrap}
+@media (prefers-reduced-motion: reduce){[data-dm="drawn-path"],[data-dm="drawn-path"] *,[data-dm="drawn-path"] *::before,[data-dm="drawn-path"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

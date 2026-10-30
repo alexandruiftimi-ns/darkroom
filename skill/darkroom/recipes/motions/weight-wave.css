@@ -1,0 +1,9 @@
+/* Dark Motions · Weight wave (T14) · CSS
+   A wave of boldness rolls through the word: letters swell from thin to heavy and back.
+   Use: type-led brands, studio sites (needs a variable font: the site's own, here Inter)
+   Markup: put the snippet in demo.html#weight-wave inside <div data-dm="weight-wave">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="weight-wave"] .t{font-family:"Inter",system-ui,sans-serif}
+[data-dm="weight-wave"] .c{display:inline-block;animation:dm-weight-wave calc(2.4s*var(--dm-dur,1)) ease-in-out infinite;animation-delay:calc(var(--i)*-140ms*var(--dm-dur,1))}
+@keyframes dm-weight-wave{0%,100%{font-weight:200}50%{font-weight:800}}
+@media (prefers-reduced-motion: reduce){[data-dm="weight-wave"],[data-dm="weight-wave"] *,[data-dm="weight-wave"] *::before,[data-dm="weight-wave"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

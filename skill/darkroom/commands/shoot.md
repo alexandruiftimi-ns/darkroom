@@ -7,7 +7,7 @@ node <skill>/scripts/darkroom.mjs capture <url | dir | file.html> [--label hero]
 node <skill>/scripts/darkroom.mjs compare <reference.png> <capture.png> [--out sheet.png]
 ```
 
-`shoot` is the old name (reduced motion unless `--motion`, no contact sheet). Use `capture`.
+`shoot` is the old name (reduced motion unless `--motion`, no contact sheet; each run gets its own dated folder in `.darkroom/qa/shots/`, so earlier shots are kept). Use `capture`.
 
 ## What it does that a plain screenshot does not
 

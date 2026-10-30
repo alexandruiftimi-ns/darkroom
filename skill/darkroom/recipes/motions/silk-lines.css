@@ -1,0 +1,8 @@
+/* Dark Motions · Silk lines (B13) · CSS
+   A bundle of fine curved lines flows like silk in a breeze, each one slightly out of phase.
+   Use: fintech / audio / premium hero, section divider band
+   Markup: put the snippet in demo.html#silk-lines inside <div data-dm="silk-lines">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="silk-lines"] .lines{position:absolute;inset:0;width:100%;height:100%}
+[data-dm="silk-lines"] path{fill:none;stroke-width:1}
+@media (prefers-reduced-motion: reduce){[data-dm="silk-lines"],[data-dm="silk-lines"] *,[data-dm="silk-lines"] *::before,[data-dm="silk-lines"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

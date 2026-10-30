@@ -1,0 +1,10 @@
+/* Dark Motions · Dot wave (B02) · CSS
+   A field of quiet dots; a ring of light expands from the centre, lighting the dots it passes.
+   Use: hero backdrop, "signal / network" products, launch sections
+   Markup: put the snippet in demo.html#dot-wave inside <div data-dm="dot-wave">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+@property --b02r{syntax:'<length>';inherits:false;initial-value:0px}
+[data-dm="dot-wave"] .dots,[data-dm="dot-wave"] .lit{position:absolute;inset:0;background:radial-gradient(circle,#ffffff2a 1.2px,transparent 1.6px) 0 0/18px 18px}
+[data-dm="dot-wave"] .lit{background:radial-gradient(circle,var(--dm-a) 1.4px,transparent 1.8px) 0 0/18px 18px;-webkit-mask:radial-gradient(circle at 50% 50%,transparent calc(var(--b02r) - 50px),#000 var(--b02r),transparent calc(var(--b02r) + 30px));mask:radial-gradient(circle at 50% 50%,transparent calc(var(--b02r) - 50px),#000 var(--b02r),transparent calc(var(--b02r) + 30px));animation:dm-dot-wave calc(3.2s*var(--dm-dur,1)) cubic-bezier(.3,0,.6,1) infinite}
+@keyframes dm-dot-wave{from{--b02r:0px}to{--b02r:320px}}
+@media (prefers-reduced-motion: reduce){[data-dm="dot-wave"],[data-dm="dot-wave"] *,[data-dm="dot-wave"] *::before,[data-dm="dot-wave"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

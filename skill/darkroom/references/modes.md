@@ -79,6 +79,7 @@ Every page names **the ONE thing it will be remembered for**: a media moment, an
 - At most **one heavy technique** per page (scrubbed frames or video, a 3D model, a shader, a pinned multi-scene story counts as the page's heavy one). Cost tags: `recipes/README.md`.
 - Never more than **three motion hooks in one viewport**; if two compete for the same attention (a spotlight, a magnet and a parallax), cut one.
 - `calm` pages have a signature too: a type moment, a crop, a colour field.
+- Supporting pieces from the Dark Motions catalogue (`recipes/motions/INDEX.md`) follow the same budget; how to pick them: `references/dark-motions.md`. The audit's `motion-budget` check counts what moves by itself per screen; motion the user explicitly asked for goes inside `[data-motion-allow]`.
 - Write it in the bible (§9 *Motion grammar*, "Signature"), in `STORYBOARD.json` (`"signature": true` on exactly one section) and as line 1 of `BUILD_SPEC.md`.
 
 ## What changes per mode in the flow

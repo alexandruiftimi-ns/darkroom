@@ -1,0 +1,10 @@
+/* Dark Motions · Travelling edge light (C01) · CSS
+   A short bright light runs round the card border forever, over a faint resting outline.
+   Use: featured pricing card, "new" feature, highlighted testimonial
+   Markup: put the snippet in demo.html#travelling-edge-light inside <div data-dm="travelling-edge-light">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="travelling-edge-light"] .cd{position:relative;width:230px;height:150px;border-radius:16px;background:#141417;padding:20px;display:flex;flex-direction:column;justify-content:flex-end;gap:4px;color:var(--dm-ink)}
+[data-dm="travelling-edge-light"] .cd b{font-size:17px}[data-dm="travelling-edge-light"] .cd span{font-size:13px;color:var(--dm-muted)}@property --c01a{syntax:'<angle>';inherits:false;initial-value:0deg}
+[data-dm="travelling-edge-light"] .beam{border:1.5px solid transparent;background:linear-gradient(#141417,#141417) padding-box,conic-gradient(from var(--c01a),transparent 0 72%,var(--dm-a) 86%,#fff 89%,transparent 93%) border-box,linear-gradient(#ffffff18,#ffffff18) border-box;animation:dm-travelling-edge-light calc(4s*var(--dm-dur,1)) linear infinite}
+@keyframes dm-travelling-edge-light{to{--c01a:360deg}}
+@media (prefers-reduced-motion: reduce){[data-dm="travelling-edge-light"],[data-dm="travelling-edge-light"] *,[data-dm="travelling-edge-light"] *::before,[data-dm="travelling-edge-light"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

@@ -1,0 +1,11 @@
+/* Dark Motions · Arrow hand-off (U05) · CSS
+   On hover the arrow shoots out to the right and a fresh one slides in from the left.
+   Use: "Read more", "Next", navigation CTAs · Visitor: hover
+   Markup: put the snippet in demo.html#arrow-hand-off inside <div data-dm="arrow-hand-off">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="arrow-hand-off"] .bt{position:relative;font:600 15px/1 "Segoe UI Variable Text","Segoe UI",system-ui,sans-serif;color:var(--dm-ink);background:#1b1b20;border:1px solid #ffffff1c;border-radius:999px;padding:15px 28px;cursor:pointer;overflow:hidden;isolation:isolate}[data-dm="arrow-hand-off"] .bt{display:inline-flex;gap:10px;align-items:center}
+[data-dm="arrow-hand-off"] .ar{position:relative;width:1em;height:1em;overflow:hidden;display:inline-block}
+[data-dm="arrow-hand-off"] .ar i{position:absolute;inset:0;font-style:normal;transition:transform calc(.45s*var(--dm-dur,1)) cubic-bezier(.6,0,.2,1)}
+[data-dm="arrow-hand-off"] .ar i:last-child{transform:translateX(-130%)}
+[data-dm="arrow-hand-off"] .bt:hover .ar i:first-child{transform:translateX(130%)}[data-dm="arrow-hand-off"] .bt:hover .ar i:last-child{transform:none;transition-delay:.08s}
+@media (prefers-reduced-motion: reduce){[data-dm="arrow-hand-off"],[data-dm="arrow-hand-off"] *,[data-dm="arrow-hand-off"] *::before,[data-dm="arrow-hand-off"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

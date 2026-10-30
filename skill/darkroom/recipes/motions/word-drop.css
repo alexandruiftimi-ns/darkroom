@@ -1,0 +1,8 @@
+/* Dark Motions · Word drop (T17) · CSS
+   Words fall in from above with a little tilt, bounce once on the line and settle straight.
+   Use: playful headline, food, toys, event posters
+   Markup: put the snippet in demo.html#word-drop inside <div data-dm="word-drop">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="word-drop"] .w{display:inline-block;opacity:0;animation:dm-word-drop calc(.9s*var(--dm-dur,1)) cubic-bezier(.3,0,.3,1) forwards;animation-delay:calc(var(--i)*110ms*var(--dm-dur,1))}
+@keyframes dm-word-drop{0%{opacity:0;transform:translateY(-180%) rotate(var(--r))}55%{opacity:1;transform:translateY(10%) rotate(calc(var(--r)*-.3))}75%{transform:translateY(-6%)}100%{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){[data-dm="word-drop"],[data-dm="word-drop"] *,[data-dm="word-drop"] *::before,[data-dm="word-drop"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

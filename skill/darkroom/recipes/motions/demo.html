@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dark Motions demo</title>
+<link rel="stylesheet" href="dm-kit.css">
+<link rel="stylesheet" href="blur-in-words.css">
+<link rel="stylesheet" href="spring-letters.css">
+<link rel="stylesheet" href="colour-sweep.css">
+<link rel="stylesheet" href="aurora-text.css">
+<link rel="stylesheet" href="glint.css">
+<link rel="stylesheet" href="outline-fill.css">
+<link rel="stylesheet" href="marker-highlight.css">
+<link rel="stylesheet" href="hand-underline.css">
+<link rel="stylesheet" href="signal-glitch.css">
+<link rel="stylesheet" href="wave-letters.css">
+<link rel="stylesheet" href="split-flap-board.css">
+<link rel="stylesheet" href="tracking-settle.css">
+<link rel="stylesheet" href="weight-wave.css">
+<link rel="stylesheet" href="extrude.css">
+<link rel="stylesheet" href="neon-tube.css">
+<link rel="stylesheet" href="word-drop.css">
+<link rel="stylesheet" href="ink-bleed.css">
+<link rel="stylesheet" href="chromatic-settle.css">
+<link rel="stylesheet" href="orbiting-caption.css">
+<link rel="stylesheet" href="grid-pulses.css">
+<link rel="stylesheet" href="dot-wave.css">
+<link rel="stylesheet" href="meteor-shower.css">
+<link rel="stylesheet" href="drifting-particles.css">
+<link rel="stylesheet" href="constellation.css">
+<link rel="stylesheet" href="aurora-field.css">
+<link rel="stylesheet" href="horizon-grid.css">
+<link rel="stylesheet" href="warp-field.css">
+<link rel="stylesheet" href="ripple-rings.css">
+<link rel="stylesheet" href="turning-mesh.css">
+<link rel="stylesheet" href="flicker-grid.css">
+<link rel="stylesheet" href="falling-beams.css">
+<link rel="stylesheet" href="silk-lines.css">
+<link rel="stylesheet" href="bokeh.css">
+<link rel="stylesheet" href="orbit-rings.css">
+<link rel="stylesheet" href="repel-dots.css">
+<link rel="stylesheet" href="travelling-edge-light.css">
+<link rel="stylesheet" href="spectrum-rim.css">
+<link rel="stylesheet" href="proximity-rims.css">
+<link rel="stylesheet" href="card-torch.css">
+<link rel="stylesheet" href="breathing-glow.css">
+<link rel="stylesheet" href="marching-outline.css">
+<link rel="stylesheet" href="corner-brackets.css">
+<link rel="stylesheet" href="flip-card.css">
+<link rel="stylesheet" href="glass-glare.css">
+<link rel="stylesheet" href="fan-stack.css">
+<link rel="stylesheet" href="drawn-frame.css">
+<link rel="stylesheet" href="lift-and-bloom.css">
+<link rel="stylesheet" href="expanding-panels.css">
+<link rel="stylesheet" href="ticket-tear.css">
+<link rel="stylesheet" href="shimmer-pass.css">
+<link rel="stylesheet" href="pulse-ring.css">
+<link rel="stylesheet" href="press-ripple.css">
+<link rel="stylesheet" href="rainbow-rim.css">
+<link rel="stylesheet" href="arrow-hand-off.css">
+<link rel="stylesheet" href="directional-fill.css">
+<link rel="stylesheet" href="gooey-drops.css">
+<link rel="stylesheet" href="confetti-pop.css">
+<link rel="stylesheet" href="hold-to-confirm.css">
+<link rel="stylesheet" href="letter-roll.css">
+<link rel="stylesheet" href="cursor-glow.css">
+<link rel="stylesheet" href="send-done.css">
+<link rel="stylesheet" href="physical-press.css">
+<link rel="stylesheet" href="sparkle-hover.css">
+<link rel="stylesheet" href="iris-open.css">
+<link rel="stylesheet" href="colour-wipe.css">
+<link rel="stylesheet" href="pixel-dissolve.css">
+<link rel="stylesheet" href="blinds.css">
+<link rel="stylesheet" href="frame-and-settle.css">
+<link rel="stylesheet" href="reading-ring.css">
+<link rel="stylesheet" href="ripple-grid.css">
+<link rel="stylesheet" href="drawn-path.css">
+<link rel="stylesheet" href="focus-pull.css">
+<link rel="stylesheet" href="fold-down.css">
+<link rel="stylesheet" href="split-open.css">
+<link rel="stylesheet" href="comet-tail.css">
+<link rel="stylesheet" href="lens-ring.css">
+<link rel="stylesheet" href="photo-trail.css">
+<link rel="stylesheet" href="pressure-type.css">
+<link rel="stylesheet" href="liquid-cursor.css">
+<link rel="stylesheet" href="crosshair-readout.css">
+<link rel="stylesheet" href="watching-eyes.css">
+<link rel="stylesheet" href="water-ripples.css">
+<link rel="stylesheet" href="click-stamps.css">
+<link rel="stylesheet" href="slot-reels.css">
+<link rel="stylesheet" href="filling-ring.css">
+<link rel="stylesheet" href="rising-bars.css">
+<link rel="stylesheet" href="line-draw.css">
+<link rel="stylesheet" href="odometer.css">
+<link rel="stylesheet" href="live-sparkline.css">
+<link rel="stylesheet" href="waving-mascot.css">
+<link rel="stylesheet" href="rocket-climb.css">
+<link rel="stylesheet" href="happy-coffee.css">
+<link rel="stylesheet" href="growing-plant.css">
+<link rel="stylesheet" href="paper-plane.css">
+<link rel="stylesheet" href="little-robot.css">
+<link rel="stylesheet" href="sunny-spell.css">
+<link rel="stylesheet" href="floating-ghost.css">
+<link rel="stylesheet" href="swimming-fish.css">
+<style>
+body{margin:0;background:#101012;color:var(--dm-ink);font:14px/1.45 system-ui,sans-serif}
+h1{font-size:20px;margin:24px}
+main{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;padding:0 24px 60px}
+section{background:#17171a;border:1px solid #2a2a2e;border-radius:12px;overflow:hidden}
+section h2{font-size:14px;margin:10px 12px}
+.stage{height:250px;background:var(--dm-bg);display:grid;place-items:center;overflow:hidden}
+.demo-h{font:700 40px/1.05 system-ui,sans-serif;letter-spacing:-.02em;text-align:center;margin:0 24px;color:var(--dm-ink)}
+.demo-p{font-size:15px;line-height:1.6;color:#cfcbc2;max-width:30ch;text-align:center;margin:0}
+.demo-ph{background:radial-gradient(circle at 72% 30%,#ffd9a0 0 7%,transparent 7.5%),linear-gradient(160deg,transparent 55%,#1d1a2e 55.2%),linear-gradient(200deg,transparent 48%,#2b2440 48.2%),linear-gradient(180deg,#f0a35e 0%,#c0567a 45%,#3b2b5c 75%,#141022 100%)}
+.demo-ph2{background:radial-gradient(circle at 30% 35%,#bfe9ff 0 9%,transparent 9.5%),linear-gradient(170deg,transparent 60%,#0d2a2a 60.2%),linear-gradient(190deg,transparent 52%,#164040 52.2%),linear-gradient(180deg,#7fd3c8 0%,#2f8f9d 50%,#123a4a 80%,#08161c 100%)}
+</style>
+</head>
+<body>
+<h1>Dark Motions (98)</h1>
+<main>
+<section id="blur-in-words"><h2>Blur-in words</h2><div class="stage" data-dm="blur-in-words"><h2 class="demo-h t">Light finds the edges first</h2></div></section>
+<section id="spring-letters"><h2>Spring letters</h2><div class="stage" data-dm="spring-letters"><h2 class="demo-h t">Shot on film</h2></div></section>
+<section id="colour-sweep"><h2>Colour sweep</h2><div class="stage" data-dm="colour-sweep"><h2 class="demo-h t">Develop the <span>colour</span></h2></div></section>
+<section id="aurora-text"><h2>Aurora text</h2><div class="stage" data-dm="aurora-text"><h2 class="demo-h t" style="font-size:56px">Aurora</h2></div></section>
+<section id="glint"><h2>Glint</h2><div class="stage" data-dm="glint"><h2 class="demo-h t">Brushed steel</h2></div></section>
+<section id="outline-fill"><h2>Outline fill</h2><div class="stage" data-dm="outline-fill"><h2 class="demo-h t" style="font-size:64px">FILL</h2></div></section>
+<section id="marker-highlight"><h2>Marker highlight</h2><div class="stage" data-dm="marker-highlight"><p class="demo-p" style="font-size:19px">We print <mark>every frame by hand</mark> and ship it <mark>within a week</mark>.</p></div></section>
+<section id="hand-underline"><h2>Hand underline</h2><div class="stage" data-dm="hand-underline"><h2 class="demo-h">Made <span class="u">by hand<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 13 C 40 5, 70 17, 102 10 S 160 4, 197 11"/></svg></span></h2></div></section>
+<section id="signal-glitch"><h2>Signal glitch</h2><div class="stage" data-dm="signal-glitch"><h2 class="demo-h t" data-text="NO SIGNAL">NO SIGNAL</h2></div></section>
+<section id="wave-letters"><h2>Wave letters</h2><div class="stage" data-dm="wave-letters"><h2 class="demo-h t">Riding the swell</h2></div></section>
+<section id="split-flap-board"><h2>Split-flap board</h2><div class="stage" data-dm="split-flap-board"><div class="board" aria-live="polite"></div></div></section>
+<section id="tracking-settle"><h2>Tracking settle</h2><div class="stage" data-dm="tracking-settle"><h2 class="demo-h t">MAISON NOIR</h2></div></section>
+<section id="weight-wave"><h2>Weight wave</h2><div class="stage" data-dm="weight-wave"><h2 class="demo-h t" style="font-size:52px">Variable</h2></div></section>
+<section id="extrude"><h2>Extrude</h2><div class="stage" data-dm="extrude"><div class="ex"><h2 class="demo-h t front" style="font-size:56px">POSTER</h2></div></div></section>
+<section id="neon-tube"><h2>Neon tube</h2><div class="stage" data-dm="neon-tube"><h2 class="demo-h t" style="font-weight:400;font-size:48px">Open late</h2></div></section>
+<section id="word-drop"><h2>Word drop</h2><div class="stage" data-dm="word-drop"><h2 class="demo-h t">Fresh bread every single morning</h2></div></section>
+<section id="ink-bleed"><h2>Ink bleed</h2><div class="stage" data-dm="ink-bleed"><svg width="0" height="0" style="position:absolute"><filter id="dm-ink-bleed-f"><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 28 -11"/></filter></svg><div class="ink"><h2 class="demo-h t" style="font-size:54px">Ink</h2></div></div></section>
+<section id="chromatic-settle"><h2>Chromatic settle</h2><div class="stage" data-dm="chromatic-settle"><h2 class="demo-h t">Lens flare</h2></div></section>
+<section id="orbiting-caption"><h2>Orbiting caption</h2><div class="stage" data-dm="orbiting-caption"><div class="ring"><svg viewBox="0 0 200 200" aria-label="Darkroom motion studio"><defs><path id="dm-orbiting-caption-p" d="M100,100 m-72,0 a72,72 0 1,1 144,0 a72,72 0 1,1 -144,0"/></defs><text><textPath href="#dm-orbiting-caption-p">DARKROOM · MOTION · STUDIO · EST 2026 ·</textPath></text></svg><span class="dot">↓</span></div></div></section>
+<section id="grid-pulses"><h2>Grid pulses</h2><div class="stage" data-dm="grid-pulses"><div class="grid"></div><h2 class="demo-h" style="position:relative">Built on a grid</h2></div></section>
+<section id="dot-wave"><h2>Dot wave</h2><div class="stage" data-dm="dot-wave"><div class="dots"></div><div class="lit"></div></div></section>
+<section id="meteor-shower"><h2>Meteor shower</h2><div class="stage" data-dm="meteor-shower"><div class="sky"></div><h2 class="demo-h" style="position:relative">Make a wish</h2></div></section>
+<section id="drifting-particles"><h2>Drifting particles</h2><div class="stage" data-dm="drifting-particles"></div></section>
+<section id="constellation"><h2>Constellation</h2><div class="stage" data-dm="constellation"></div></section>
+<section id="aurora-field"><h2>Aurora field</h2><div class="stage" data-dm="aurora-field"><div class="blob a"></div><div class="blob b"></div><div class="blob c"></div><h2 class="demo-h" style="position:relative">Northern</h2></div></section>
+<section id="horizon-grid"><h2>Horizon grid</h2><div class="stage" data-dm="horizon-grid"><div class="sun"></div><div class="floor"></div></div></section>
+<section id="warp-field"><h2>Warp field</h2><div class="stage" data-dm="warp-field"></div></section>
+<section id="ripple-rings"><h2>Ripple rings</h2><div class="stage" data-dm="ripple-rings"><div class="rings"><i></i><i></i><i></i><i></i><i></i><b></b></div></div></section>
+<section id="turning-mesh"><h2>Turning mesh</h2><div class="stage" data-dm="turning-mesh"><div class="mesh"></div><div class="grain"></div><h2 class="demo-h" style="position:relative">Spectrum</h2></div></section>
+<section id="flicker-grid"><h2>Flicker grid</h2><div class="stage" data-dm="flicker-grid"><h2 class="demo-h" style="position:relative">Always on</h2></div></section>
+<section id="falling-beams"><h2>Falling beams</h2><div class="stage" data-dm="falling-beams"><div class="beams"></div><h2 class="demo-h" style="position:relative">Streaming</h2></div></section>
+<section id="silk-lines"><h2>Silk lines</h2><div class="stage" data-dm="silk-lines"><svg class="lines" preserveAspectRatio="none"></svg></div></section>
+<section id="bokeh"><h2>Bokeh</h2><div class="stage" data-dm="bokeh"><div class="bk"></div></div></section>
+<section id="orbit-rings"><h2>Orbit rings</h2><div class="stage" data-dm="orbit-rings"><div class="sys"><div class="orb o1"><span>◆</span><span>●</span><span>▲</span></div><div class="orb o2"><span>✦</span><span>■</span></div><b>DR</b></div></div></section>
+<section id="repel-dots"><h2>Repel dots</h2><div class="stage" data-dm="repel-dots"></div></section>
+<section id="travelling-edge-light"><h2>Travelling edge light</h2><div class="stage" data-dm="travelling-edge-light"><div class="cd beam"><b>Studio plan</b><span>Unlimited rolls, priority scans.</span></div></div></section>
+<section id="spectrum-rim"><h2>Spectrum rim</h2><div class="stage" data-dm="spectrum-rim"><div class="cd rim"><b>Studio plan</b><span>Unlimited rolls, priority scans.</span></div></div></section>
+<section id="proximity-rims"><h2>Proximity rims</h2><div class="stage" data-dm="proximity-rims"><div class="g"><div class="t">Feature 1</div><div class="t">Feature 2</div><div class="t">Feature 3</div><div class="t">Feature 4</div></div></div></section>
+<section id="card-torch"><h2>Card torch</h2><div class="stage" data-dm="card-torch"><div class="cd torch"><b>Night scans</b><span>Move across me.</span></div></div></section>
+<section id="breathing-glow"><h2>Breathing glow</h2><div class="stage" data-dm="breathing-glow"><div class="cd glow"><b>Recommended</b><span>Most picked by studios.</span></div></div></section>
+<section id="marching-outline"><h2>Marching outline</h2><div class="stage" data-dm="marching-outline"><div class="drop"><svg aria-hidden="true"><rect x="1" y="1" rx="14" ry="14"/></svg><span>Drop your scans here</span></div></div></section>
+<section id="corner-brackets"><h2>Corner brackets</h2><div class="stage" data-dm="corner-brackets"><div class="cd vf"><b>Frame 24</b><span>Kodak Portra 400</span></div></div></section>
+<section id="flip-card"><h2>Flip card</h2><div class="stage" data-dm="flip-card"><div class="flip"><div class="in"><div class="f a"><b>Ilford HP5</b><span>Hover to turn</span></div><div class="f b"><b>€14 / roll</b><span>Black & white, ISO 400</span></div></div></div></div></section>
+<section id="glass-glare"><h2>Glass glare</h2><div class="stage" data-dm="glass-glare"><div class="cd gl demo-ph"><b style="color:#fff">Golden hour</b><span style="color:#fffb">Hover me</span></div></div></section>
+<section id="fan-stack"><h2>Fan stack</h2><div class="stage" data-dm="fan-stack"><div class="fan"><i class="demo-ph2"></i><i class="demo-ph"></i><i class="demo-ph2"></i></div></div></section>
+<section id="drawn-frame"><h2>Drawn frame</h2><div class="stage" data-dm="drawn-frame"><div class="df"><svg aria-hidden="true"><rect x="1" y="1" rx="15" pathLength="1"/></svg><b>Step one</b><span>Send us your rolls.</span></div></div></section>
+<section id="lift-and-bloom"><h2>Lift and bloom</h2><div class="stage" data-dm="lift-and-bloom"><div class="cd lift"><b>Read the story</b><span>6 min · Process</span></div></div></section>
+<section id="expanding-panels"><h2>Expanding panels</h2><div class="stage" data-dm="expanding-panels"><div class="row"><div class="p demo-ph"><span>Portraits</span></div><div class="p demo-ph2"><span>Weddings</span></div><div class="p demo-ph"><span>Products</span></div><div class="p demo-ph2"><span>Travel</span></div></div></div></section>
+<section id="ticket-tear"><h2>Ticket tear</h2><div class="stage" data-dm="ticket-tear"><div class="tk"><div class="main"><b>Darkroom Night</b><span>Fri 13 Nov · 20:00</span></div><div class="stub"><b>A12</b></div></div></div></section>
+<section id="shimmer-pass"><h2>Shimmer pass</h2><div class="stage" data-dm="shimmer-pass"><button class="bt">Book a session</button></div></section>
+<section id="pulse-ring"><h2>Pulse ring</h2><div class="stage" data-dm="pulse-ring"><button class="bt">Join live</button></div></section>
+<section id="press-ripple"><h2>Press ripple</h2><div class="stage" data-dm="press-ripple"><button class="bt">Press anywhere on me</button></div></section>
+<section id="rainbow-rim"><h2>Rainbow rim</h2><div class="stage" data-dm="rainbow-rim"><button class="bt">Try it free</button></div></section>
+<section id="arrow-hand-off"><h2>Arrow hand-off</h2><div class="stage" data-dm="arrow-hand-off"><button class="bt">See the work <span class="ar"><i>→</i><i>→</i></span></button></div></section>
+<section id="directional-fill"><h2>Directional fill</h2><div class="stage" data-dm="directional-fill"><button class="bt">Get in touch</button></div></section>
+<section id="gooey-drops"><h2>Gooey drops</h2><div class="stage" data-dm="gooey-drops"><svg width="0" height="0" style="position:absolute"><filter id="dm-gooey-drops-g"><feGaussianBlur in="SourceGraphic" stdDeviation="7"/><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -9"/></filter></svg>
+<div class="wrap"><div class="goo"><span class="body"></span><i></i><i></i><i></i><i></i></div><button class="lab">Pour me one</button></div></div></section>
+<section id="confetti-pop"><h2>Confetti pop</h2><div class="stage" data-dm="confetti-pop"><button class="bt">Celebrate</button></div></section>
+<section id="hold-to-confirm"><h2>Hold to confirm</h2><div class="stage" data-dm="hold-to-confirm"><button class="bt">Hold to publish</button></div></section>
+<section id="letter-roll"><h2>Letter roll</h2><div class="stage" data-dm="letter-roll"><button class="bt" aria-label="Start a project"><span class="lb">Start a project</span></button></div></section>
+<section id="cursor-glow"><h2>Cursor glow</h2><div class="stage" data-dm="cursor-glow"><button class="bt" style="padding:20px 46px">Choose Studio</button></div></section>
+<section id="send-done"><h2>Send → done</h2><div class="stage" data-dm="send-done"><button class="bt"><span class="t">Subscribe</span><span class="sp"></span><svg class="ck" viewBox="0 0 24 24"><path pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></button></div></section>
+<section id="physical-press"><h2>Physical press</h2><div class="stage" data-dm="physical-press"><button class="push"><span>Press start</span></button></div></section>
+<section id="sparkle-hover"><h2>Sparkle hover</h2><div class="stage" data-dm="sparkle-hover"><div class="sw"><button class="bt">Upgrade to Pro</button></div></div></section>
+<section id="iris-open"><h2>Iris open</h2><div class="stage" data-dm="iris-open"><div class="ph demo-ph" ></div></div></section>
+<section id="colour-wipe"><h2>Colour wipe</h2><div class="stage" data-dm="colour-wipe"><div class="wr"><div class="ph demo-ph" ></div></div></div></section>
+<section id="pixel-dissolve"><h2>Pixel dissolve</h2><div class="stage" data-dm="pixel-dissolve"><div class="wr"><div class="ph demo-ph" ></div><div class="px"></div></div></div></section>
+<section id="blinds"><h2>Blinds</h2><div class="stage" data-dm="blinds"><div class="wr"><div class="ph demo-ph2" ></div><div class="bl"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div></section>
+<section id="frame-and-settle"><h2>Frame and settle</h2><div class="stage" data-dm="frame-and-settle"><div class="fr"><div class="ph demo-ph" ></div></div></div></section>
+<section id="reading-ring"><h2>Reading ring</h2><div class="stage" data-dm="reading-ring"><div class="sc"><article><p>Every roll is developed in small batches, by hand, at controlled temperature. We check each strip on the light table before scanning.</p><p>Every roll is developed in small batches, by hand, at controlled temperature. We check each strip on the light table before scanning.</p><p>Every roll is developed in small batches, by hand, at controlled temperature. We check each strip on the light table before scanning.</p><p>Every roll is developed in small batches, by hand, at controlled temperature. We check each strip on the light table before scanning.</p><p>Every roll is developed in small batches, by hand, at controlled temperature. We check each strip on the light table before scanning.</p><p>Every roll is developed in small batches, by hand, at controlled temperature. We check each strip on the light table before scanning.</p><p>Every roll is developed in small batches, by hand, at controlled temperature. We check each strip on the light table before scanning.</p><p>Every roll is developed in small batches, by hand, at controlled temperature. We check each strip on the light table before scanning.</p><p>Every roll is developed in small batches, by hand, at controlled temperature. We check each strip on the light table before scanning.</p></article></div>
+<div class="ring"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" class="bg"/><circle cx="20" cy="20" r="17" class="fg" pathLength="1"/></svg><b>0</b></div></div></section>
+<section id="ripple-grid"><h2>Ripple grid</h2><div class="stage" data-dm="ripple-grid"><div class="g"></div></div></section>
+<section id="drawn-path"><h2>Drawn path</h2><div class="stage" data-dm="drawn-path"><div class="sc"><div class="in"><svg viewBox="0 0 300 900"><path class="bg" d="M150 0 C 40 120, 260 220, 150 330 S 40 560, 150 650 S 260 820, 150 900"/><path class="fg" pathLength="1" d="M150 0 C 40 120, 260 220, 150 330 S 40 560, 150 650 S 260 820, 150 900"/></svg><span style="top:120px">1 · Shoot</span><span style="top:330px">2 · Develop</span><span style="top:540px">3 · Scan</span><span style="top:750px">4 · Print</span></div></div></div></section>
+<section id="focus-pull"><h2>Focus pull</h2><div class="stage" data-dm="focus-pull"><div class="sc"><div class="ph demo-ph" ></div><div class="ph demo-ph2" ></div><div class="ph demo-ph" ></div><div class="ph demo-ph2" ></div><div class="ph demo-ph" ></div></div></div></section>
+<section id="fold-down"><h2>Fold down</h2><div class="stage" data-dm="fold-down"><div class="sc"><div class="f">Fresh chemistry every day</div><div class="f">Scans at 4000 dpi</div><div class="f">Negatives returned</div><div class="f">Prints on fibre paper</div><div class="f">Same-week turnaround</div><div class="f">Free re-scans</div></div></div></section>
+<section id="split-open"><h2>Split open</h2><div class="stage" data-dm="split-open"><div class="sp"><h2 class="demo-h" style="font-size:30px">Now open</h2><div class="hf l demo-ph"></div><div class="hf r demo-ph"></div></div></div></section>
+<section id="comet-tail"><h2>Comet tail</h2><div class="stage" data-dm="comet-tail"><p class="demo-p">Move around</p></div></section>
+<section id="lens-ring"><h2>Lens ring</h2><div class="stage" data-dm="lens-ring"><div class="links"><a class="tg">Work</a><a class="tg">About</a><a class="tg">Contact</a></div><i class="dot"></i><i class="ring"></i></div></section>
+<section id="photo-trail"><h2>Photo trail</h2><div class="stage" data-dm="photo-trail"><h2 class="demo-h" style="position:relative;z-index:2;pointer-events:none">Our archive</h2></div></section>
+<section id="pressure-type"><h2>Pressure type</h2><div class="stage" data-dm="pressure-type"><h2 class="demo-h t" style="font-size:58px">PRESSURE</h2></div></section>
+<section id="liquid-cursor"><h2>Liquid cursor</h2><div class="stage" data-dm="liquid-cursor"><svg width="0" height="0" style="position:absolute"><filter id="dm-liquid-cursor-g"><feGaussianBlur in="SourceGraphic" stdDeviation="8"/><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 22 -10"/></filter></svg><div class="goo"><i class="a"></i><i class="b"></i></div><p class="demo-p" style="position:relative;pointer-events:none">Move slowly, then fast</p></div></section>
+<section id="crosshair-readout"><h2>Crosshair readout</h2><div class="stage" data-dm="crosshair-readout"><i class="h"></i><i class="v"></i><span class="lbl" aria-hidden="true">x 0 · y 0</span></div></section>
+<section id="watching-eyes"><h2>Watching eyes</h2><div class="stage" data-dm="watching-eyes"><div class="eyes"><div class="e"><i></i></div><div class="e"><i></i></div></div></div></section>
+<section id="water-ripples"><h2>Water ripples</h2><div class="stage" data-dm="water-ripples"><p class="demo-p" style="pointer-events:none">Trail your finger</p></div></section>
+<section id="click-stamps"><h2>Click stamps</h2><div class="stage" data-dm="click-stamps"><p class="demo-p" style="pointer-events:none">Click around</p></div></section>
+<section id="slot-reels"><h2>Slot reels</h2><div class="stage" data-dm="slot-reels"><div class="slot" aria-live="polite"></div><p class="demo-p" style="margin-top:12px">frames developed</p></div></section>
+<section id="filling-ring"><h2>Filling ring</h2><div class="stage" data-dm="filling-ring"><div class="rg"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" class="bg"/><circle cx="60" cy="60" r="52" class="fg" pathLength="100"/></svg><b>0%</b></div></div></section>
+<section id="rising-bars"><h2>Rising bars</h2><div class="stage" data-dm="rising-bars"><div class="ch"></div></div></section>
+<section id="line-draw"><h2>Line draw</h2><div class="stage" data-dm="line-draw"><svg class="lc" viewBox="0 0 300 160"><defs><linearGradient id="dm-line-draw-g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--dm-a)" stop-opacity=".35"/><stop offset="1" stop-color="var(--dm-a)" stop-opacity="0"/></linearGradient></defs><path class="ar" d="M0 130 L40 118 L80 124 L120 96 L160 102 L200 70 L240 58 L280 26 L280 160 L0 160Z"/><path class="ln" pathLength="1" d="M0 130 L40 118 L80 124 L120 96 L160 102 L200 70 L240 58 L280 26"/><circle class="pt" cx="280" cy="26" r="5"/><circle class="pg" cx="280" cy="26" r="5"/></svg></div></section>
+<section id="odometer"><h2>Odometer</h2><div class="stage" data-dm="odometer"><div class="od"></div><p class="demo-p" style="margin-top:12px">rolls shipped</p></div></section>
+<section id="live-sparkline"><h2>Live sparkline</h2><div class="stage" data-dm="live-sparkline"><div class="lv"><div class="hd"><span class="led"></span>Live load <b>0</b></div><svg viewBox="0 0 260 90" preserveAspectRatio="none"><path class="ln"/></svg></div></div></section>
+<section id="waving-mascot"><h2>Waving mascot</h2><div class="stage" data-dm="waving-mascot"><svg class="ill" viewBox="0 0 200 170" aria-label="Waving mascot">
+<ellipse class="sh fb" cx="100" cy="154" rx="44" ry="7"/>
+<g class="bod fb">
+  <path class="arm fb" d="M140 96 q20 -14 24 -40" stroke="var(--dm-a)" stroke-width="13" stroke-linecap="round" fill="none"/>
+  <path d="M100 42 C140 42 152 80 150 112 C148 142 126 152 100 152 C74 152 52 142 50 112 C48 80 60 42 100 42Z" fill="var(--dm-a)"/>
+  <path d="M70 70 C76 56 88 50 98 50" stroke="#fff" stroke-opacity=".35" stroke-width="7" stroke-linecap="round" fill="none"/>
+  <path d="M60 104 q-14 10 -12 24" stroke="color-mix(in srgb,var(--dm-a) 80%,#000)" stroke-width="13" stroke-linecap="round" fill="none"/>
+  <g class="eyes fb"><ellipse cx="84" cy="92" rx="7" ry="9" fill="#1d1a17"/><ellipse cx="116" cy="92" rx="7" ry="9" fill="#1d1a17"/><circle cx="86.5" cy="88.5" r="2.4" fill="#fff"/><circle cx="118.5" cy="88.5" r="2.4" fill="#fff"/></g>
+  <ellipse cx="72" cy="108" rx="7" ry="4" fill="#ff7a8a" opacity=".6"/><ellipse cx="128" cy="108" rx="7" ry="4" fill="#ff7a8a" opacity=".6"/>
+  <path d="M90 112 q10 10 20 0" stroke="#1d1a17" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+</g></svg></div></section>
+<section id="rocket-climb"><h2>Rocket climb</h2><div class="stage" data-dm="rocket-climb"><svg class="ill" viewBox="0 0 200 170" aria-label="Rocket">
+<g class="lines"><line x1="30" y1="-20" x2="30" y2="10" stroke="#ffffff22" stroke-width="2" stroke-linecap="round" style="animation-delay:0s"/><line x1="60" y1="-20" x2="60" y2="10" stroke="#ffffff40" stroke-width="2" stroke-linecap="round" style="animation-delay:-0.27s"/><line x1="140" y1="-20" x2="140" y2="10" stroke="#ffffff22" stroke-width="2" stroke-linecap="round" style="animation-delay:-0.54s"/><line x1="170" y1="-20" x2="170" y2="10" stroke="#ffffff40" stroke-width="2" stroke-linecap="round" style="animation-delay:-0.81s"/><line x1="50" y1="-20" x2="50" y2="10" stroke="#ffffff22" stroke-width="2" stroke-linecap="round" style="animation-delay:-1.08s"/><line x1="155" y1="-20" x2="155" y2="10" stroke="#ffffff40" stroke-width="2" stroke-linecap="round" style="animation-delay:-1.35s"/></g>
+<g class="rk">
+  <g class="fl fb"><path d="M88 128 Q100 172 112 128Z" fill="#ff8a3d"/><path d="M93 128 Q100 156 107 128Z" fill="#ffe27a"/></g>
+  <path d="M100 20 C124 40 128 90 120 128 H80 C72 90 76 40 100 20Z" fill="#f2efe9"/>
+  <path d="M100 20 C112 30 118 50 120 70 H80 C82 50 88 30 100 20Z" fill="var(--dm-a)"/>
+  <path d="M80 100 L62 132 L82 126Z M120 100 L138 132 L118 126Z" fill="var(--dm-a)"/>
+  <circle cx="100" cy="84" r="11" fill="#22305a"/><circle cx="100" cy="84" r="7" fill="#7cc4ff"/><circle cx="97" cy="81" r="2.2" fill="#fff"/>
+  <path d="M114 40 C120 60 122 90 118 120" stroke="#00000020" stroke-width="6" fill="none"/>
+</g></svg></div></section>
+<section id="happy-coffee"><h2>Happy coffee</h2><div class="stage" data-dm="happy-coffee"><svg class="ill" viewBox="0 0 200 170" aria-label="Coffee cup">
+<g class="steam"><path d="M84 66 c-8 -10 8 -16 0 -26 c-8 -10 8 -16 0 -26" pathLength="1" style="animation-delay:0s"/><path d="M100 66 c-8 -10 8 -16 0 -26 c-8 -10 8 -16 0 -26" pathLength="1" style="animation-delay:-0.7s"/><path d="M116 66 c-8 -10 8 -16 0 -26 c-8 -10 8 -16 0 -26" pathLength="1" style="animation-delay:-1.4s"/></g>
+<ellipse class="sh" cx="100" cy="152" rx="56" ry="6"/>
+<g class="cup fb">
+  <ellipse cx="100" cy="146" rx="52" ry="8" fill="#d9d2c5"/>
+  <path d="M140 92 c22 -4 26 30 2 32" stroke="#f2efe9" stroke-width="9" fill="none"/>
+  <path d="M60 78 H140 L134 136 C132 144 120 146 100 146 C80 146 68 144 66 136Z" fill="#f2efe9"/>
+  <ellipse cx="100" cy="78" rx="40" ry="7" fill="#6b3d1e"/><ellipse cx="94" cy="77" rx="16" ry="2.5" fill="#a0673a"/>
+  <path d="M68 92 L70 126" stroke="#00000014" stroke-width="6" stroke-linecap="round"/>
+  <g class="face"><path d="M84 106 q5 -6 10 0 M106 106 q5 -6 10 0" stroke="#1d1a17" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M94 116 q6 6 12 0" stroke="#1d1a17" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="80" cy="115" rx="5" ry="3" fill="#ff8f9c" opacity=".6"/><ellipse cx="120" cy="115" rx="5" ry="3" fill="#ff8f9c" opacity=".6"/></g>
+</g></svg></div></section>
+<section id="growing-plant"><h2>Growing plant</h2><div class="stage" data-dm="growing-plant"><svg class="ill" viewBox="0 0 200 170" aria-label="Plant growing">
+<ellipse class="sh" cx="100" cy="158" rx="40" ry="5"/>
+<g class="pl">
+  <path class="stem" pathLength="1" d="M100 126 C98 106 104 90 100 64" stroke="#40916c" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path class="lf l1" d="M100 108 C84 104 76 92 74 84 C88 84 98 94 100 108Z" fill="#52b788"/>
+  <path class="lf l2" d="M101 92 C116 88 124 76 126 68 C112 68 102 78 101 92Z" fill="#74c69d"/>
+  <g class="fw"><g transform="rotate(0 100 52)"><ellipse class="pt" style="--i:0" cx="100" cy="38" rx="6" ry="13" fill="#fdfbf5"/></g><g transform="rotate(45 100 52)"><ellipse class="pt" style="--i:1" cx="100" cy="38" rx="6" ry="13" fill="#fdfbf5"/></g><g transform="rotate(90 100 52)"><ellipse class="pt" style="--i:2" cx="100" cy="38" rx="6" ry="13" fill="#fdfbf5"/></g><g transform="rotate(135 100 52)"><ellipse class="pt" style="--i:3" cx="100" cy="38" rx="6" ry="13" fill="#fdfbf5"/></g><g transform="rotate(180 100 52)"><ellipse class="pt" style="--i:4" cx="100" cy="38" rx="6" ry="13" fill="#fdfbf5"/></g><g transform="rotate(225 100 52)"><ellipse class="pt" style="--i:5" cx="100" cy="38" rx="6" ry="13" fill="#fdfbf5"/></g><g transform="rotate(270 100 52)"><ellipse class="pt" style="--i:6" cx="100" cy="38" rx="6" ry="13" fill="#fdfbf5"/></g><g transform="rotate(315 100 52)"><ellipse class="pt" style="--i:7" cx="100" cy="38" rx="6" ry="13" fill="#fdfbf5"/></g><circle class="ctr" cx="100" cy="52" r="8" fill="#ffc43d"/><circle cx="97.5" cy="49.5" r="2.5" fill="#ffe08a"/></g>
+</g>
+<path d="M72 126 H128 L122 158 H78Z" fill="#c8693a"/><path d="M78 130 H122 L121 136 H79Z" fill="#00000022"/><rect x="68" y="120" width="64" height="10" rx="3" fill="#dd7d4a"/></svg></div></section>
+<section id="paper-plane"><h2>Paper plane</h2><div class="stage" data-dm="paper-plane"><div class="sky"><svg class="path" viewBox="0 0 300 200"><path d="M-20 150 C 60 150 70 40 140 60 S 220 170 320 60" fill="none" stroke="#ffffff30" stroke-width="2" stroke-dasharray="5 7"/></svg>
+<svg class="pl" viewBox="0 0 40 24" width="40" height="24"><path d="M0 2 L40 12 L0 22 L9 12Z" fill="#f2efe9"/><path d="M9 12 L40 12 L0 22Z" fill="#c9c2b5"/><path d="M9 12 L40 12 L12 17Z" fill="#9d968a"/></svg></div></div></section>
+<section id="little-robot"><h2>Little robot</h2><div class="stage" data-dm="little-robot"><svg class="ill" viewBox="0 0 200 170" aria-label="Robot">
+<ellipse class="sh" cx="100" cy="158" rx="40" ry="5"/>
+<g class="rb">
+  <rect x="70" y="104" width="60" height="48" rx="12" fill="#b8bcc6"/><circle class="chest" cx="100" cy="126" r="7" fill="var(--dm-a)"/>
+  <path class="armL fb" d="M70 116 q-16 6 -14 24" stroke="#9aa0ac" stroke-width="9" stroke-linecap="round" fill="none"/><path class="armR fb" d="M130 116 q16 6 14 24" stroke="#9aa0ac" stroke-width="9" stroke-linecap="round" fill="none"/>
+  <g class="hd fb">
+    <line x1="100" y1="40" x2="100" y2="24" stroke="#9aa0ac" stroke-width="4"/><circle class="ant" cx="100" cy="22" r="6" fill="#ff5b5b"/>
+    <rect x="62" y="40" width="76" height="58" rx="16" fill="#dfe2e8"/><rect x="72" y="54" width="56" height="30" rx="10" fill="#1d2230"/>
+    <g class="eye"><rect x="80" y="62" width="12" height="14" rx="5" fill="#7cf2ff"/><rect x="108" y="62" width="12" height="14" rx="5" fill="#7cf2ff"/></g>
+    <rect x="56" y="58" width="8" height="20" rx="3" fill="#b8bcc6"/><rect x="136" y="58" width="8" height="20" rx="3" fill="#b8bcc6"/>
+  </g>
+</g></svg></div></section>
+<section id="sunny-spell"><h2>Sunny spell</h2><div class="stage" data-dm="sunny-spell"><svg class="ill" viewBox="0 0 200 170" aria-label="Sun and clouds">
+<g class="c2"><path d="M120 70 a12 12 0 0 1 10 -16 a16 16 0 0 1 28 -2 a10 10 0 0 1 12 14 a8 8 0 0 1 -2 14 H126 a8 8 0 0 1 -6 -10Z" fill="#d9d4ca"/></g>
+<g class="sun fb"><g class="rays fb"><rect x="97" y="18" width="6" height="18" rx="3" fill="#ffc94a" transform="rotate(0 100 75)"/><rect x="97" y="18" width="6" height="18" rx="3" fill="#ffc94a" transform="rotate(30 100 75)"/><rect x="97" y="18" width="6" height="18" rx="3" fill="#ffc94a" transform="rotate(60 100 75)"/><rect x="97" y="18" width="6" height="18" rx="3" fill="#ffc94a" transform="rotate(90 100 75)"/><rect x="97" y="18" width="6" height="18" rx="3" fill="#ffc94a" transform="rotate(120 100 75)"/><rect x="97" y="18" width="6" height="18" rx="3" fill="#ffc94a" transform="rotate(150 100 75)"/><rect x="97" y="18" width="6" height="18" rx="3" fill="#ffc94a" transform="rotate(180 100 75)"/><rect x="97" y="18" width="6" height="18" rx="3" fill="#ffc94a" transform="rotate(210 100 75)"/><rect x="97" y="18" width="6" height="18" rx="3" fill="#ffc94a" transform="rotate(240 100 75)"/><rect x="97" y="18" width="6" height="18" rx="3" fill="#ffc94a" transform="rotate(270 100 75)"/><rect x="97" y="18" width="6" height="18" rx="3" fill="#ffc94a" transform="rotate(300 100 75)"/><rect x="97" y="18" width="6" height="18" rx="3" fill="#ffc94a" transform="rotate(330 100 75)"/></g><circle cx="100" cy="75" r="34" fill="#ffd45e"/><circle cx="100" cy="75" r="26" fill="#ffe17f"/></g>
+<g class="c1"><path d="M40 120 a18 18 0 0 1 16 -26 a24 24 0 0 1 44 -4 a16 16 0 0 1 22 20 a12 12 0 0 1 -4 22 H48 a12 12 0 0 1 -8 -12Z" fill="#f2efe9"/></g></svg></div></section>
+<section id="floating-ghost"><h2>Floating ghost</h2><div class="stage" data-dm="floating-ghost"><svg class="ill" viewBox="0 0 200 170" aria-label="Ghost">
+<ellipse class="sh fb" cx="100" cy="158" rx="36" ry="5"/>
+<g class="gh fb">
+  <path class="hem fb" d="M64 80 C64 50 80 34 100 34 C120 34 136 50 136 80 V132 q-6 10 -12 0 q-6 -10 -12 0 q-6 10 -12 0 q-6 -10 -12 0 q-6 10 -12 0 q-6 -10 -12 0Z" fill="#f2efe9"/>
+  <path d="M76 70 C76 54 86 44 98 42" stroke="#fff" stroke-width="5" stroke-linecap="round" fill="none" opacity=".8"/>
+  <g class="eyes fb"><ellipse cx="88" cy="78" rx="6" ry="8" fill="#1d1a17"/><ellipse cx="112" cy="78" rx="6" ry="8" fill="#1d1a17"/></g>
+  <ellipse cx="100" cy="98" rx="6" ry="7" fill="#1d1a17"/><ellipse cx="80" cy="92" rx="6" ry="3.5" fill="#ff9fb0" opacity=".55"/><ellipse cx="120" cy="92" rx="6" ry="3.5" fill="#ff9fb0" opacity=".55"/>
+</g></svg></div></section>
+<section id="swimming-fish"><h2>Swimming fish</h2><div class="stage" data-dm="swimming-fish"><div class="tank"><div class="sw"><svg class="fish" viewBox="0 0 90 60" width="90" height="60"><path class="tl fb" d="M24 30 L4 14 Q10 30 4 46Z" fill="#ff8a3d"/><ellipse cx="48" cy="30" rx="28" ry="20" fill="#ffa94d"/><path d="M40 12 Q50 2 62 12Z M44 48 Q52 56 60 48Z" fill="#ff8a3d"/><path d="M36 16 Q30 30 36 44" stroke="#ff8a3d" stroke-width="3" fill="none"/><circle cx="62" cy="26" r="5" fill="#fff"/><circle cx="63.5" cy="26" r="2.6" fill="#141210"/><path d="M70 36 q3 2 6 0" stroke="#141210" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><i class="bub" style="left:20%;animation-delay:0s"></i><i class="bub" style="left:35%;animation-delay:-0.9s"></i><i class="bub" style="left:50%;animation-delay:-1.8s"></i><i class="bub" style="left:65%;animation-delay:-2.7s"></i><i class="bub" style="left:80%;animation-delay:-3.6s"></i></div></div></section>
+</main>
+<script type="module" src="blur-in-words.js"></script>
+<script type="module" src="spring-letters.js"></script>
+<script type="module" src="wave-letters.js"></script>
+<script type="module" src="split-flap-board.js"></script>
+<script type="module" src="weight-wave.js"></script>
+<script type="module" src="extrude.js"></script>
+<script type="module" src="word-drop.js"></script>
+<script type="module" src="grid-pulses.js"></script>
+<script type="module" src="meteor-shower.js"></script>
+<script type="module" src="drifting-particles.js"></script>
+<script type="module" src="constellation.js"></script>
+<script type="module" src="warp-field.js"></script>
+<script type="module" src="flicker-grid.js"></script>
+<script type="module" src="falling-beams.js"></script>
+<script type="module" src="silk-lines.js"></script>
+<script type="module" src="bokeh.js"></script>
+<script type="module" src="repel-dots.js"></script>
+<script type="module" src="proximity-rims.js"></script>
+<script type="module" src="card-torch.js"></script>
+<script type="module" src="press-ripple.js"></script>
+<script type="module" src="directional-fill.js"></script>
+<script type="module" src="confetti-pop.js"></script>
+<script type="module" src="hold-to-confirm.js"></script>
+<script type="module" src="letter-roll.js"></script>
+<script type="module" src="cursor-glow.js"></script>
+<script type="module" src="send-done.js"></script>
+<script type="module" src="sparkle-hover.js"></script>
+<script type="module" src="pixel-dissolve.js"></script>
+<script type="module" src="reading-ring.js"></script>
+<script type="module" src="ripple-grid.js"></script>
+<script type="module" src="drawn-path.js"></script>
+<script type="module" src="focus-pull.js"></script>
+<script type="module" src="fold-down.js"></script>
+<script type="module" src="comet-tail.js"></script>
+<script type="module" src="lens-ring.js"></script>
+<script type="module" src="photo-trail.js"></script>
+<script type="module" src="pressure-type.js"></script>
+<script type="module" src="liquid-cursor.js"></script>
+<script type="module" src="crosshair-readout.js"></script>
+<script type="module" src="watching-eyes.js"></script>
+<script type="module" src="water-ripples.js"></script>
+<script type="module" src="click-stamps.js"></script>
+<script type="module" src="slot-reels.js"></script>
+<script type="module" src="filling-ring.js"></script>
+<script type="module" src="rising-bars.js"></script>
+<script type="module" src="odometer.js"></script>
+<script type="module" src="live-sparkline.js"></script>
+</body>
+</html>

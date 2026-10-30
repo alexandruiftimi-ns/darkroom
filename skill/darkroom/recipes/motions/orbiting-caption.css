@@ -1,0 +1,12 @@
+/* Dark Motions · Orbiting caption (T20) · CSS
+   A line of small caps runs around a circle that turns slowly, like a stamp or a badge.
+   Use: scroll-down badge, "new collection" seal, footer stamp
+   Markup: put the snippet in demo.html#orbiting-caption inside <div data-dm="orbiting-caption">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="orbiting-caption"] .ring{position:relative;width:170px;height:170px}
+[data-dm="orbiting-caption"] svg{width:100%;height:100%;animation:dm-orbiting-caption calc(16s*var(--dm-dur,1)) linear infinite}
+[data-dm="orbiting-caption"] text{font:600 14.2px ui-monospace,Consolas,monospace;letter-spacing:.18em;fill:var(--dm-ink)}
+[data-dm="orbiting-caption"] .dot{position:absolute;inset:0;margin:auto;width:58px;height:58px;border-radius:50%;background:var(--dm-a);color:#111;display:grid;place-items:center;font-size:24px}
+[data-dm="orbiting-caption"] .ring:hover svg{animation-duration:calc(5s*var(--dm-dur,1))}
+@keyframes dm-orbiting-caption{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion: reduce){[data-dm="orbiting-caption"],[data-dm="orbiting-caption"] *,[data-dm="orbiting-caption"] *::before,[data-dm="orbiting-caption"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

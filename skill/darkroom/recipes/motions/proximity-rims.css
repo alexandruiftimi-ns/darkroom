@@ -1,0 +1,10 @@
+/* Dark Motions · Proximity rims (C03) · CSS
+   A grid of cards whose borders light up only where the cursor is near, across all cards at once.
+   Use: feature grid, bento section, pricing row · Visitor: move cursor
+   Markup: put the snippet in demo.html#proximity-rims inside <div data-dm="proximity-rims">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="proximity-rims"] .g{display:grid;grid-template-columns:repeat(2,140px);gap:10px}
+[data-dm="proximity-rims"] .t{position:relative;height:90px;border-radius:12px;background:#141417;border:1px solid #ffffff12;display:grid;place-items:center;font-size:13px;color:var(--dm-muted)}
+[data-dm="proximity-rims"] .t::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;background:radial-gradient(130px circle at var(--x,-999px) var(--y,-999px),var(--dm-a),transparent 70%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+[data-dm="proximity-rims"] .t::after{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(160px circle at var(--x,-999px) var(--y,-999px),#ffffff0c,transparent 70%)}
+@media (prefers-reduced-motion: reduce){[data-dm="proximity-rims"],[data-dm="proximity-rims"] *,[data-dm="proximity-rims"] *::before,[data-dm="proximity-rims"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

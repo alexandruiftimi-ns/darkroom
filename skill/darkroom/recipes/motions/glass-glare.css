@@ -1,0 +1,10 @@
+/* Dark Motions · Glass glare (C09) · CSS
+   On hover a bright diagonal reflection sweeps once across the card, like light across glass.
+   Use: product cards, gallery images, app-store badges · Visitor: hover
+   Markup: put the snippet in demo.html#glass-glare inside <div data-dm="glass-glare">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="glass-glare"] .cd{position:relative;width:230px;height:150px;border-radius:16px;background:#141417;padding:20px;display:flex;flex-direction:column;justify-content:flex-end;gap:4px;color:var(--dm-ink)}
+[data-dm="glass-glare"] .cd b{font-size:17px}[data-dm="glass-glare"] .cd span{font-size:13px;color:var(--dm-muted)}[data-dm="glass-glare"] .gl{overflow:hidden}
+[data-dm="glass-glare"] .gl::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,#ffffff70 48%,#ffffff20 52%,transparent 60%);transform:translateX(-120%);transition:transform 0s}
+[data-dm="glass-glare"] .gl:hover::after{transform:translateX(120%);transition:transform calc(.9s*var(--dm-dur,1)) cubic-bezier(.3,0,.3,1)}
+@media (prefers-reduced-motion: reduce){[data-dm="glass-glare"],[data-dm="glass-glare"] *,[data-dm="glass-glare"] *::before,[data-dm="glass-glare"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

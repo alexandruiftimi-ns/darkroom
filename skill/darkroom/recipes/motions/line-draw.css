@@ -1,0 +1,12 @@
+/* Dark Motions · Line draw (N04) · CSS
+   A chart line draws itself left to right, the area under it fades in, and the last point pulses.
+   Use: growth stories, investor / fintech pages, case-study results
+   Markup: put the snippet in demo.html#line-draw inside <div data-dm="line-draw">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="line-draw"] .lc{width:300px;height:160px;overflow:visible}
+[data-dm="line-draw"] .ln{fill:none;stroke:var(--dm-a);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:dm-line-draw calc(1.6s*var(--dm-dur,1)) cubic-bezier(.6,0,.3,1) forwards}
+[data-dm="line-draw"] .ar{fill:url(#dm-line-draw-g);opacity:0;animation:dm-line-draw-a calc(.8s*var(--dm-dur,1)) calc(1.2s*var(--dm-dur,1)) forwards}
+[data-dm="line-draw"] .pt{fill:var(--dm-a);opacity:0;animation:dm-line-draw-a .3s calc(1.6s*var(--dm-dur,1)) forwards}
+[data-dm="line-draw"] .pg{fill:none;stroke:var(--dm-a);opacity:0;transform-origin:280px 26px;animation:dm-line-draw-p calc(1.6s*var(--dm-dur,1)) calc(1.8s*var(--dm-dur,1)) infinite}
+@keyframes dm-line-draw{to{stroke-dashoffset:0}}@keyframes dm-line-draw-a{to{opacity:1}}@keyframes dm-line-draw-p{from{opacity:1;transform:scale(1)}to{opacity:0;transform:scale(3.2)}}
+@media (prefers-reduced-motion: reduce){[data-dm="line-draw"],[data-dm="line-draw"] *,[data-dm="line-draw"] *::before,[data-dm="line-draw"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

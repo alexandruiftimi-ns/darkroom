@@ -1,0 +1,9 @@
+/* Dark Motions · Directional fill (U06) · CSS
+   Colour fills the button from the side the cursor enters and drains out the side it leaves.
+   Use: secondary CTA, outline buttons, menu items · Visitor: hover from different sides
+   Markup: put the snippet in demo.html#directional-fill inside <div data-dm="directional-fill">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="directional-fill"] .bt{position:relative;font:600 15px/1 "Segoe UI Variable Text","Segoe UI",system-ui,sans-serif;color:var(--dm-ink);background:#1b1b20;border:1px solid #ffffff1c;border-radius:999px;padding:15px 28px;cursor:pointer;overflow:hidden;isolation:isolate}[data-dm="directional-fill"] .bt{background:transparent;border-color:var(--dm-a);transition:color .35s}
+[data-dm="directional-fill"] .bt::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--dm-a);transform:scaleX(0);transform-origin:var(--o,left);transition:transform calc(.45s*var(--dm-dur,1)) cubic-bezier(.6,0,.2,1)}
+[data-dm="directional-fill"] .bt.on{color:#141210}[data-dm="directional-fill"] .bt.on::before{transform:scaleX(1)}
+@media (prefers-reduced-motion: reduce){[data-dm="directional-fill"],[data-dm="directional-fill"] *,[data-dm="directional-fill"] *::before,[data-dm="directional-fill"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

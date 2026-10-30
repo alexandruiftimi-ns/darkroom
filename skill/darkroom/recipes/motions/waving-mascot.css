@@ -1,0 +1,15 @@
+/* Dark Motions · Waving mascot (D01) · CSS
+   A round blob character bounces gently, waves hello and blinks; its shadow breathes with the bounce.
+   Use: welcome / onboarding, empty states, friendly 404, kids and SaaS brands
+   Markup: put the snippet in demo.html#waving-mascot inside <div data-dm="waving-mascot">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="waving-mascot"] .ill{width:250px;height:auto;overflow:visible}[data-dm="waving-mascot"] .ill .fb{transform-box:fill-box}
+[data-dm="waving-mascot"] .sh{fill:#000;opacity:.35}[data-dm="waving-mascot"] .bod{transform-origin:50% 100%;animation:dm-waving-mascot-b calc(1.6s*var(--dm-dur,1)) ease-in-out infinite}
+[data-dm="waving-mascot"] .sh{transform-origin:50% 50%;animation:dm-waving-mascot-s calc(1.6s*var(--dm-dur,1)) ease-in-out infinite}
+[data-dm="waving-mascot"] .arm{transform-origin:0% 100%;animation:dm-waving-mascot-a calc(0.8s*var(--dm-dur,1)) ease-in-out infinite alternate}
+[data-dm="waving-mascot"] .eyes{transform-origin:50% 50%;animation:dm-waving-mascot-e calc(3.6s*var(--dm-dur,1)) infinite}
+@keyframes dm-waving-mascot-b{0%,100%{transform:translateY(0) scale(1.05,.95)}50%{transform:translateY(-9px) scale(.98,1.03)}}
+@keyframes dm-waving-mascot-s{0%,100%{transform:scaleX(1);opacity:.35}50%{transform:scaleX(.8);opacity:.22}}
+@keyframes dm-waving-mascot-a{from{transform:rotate(-12deg)}to{transform:rotate(22deg)}}
+@keyframes dm-waving-mascot-e{0%,44%,50%,100%{transform:scaleY(1)}47%{transform:scaleY(.1)}}
+@media (prefers-reduced-motion: reduce){[data-dm="waving-mascot"],[data-dm="waving-mascot"] *,[data-dm="waving-mascot"] *::before,[data-dm="waving-mascot"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

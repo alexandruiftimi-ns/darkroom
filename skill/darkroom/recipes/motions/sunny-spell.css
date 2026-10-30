@@ -1,0 +1,12 @@
+/* Dark Motions · Sunny spell (D11) · CSS
+   A sun with slowly turning rays while two puffy clouds drift across at different speeds.
+   Use: weather, travel, holidays, "good news" sections, outdoor brands
+   Markup: put the snippet in demo.html#sunny-spell inside <div data-dm="sunny-spell">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="sunny-spell"] .ill{width:250px;height:auto;overflow:visible}[data-dm="sunny-spell"] .ill .fb{transform-box:fill-box}
+[data-dm="sunny-spell"] .sh{fill:#000;opacity:.35}[data-dm="sunny-spell"] .rays{transform-origin:50% 50%;animation:dm-sunny-spell-r calc(18s*var(--dm-dur,1)) linear infinite}
+[data-dm="sunny-spell"] .sun{transform-origin:50% 50%;animation:dm-sunny-spell-s calc(3s*var(--dm-dur,1)) ease-in-out infinite}
+[data-dm="sunny-spell"] .c1{animation:dm-sunny-spell-c calc(9s*var(--dm-dur,1)) ease-in-out infinite alternate}[data-dm="sunny-spell"] .c2{animation:dm-sunny-spell-c2 calc(12s*var(--dm-dur,1)) ease-in-out infinite alternate}
+@keyframes dm-sunny-spell-r{to{transform:rotate(360deg)}}@keyframes dm-sunny-spell-s{50%{transform:scale(1.04)}}
+@keyframes dm-sunny-spell-c{from{transform:translateX(-24px)}to{transform:translateX(34px)}}@keyframes dm-sunny-spell-c2{from{transform:translateX(16px)}to{transform:translateX(-40px)}}
+@media (prefers-reduced-motion: reduce){[data-dm="sunny-spell"],[data-dm="sunny-spell"] *,[data-dm="sunny-spell"] *::before,[data-dm="sunny-spell"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

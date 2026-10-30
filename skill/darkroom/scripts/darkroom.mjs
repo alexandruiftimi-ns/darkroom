@@ -81,7 +81,7 @@ try {
   else if (cmd === 'init') init(SKILL_DIR);
   else if (cmd === 'state') state(opt);
   else if (cmd === 'capture') { if (!pos[0]) { console.error(USAGE); process.exit(1); } await capture(pos[0], opt); }
-  else if (cmd === 'shoot') { if (!pos[0]) { console.error(USAGE); process.exit(1); } await capture(pos[0], { ...opt, label: opt.label ?? 'shoot', out: opt.out ?? '.darkroom/qa/shots', 'no-sheet': true }, { defaultModes: opt.motion ? ['no-preference'] : ['reduce'] }); }
+  else if (cmd === 'shoot') { if (!pos[0]) { console.error(USAGE); process.exit(1); } await capture(pos[0], { ...opt, label: opt.label ?? 'shoot', out: opt.out ?? path.join('.darkroom', 'qa', 'shots', new Date().toISOString().replace(/[-:]/g, '').replace(/\..*/, '').replace('T', '-')), 'no-sheet': true }, { defaultModes: opt.motion ? ['no-preference'] : ['reduce'] }); }
   else if (cmd === 'compare') { if (pos.length < 2) { console.error(USAGE); process.exit(1); } await compare(pos[0], pos[1], opt); }
   else if (cmd === 'audit') { if (!pos[0]) { console.error(USAGE); process.exit(1); } await audit(pos[0], opt, { resolveSettings }); }
   else if (cmd === 'study') { if (!pos[0]) { console.error(USAGE); process.exit(1); } await study(pos[0]); }

@@ -1,0 +1,13 @@
+/* Dark Motions · Rocket climb (D04) · CSS
+   A rocket hovers with a flickering flame while speed lines and stars rush past it.
+   Use: launches, "get started", growth / startup pages, success screens
+   Markup: put the snippet in demo.html#rocket-climb inside <div data-dm="rocket-climb">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="rocket-climb"] .ill{width:250px;height:auto;overflow:visible}[data-dm="rocket-climb"] .ill .fb{transform-box:fill-box}
+[data-dm="rocket-climb"] .sh{fill:#000;opacity:.35}[data-dm="rocket-climb"] .rk{animation:dm-rocket-climb-r calc(2.4s*var(--dm-dur,1)) ease-in-out infinite}
+[data-dm="rocket-climb"] .fl{transform-origin:50% 0%;animation:dm-rocket-climb-f calc(0.18s*var(--dm-dur,1)) steps(2) infinite alternate}
+[data-dm="rocket-climb"] .lines line{animation:dm-rocket-climb-l calc(0.8s*var(--dm-dur,1)) linear infinite}
+@keyframes dm-rocket-climb-r{0%,100%{transform:translate(0,0) rotate(-2deg)}50%{transform:translate(0,-7px) rotate(2deg)}}
+@keyframes dm-rocket-climb-f{from{transform:scale(1,1)}to{transform:scale(.85,1.25)}}
+@keyframes dm-rocket-climb-l{from{transform:translateY(0)}to{transform:translateY(200px)}}
+@media (prefers-reduced-motion: reduce){[data-dm="rocket-climb"],[data-dm="rocket-climb"] *,[data-dm="rocket-climb"] *::before,[data-dm="rocket-climb"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

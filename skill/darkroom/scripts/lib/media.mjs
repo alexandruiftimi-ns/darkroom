@@ -174,6 +174,8 @@ export async function frames(source, opt) {
   const src = path.resolve(source);
   const outDir = path.resolve(opt.out ?? path.join(path.dirname(src), `${path.basename(src, path.extname(src))}-frames`));
   mkdirp(outDir);
+  // a re-run must not mix with an earlier sequence (12 fps then 3 fps used to leave 36 frames, not 9)
+  for (const dir of [outDir, path.join(outDir, 'mobile')]) if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir)) if (/^seq_\d{4}\.\w+$/.test(f)) fs.rmSync(path.join(dir, f));
   const fps = Number(opt.fps ?? 24); const width = Number(opt.width ?? 1600); const quality = Number(opt.quality ?? 76);
   const format = String(opt.format ?? 'webp'); const ext = format === 'jpeg' ? 'jpg' : format;
   const eng = engines();

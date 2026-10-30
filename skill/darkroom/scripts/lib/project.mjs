@@ -24,7 +24,30 @@ const writeJson = (f, o) => { mkdirp(path.dirname(f)); fs.writeFileSync(f, JSON.
 
 // Settings come from a ```darkroom JSON block (or a plain .json file). Order: --bible, project.json "config",
 // .darkroom/settings.json, DESIGN_BIBLE.md, PROJECT_BLUEPRINT.md, DESIGN.md. Returns { settings, source, problem }.
+// Audit defaults per style pack (law 4: thresholds are landing-page defaults, switched per pack). They sit under the
+// bible's own ```darkroom block: anything the bible or the user sets wins.
+export const PACK_AUDIT = {
+  'editorial-news': { maxZones: 5, wordBudgets: { hero: 45, feature: 90, proof: 90 } },
+  catalog: { maxZones: 5, wordBudgets: { feature: 60 } },
+  trust: { wordBudgets: { feature: 60, proof: 80 } },
+  restaurant: { maxZones: 4 },
+  family: { maxZones: 4 },
+  luxury: { wordBudgets: { hero: 20, feature: 35 } },
+  'art-gallery': { wordBudgets: { hero: 20, feature: 35 } },
+  cinematic: { wordBudgets: { hero: 20 } },
+  'glass-cinema': { wordBudgets: { hero: 20 } },
+};
+
 export function resolveSettings(file) {
+  const found = findSettings(file);
+  const pack = /^pack:([\w.-]+)$/.exec(readJson(PROJECT)?.look ?? '')?.[1];
+  const base = PACK_AUDIT[pack];
+  if (!base) return found;
+  const s = found.settings;
+  return { ...found, settings: { ...base, ...s, wordBudgets: { ...base.wordBudgets, ...s.wordBudgets } }, source: `${found.source ?? 'defaults'} + pack ${pack}` };
+}
+
+function findSettings(file) {
   const candidates = [];
   if (file && file !== true) candidates.push(String(file));
   const cfg = readJson(PROJECT)?.config;
@@ -105,7 +128,11 @@ export function state(opt) {
     p.approvals.push({ id: String(opt.approve), date: new Date().toISOString().slice(0, 10), revision, evidence: latest?.run ?? null, note: opt.note && opt.note !== true ? String(opt.note) : '' });
     changed = true;
   }
-  if (opt.open) { const [type, id, blocking] = String(opt.open).split(':'); p.open.push({ type, id, blocking: blocking === 'blocking' }); changed = true; }
+  if (opt.open) {
+    const [type, id, blocking] = String(opt.open).split(':');
+    if (opt.open === true || !type || !id) { console.error('--open needs type:id[:blocking], e.g. --open asset:hero-video:blocking'); process.exit(1); }
+    p.open.push({ type, id, blocking: blocking === 'blocking' }); changed = true;
+  }
   if (opt.close) { p.open = p.open.filter((o) => o.id !== String(opt.close)); changed = true; }
   if (changed) writeJson(PROJECT, { ...p });
   const stale = runs.filter((r) => revision && r.revision && r.revision !== revision).map((r) => r.run);

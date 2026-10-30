@@ -1,0 +1,9 @@
+/* Dark Motions · Turning mesh (B10) · CSS
+   A big soft colour wheel turns and breathes behind the content, with fine grain on top.
+   Use: hero backdrop, product launch, music / creative tools
+   Markup: put the snippet in demo.html#turning-mesh inside <div data-dm="turning-mesh">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="turning-mesh"] .mesh{position:absolute;width:150%;aspect-ratio:1;background:conic-gradient(from 0deg,var(--dm-a),var(--dm-c),var(--dm-b),#38e1c6,var(--dm-a));filter:blur(60px) saturate(1.1);opacity:.55;animation:dm-turning-mesh calc(18s*var(--dm-dur,1)) linear infinite}
+[data-dm="turning-mesh"] .grain{position:absolute;inset:0;opacity:.18;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+@keyframes dm-turning-mesh{0%{transform:rotate(0) scale(1)}50%{transform:rotate(180deg) scale(1.15)}100%{transform:rotate(360deg) scale(1)}}
+@media (prefers-reduced-motion: reduce){[data-dm="turning-mesh"],[data-dm="turning-mesh"] *,[data-dm="turning-mesh"] *::before,[data-dm="turning-mesh"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

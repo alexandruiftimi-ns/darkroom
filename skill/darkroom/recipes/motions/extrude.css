@@ -1,0 +1,11 @@
+/* Dark Motions · Extrude (T15) · CSS
+   Flat text slowly pulls out of the page into a solid block shadow, then sinks back.
+   Use: retro, poster, bold sale headline
+   Markup: put the snippet in demo.html#extrude inside <div data-dm="extrude">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="extrude"] .ex{position:relative}[data-dm="extrude"] .ex .demo-h{margin:0}
+[data-dm="extrude"] .ly{position:absolute;left:0;top:0;width:100%;will-change:transform;animation:dm-extrude-l calc(3.2s*var(--dm-dur,1)) cubic-bezier(.65,0,.35,1) infinite alternate}
+[data-dm="extrude"] .front{position:relative;will-change:transform;animation:dm-extrude-f calc(3.2s*var(--dm-dur,1)) cubic-bezier(.65,0,.35,1) infinite alternate}
+@keyframes dm-extrude-l{from{transform:translate(0,0)}to{transform:translate(calc(var(--i)*1px - 5px),calc(var(--i)*1px - 5px))}}
+@keyframes dm-extrude-f{from{transform:translate(0,0)}to{transform:translate(-5px,-5px)}}
+@media (prefers-reduced-motion: reduce){[data-dm="extrude"],[data-dm="extrude"] *,[data-dm="extrude"] *::before,[data-dm="extrude"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

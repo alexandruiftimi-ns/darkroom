@@ -1,0 +1,9 @@
+/* Dark Motions · Rainbow rim (U04) · CSS
+   A thin flowing rainbow runs along the button edge with a coloured glow pooling underneath.
+   Use: AI / creative product CTA, "try it free"
+   Markup: put the snippet in demo.html#rainbow-rim inside <div data-dm="rainbow-rim">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="rainbow-rim"] .bt{position:relative;font:600 15px/1 "Segoe UI Variable Text","Segoe UI",system-ui,sans-serif;color:var(--dm-ink);background:#1b1b20;border:1px solid #ffffff1c;border-radius:999px;padding:15px 28px;cursor:pointer;overflow:hidden;isolation:isolate}[data-dm="rainbow-rim"] .bt{overflow:visible;border:1.5px solid transparent;background:linear-gradient(#141417,#141417) padding-box,linear-gradient(90deg,var(--dm-a),var(--dm-c),var(--dm-b),#38e1c6,var(--dm-a)) border-box;background-size:100% 100%,200% 100%;animation:dm-rainbow-rim calc(3s*var(--dm-dur,1)) linear infinite}
+[data-dm="rainbow-rim"] .bt::before{content:"";position:absolute;left:10%;right:10%;bottom:-8px;height:18px;z-index:-1;background:linear-gradient(90deg,var(--dm-a),var(--dm-c),var(--dm-b),#38e1c6,var(--dm-a));background-size:200% 100%;filter:blur(14px);opacity:.7;animation:inherit}
+@keyframes dm-rainbow-rim{to{background-position:0 0,200% 0}}
+@media (prefers-reduced-motion: reduce){[data-dm="rainbow-rim"],[data-dm="rainbow-rim"] *,[data-dm="rainbow-rim"] *::before,[data-dm="rainbow-rim"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

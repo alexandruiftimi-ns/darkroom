@@ -1,0 +1,7 @@
+/* Dark Motions · Warp field (B08) · CSS
+   Stars stream outward from the centre in short streaks, the feeling of travelling forward fast.
+   Use: launch, "go faster" product, transition between sections
+   Markup: put the snippet in demo.html#warp-field inside <div data-dm="warp-field">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+
+@media (prefers-reduced-motion: reduce){[data-dm="warp-field"],[data-dm="warp-field"] *,[data-dm="warp-field"] *::before,[data-dm="warp-field"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

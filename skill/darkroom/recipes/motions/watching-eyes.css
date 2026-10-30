@@ -1,0 +1,10 @@
+/* Dark Motions · Watching eyes (K08) · CSS
+   A pair of cartoon eyes follow the cursor around the screen and blink now and then.
+   Use: friendly 404, mascots, kids / pet brands, login screens · Visitor: move cursor
+   Markup: put the snippet in demo.html#watching-eyes inside <div data-dm="watching-eyes">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="watching-eyes"] .eyes{display:flex;gap:18px}
+[data-dm="watching-eyes"] .e{width:70px;height:70px;border-radius:50%;background:#f2efe9;position:relative;display:grid;place-items:center;animation:dm-watching-eyes calc(4s*var(--dm-dur,1)) infinite}
+[data-dm="watching-eyes"] .e i{width:28px;height:28px;border-radius:50%;background:#141210;box-shadow:inset 6px -6px 0 -3px #fff8;transform:translate(var(--px,0),var(--py,0));transition:transform .08s}
+@keyframes dm-watching-eyes{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.08)}}
+@media (prefers-reduced-motion: reduce){[data-dm="watching-eyes"],[data-dm="watching-eyes"] *,[data-dm="watching-eyes"] *::before,[data-dm="watching-eyes"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

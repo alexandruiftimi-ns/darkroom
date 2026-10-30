@@ -29,6 +29,7 @@ export const CHECKS = [
   { id: 'headline-length', sev: 'low', basis: 'heuristic', what: 'headline > 8 words', limits: '' },
   { id: 'word-budget', sev: 'high', basis: 'heuristic', what: 'visible copy words vs section budget (> 2x high, > 1x medium), and single text blocks (paragraph, list item, quote, caption) over 60 words (medium); skipped for surface "read"', limits: 'excludes [data-darkroom-ignore] and aria-hidden subtrees; section boundaries are guessed from markup' },
   { id: 'dead-scroll', sev: 'high', basis: 'measured', what: 'default motion, desktop: the page scrolled in half-screen steps; more than 2 screens of scroll in a row where the picture barely changes (< 1.5 % of pixels): nothing new to see or read (> 2 medium, > 4 high)', limits: 'compares 96×60 thumbnails 250 ms after each step; slow ambient motion counts as no change; pages that do not scroll the document are skipped' },
+  { id: 'motion-budget', sev: 'high', basis: 'heuristic', what: 'default motion, desktop: the page scrolled a screen at a time; at each rest, the things that move by themselves in view (looping CSS or Web animations grouped per component, playing videos, canvases whose pixels change at rest): more than 3 in one screen medium, more than 5 high', limits: 'hover, cursor and scroll-linked effects are not counted (they move only when the visitor acts), nor entrances that finish; loops are grouped by [data-motion], the outermost svg, or the animation name; motion inside [data-motion-allow] (asked for by the user) is reported as info' },
   { id: 'glass-caption', sev: 'medium', basis: 'heuristic', what: 'the same frosted caption card (backdrop blur, 3+ words) repeated in 3 or more sections: an AI-film tell; one fixed card as a reading anchor is fine', limits: 'backdrop-filter blur only; cards inside one section (a grid) count once' },
   { id: 'phone-gate', sev: 'high', basis: 'heuristic', what: 'phone view (390 px) shows a gate instead of the page ("best viewed on desktop", "rotate your device", "not available on mobile")', limits: 'English, German, French and Spanish phrases; a gate drawn as an image is not detected' },
   { id: 'film-headline', sev: 'medium', basis: 'heuristic', what: 'first screen only: the h1 sits over full-bleed media (video, canvas or an image covering half the screen) and is smaller than 48 px desktop / 32 px phone', limits: 'later chapters may use subtitle-size text by design; media is found by size and overlap, not by looking at the picture' },
@@ -733,6 +734,13 @@ export function findings({ desk, mob, colour, motion, keyboard, contrast, ctx })
     else if (d.screens > 2) add('medium', 'dead-scroll', `${d.screens} screens of scroll with almost no visible change (from y ${d.fromY}): keep stretches without change under about two screens`, d);
     else add('info', 'dead-scroll', `longest stretch without visible change: ${d.screens} screens`);
   }
+  if (ex?.budget) {
+    const b = ex.budget; const list = b.hooks.slice(0, 6).join('; ');
+    if (b.count > 5) add('high', 'motion-budget', `${b.count} things move by themselves in one screen (at y ${b.y}): ${list}. One signature and at most three moving things per screen: stop or remove the rest (references/modes.md, "One signature per page")`, b);
+    else if (b.count > 3) add('medium', 'motion-budget', `${b.count} things move by themselves in one screen (at y ${b.y}): ${list}. Keep it to three: the signature and two quiet ones (references/modes.md)`, b);
+    else add('info', 'motion-budget', `most things moving by themselves in one screen: ${b.count} (${b.distinct} different across the page)`);
+    if (b.allowed.length) add('info', 'motion-budget', `motion the user asked for ([data-motion-allow]), not counted: ${b.allowed.join(', ')}`);
+  }
   if (desk.glassCaptions?.sections >= 3) add('medium', 'glass-caption', `the same frosted caption card (e.g. "${desk.glassCaptions.text}") repeats in ${desk.glassCaptions.sections} sections: it reads as a template. Vary the text treatment by chapter, or keep one fixed card as a reading anchor`, desk.glassCaptions);
   if (mob.phoneGate) add('high', 'phone-gate', `the phone view shows a gate ("${mob.phoneGate}") instead of the page: build the phone version (stacked chapters, stills instead of heavy scenes)`);
   for (const [label, d, floor] of [['desktop', desk, 48], ['mobile', mob, 32]]) {
@@ -786,6 +794,60 @@ async function revealPass(page) {
   }
   await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
   await page.waitForTimeout(steps ? 400 : 0);
+}
+
+// Motion budget: default motion, desktop. At each screen, list what moves by itself (not hover, cursor or scroll-linked motion).
+// Self-contained: serialised into the page.
+function motionHooks() {
+  const W = innerWidth, H = innerHeight;
+  const box = (el) => {
+    if (el.checkVisibility && !el.checkVisibility({ opacityProperty: true, visibilityProperty: true })) return null;
+    const r = el.getBoundingClientRect();
+    return r.width < 8 || r.height < 8 || r.bottom <= 0 || r.top >= H || r.right <= 0 || r.left >= W ? null : r;
+  };
+  const label = (el) => el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + (typeof el.className === 'string' && el.className.trim() ? '.' + el.className.trim().split(/\s+/)[0] : '');
+  const hooks = new Map(); const allowed = new Set();
+  for (const a of document.getAnimations()) {
+    const t = a.effect?.getComputedTiming?.(); const el = a.effect?.target;
+    if (a.playState !== 'running' || !t || t.iterations !== Infinity || !el?.isConnected || !box(el)) continue;
+    const ok = el.closest('[data-motion-allow]'); if (ok) { allowed.add(label(ok)); continue; }
+    let svg = el.closest('svg'); while (svg?.parentElement?.closest('svg')) svg = svg.parentElement.closest('svg');
+    const root = el.closest('[data-motion]') || svg; const name = a.animationName || a.id || 'animation';
+    const key = root || 'name:' + name;
+    if (!hooks.has(key)) hooks.set(key, root ? label(root) + ' loop' : '"' + name + '" loop on ' + label(el));
+  }
+  for (const v of document.querySelectorAll('video')) {
+    if (v.paused || v.ended || !box(v)) continue;
+    if (v.closest('[data-motion-allow]')) { allowed.add(label(v)); continue; }
+    hooks.set(v, 'video ' + (v.currentSrc || '').split('/').pop().slice(0, 40));
+  }
+  const canvases = [];
+  for (const c of document.querySelectorAll('canvas')) {
+    const r = box(c); if (!r || r.width < 80 || r.height < 80) continue;
+    const x = Math.max(0, r.left), y = Math.max(0, r.top);
+    canvases.push({ label: label(c), allowed: !!c.closest('[data-motion-allow]'), clip: { x, y, width: Math.min(W, r.right) - x, height: Math.min(H, r.bottom) - y } });
+  }
+  return { hooks: [...hooks.values()], allowed: [...allowed], canvases };
+}
+async function motionBudgetPass(page) {
+  const vpH = page.viewportSize().height;
+  const total = await page.evaluate(() => Math.max(0, document.documentElement.scrollHeight - innerHeight));
+  const steps = Math.min(25, Math.ceil(total / vpH));
+  let worst = { count: -1, y: 0, hooks: [] }; const allowed = new Set(); const all = new Set();
+  for (let i = 0; i <= steps; i++) {
+    await page.evaluate((y) => scrollTo({ top: y, behavior: 'instant' }), Math.min(total, i * vpH));
+    await page.waitForTimeout(450);
+    const s = await page.evaluate(motionHooks);
+    for (const c of s.canvases.slice(0, 4)) { // a canvas counts only if its pixels change while nobody touches the page
+      const a = await page.screenshot({ clip: c.clip, type: 'jpeg', quality: 50 }); await page.waitForTimeout(250);
+      const b = await page.screenshot({ clip: c.clip, type: 'jpeg', quality: 50 });
+      if (!a.equals(b)) (c.allowed ? s.allowed : s.hooks).push(c.allowed ? c.label : 'canvas ' + c.label);
+    }
+    s.allowed.forEach((x) => allowed.add(x)); s.hooks.forEach((h) => all.add(h));
+    if (s.hooks.length > worst.count) worst = { count: s.hooks.length, y: await page.evaluate(() => Math.round(scrollY)), hooks: s.hooks };
+  }
+  await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
+  return { ...worst, allowed: [...allowed], distinct: all.size };
 }
 
 // Dead scroll: default motion, desktop. Scroll the document in half-screen steps, photograph each rest, and find the
@@ -991,6 +1053,7 @@ export async function audit(target, opt, { resolveSettings, study = false } = {}
     await page.waitForTimeout(700);
     const motionNow = await page.evaluate(motionState);
     if (early && await page.evaluate(() => !!document.querySelector('canvas'))) { await revealPass(page); extra.blend = await page.evaluate(() => window.__drBlend ?? null); }
+    if (early) { try { extra.budget = await motionBudgetPass(page); } catch (e) { if (process.env.DARKROOM_DEBUG) console.error('motion-budget pass:', e.message); } }
     if (early) { try { extra.dead = await deadScrollPass(page, browser); } catch (e) { if (process.env.DARKROOM_DEBUG) console.error('dead-scroll pass:', e.message); } }
     if (!full) { await ctx.close(); return { motion: motionNow, extra }; }
     const dom = await page.evaluate(probeDom, probeArgs);
@@ -1019,7 +1082,7 @@ export async function audit(target, opt, { resolveSettings, study = false } = {}
     url, date: new Date().toISOString(),
     capture: { mode: 'prefers-reduced-motion: reduce (plus one default-motion pass for the motion comparison)', viewports: ['desktop-1440', 'mobile-390'], consent, tools: toolVersions(null) },
     config: { source, problem }, settings,
-    findings: findings({ desk: d.dom, mob: m.dom, colour: d.colour, motion: { reduce: d.motion, normal: normal.motion }, keyboard: d.keyboard, contrast: { desktop: d.contrast, mobile: m.contrast }, ctx: { settings, fonts: opt.fonts, mode: opt.mode, hosts, host, errors, problem, extra: { frames, h1At1500: normal.extra.h1At1500, video: normal.extra.video, restJs: normal.extra.restJs, restNoJs: noJs.restNoJs, font: d.font, blend: normal.extra.blend, fling, weight: normal.extra.weight, chains: normal.extra.chains, dead: normal.extra.dead } } }),
+    findings: findings({ desk: d.dom, mob: m.dom, colour: d.colour, motion: { reduce: d.motion, normal: normal.motion }, keyboard: d.keyboard, contrast: { desktop: d.contrast, mobile: m.contrast }, ctx: { settings, fonts: opt.fonts, mode: opt.mode, hosts, host, errors, problem, extra: { frames, h1At1500: normal.extra.h1At1500, video: normal.extra.video, restJs: normal.extra.restJs, restNoJs: noJs.restNoJs, font: d.font, blend: normal.extra.blend, fling, weight: normal.extra.weight, chains: normal.extra.chains, dead: normal.extra.dead, budget: normal.extra.budget } } }),
     desktop: d.dom, mobile: { zones: m.dom.zones, travel: m.dom.travel, smallTargets: m.dom.smallTargets, overflow: m.dom.overflow, nameless: m.dom.nameless, unlabeled: m.dom.unlabeled },
     colour: d.colour, contrast: { desktop: d.contrast, mobile: m.contrast }, keyboard: d.keyboard, motion: { reduce: d.motion, normal: normal.motion },
   };

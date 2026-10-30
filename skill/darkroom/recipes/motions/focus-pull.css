@@ -1,0 +1,9 @@
+/* Dark Motions · Focus pull (R11) · CSS
+   Images arrive soft and slightly zoomed, then pull into sharp focus as they enter the view.
+   Use: photography, galleries, product imagery on scroll · Visitor: scroll inside
+   Markup: put the snippet in demo.html#focus-pull inside <div data-dm="focus-pull">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="focus-pull"] .sc{position:absolute;inset:0;overflow:auto;padding:30px 0 60px;display:grid;justify-items:center;gap:24px;scrollbar-width:thin}
+[data-dm="focus-pull"] .ph{width:260px;height:170px;border-radius:12px;flex:none;filter:blur(14px);transform:scale(1.06);opacity:.5;transition:filter calc(1s*var(--dm-dur,1)) cubic-bezier(.2,.7,.2,1),transform calc(1.2s*var(--dm-dur,1)) cubic-bezier(.2,.7,.2,1),opacity calc(.8s*var(--dm-dur,1))}
+[data-dm="focus-pull"] .ph.in{filter:none;transform:none;opacity:1}
+@media (prefers-reduced-motion: reduce){[data-dm="focus-pull"],[data-dm="focus-pull"] *,[data-dm="focus-pull"] *::before,[data-dm="focus-pull"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

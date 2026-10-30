@@ -1,0 +1,10 @@
+/* Dark Motions · Filling ring (N02) · CSS
+   A ring fills to its value with an easing that slows near the end; the number counts up in step.
+   Use: satisfaction score, progress, skill / spec stats
+   Markup: put the snippet in demo.html#filling-ring inside <div data-dm="filling-ring">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="filling-ring"] .rg{position:relative;width:170px;height:170px;display:grid;place-items:center}
+[data-dm="filling-ring"] svg{position:absolute;inset:0;transform:rotate(-90deg)}
+[data-dm="filling-ring"] circle{fill:none;stroke-width:8;stroke-linecap:round}[data-dm="filling-ring"] .bg{stroke:#ffffff14}[data-dm="filling-ring"] .fg{stroke:var(--dm-a);stroke-dasharray:100;stroke-dashoffset:100}
+[data-dm="filling-ring"] b{font:800 36px system-ui;font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion: reduce){[data-dm="filling-ring"],[data-dm="filling-ring"] *,[data-dm="filling-ring"] *::before,[data-dm="filling-ring"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

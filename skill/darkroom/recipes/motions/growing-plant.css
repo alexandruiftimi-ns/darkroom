@@ -1,0 +1,19 @@
+/* Dark Motions · Growing plant (D06) · CSS
+   A stem grows out of a pot, two leaves unfold, a daisy opens petal by petal, then the plant sways; it starts again every few seconds.
+   Use: growth, sustainability, gardening, savings / investment, onboarding success
+   Markup: put the snippet in demo.html#growing-plant inside <div data-dm="growing-plant">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="growing-plant"] .ill{width:250px;height:auto;overflow:visible}[data-dm="growing-plant"] .ill .fb{transform-box:fill-box}
+[data-dm="growing-plant"] .sh{fill:#000;opacity:.35}[data-dm="growing-plant"] .stem{stroke-dasharray:1;animation:dm-growing-plant-s calc(7s*var(--dm-dur,1)) cubic-bezier(.5,0,.3,1) infinite}
+[data-dm="growing-plant"] .l1{transform-origin:100px 108px;animation:dm-growing-plant-l calc(7s*var(--dm-dur,1)) infinite}
+[data-dm="growing-plant"] .l2{transform-origin:101px 92px;animation:dm-growing-plant-l2 calc(7s*var(--dm-dur,1)) infinite}
+[data-dm="growing-plant"] .pt{transform-box:fill-box;transform-origin:50% 100%;animation:dm-growing-plant-p calc(7s*var(--dm-dur,1)) infinite;animation-delay:calc(var(--i)*45ms*var(--dm-dur,1))}
+[data-dm="growing-plant"] .ctr{transform-box:fill-box;transform-origin:50% 50%;animation:dm-growing-plant-c calc(7s*var(--dm-dur,1)) infinite}
+[data-dm="growing-plant"] .pl{transform-origin:100px 126px;animation:dm-growing-plant-w calc(7s*var(--dm-dur,1)) ease-in-out infinite}
+@keyframes dm-growing-plant-s{0%{stroke-dashoffset:1;opacity:1}22%{stroke-dashoffset:0;opacity:1}90%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
+@keyframes dm-growing-plant-l{0%,14%{transform:scale(0);opacity:1;animation-timing-function:cubic-bezier(.3,1.6,.5,1)}26%{transform:scale(1);opacity:1}90%{transform:scale(1);opacity:1}100%{transform:scale(1);opacity:0}}
+@keyframes dm-growing-plant-l2{0%,19%{transform:scale(0);opacity:1;animation-timing-function:cubic-bezier(.3,1.6,.5,1)}31%{transform:scale(1);opacity:1}90%{transform:scale(1);opacity:1}100%{transform:scale(1);opacity:0}}
+@keyframes dm-growing-plant-c{0%,24%{transform:scale(0);opacity:1;animation-timing-function:cubic-bezier(.3,1.8,.5,1)}32%{transform:scale(1);opacity:1}90%{transform:scale(1);opacity:1}100%{transform:scale(1);opacity:0}}
+@keyframes dm-growing-plant-p{0%,28%{transform:scale(0);opacity:1;animation-timing-function:cubic-bezier(.3,1.6,.5,1)}38%{transform:scale(1);opacity:1}90%{transform:scale(1);opacity:1}100%{transform:scale(1);opacity:0}}
+@keyframes dm-growing-plant-w{0%,42%{transform:rotate(0)}52%{transform:rotate(3deg)}62%{transform:rotate(-2.5deg)}72%{transform:rotate(1.5deg)}82%,100%{transform:rotate(0)}}
+@media (prefers-reduced-motion: reduce){[data-dm="growing-plant"],[data-dm="growing-plant"] *,[data-dm="growing-plant"] *::before,[data-dm="growing-plant"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

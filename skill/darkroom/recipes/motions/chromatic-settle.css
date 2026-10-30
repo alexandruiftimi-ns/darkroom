@@ -1,0 +1,8 @@
+/* Dark Motions · Chromatic settle (T19) · CSS
+   Text lands with red and cyan ghosts pulled apart, which snap together; a tiny jitter repeats later.
+   Use: film, camera, music, streetwear headline
+   Markup: put the snippet in demo.html#chromatic-settle inside <div data-dm="chromatic-settle">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="chromatic-settle"] .t{animation:dm-chromatic-settle calc(4s*var(--dm-dur,1)) cubic-bezier(.2,.8,.2,1) infinite}
+@keyframes dm-chromatic-settle{0%{text-shadow:-10px 0 #ff3b6bcc,10px 0 #37e2ffcc;filter:blur(1px)}22%,88%{text-shadow:0 0 #ff3b6b00,0 0 #37e2ff00;filter:none}91%{text-shadow:-3px 1px #ff3b6bcc,3px -1px #37e2ffcc}95%,100%{text-shadow:0 0 #ff3b6b00,0 0 #37e2ff00}}
+@media (prefers-reduced-motion: reduce){[data-dm="chromatic-settle"],[data-dm="chromatic-settle"] *,[data-dm="chromatic-settle"] *::before,[data-dm="chromatic-settle"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

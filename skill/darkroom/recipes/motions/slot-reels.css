@@ -1,0 +1,10 @@
+/* Dark Motions · Slot reels (N01) · CSS
+   Each digit spins like a slot-machine reel, blurred while moving, and the reels stop left to right.
+   Use: big stats, prize / price reveals, "users today"
+   Markup: put the snippet in demo.html#slot-reels inside <div data-dm="slot-reels">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="slot-reels"]{align-content:center}[data-dm="slot-reels"] .slot{display:flex;font:800 64px/1 system-ui,sans-serif;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+[data-dm="slot-reels"] .reel{height:1em;overflow:hidden}
+[data-dm="slot-reels"] .strip{display:flex;flex-direction:column;transition:transform var(--t) cubic-bezier(.2,.9,.25,1.05),filter var(--t)}
+[data-dm="slot-reels"] .strip.spin{filter:blur(2px)}
+@media (prefers-reduced-motion: reduce){[data-dm="slot-reels"],[data-dm="slot-reels"] *,[data-dm="slot-reels"] *::before,[data-dm="slot-reels"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

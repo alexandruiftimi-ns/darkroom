@@ -4,6 +4,16 @@ Darkroom uses [semantic versioning](https://semver.org): **major.minor.patch**.
 A **major** change breaks how projects or commands worked before, a **minor** one adds features, a **patch** fixes things.
 The installed version: `node ~/.claude/skills/darkroom/scripts/darkroom.mjs version` (or the `VERSION` file in the skill).
 
+## 1.7.5 · Motion Update · 2026-10-30
+
+Darkroom now has its own motion library, and a rule that keeps pages from filling up with it.
+
+- **Dark Motions: 98 small motion pieces, written for Darkroom.** Text effects, ambient backgrounds, card borders, button feedback, reveals, cursor pieces, number counters and small animated 2D characters. Plain CSS, SVG and JavaScript, no library, no third-party code, so they work on every platform Darkroom builds for. Each piece takes its colours and speed from the site's own design, so it never shows up in demo colours.
+- **Picked to fit, never sprinkled.** Each piece is tagged with the style packs it suits, its job and its cost. Darkroom chooses a signature and at most two accents inside the design directions you already approve, so there are no extra questions. Don't like a pick? Describe what you want, or say shuffle for another set that still fits.
+- **A new check stops motion overload.** The audit's `motion-budget` check scrolls the page and counts the things moving by themselves on each screen. More than three is flagged, more than five fails. Motion you ask for yourself is noted, never blocked.
+- **Fixes.** Style packs now set their own audit limits (news and catalog pages may carry more text, luxury and cinema heroes less), and your design bible still wins. Re-running `media frames` into the same folder replaces the old frames instead of mixing them. `shoot` keeps earlier screenshots. A mistyped viewport, a malformed states file or an incomplete `--open` now stops with a clear message instead of passing silently. The release zip builds again.
+- **Calm and accessible by default.** With reduced motion turned on, every piece jumps to its finished state and animated drawings hold still. Pieces pause when off screen, cursor pieces only start for a mouse or trackpad, and the page reads fully without JavaScript.
+
 ## 1.7.1 · Smooth Scroll · 2026-10-30
 
 A fix for the README: the live showcase had grown and moved on, and the page still described the old one.

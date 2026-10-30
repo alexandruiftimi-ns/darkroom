@@ -1,0 +1,13 @@
+/* Dark Motions · Send → done (U12) · CSS
+   Click: the button shrinks to a circle with a spinner, then pops a check mark and returns.
+   Use: forms: subscribe, send, save, add to cart · Visitor: click
+   Markup: put the snippet in demo.html#send-done inside <div data-dm="send-done">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="send-done"] .bt{position:relative;font:600 15px/1 "Segoe UI Variable Text","Segoe UI",system-ui,sans-serif;color:var(--dm-ink);background:#1b1b20;border:1px solid #ffffff1c;border-radius:999px;padding:15px 28px;cursor:pointer;overflow:hidden;isolation:isolate}[data-dm="send-done"] .bt{width:170px;height:50px;padding:0;background:var(--dm-a);color:#141210;border:0;transition:width calc(.45s*var(--dm-dur,1)) cubic-bezier(.6,0,.2,1)}
+[data-dm="send-done"] .t{transition:opacity .2s}[data-dm="send-done"] .sp,[data-dm="send-done"] .ck{position:absolute;inset:0;margin:auto;opacity:0}
+[data-dm="send-done"] .sp{width:20px;height:20px;border-radius:50%;border:2.5px solid #14121040;border-top-color:#141210;animation:dm-send-done-s .7s linear infinite}
+[data-dm="send-done"] .ck{width:24px;height:24px}[data-dm="send-done"] .ck path{fill:none;stroke:#141210;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}
+[data-dm="send-done"] .bt.busy,[data-dm="send-done"] .bt.ok{width:50px}[data-dm="send-done"] .bt.busy .t,[data-dm="send-done"] .bt.ok .t{opacity:0}[data-dm="send-done"] .bt.busy .sp{opacity:1;transition:opacity .2s .25s}
+[data-dm="send-done"] .bt.ok{animation:dm-send-done-p .4s cubic-bezier(.3,1.8,.5,1)}[data-dm="send-done"] .bt.ok .ck{opacity:1}[data-dm="send-done"] .bt.ok path{transition:stroke-dashoffset .4s .1s;stroke-dashoffset:0}
+@keyframes dm-send-done-s{to{transform:rotate(360deg)}}@keyframes dm-send-done-p{50%{transform:scale(1.15)}}
+@media (prefers-reduced-motion: reduce){[data-dm="send-done"],[data-dm="send-done"] *,[data-dm="send-done"] *::before,[data-dm="send-done"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

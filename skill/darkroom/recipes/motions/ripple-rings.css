@@ -1,0 +1,11 @@
+/* Dark Motions · Ripple rings (B09) · CSS
+   Thin rings expand from a glowing centre point and fade, like a sonar ping or a drop in water.
+   Use: behind a logo or icon, "listening / live" states, CTA focus
+   Markup: put the snippet in demo.html#ripple-rings inside <div data-dm="ripple-rings">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="ripple-rings"] .rings{position:relative;width:240px;height:240px}
+[data-dm="ripple-rings"] i{position:absolute;inset:0;border-radius:50%;border:1px solid var(--dm-a);opacity:0;animation:dm-ripple-rings calc(4s*var(--dm-dur,1)) cubic-bezier(.2,.6,.3,1) infinite}
+[data-dm="ripple-rings"] i:nth-child(2){animation-delay:calc(.8s*var(--dm-dur,1))}[data-dm="ripple-rings"] i:nth-child(3){animation-delay:calc(1.6s*var(--dm-dur,1))}[data-dm="ripple-rings"] i:nth-child(4){animation-delay:calc(2.4s*var(--dm-dur,1))}[data-dm="ripple-rings"] i:nth-child(5){animation-delay:calc(3.2s*var(--dm-dur,1))}
+[data-dm="ripple-rings"] b{position:absolute;inset:0;margin:auto;width:16px;height:16px;border-radius:50%;background:var(--dm-a);box-shadow:0 0 24px var(--dm-a)}
+@keyframes dm-ripple-rings{0%{transform:scale(.05);opacity:1}100%{transform:scale(1);opacity:0}}
+@media (prefers-reduced-motion: reduce){[data-dm="ripple-rings"],[data-dm="ripple-rings"] *,[data-dm="ripple-rings"] *::before,[data-dm="ripple-rings"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

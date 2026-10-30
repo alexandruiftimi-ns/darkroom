@@ -1,0 +1,7 @@
+/* Dark Motions · Confetti pop (U08) · CSS
+   Clicking bursts a handful of paper confetti from the button that tumbles down with gravity.
+   Use: sign-up success, "order placed", celebration moments · Visitor: click
+   Markup: put the snippet in demo.html#confetti-pop inside <div data-dm="confetti-pop">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="confetti-pop"] .bt{position:relative;font:600 15px/1 "Segoe UI Variable Text","Segoe UI",system-ui,sans-serif;color:var(--dm-ink);background:#1b1b20;border:1px solid #ffffff1c;border-radius:999px;padding:15px 28px;cursor:pointer;overflow:hidden;isolation:isolate}[data-dm="confetti-pop"] .bt{background:var(--dm-a);color:#141210;border:0;position:relative;z-index:2}
+@media (prefers-reduced-motion: reduce){[data-dm="confetti-pop"],[data-dm="confetti-pop"] *,[data-dm="confetti-pop"] *::before,[data-dm="confetti-pop"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

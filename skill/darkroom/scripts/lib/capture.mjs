@@ -84,8 +84,12 @@ async function runActions(page, actions = []) {
 // states: explicit file, or --scene + --steps, or --film, or --scroll fractions.
 function planStates(opt) {
   if (opt.states) {
-    const raw = JSON.parse(fs.readFileSync(String(opt.states), 'utf8'));
-    return (raw.states ?? raw).map((s, i) => ({ id: s.id ?? `s${pad(i, 2)}`, ...s }));
+    if (opt.states === true) throw new Error('--states needs a JSON file: --states states.json');
+    let raw;
+    try { raw = JSON.parse(fs.readFileSync(String(opt.states), 'utf8')); } catch (e) { throw new Error(`--states ${opt.states}: ${e.code === 'ENOENT' ? 'file not found' : 'not valid JSON'}`); }
+    const list = raw?.states ?? raw;
+    if (!Array.isArray(list)) throw new Error(`--states ${opt.states}: expected a list of states, e.g. [{"id":"hero","scroll":0},{"id":"menu","actions":[{"click":"button.menu"}]}] or {"states":[…]}`);
+    return list.map((s, i) => ({ id: s.id ?? `s${pad(i, 2)}`, ...s }));
   }
   if (opt.scene) {
     const n = Math.max(2, Number(opt.steps ?? 10));
@@ -119,6 +123,8 @@ async function contactSheet(page, tiles, file, cols, tileW) {
 
 // opt: out, label, viewports, scroll, scene, steps, film, states, motion|reduce|both, dismiss, wait, dpr, crop, no-early
 export async function capture(target, opt, { defaultModes = ['no-preference', 'reduce'], quiet = false } = {}) {
+  const unknown = (opt.viewports ? String(opt.viewports).split(',') : []).filter((v) => !VIEWPORTS[v]);
+  if (unknown.length) throw new Error(`unknown viewport ${unknown.join(', ')}; use ${Object.keys(VIEWPORTS).join(', ')}`);
   const served = await resolveTarget(target);
   const revision = revisionOf(served.root);
   const runDir = opt.out ?? path.join('.darkroom', 'qa', `${stamp()}${opt.label ? '-' + String(opt.label).replace(/[^\w.-]/g, '_') : ''}`);

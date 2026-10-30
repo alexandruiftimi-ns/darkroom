@@ -1,0 +1,4 @@
+/* Dark Motions kit: tokens and the off-screen pause. Set the tokens from the bible (colour roles, motion speed). */
+:root{--dm-bg:#0b0b0d;--dm-ink:#f2efe9;--dm-muted:#8a8780;--dm-a:#e8b04a;--dm-b:#7c8cff;--dm-c:#ff6fae;--dm-dur:1}
+[data-dm]{position:relative}
+.dm-off,.dm-off *,.dm-off *::before,.dm-off *::after{animation-play-state:paused!important}

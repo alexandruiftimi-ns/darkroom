@@ -18,7 +18,7 @@ Two genuinely different directions (different idea and composition, not differen
 
 Use a generated image only to settle imagery you cannot code: write one prompt (`commands/imagine.md`), ask the user to generate it, and continue with the rest meanwhile.
 
-For each direction write ≤ 8 lines: name + idea + **signature in one line** a non-designer can picture ("A: the film scrubs as you scroll; B: the name is the image");  type (display + text, weights, H1 size); palette (4–6 named hex with roles, colour mode); motion signature (the one move); switches on/off; risk.
+For each direction write ≤ 8 lines: name + idea + **signature in one line** a non-designer can picture ("A: the film scrubs as you scroll; B: the name is the image");  type (display + text, weights, H1 size); palette (4–6 named hex with roles, colour mode); motion signature (the one move) and up to two accents, each from `recipes/` or the Dark Motions catalogue (`recipes/motions/INDEX.md`, filtered by the pack; `references/dark-motions.md`) with its job in a few words; switches on/off; risk.
 
 ## 4. Show
 
@@ -29,3 +29,4 @@ For each direction write ≤ 8 lines: name + idea + **signature in one line** a 
 - Never deal two dark-neon options because the category "is tech", or cream + terracotta + serif because "premium" (`references/tells.md`).
 - If the user says "colourful", set colour mode `expressive`; do not fall back to dark minimal.
 - A direction that needs assets that cannot exist at this tier is not a direction; say so and substitute.
+- When the user dislikes a motion pick: "Want different ones? Describe what you'd like, or say shuffle and I'll pick another set that fits." Shuffle stays within the pack and the budget.

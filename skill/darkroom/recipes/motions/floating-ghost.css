@@ -1,0 +1,15 @@
+/* Dark Motions · Floating ghost (D12) · CSS
+   A friendly ghost floats up and down, its hem wobbling and its shadow shrinking as it rises.
+   Use: 404 / "page not found", empty states, Halloween campaigns
+   Markup: put the snippet in demo.html#floating-ghost inside <div data-dm="floating-ghost">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="floating-ghost"] .ill{width:250px;height:auto;overflow:visible}[data-dm="floating-ghost"] .ill .fb{transform-box:fill-box}
+[data-dm="floating-ghost"] .sh{fill:#000;opacity:.35}[data-dm="floating-ghost"] .gh{animation:dm-floating-ghost-g calc(2.8s*var(--dm-dur,1)) ease-in-out infinite}
+[data-dm="floating-ghost"] .hem{transform-origin:50% 0%;animation:dm-floating-ghost-w calc(1.4s*var(--dm-dur,1)) ease-in-out infinite alternate}
+[data-dm="floating-ghost"] .sh{transform-origin:50% 50%;animation:dm-floating-ghost-s calc(2.8s*var(--dm-dur,1)) ease-in-out infinite}
+[data-dm="floating-ghost"] .eyes{transform-origin:50% 50%;animation:dm-floating-ghost-e calc(3.8s*var(--dm-dur,1)) infinite}
+@keyframes dm-floating-ghost-g{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-14px) rotate(2deg)}}
+@keyframes dm-floating-ghost-w{from{transform:skewX(-4deg)}to{transform:skewX(4deg)}}
+@keyframes dm-floating-ghost-s{0%,100%{transform:scaleX(1);opacity:.35}50%{transform:scaleX(.7);opacity:.18}}
+@keyframes dm-floating-ghost-e{0%,70%,76%,100%{transform:scaleY(1)}73%{transform:scaleY(.1)}}
+@media (prefers-reduced-motion: reduce){[data-dm="floating-ghost"],[data-dm="floating-ghost"] *,[data-dm="floating-ghost"] *::before,[data-dm="floating-ghost"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

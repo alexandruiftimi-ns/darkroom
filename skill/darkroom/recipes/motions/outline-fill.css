@@ -1,0 +1,8 @@
+/* Dark Motions · Outline fill (T06) · CSS
+   Hollow outlined letters fill with solid ink from the bottom up, then drain again.
+   Use: big display word, section number
+   Markup: put the snippet in demo.html#outline-fill inside <div data-dm="outline-fill">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="outline-fill"] .t{-webkit-text-stroke:1.5px var(--dm-ink);color:transparent;background:linear-gradient(var(--dm-a),var(--dm-a)) bottom/100% 0% no-repeat;-webkit-background-clip:text;background-clip:text;animation:dm-outline-fill calc(4.5s*var(--dm-dur,1)) cubic-bezier(.65,0,.35,1) infinite}
+@keyframes dm-outline-fill{0%,10%{background-size:100% 0%}45%,60%{background-size:100% 100%}95%,100%{background-size:100% 0%}}
+@media (prefers-reduced-motion: reduce){[data-dm="outline-fill"],[data-dm="outline-fill"] *,[data-dm="outline-fill"] *::before,[data-dm="outline-fill"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

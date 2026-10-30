@@ -1,0 +1,17 @@
+/* Dark Motions · Little robot (D10) · CSS
+   A boxy robot tilts its head, its eyes scan left and right, the antenna light blinks.
+   Use: AI products, automation, help / chat bots, tech for kids
+   Markup: put the snippet in demo.html#little-robot inside <div data-dm="little-robot">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="little-robot"] .ill{width:250px;height:auto;overflow:visible}[data-dm="little-robot"] .ill .fb{transform-box:fill-box}
+[data-dm="little-robot"] .sh{fill:#000;opacity:.35}[data-dm="little-robot"] .hd{transform-origin:50% 100%;animation:dm-little-robot-h calc(4s*var(--dm-dur,1)) ease-in-out infinite}
+[data-dm="little-robot"] .eye{animation:dm-little-robot-e calc(4s*var(--dm-dur,1)) ease-in-out infinite}
+[data-dm="little-robot"] .ant{animation:dm-little-robot-a calc(1.2s*var(--dm-dur,1)) steps(1) infinite}[data-dm="little-robot"] .chest{animation:dm-little-robot-c calc(2s*var(--dm-dur,1)) ease-in-out infinite}
+[data-dm="little-robot"] .armR{transform-origin:0% 0%;animation:dm-little-robot-r calc(4s*var(--dm-dur,1)) ease-in-out infinite}
+[data-dm="little-robot"] .rb{animation:dm-little-robot-b calc(2s*var(--dm-dur,1)) ease-in-out infinite}
+@keyframes dm-little-robot-h{0%,20%,100%{transform:rotate(0)}30%,45%{transform:rotate(-8deg)}55%,70%{transform:rotate(7deg)}}
+@keyframes dm-little-robot-e{0%,20%,100%{transform:translateX(0)}30%,45%{transform:translateX(-6px)}55%,70%{transform:translateX(6px)}}
+@keyframes dm-little-robot-a{0%,60%{opacity:1}61%,100%{opacity:.25}}@keyframes dm-little-robot-c{50%{opacity:.4}}
+@keyframes dm-little-robot-r{0%,60%,100%{transform:rotate(0)}70%,85%{transform:rotate(-40deg)}}
+@keyframes dm-little-robot-b{50%{transform:translateY(-3px)}}
+@media (prefers-reduced-motion: reduce){[data-dm="little-robot"],[data-dm="little-robot"] *,[data-dm="little-robot"] *::before,[data-dm="little-robot"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}

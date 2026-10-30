@@ -1,0 +1,10 @@
+/* Dark Motions · Pixel dissolve (R04) · CSS
+   A grid of dark squares covering the image winks out in random order until the picture is clear.
+   Use: tech / gaming / digital art reveals, loading-to-image
+   Markup: put the snippet in demo.html#pixel-dissolve inside <div data-dm="pixel-dissolve">…</div>.
+   Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
+[data-dm="pixel-dissolve"] .ph{width:280px;height:190px;border-radius:12px}[data-dm="pixel-dissolve"] .wr{position:relative;border-radius:12px;overflow:hidden}
+[data-dm="pixel-dissolve"] .px{position:absolute;inset:0;display:grid;grid-template-columns:repeat(14,1fr);grid-template-rows:repeat(10,1fr)}
+[data-dm="pixel-dissolve"] .px i{background:var(--dm-bg);animation:dm-pixel-dissolve calc(.25s*var(--dm-dur,1)) steps(1) var(--d) forwards}
+@keyframes dm-pixel-dissolve{to{opacity:0}}
+@media (prefers-reduced-motion: reduce){[data-dm="pixel-dissolve"],[data-dm="pixel-dissolve"] *,[data-dm="pixel-dissolve"] *::before,[data-dm="pixel-dissolve"] *::after{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:1ms!important}}
