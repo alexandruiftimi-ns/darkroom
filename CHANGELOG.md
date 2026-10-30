@@ -4,6 +4,15 @@ Darkroom uses [semantic versioning](https://semver.org): **major.minor.patch**.
 A **major** change breaks how projects or commands worked before, a **minor** one adds features, a **patch** fixes things.
 The installed version: `node ~/.claude/skills/darkroom/scripts/darkroom.mjs version` (or the `VERSION` file in the skill).
 
+## 1.7.6 · Motion Update (hotfix) · 2026-10-31
+
+Scroll films now keep the full resolution of your video.
+
+- **No more soft, stretched frames.** Turning a video into scroll frames used to shrink it to 1600 px wide by default, and the build notes suggested 1100–1600 px to save bytes. On a large screen the page then stretched those frames back up, so a sharp 1920 × 1080 video looked blurry. Frames now keep the video's own size: 1080p stays 1080p, 4K stays 4K. They are only made smaller if you ask for a size.
+- **Phones still get a light set.** The separate phone frames (900 px by default) are unchanged, so phones load fast while big screens get every pixel.
+- **4K without crashing the tab.** A 4K frame takes about 32 MB of memory once the browser has opened it. The scroll player now keeps fewer frames open at once when they are this big, instead of shrinking them, so the picture stays sharp and memory stays bounded.
+- **Lighter sets the right way.** When a frame set is too heavy, Darkroom now lowers the frame count or the compression setting, never the desktop width.
+
 ## 1.7.5 · Motion Update · 2026-10-30
 
 Darkroom now has its own motion library, and a rule that keeps pages from filling up with it.

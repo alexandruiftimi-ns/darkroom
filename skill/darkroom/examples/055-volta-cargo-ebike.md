@@ -14,7 +14,7 @@
 Volta Cargo V2 is a front-box cargo bike for two children, 100 km range, € 4,690, pre-orders with a € 200 refundable deposit. Visitors are parents replacing a second car. Feeling: capable, friendly, engineered. **Signature:** three pinned chapters of scroll-scrubbed frames from one locked camera: (1) the bike turns 120° to side view, (2) the box's rain cover opens and two child seats fold up, (3) the battery slides out of the frame. Facts arrive beside the part being shown. **Supporting:** a chapter progress indicator, a skip link, a plain spec table after the story.
 
 ### Stack & files
-Next.js App Router; `components/Chapter.tsx` wraps `recipes/scrub-frames.js` (one frame set per chapter: 72 frames, 1600 px AVIF + 900 px phone set via `darkroom media frames --format avif --mobile-width 900`); `recipes/scene-progress.js` for fact timing; `reveal.js` for the rest.
+Next.js App Router; `components/Chapter.tsx` wraps `recipes/scrub-frames.js` (one frame set per chapter: 72 frames, full-size AVIF + 900 px phone set via `darkroom media frames --format avif --mobile-width 900`); `recipes/scene-progress.js` for fact timing; `reveal.js` for the rest.
 
 ### Fonts
 | Role | Family | Weights | Notes |

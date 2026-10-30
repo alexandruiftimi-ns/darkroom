@@ -17,12 +17,13 @@
 // changes whenever the address bar shows or hides, which moved the frame every time the scroll direction flipped.
 // Paused off-screen and in hidden tabs; DPR is capped; reduced motion shows one still frame and never scrubs.
 // Phones: when the manifest names a `mobile` set (`darkroom media frames --mobile-width`) and `mobileQuery` matches, that
-// set is used instead. A few `anchors` spread coarse-to-fine stay decoded once the window has room.
+// set is used instead. Frames are never scaled down here: large ones (4K) shrink the decode window to fit `memoryMB`.
+// A few `anchors` spread coarse-to-fine stay decoded once the window has room.
 // Breaking points: pass `mapFrame: holdAt([...frames], 0.04)` to make the film rest on chosen frames for a stretch of
 // scroll. Never snap or glide the page's scroll to a stop: it fights touch momentum and reads as a glitch.
 
 export async function createFrameScrubber({
-  canvas, scene, manifestUrl, window: R = 12, dprCap = 2, ease = 0.3, maxSpeed = 4, concurrency = 4, anchors: anchorCount = 9,
+  canvas, scene, manifestUrl, window: R = 12, dprCap = 2, ease = 0.3, maxSpeed = 4, concurrency = 4, anchors: anchorCount = 9, memoryMB = 600,
   mobileQuery = '(max-width: 1023px)', mapFrame,
   restFrame = 'last', reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches, onFrame,
 }) {
@@ -32,6 +33,10 @@ export async function createFrameScrubber({
     manifest = await (await fetch(manifestUrl)).json();
   }
   const base = manifestUrl.slice(0, manifestUrl.lastIndexOf('/') + 1);
+  // big frames (4K is ~32 MB decoded each) keep fewer decoded at once instead of being shrunk: full sharpness, bounded memory.
+  // The window holds 3R + 1 frames plus the anchors; `memoryMB` caps them (1080p keeps R = 12, 4K drops to R = 3).
+  const perFrameMB = (manifest.width * manifest.height * 4) / 1048576 || 8;
+  R = Math.max(3, Math.min(R, Math.floor((memoryMB / perFrameMB - anchorCount - 1) / 3)));
   const n = manifest.count;
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   const toPos = mapFrame ? (p) => clamp(mapFrame(p, n), 0, n - 1) : (p) => p * (n - 1);

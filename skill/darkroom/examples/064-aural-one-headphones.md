@@ -14,7 +14,7 @@
 Aural One is a € 549 open-back headphone with planar drivers, made in Lyon. Visitors are audio enthusiasts reading reviews. Feeling: precise, airy, crafted. **Signature:** an exploded view scrubbed by scroll: 96 rendered frames take the headphone apart along one axis (pads, grille, driver, frame, headband), hold it apart while four part labels appear, then reassemble. **Supporting:** hairline label leaders drawn in SVG from each label to its part (positions fixed per frame range), spec table in tabular figures.
 
 ### Stack & files
-`index.html`, `styles.css`, `recipes/scrub-frames.js` with frames from `darkroom media frames explode.mp4 --out frames --fps 24 --width 1600 --format avif --mobile-width 900` (96 frames), `labels.js` (shows labels by progress), `reveal.js`.
+`index.html`, `styles.css`, `recipes/scrub-frames.js` with frames from `darkroom media frames explode.mp4 --out frames --fps 24 --format avif --mobile-width 900` (96 frames), `labels.js` (shows labels by progress), `reveal.js`.
 
 ### Fonts
 | Role | Family | Weights | Notes |

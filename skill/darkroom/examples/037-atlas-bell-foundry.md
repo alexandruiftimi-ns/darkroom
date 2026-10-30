@@ -14,7 +14,7 @@
 Atlas casts bells from 20 kg to 4 tonnes in a Dutch foundry founded in 1873; tuning is done by hand on a lathe. Visitors are parish councils, carillonneurs and architects. Feeling: fire, weight, centuries. **Signature:** a 400vh pinned scene where 120 frames of a casting follow the scroll: clay mould → bronze pour → glowing bell lifted from the pit; three captions on small frosted chips arrive at 15 %, 50 % and 85 %. **Supporting:** text shadows instead of boxes, a warm ground that cools as the bell cools, reveals after the story.
 
 ### Stack & files
-`index.html`, `styles.css`, `recipes/scrub-frames.js` (frames from `darkroom media frames casting.mp4 --out frames --fps 24 --width 1600 --format avif` plus `--mobile-width 900`), `recipes/scene-progress.js` for the captions and the ground, `reveal.js`.
+`index.html`, `styles.css`, `recipes/scrub-frames.js` (frames from `darkroom media frames casting.mp4 --out frames --fps 24 --format avif` plus `--mobile-width 900`), `recipes/scene-progress.js` for the captions and the ground, `reveal.js`.
 
 ### Fonts
 | Role | Family | Weights | Notes |

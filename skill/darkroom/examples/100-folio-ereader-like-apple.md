@@ -14,7 +14,7 @@
 Folio is a 7-inch warm-light e-reader with a paper-feel screen, 6 weeks of battery, € 189, from a Utrecht startup. Look-alike rules (`commands/lookalike.md`): measure apple.com's design language live (scale, spacing, rhythm, restraint), take the language and never the identity: no Apple fonts, no Apple product or colour names, no copy patterns lifted, the client's own colours and an OFL type substitute. **Signature:** after a giant headline, the device rotates from front to edge-on as you scroll (72 frames), shows a 4.8 mm edge with the measurement drawn as a thin line, then turns back to reveal a page of a book with warm light coming up (screen frames). **Supporting:** one feature per viewport, huge numbers in tabular figures, near-white ground with one deep green accent.
 
 ### Stack & files
-Next.js; `components/Turn.tsx` with `recipes/scrub-frames.js` (render of the client's CAD, locked camera; desktop 1600 px AVIF, phone 900 px); `components/WarmLight.tsx` (`scene-progress.js` drives a CSS warm overlay on the screen frame from 0 % to 60 %); `reveal.js` for features.
+Next.js; `components/Turn.tsx` with `recipes/scrub-frames.js` (render of the client's CAD, locked camera; desktop AVIF at the render's own size, phone 900 px); `components/WarmLight.tsx` (`scene-progress.js` drives a CSS warm overlay on the screen frame from 0 % to 60 %); `reveal.js` for features.
 
 ### Fonts
 | Role | Family | Weights | Notes |

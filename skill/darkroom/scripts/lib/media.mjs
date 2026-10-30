@@ -176,7 +176,8 @@ export async function frames(source, opt) {
   mkdirp(outDir);
   // a re-run must not mix with an earlier sequence (12 fps then 3 fps used to leave 36 frames, not 9)
   for (const dir of [outDir, path.join(outDir, 'mobile')]) if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir)) if (/^seq_\d{4}\.\w+$/.test(f)) fs.rmSync(path.join(dir, f));
-  const fps = Number(opt.fps ?? 24); const width = Number(opt.width ?? 1600); const quality = Number(opt.quality ?? 76);
+  // no --width: the source's own size. Shrinking a 1920 film to save bytes makes the canvas stretch it on big screens.
+  const fps = Number(opt.fps ?? 24); const width = opt.width ? Number(opt.width) : Infinity; const quality = Number(opt.quality ?? 76);
   const format = String(opt.format ?? 'webp'); const ext = format === 'jpeg' ? 'jpg' : format;
   const eng = engines();
   if (format === 'avif') return framesAvif(src, outDir, opt, eng);
@@ -188,7 +189,7 @@ export async function frames(source, opt) {
     engine = 'ffmpeg';
     const enc = format === 'webp' ? ['-c:v', 'libwebp', '-quality', String(quality)] : format === 'png' ? ['-c:v', 'png'] : ['-c:v', 'mjpeg', '-q:v', String(Math.max(2, Math.round((100 - quality) / 4)))];
     const range = [...(start ? ['-ss', String(start)] : []), ...(opt.end ? ['-to', String(opt.end)] : [])];
-    sh(eng.ffmpeg.bin, ['-y', '-v', 'error', ...range, '-i', src, '-an', '-vf', `fps=${fps},scale='min(${width},iw)':-2:flags=lanczos${opt.sharpen ? `,unsharp=5:5:${Number(opt.sharpen)}:5:5:0` : ''}`, ...enc, path.join(outDir, `seq_%04d.${ext}`)]);
+    sh(eng.ffmpeg.bin, ['-y', '-v', 'error', ...range, '-i', src, '-an', '-vf', `fps=${fps}${Number.isFinite(width) ? `,scale='min(${width},iw)':-2:flags=lanczos` : ''}${opt.sharpen ? `,unsharp=5:5:${Number(opt.sharpen)}:5:5:0` : ''}`, ...enc, path.join(outDir, `seq_%04d.${ext}`)]);
   } else {
     if (!['webp', 'jpg', 'jpeg', 'png'].includes(format)) throw new Error(`format ${format} is not available without ffmpeg`);
     engine = 'chromium';
@@ -238,6 +239,7 @@ export async function frames(source, opt) {
     manifest.mobile = 'mobile/manifest.json'; manifest.mobileWidth = mob.width;
   }
   fs.writeFileSync(path.join(outDir, 'manifest.json'), JSON.stringify(manifest, null, 2));
+  if (!opt.isMobileSet && width_ < 1920) console.log(`note: ${width_} px frames will be stretched on screens wider than that${Number.isFinite(width) ? ' (drop --width to keep the source size)' : ' (the source itself is that wide)'}`);
   console.log(`${list.length} frames (${engine}) ${width_}x${height_} ${ext}, ${(total / 1048576).toFixed(1)} MB on the wire, ${decodedMiB} MiB decoded per frame (${manifest.decodedMiBAllFrames} MiB if all were held) → ${path.join(outDir, 'manifest.json')}`);
   return manifest;
 }
@@ -313,7 +315,7 @@ export async function media(pos, opt) {
   doctor                              which engines exist (ffmpeg + real encoders, sharp, chromium)
   inspect <file|dir>                  dimensions, duration, codec, alpha, rotation, decoded memory per frame, checksums
   derive <image> [--out dir] [--widths 640,1280,1920] [--formats webp,jpg,avif] [--quality 78]
-  frames <video> [--out dir] [--fps 24] [--width 1600] [--format webp|jpg|png|avif] [--quality 76] [--start s --end s] [--sharpen 0.6] [--engine ffmpeg|chromium]
+  frames <video> [--out dir] [--fps 24] [--width px, default: the video's own width] [--format webp|jpg|png|avif] [--quality 76] [--start s --end s] [--sharpen 0.6] [--engine ffmpeg|chromium]
          [--mobile-width 900]         also write a smaller phone set to <out>/mobile/ (same frame count); avif needs sharp or ffmpeg with AV1
   check <frames dir>                  validate manifest, files, order, checksums, sizes; warn on memory
   web <clip> [--out dir] [--name hero] [--width 1920] [--mobile-width 960] [--fps 24] [--crf 23] [--loop crossfade|boomerang] [--cutout]

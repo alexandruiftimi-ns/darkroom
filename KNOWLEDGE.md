@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/knowledge.svg" alt="228 real site designs that inspired it (131 good, 97 bad), 32 cross-site lessons with 13 promoted to rules, 29 research sources, 7 design tools, 100 example prompts with their specs, 35 tested recipes, 136 automated checks, one human art director" width="100%"></p>
+<p align="center"><img src="assets/knowledge.svg" alt="228 real site designs that inspired it (131 good, 97 bad), 32 cross-site lessons with 13 promoted to rules, 29 research sources, 7 design tools, 100 example prompts with their specs, 35 tested recipes, 137 automated checks, one human art director" width="100%"></p>
 
 # Where Darkroom's knowledge comes from
 
@@ -11,7 +11,7 @@
 | [Research](#3-research-and-standards) | 29 sources: usability research, accessibility standards, EU law, award criteria | `references/sources.md` |
 | [Other tools](#4-other-design-tools-studied) | 7 open design skills and tools, read for principles only | `references/provenance.md` |
 | [Examples and recipes](#5-examples-and-recipes) | 100 example prompts, each with the full build spec it leads to; 35 motion and media recipes tested in a real browser; Values tables for type, motion, spacing and colour | `examples/`, `recipes/`, `references/` |
-| [Test pages](#6-test-pages-built-with-it) | 4 pages built end to end to find what broke | the test suite (136 checks) |
+| [Test pages](#6-test-pages-built-with-it) | 4 pages built end to end to find what broke | the test suite (137 checks) |
 | [Human input](#7-human-input) | the author's taste calls, dislikes, approvals and assets | everywhere |
 
 ---
@@ -357,7 +357,7 @@ Read for principles, then rewritten in Darkroom's own words and code; **no code 
 
 ## 6. Test pages built with it
 
-Each build exposed gaps that became fixes or tests: **NorthShutter** (an AR headset concept, scroll-scrubbed hero film, lens dive), **Porsche 911 Turbo S** (unofficial concept, frame-sequence film and configurator), **Forno Cinco** (a fictional bakery, no assets at all), **Halden Kiln** (a fictional ceramics studio, scroll-driven kiln firing). The test suite (136 checks today, kept with the maintainer's tools rather than in this repository) grew from what went wrong on them. Examples: text contrast measured from pixels, because a colour check passed text that was 5 % visible; and the scroll pass, because fade-in text hid problems from the audit.
+Each build exposed gaps that became fixes or tests: **NorthShutter** (an AR headset concept, scroll-scrubbed hero film, lens dive), **Porsche 911 Turbo S** (unofficial concept, frame-sequence film and configurator), **Forno Cinco** (a fictional bakery, no assets at all), **Halden Kiln** (a fictional ceramics studio, scroll-driven kiln firing). The test suite (137 checks today, kept with the maintainer's tools rather than in this repository) grew from what went wrong on them. Examples: text contrast measured from pixels, because a colour check passed text that was 5 % visible; and the scroll pass, because fade-in text hid problems from the audit.
 
 ## 7. Human input
 
