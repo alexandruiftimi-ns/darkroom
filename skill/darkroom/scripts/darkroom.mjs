@@ -13,7 +13,8 @@ const { cmd, pos, opt } = parseArgs(process.argv.slice(2));
 
 const VERSION = fs.readFileSync(path.join(SKILL_DIR, 'VERSION'), 'utf8').trim();
 const USAGE = `darkroom <command>   (Darkroom ${VERSION})
-  version                      print the installed version (major.minor.patch; CHANGELOG.md in the repository)
+  version [--check]            print the installed version (major.minor.patch; CHANGELOG.md in the repository);
+                               --check also asks GitHub for the latest release and says how to update (never fails offline)
   doctor                       what this computer has (Node, Playwright, a browser, ffmpeg) and the exact command for anything missing
   init                         create .darkroom/ (never overwrites); adopts PROJECT_BLUEPRINT.md / DESIGN.md as the design document
   state [--set stage=slice,mode=animated,look=like:apple,platform=shopify,verify=quick,scope=home,palette=60-30-10]
@@ -76,7 +77,8 @@ async function study(target) {
 }
 
 try {
-  if (cmd === 'version' || cmd === '--version') console.log(VERSION);
+  if (cmd === '--version' || (cmd === 'version' && !opt.check)) console.log(VERSION);
+  else if (cmd === 'version') { const { version } = await import('./lib/version.mjs'); await version(VERSION, SKILL_DIR, opt); }
   else if (cmd === 'doctor') { const { doctor } = await import('./lib/doctor.mjs'); await doctor(); }
   else if (cmd === 'init') init(SKILL_DIR);
   else if (cmd === 'state') state(opt);

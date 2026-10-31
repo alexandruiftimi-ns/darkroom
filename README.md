@@ -8,11 +8,11 @@
 
 <p align="center">
   <a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/"><img alt="Live showcase: 8 demos" src="https://img.shields.io/badge/%E2%96%B6%20live%20showcase-8%20demos-ff7a3d?style=for-the-badge&labelColor=ff7a3d&color=121110"></a>
-  <a href="CHANGELOG.md"><img alt="Version 1.7.6, Motion Update" src="https://img.shields.io/badge/version-1.7.6%20·%20Motion%20Update-ff7a3d?style=for-the-badge&labelColor=121110"></a>
+  <a href="CHANGELOG.md"><img alt="Version 1.8.0, Anti-Slop" src="https://img.shields.io/badge/version-1.8.0%20·%20Anti--Slop-ff7a3d?style=for-the-badge&labelColor=121110"></a>
   <a href="LICENSE"><img alt="MIT licence" src="https://img.shields.io/badge/licence-MIT-ff7a3d?style=for-the-badge&labelColor=121110"></a>
   <img alt="Claude Code skill" src="https://img.shields.io/badge/Claude%20Code-skill-ece6dc?style=for-the-badge&logo=anthropic&logoColor=ece6dc&labelColor=121110">
   <img alt="10 platforms" src="https://img.shields.io/badge/platforms-10-ff7a3d?style=for-the-badge&labelColor=121110">
-  <img alt="137 automated checks" src="https://img.shields.io/badge/tests-137%20passing-7ab55c?style=for-the-badge&labelColor=121110">
+  <img alt="141 automated checks" src="https://img.shields.io/badge/tests-141%20passing-7ab55c?style=for-the-badge&labelColor=121110">
   <img alt="Node 18+" src="https://img.shields.io/badge/node-18%2B-ece6dc?style=for-the-badge&logo=nodedotjs&logoColor=ece6dc&labelColor=121110">
 </p>
 
@@ -24,6 +24,7 @@
   <a href="#questions">💬 <b>How it asks</b></a> &nbsp;·&nbsp;
   <a href="#looks">✨ <b>Looks & motion</b></a> &nbsp;·&nbsp;
   <a href="#prompts">🗣️ <b>Prompts</b></a> &nbsp;·&nbsp;
+  <a href="#no-slop">🧼 <b>No AI slop</b></a> &nbsp;·&nbsp;
   <a href="#proof">✅ <b>Proof</b></a> &nbsp;·&nbsp;
   <a href="#install">🚀 <b>Install</b></a>
 </p>
@@ -500,6 +501,25 @@ Without `/darkroom`, Claude still edits your files, but as plain Claude: no Dark
 
 ---
 
+<a id="no-slop"></a>
+
+## 🧼 No AI slop
+
+Most AI-made sites look alike: a purple-to-blue glow, a small capitals label above every heading, one italic word in every headline, emoji for icons, "Trusted by 10,000+ teams" that nobody can trace. Darkroom **spots these on its own** in the real browser and fixes them before you see the page.
+
+| | What | How Darkroom treats it |
+|---|---|---|
+| 🚫 | **Never ships**: made-up numbers, quotes or logos, leftover "lorem ipsum", animation that stutters on phones, a form that says "Thanks!" while nothing was sent | always fixed. Your real numbers stay: Darkroom marks where each one comes from |
+| ⚠️ | **Serious**: the purple-blue "AI" gradient, emoji as icons, drawn browser windows | fixed, unless it really is your brand (your colours *are* purple and blue) |
+| ✏️ | **Habits**: gradient text, a coloured stripe on every card, labels over every heading, arrows glued to every link | fixed from the first one. A design that truly chooses one keeps it, with the reason written down |
+| 🧮 | **Three different habits on one page** | flagged as slop: together they read as "nobody chose this" |
+
+It is strict, not fussy: one italic word in your hero headline is allowed (good sites do it), and a label that carries a fact (a date, a price) is never decoration. Before building, Darkroom also plans the page around **what your visitor came to do** (book, buy, visit, subscribe…) instead of the usual hero, three cards and an email box, and a **second reviewer that did not build the page** looks at it with fresh eyes before you do.
+
+<sub>The tiers and several of these checks were adapted from <a href="https://github.com/nutlope/hallmark">Hallmark</a> (MIT), rewritten for Darkroom's design-first rules.</sub>
+
+---
+
 <a id="proof"></a>
 
 ## ✅ Checked, not guessed
@@ -512,7 +532,7 @@ Every starter theme was run through **the platform's own tools**, not just Darkr
 | <picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/ghost-light.svg"><img src="assets/icons/ghost.svg" width="16" alt=""></picture> Ghost | gscan | **compatible with Ghost 6.x** |
 | <img src="assets/icons/wordpress.svg" width="16" alt=""> WordPress | a real WordPress (Playground), Site Editor block validation | **renders; 0 invalid blocks** in every template |
 | <img src="assets/icons/woocommerce.svg" width="30" alt=""> WooCommerce | WordPress + WooCommerce from wordpress.org, sample products | **shop and product pages render; 0 invalid blocks** |
-| All ten | Darkroom's structure check + **137 automated tests** | passing locally; run before every release |
+| All ten | Darkroom's structure check + **141 automated tests** | passing locally; run before every release |
 
 That run found real problems before you could: WooCommerce blocks that look self-closing but save HTML (the editor would have called them broken), missing side padding on phones, and new WooCommerce stores hiding behind "Coming soon". All fixed, and the checks now catch them.
 
@@ -529,7 +549,7 @@ That run found real problems before you could: WooCommerce blocks that look self
 | 🌊 **Scroll and motion** | 35 tested building blocks: background video that never flashes, seamless loops, readable text over video, headline entrances, menus, buttons, grain, marquees, count-ups, word-by-word reveals, stacking cards, typewriter and rotating words, full-width wordmarks, phone swipe rails, magnetic buttons, parallax layers, spotlights, a depth carousel, frosted glass, mood-clip switchers, shader backdrops, a draggable 3D model, reveals, scroll-scrubbed video, frame sequences that stay smooth on a fast phone flick (with a lighter set for phones), pinned scenes, characters that come alive per section, and an image that reveals another under your cursor. Every one has a reduced-motion fallback. |
 | 🎞️ **Dark Motions** | 98 small motion pieces written for Darkroom: text effects, ambient backgrounds, card borders, button feedback, reveals, cursor pieces, number counters and small animated 2D characters. Plain CSS, SVG and JavaScript, no library, on every platform. Each takes its colours and speed from your design; Darkroom picks one signature and at most two accents that fit, and you can say *shuffle* for another set. |
 | 📷 **Real-browser QA** | Playwright captures at several screen sizes, contact sheets and crops, motion on and off (also pages that scroll inside their own box or only on the mouse wheel); each run records the build it was taken from. A live preview that reloads by itself while Darkroom works. |
-| 🔎 **Audits** | 42 checks, each marked measured, heuristic or manual: accessibility, contrast from real pixels, clutter, word budgets, type scale, colour, keyboard, reduced motion, white flash on load, hidden headlines, videos that don't play or jump on loop, fonts that didn't load, see-through frames in scroll films, films that jump on a fast phone flick, pages that scroll by themselves, dead stretches of scroll, the same frosted caption box in every chapter, "best viewed on desktop" screens, a small headline lost over full-screen film, too much weight before the first scroll, chained clips that jump at the join, and too many things moving at once. |
+| 🔎 **Audits** | 55 checks, each marked measured, heuristic or manual: accessibility, contrast from real pixels, clutter, word budgets, type scale, colour, keyboard, reduced motion, white flash on load, hidden headlines, videos that don't play or jump on loop, fonts that didn't load, see-through frames in scroll films, films that jump on a fast phone flick, pages that scroll by themselves, dead stretches of scroll, the same frosted caption box in every chapter, "best viewed on desktop" screens, a small headline lost over full-screen film, too much weight before the first scroll, chained clips that jump at the join, too many things moving at once, and the marks of a page nobody designed (gradient text, the purple-blue "AI" gradient, a coloured stripe on every card, a small label over every heading, emoji as icons, drawn browser windows, leftover lorem ipsum, made-up numbers and quotes), held as strictly as the Hallmark design skill where that is the right call: made-up proof, leftover placeholders and janky animation never ship, and three different tells on one page are flagged as slop. |
 | ⚖️ **Compliance checklist** | EU and US checklists for cookies, prices, disclosures and AI-image labelling. A checklist, not legal advice. |
 | 🎞️ **Media** | probes media, makes responsive images, turns video into a frame sequence, makes videos web-ready (desktop, phone, still frame), measures edge colour and loop jumps, joins chained AI clips into one film and scores every join, and draws free moving backdrops in your colours (8 styles + 3 textures). |
 | ✍️ **Image and video prompts** | for ChatGPT, Midjourney, Kling, Seedance, Veo and others, with acceptance criteria. |
@@ -542,9 +562,9 @@ That run found real problems before you could: WooCommerce blocks that look self
 
 ## 📚 Where the knowledge comes from
 
-<p align="center"><img src="assets/knowledge.svg" alt="228 real site designs that inspired it (131 good, 97 bad), 32 cross-site lessons with 13 promoted to rules, 29 research sources, 7 design tools, 100 example prompts with their specs, 35 tested recipes, 137 automated checks, one human art director" width="100%"></p>
+<p align="center"><img src="assets/knowledge.svg" alt="228 real site designs that inspired it (131 good, 97 bad), 32 cross-site lessons with 13 promoted to rules, 29 research sources, 8 design tools, 100 example prompts with their specs, 35 tested recipes, 141 automated checks, one human art director" width="100%"></p>
 
-Darkroom is **not a trained model**. It is written knowledge that Claude reads while it works, in plain files you can check: **inspiration from 228 real website designs** (kept as written lessons, never screenshots or copied code; the newest 89 are AI-made and AI-motion sites, each judged on design, build and technique separately), **32 lessons** of which **13 became rules** after the author approved them, **29 research sources** (Nielsen Norman Group, WCAG 2.2, the European Accessibility Act, EU cookie and price rules, the AI Act), the **official docs of all ten platforms**, **100 example prompts**, each with the full build spec it leads to (every font, size, colour and timing), which Darkroom reads before designing yours, **35 motion and media recipes** each tested in a real browser, **Values tables** for type, motion, spacing and colour, and the author's own taste calls. **137 automated checks** run on every change, so a rule that stops working gets noticed.
+Darkroom is **not a trained model**. It is written knowledge that Claude reads while it works, in plain files you can check: **inspiration from 228 real website designs** (kept as written lessons, never screenshots or copied code; the newest 89 are AI-made and AI-motion sites, each judged on design, build and technique separately), **32 lessons** of which **13 became rules** after the author approved them, **29 research sources** (Nielsen Norman Group, WCAG 2.2, the European Accessibility Act, EU cookie and price rules, the AI Act), the **official docs of all ten platforms**, **100 example prompts**, each with the full build spec it leads to (every font, size, colour and timing), which Darkroom reads before designing yours, **35 motion and media recipes** each tested in a real browser, **Values tables** for type, motion, spacing and colour, and the author's own taste calls. **141 automated checks** run on every change, so a rule that stops working gets noticed.
 
 **[→ The full list: every site, source and human decision](KNOWLEDGE.md)**
 
@@ -571,6 +591,8 @@ Or from your shell: `claude plugin marketplace add alexandruiftimi-ns/darkroom`,
 2. For screenshots and audits, Darkroom needs Playwright: `npm i -D playwright && npx playwright install chromium` in your project, or a global install. On Windows it can use the Edge browser you already have. ffmpeg is optional.
    Not sure what you have? `node ~/.claude/skills/darkroom/scripts/darkroom.mjs doctor` (plugin installs: ask Claude to run Darkroom's doctor) checks and prints the exact command for anything missing.
 3. Type `/darkroom` (plugin: `/darkroom:darkroom`) and describe your site.
+
+**Which version do I have?** Type `/darkroom version` (plugin: `/darkroom:darkroom version`). Darkroom tells you the version you have, whether a newer release is out, what it brings, and how to update. It never starts a project for this.
 
 Platform tools (Shopify CLI, WordPress Playground, gscan, Astro, Hugo) are free, and Darkroom asks before it downloads any of them. To remove Darkroom: `claude plugin uninstall darkroom@darkroom`, or delete the copied `darkroom` folder.
 

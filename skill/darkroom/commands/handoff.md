@@ -9,7 +9,7 @@ Assemble `.darkroom/HANDOFF.md` from evidence that matches the **current build r
 5. Performance: **measured** numbers only, with device/network/date (LCP, INP, CLS, bytes), otherwise "not measured". The audit does not measure vitals; do not quote any from it. Page weight from `study`/`audit` is a lower bound.
 6. Robustness checked: keyboard path, 200 % zoom, reduced motion, font failure, media failure (text readable with images blocked), narrow phones (375), scroll restoration, console errors.
 7. Platform (`commands/platform.md`, step 5): preview and deploy steps in plain words, sign-ups the user needs, the platform validator's result, the docs-check date, and whether the **quick** or **full** check ran (never imply full coverage from a quick check).
-8. Run, build and test commands (including `node tests/run-evals.mjs` (in the Darkroom repository) if the skill itself was changed).
+8. Run, build and test commands (and, if the skill itself was changed, a note that the maintainer's regression suite must be run; it is not shipped with the skill).
 9. Known gaps and the single next action.
 
 Present the pack to the user with the three or four things that need their taste or a decision. Never call a planned asset or motion "done".

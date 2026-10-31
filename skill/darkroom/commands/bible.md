@@ -22,7 +22,7 @@ BRIEF, the chosen direction and its coded comp, the style pack(s), approved refe
 12. **Compliance baseline**: markets, WCAG level, consent, price display, disclosures.
 13. **Do / Don't**: 6–10 concrete lines each. **Exceptions log**: where the project knowingly breaks the pack.
 
-The `darkroom` JSON block at the top holds the audit settings: `surface`, `colorMode`, `fontBudget`, `maxZones`, `wordBudgets`, `disclosure`, `currency`, `markets`. Keep it valid JSON; `darkroom audit` prints which file it read.
+The `darkroom` JSON block at the top holds the audit settings: `surface`, `colorMode`, `fontBudget`, `maxZones`, `wordBudgets`, `disclosure`, `currency`, `markets`, `keepTells`. `keepTells` lists the generated-design tells this design keeps on purpose (audit ids such as `"eyebrow"`, `"accent-word"`; `references/tells.md`), each with a one-line reason in the exceptions log; the audit then reports them as info and leaves them out of `slop-count`. `placeholder`, `proof` and `css-motion` can never be kept; `ai-gradient` only for a brand whose own colours they are, `emoji-icon` only when emoji are the page's voice. Keep it valid JSON; `darkroom audit` prints which file it read.
 
 ## Adopting a blueprint
 

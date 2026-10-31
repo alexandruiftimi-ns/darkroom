@@ -26,4 +26,4 @@ The bar for a new platform: used by millions of sites or developers, a documente
 | Drupal, Joomla | millions of legacy sites, few new builds; WordPress covers the CMS case |
 | BigCommerce, Magento (Adobe Commerce) | real commerce platforms, mostly agency-run; Shopify and WooCommerce cover small shops |
 
-Adding one: a profile `platforms/<id>.md` with the same headings as the others, an entry in `scripts/lib/platforms.mjs` (`PLATFORMS`, a checker, a scaffold or generator), the id in `scripts/lib/project.mjs`, a scaffold test in `tests/run-evals.mjs`, and a run of the platform's own validator.
+Adding one: a profile `platforms/<id>.md` with the same headings as the others, an entry in `scripts/lib/platforms.mjs` (`PLATFORMS`, a checker, a scaffold or generator), the id in `scripts/lib/project.mjs`, a scaffold test in the maintainer's regression suite (outside the public repository), and a run of the platform's own validator.

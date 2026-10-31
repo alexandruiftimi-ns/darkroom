@@ -4,6 +4,22 @@ Darkroom uses [semantic versioning](https://semver.org): **major.minor.patch**.
 A **major** change breaks how projects or commands worked before, a **minor** one adds features, a **patch** fixes things.
 The installed version: `node ~/.claude/skills/darkroom/scripts/darkroom.mjs version` (or the `VERSION` file in the skill).
 
+## 1.8.0 · Anti-Slop · 2026-10-31
+
+Darkroom now catches the marks of a page nobody designed, on its own, and still lets a design keep the ones it chose.
+
+- **13 new automatic checks for "AI-made" tells.** Gradient-filled text, the purple-to-blue "AI" gradient, a coloured stripe down the side of every card, a small capitals label or pill above every heading, one italic or coloured word in every headline, emoji used as icons, drawn browser windows with red, yellow and green dots, leftover lorem ipsum and "Your Company", dots and arrows glued onto every label, "Learn more" and "Get started" as every button, animation that moves layout instead of gliding, and numbers or quotes with no source ("10,000+ teams", "— Sarah K.").
+- **Strict where it is the right design call.** Made-up numbers and quotes, leftover placeholder text and janky animation never ship, whatever the style. The purple-blue gradient, emoji icons and drawn browser windows are treated as serious. Every other tell is fixed from the first time it appears. Three different tells on one page are flagged as slop, because together they read as "nobody chose this".
+- **Two allowances, on purpose.** One italic or coloured word in the hero headline, and a single "Get started" button, stay quiet notes: well-designed sites use them, and Darkroom judges design first. Labels that carry a fact (a date, a price, a temperature) are never counted as decoration.
+- **Real proof stays.** A real number or quote from you is marked with its source in the page and passes; only proof nobody can trace is flagged.
+- **Keep what you chose.** When a style tell is part of the design (your brand really is purple and blue), Darkroom records it once in the design bible with the reason, and stops flagging it. Placeholders, untraceable proof and janky animation can never be kept.
+- **Darkroom's own motion pieces now pass the same rules.** Two of them moved layout or animated every property; they now glide with transforms only and look the same.
+- **Pages built around what the visitor came to do.** Before planning sections, Darkroom names the visitor's job (book, buy, visit, attend, subscribe, try, sign up, hire, join, listen) and builds the sections that kind of site really has: the menu and the booking for a restaurant, the lineup and tickets for a festival, the work for a studio. No more email sign-up at the end of every page.
+- **A second pair of eyes.** The first screen, and later the finished page, are reviewed by a reviewer that did not build them and does not know the intent, so it sees the page as a visitor does. Before any code, Darkroom also scores its own plan on six points (argument, hierarchy, execution, specificity, restraint, variety) and fixes the weakest.
+- **No fake "Thanks!".** A form never shows a success message unless something was really sent.
+- **Which version do I have?** Type `/darkroom version`. Darkroom tells you the version you have, whether a newer release is out and what it brings, and how to update for the way you installed it. Offline, it says it could not check; nothing breaks.
+- Credit: the tiers, several tells, the visitor's-job layout and the fresh reviewer were adapted from [Hallmark](https://github.com/nutlope/hallmark) (MIT), rewritten for Darkroom's design-first rules.
+
 ## 1.7.6 · Motion Update (hotfix) · 2026-10-31
 
 Scroll films now keep the full resolution of your video.

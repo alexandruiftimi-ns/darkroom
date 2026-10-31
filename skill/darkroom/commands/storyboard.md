@@ -4,7 +4,7 @@ Goal: `.darkroom/STORYBOARD.json` (schema in `templates/STORYBOARD.json`) plus a
 
 ## 1. Write the argument first
 
-List the page as **claims with proof**, one line each. A section exists only if it carries a claim. Order by the journey in the BRIEF (default: seduce → explain → prove → convert). Delete sections with no claim: that is the cure for the brochure page.
+List the page as **claims with proof**, one line each. A section exists only if it carries a claim. Order by the journey in the BRIEF (default: seduce → explain → prove → convert). First name the visitor's **job** (book, buy, visit, attend, subscribe, try, sign up, hire, join, listen) and read its row in `references/anatomy.md`: the action sits where the category puts it, the category's own sections replace generic ones (the menu, the timetable, the lineup, the archive, not three icon cards), and the page ends on the job, not on an email band. Then run the mirror test there: if a neighbouring business would get the same sequence, change one decision. Delete sections with no claim: that is the cure for the brochure page.
 
 ## 2. Per section
 

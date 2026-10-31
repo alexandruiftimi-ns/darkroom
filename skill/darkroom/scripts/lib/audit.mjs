@@ -32,6 +32,19 @@ export const CHECKS = [
   { id: 'motion-budget', sev: 'high', basis: 'heuristic', what: 'default motion, desktop: the page scrolled a screen at a time; at each rest, the things that move by themselves in view (looping CSS or Web animations grouped per component, playing videos, canvases whose pixels change at rest): more than 3 in one screen medium, more than 5 high', limits: 'hover, cursor and scroll-linked effects are not counted (they move only when the visitor acts), nor entrances that finish; loops are grouped by [data-motion], the outermost svg, or the animation name; motion inside [data-motion-allow] (asked for by the user) is reported as info' },
   { id: 'glass-caption', sev: 'medium', basis: 'heuristic', what: 'the same frosted caption card (backdrop blur, 3+ words) repeated in 3 or more sections: an AI-film tell; one fixed card as a reading anchor is fine', limits: 'backdrop-filter blur only; cards inside one section (a grid) count once' },
   { id: 'phone-gate', sev: 'high', basis: 'heuristic', what: 'phone view (390 px) shows a gate instead of the page ("best viewed on desktop", "rotate your device", "not available on mobile")', limits: 'English, German, French and Spanish phrases; a gate drawn as an image is not detected' },
+  { id: 'gradient-text', sev: 'medium', basis: 'measured', what: 'text filled with a gradient (background-clip: text), from the first run', limits: 'computed styles only; gradient text drawn in SVG or canvas is not seen' },
+  { id: 'ai-gradient', sev: 'high', basis: 'heuristic', what: 'the purple-to-blue / pink-to-violet ramp on text or on a surface of 2 % of the viewport or more (two saturated stops between 190° and 345°, 35° apart, one of them purple); keepable only for a brand whose own colours these are', limits: 'CSS gradients only; gradients inside images or video are not seen' },
+  { id: 'card-stripe', sev: 'medium', basis: 'heuristic', what: 'a card (fill, shadow or radius, 3+ words) with one thick (3 px+) saturated border side and hairline or no others, from the first card', limits: 'blockquote, aside and list items are exempt; a stripe drawn with a pseudo-element or box-shadow is not seen' },
+  { id: 'eyebrow', sev: 'medium', basis: 'heuristic', what: 'small (≤ 15.5 px) 1–6 word label in capitals, tracked (≥ 0.06 em) or a pill, right above an h1–h3, from the first one', limits: 'the label must be the previous sibling of the heading or of its wrapper; time, figcaption, label, links and labels holding a number (a fact) are exempt' },
+  { id: 'accent-word', sev: 'medium', basis: 'heuristic', what: 'one word or phrase in an h1/h2 set apart by italic, another face, another colour or gradient: once in the hero h1 low, in any other heading or twice medium', limits: 'span, em, i, strong, b and mark children covering under 60 % of the heading' },
+  { id: 'emoji-icon', sev: 'high', basis: 'heuristic', what: 'emoji used as icons (a short leaf that is an emoji, or one opening a heading, list item, link or button), from the first one', limits: 'emoji-presentation characters only; ©, ® and arrows are not counted' },
+  { id: 'fake-chrome', sev: 'high', basis: 'heuristic', what: 'a drawn browser or OS window: three small round dots in a row, red then yellow then green', limits: 'dots must be sibling elements with a background colour; an image of a window is not seen' },
+  { id: 'placeholder', sev: 'high', basis: 'heuristic', what: 'placeholder copy left live (lorem ipsum, John/Jane Doe, Acme Corp, Your Company, Logo Ipsum, [Headline]); a © year older than last year is low', limits: 'English placeholders only' },
+  { id: 'template-punct', sev: 'medium', basis: 'heuristic', what: 'meta strings joined by 2+ middle dots or bullets, and link or button labels with an arrow glued on (→ ↗ › »), from the first one', limits: 'marquees and tickers are exempt; one dot in a byline is not counted' },
+  { id: 'stock-cta', sev: 'medium', basis: 'heuristic', what: 'link or button labels that name no action (Learn more, Get started, Read more, Discover more, Book a demo, Explore, Click here): one low, two or more medium', limits: 'English only; exact label match' },
+  { id: 'css-motion', sev: 'high', basis: 'measured', what: 'same-origin CSS with a transition on "all" (with a duration) or @keyframes that animate width, height, top, left, right, bottom or margins; cannot be kept', limits: 'cross-origin stylesheets and inline style attributes are not read; JS-driven layout animation is not seen' },
+  { id: 'proof', sev: 'high', basis: 'manual', what: 'proof-shaped claims with no source in the markup ("10,000+ teams", "99.9 % uptime", "3× faster", "Trusted by", star rows, "— Sarah K." quotes): an invented one is removed, a real one from the brief gets data-source, a cite or a link; cannot be kept', limits: 'English patterns; text inside [data-source], cite, or a blockquote/figure with a cite is treated as sourced' },
+  { id: 'slop-count', sev: 'high', basis: 'heuristic', what: '3 or more different generated-design tells on one page (the tell checks above, plus glass-caption and copy); tells listed in the bible keepTells are not counted', limits: 'counts kinds of tell, not how bad each is; fewer than 4 is reported as info' },
   { id: 'film-headline', sev: 'medium', basis: 'heuristic', what: 'first screen only: the h1 sits over full-bleed media (video, canvas or an image covering half the screen) and is smaller than 48 px desktop / 32 px phone', limits: 'later chapters may use subtitle-size text by design; media is found by size and overlap, not by looking at the picture' },
   { id: 'first-scroll-weight', sev: 'high', basis: 'measured', what: 'bytes on the wire before the visitor scrolls (desktop, default motion, ~2 s after load, empty cache): > 4 MB medium, > 8 MB high', limits: 'Chromium network counters; media still streaming after 2 s is counted only up to then; a page served locally has no compression from a CDN' },
   { id: 'chain-seam', sev: 'medium', basis: 'measured', what: 'chained clips (<video data-chain="name">, in page order): the last frame of one clip and the first frame of the next differ by more than 6 % (mean absolute difference): the film jumps at the join', limits: 'needs ffmpeg; one frame at each end compared at 96×54; frame sequences are checked when joined (darkroom media chain), not here' },
@@ -283,15 +296,137 @@ function probeDom({ maxZones, wordBudgets, disclosure, surface }) {
   const phoneGate = (bodyText.match(/(best (viewed|experienced|enjoyed) on (a )?(desktop|computer|laptop|larger screen)|(please )?(rotate|turn) your (device|phone|screen)|(only|not) available on (mobile|desktop)|desktop only|open (this|it) on (a )?(desktop|computer)|switch to (a )?desktop|auf dem desktop|sur (un )?ordinateur|en (un )?ordenador)/i) ?? [null])[0];
   const norm = (t) => t.replace(/\s+/g, ' ').trim().toLowerCase();
   const prices = bodyText.match(/(?:[€$£]\s?\d[\d.,]*|\d[\d.,]*\s?(?:€|EUR|USD|GBP|\$|£))/g) ?? [];
-  const genre = [...new Set((bodyText.match(/\b(unlock|seamless(ly)?|supercharge|elevate|effortless(ly)?|cutting[- ]edge|next[- ]gen|synergy|revolutioni[sz]e|game[- ]chang(er|ing)|world[- ]class|all[- ]in[- ]one|lorem ipsum)\b/gi) ?? []).map((w) => w.toLowerCase()))];
+  const genre = [...new Set((bodyText.match(/\b(unlock|seamless(ly)?|supercharge|elevate|effortless(ly)?|cutting[- ]edge|next[- ]gen|synergy|revolutioni[sz]e|game[- ]chang(er|ing)|world[- ]class|all[- ]in[- ]one)\b/gi) ?? []).map((w) => w.toLowerCase()))];
   const urgency = bodyText.match(/(limited (time )?offer|ends (soon|today|tonight)|only \d+ left|hurry|last chance|act now|!!+)/gi) ?? [];
+
+  // generated-design tells (references/tells.md): each alone can be a choice; four or more together read as nobody chose
+  const slop = (() => {
+    const cv = document.createElement('canvas'); cv.width = cv.height = 1;
+    const c2 = cv.getContext('2d', { willReadFrequently: true });
+    const rgbOf = (c) => { c2.clearRect(0, 0, 1, 1); c2.fillStyle = '#000'; c2.fillStyle = c; c2.fillRect(0, 0, 1, 1); const d = c2.getImageData(0, 0, 1, 1).data; return d[3] < 40 ? null : [d[0], d[1], d[2]]; };
+    const hsl = ([r, g, b]) => {
+      r /= 255; g /= 255; b /= 255;
+      const mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, d = mx - mn;
+      if (!d) return { h: 0, s: 0, l };
+      const s = d / (1 - Math.abs(2 * l - 1));
+      const h = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4;
+      return { h: (h * 60 + 360) % 360, s, l };
+    };
+    const colourRe = /(rgba?\([^)]*\)|oklch\([^)]*\)|oklab\([^)]*\)|lab\([^)]*\)|lch\([^)]*\)|hsla?\([^)]*\)|color\([^)]*\)|#[0-9a-f]{3,8}\b)/gi;
+    const short = (el) => (el.innerText || '').replace(/\s+/g, ' ').trim().slice(0, 40);
+    const leafText = (el) => [...el.childNodes].filter((n) => n.nodeType === 3).map((n) => n.nodeValue).join('').trim();
+    const els = [...document.querySelectorAll('body *')].filter((el) => !skipTag.has(el.tagName) && !el.closest('[data-darkroom-ignore]') && vis(el)); // aria-hidden decoration is still seen
+    const out = { gradientText: [], aiGradient: [], cardStripe: [], eyebrow: [], pillOverH1: null, accentWord: [], emoji: [], fakeChrome: 0, placeholder: [], staleYear: null, punct: [], stockCta: [], proof: [] };
+    const vpArea = innerWidth * innerHeight;
+    for (const el of els) {
+      const s = getComputedStyle(el);
+      const r = el.getBoundingClientRect();
+      // gradients: text filled with a gradient; the purple-blue / pink-violet "AI" ramp on text or a large surface
+      if (s.backgroundImage.includes('gradient')) {
+        const isText = (s.backgroundClip === 'text' || s.webkitBackgroundClip === 'text') && (el.innerText || '').trim().length > 0;
+        if (isText) out.gradientText.push(short(el));
+        if (isText || r.width * r.height >= 0.02 * vpArea) {
+          const stops = (s.backgroundImage.match(colourRe) ?? []).map(rgbOf).filter(Boolean).map(hsl).filter((c) => c.s > 0.35 && c.l > 0.2 && c.l < 0.85);
+          const cool = stops.filter((c) => c.h >= 190 && c.h <= 345);
+          const span = cool.length >= 2 ? Math.max(...cool.map((c) => c.h)) - Math.min(...cool.map((c) => c.h)) : 0;
+          if (span >= 35 && cool.some((c) => c.h >= 250 && c.h <= 300)) out.aiGradient.push(isText ? `text "${short(el)}"` : `${el.tagName.toLowerCase()}${el.className && typeof el.className === 'string' ? '.' + el.className.split(/\s+/)[0] : ''} ${Math.round(r.width)}×${Math.round(r.height)}`);
+        }
+      }
+      // accent stripe: one thick coloured side on a card (a box with a fill, shadow or radius); quotes and asides are exempt
+      if (!/^(BLOCKQUOTE|ASIDE|HR|LI|A|BUTTON)$/.test(el.tagName) && r.width >= 120 && copyWords(el) >= 3) {
+        const sides = ['Top', 'Right', 'Bottom', 'Left'].map((k) => ({ k, w: parseFloat(s[`border${k}Width`]), c: s[`border${k}Color`], st: s[`border${k}Style`] }));
+        const thick = sides.filter((x) => x.w >= 3 && x.st !== 'none');
+        const boxed = rgbOf(s.backgroundColor) || s.boxShadow !== 'none' || parseFloat(s.borderTopLeftRadius) >= 4 || parseFloat(s.borderBottomLeftRadius) >= 4;
+        if (thick.length === 1 && boxed && sides.every((x) => x === thick[0] || x.w <= 1.5)) {
+          const c = rgbOf(thick[0].c); if (c && hsl(c).s > 0.3) out.cardStripe.push(short(el));
+        }
+      }
+      // emoji standing in for icons (a leaf that is only an emoji, or an emoji opening a heading, list item, link or button)
+      const lt = leafText(el);
+      if (lt && /^(\p{Emoji_Presentation}|\p{Extended_Pictographic}️)/u.test(lt) && (/^(H[1-6]|LI|A|BUTTON|SPAN|I|DIV|P)$/.test(el.tagName)) && (lt.length <= 4 || /^(H[1-6]|LI|A|BUTTON)$/.test(el.tagName))) out.emoji.push(lt.slice(0, 12));
+      // template punctuation: meta strings joined by two or more middle dots or bullets; an arrow glued to a link or button label
+      if (lt && lt.length <= 90 && !el.closest('[class*="marquee"],[class*="ticker"],[data-marquee]') && (lt.match(/\s[·•]\s/g) ?? []).length >= 2) out.punct.push(lt.slice(0, 40));
+      if (/^(A|BUTTON)$/.test(el.tagName) || el.getAttribute('role') === 'button') {
+        const t = (el.innerText || '').replace(/\s+/g, ' ').trim();
+        if (/\S\s?[→↗›»]$/.test(t)) out.punct.push(t.slice(0, 40));
+        if (/^(learn more|get started|read more|discover more|find out more|book a demo|explore( now)?|see more|click here)$/i.test(t.replace(/\s?[→↗›»]$/, ''))) out.stockCta.push(t);
+      }
+    }
+    // eyebrows: short small type, capitals, tracked or a pill, sitting right above a heading
+    for (const h of document.querySelectorAll('h1, h2, h3')) {
+      if (!vis(h) || ignored(h)) continue;
+      let p = h.previousElementSibling ?? (h.parentElement && h.parentElement.firstElementChild === h ? h.parentElement.previousElementSibling : null);
+      if (!p || !vis(p) || /^(TIME|FIGCAPTION|LABEL|LEGEND|NAV|IMG|PICTURE|VIDEO|SVG|BUTTON|INPUT|FORM)$/.test(p.tagName) || p.querySelector('h1,h2,h3,img,svg,video,input,a[href]:not([href^="#"])')) continue;
+      const t = (p.innerText || '').replace(/\s+/g, ' ').trim(); const n = count(t);
+      if (n < 1 || n > 6 || /\d/.test(t)) continue; // a label with a number (a date, a price, a step that is real) carries a fact
+      const ps = getComputedStyle(p); const fs = parseFloat(ps.fontSize);
+      const caps = ps.textTransform === 'uppercase' || ps.fontVariantCaps.includes('small-caps') || (/[A-Z]{3}/.test(t) && t === t.toUpperCase());
+      const tracked = parseFloat(ps.letterSpacing) / fs >= 0.06;
+      const pr = p.getBoundingClientRect();
+      const pill = parseFloat(ps.borderTopLeftRadius) >= pr.height / 2 - 1 && (rgbOf(ps.backgroundColor) || parseFloat(ps.borderTopWidth) > 0) && pr.width < 0.5 * innerWidth;
+      if (fs <= 15.5 && (caps || tracked || pill)) { out.eyebrow.push(t.slice(0, 30)); if (h.tagName === 'H1' && pill) out.pillOverH1 = t.slice(0, 30); }
+    }
+    // the accent word: one italic, recoloured or other-face word inside an otherwise plain heading
+    for (const h of document.querySelectorAll('h1, h2')) {
+      if (!vis(h) || ignored(h)) continue;
+      const hs = getComputedStyle(h); const hc = rgbOf(hs.color); const all = (h.innerText || '').trim().length;
+      const odd = [...h.querySelectorAll('span, em, i, strong, b, mark')].find((x) => {
+        const xs = getComputedStyle(x); const xt = (x.innerText || '').trim().length;
+        if (!xt || xt > 0.6 * all) return false;
+        const xc = rgbOf(xs.color);
+        return xs.fontStyle !== hs.fontStyle || xs.fontFamily !== hs.fontFamily || (hc && xc && Math.hypot(hc[0] - xc[0], hc[1] - xc[1], hc[2] - xc[2]) > 60) || (xs.backgroundImage.includes('gradient') && xs.backgroundClip === 'text');
+      });
+      if (odd) out.accentWord.push({ h1: h.tagName === 'H1', text: `${(odd.innerText || '').trim().slice(0, 20)} in "${short(h)}"` });
+    }
+    // fake browser or OS window: three small round dots in red, yellow and green
+    for (const el of els) {
+      const kids = [...el.children]; if (kids.length < 3 || kids.length > 6) continue;
+      const dots = kids.map((k) => { const b = k.getBoundingClientRect(); const ks = getComputedStyle(k); const c = rgbOf(ks.backgroundColor); return b.width >= 5 && b.width <= 20 && Math.abs(b.width - b.height) <= 2 && parseFloat(ks.borderTopLeftRadius) >= b.width / 2 - 1 && c ? hsl(c).h : null; });
+      for (let i = 0; i + 2 < dots.length; i++) {
+        const [a, b, c] = dots.slice(i, i + 3);
+        if (a !== null && b !== null && c !== null && (a <= 15 || a >= 345) && b >= 30 && b <= 60 && c >= 80 && c <= 160) { out.fakeChrome++; break; }
+      }
+    }
+    // placeholders left live; a copyright year left behind
+    out.placeholder = [...new Set((bodyText.match(/\b(lorem ipsum|dolor sit amet|john doe|jane doe|acme (corp|inc)|your company( name)?|company name here|logo ?ipsum|placeholder text|sample text|insert (text|image|headline) here)\b|\[(headline|title|subtitle|name|company|image|cta|button|your [a-z ]+)\]/gi) ?? []).map((w) => w.toLowerCase()))];
+    const yr = new Date().getFullYear();
+    const cy = [...bodyText.matchAll(/©\s*(?:\d{4}\s*[–-]\s*)?(\d{4})/g)].map((m) => +m[1]);
+    if (cy.length && Math.max(...cy) < yr - 1) out.staleYear = Math.max(...cy);
+    // proof nobody can trace: big round numbers, uptime, "10× faster", star rows, first-name-and-initial quotes
+    const proofRe = /(\b\d[\d,.]*\s?(k|m)?\+\s+(teams|customers|users|companies|businesses|developers|creators|people|clients|brands|members)\b|\b99(\.\d+)?\s?%\s+(uptime|satisfaction|accuracy)\b|\b\d+(\.\d+)?\s?[x×]\s+(faster|more|better|cheaper)\b|\btrusted by\b|★{4,5}|\b[1-5]\.\d\s?\/\s?5\b|[—–]\s?[A-Z][a-z]+ [A-Z]\.(?=[\s,]|$))/g;
+    const tw2 = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    while (tw2.nextNode() && out.proof.length < 8) {
+      const n = tw2.currentNode; const p = n.parentElement;
+      if (!p || !visibleCopyEl(p) || p.closest('[data-source], cite, blockquote:has(cite), figure:has(cite)')) continue;
+      for (const m of n.nodeValue.matchAll(proofRe)) out.proof.push(m[0].trim());
+    }
+    // CSS that animates by reflex: transition on "all", keyframes moving layout (width, height, top, left, margins)
+    out.cssMotion = [];
+    const walkRules = (rules) => {
+      for (const rule of rules) {
+        if (out.cssMotion.length >= 6) return;
+        if (rule.cssRules && !(rule instanceof CSSKeyframesRule)) walkRules(rule.cssRules);
+        if (rule instanceof CSSStyleRule) {
+          const st = rule.style; const props = (st.transitionProperty || '').split(',').map((x) => x.trim());
+          const durs = (st.transitionDuration || '').split(',').map((x) => parseFloat(x) || 0);
+          if (props.includes('all') && (st.transition || st.transitionDuration) && durs.some((d) => d > 0)) out.cssMotion.push(`transition: all on ${rule.selectorText.slice(0, 40)}`);
+        } else if (rule instanceof CSSKeyframesRule) {
+          const moved = new Set();
+          for (const k of rule.cssRules) for (const p of ['width', 'height', 'top', 'left', 'right', 'bottom', 'margin-top', 'margin-left']) if (k.style.getPropertyValue(p)) moved.add(p);
+          if (moved.size) out.cssMotion.push(`@keyframes ${rule.name} animates ${[...moved].join(', ')}`);
+        }
+      }
+    };
+    for (const sh of document.styleSheets) { try { walkRules(sh.cssRules); } catch { /* cross-origin sheet */ } }
+    return out;
+  })();
   return {
     lang: document.documentElement.lang, title: document.title,
     families: [...families], declared: Object.fromEntries(declared), weights, loaded: [...loaded], sizes: [...sizes].sort((a, b) => a - b),
     zones, travel: +(travel / diag).toFixed(2), corners: [...corners],
     smallTargets, targetCount: targets.length, h1s, skips, imgsNoAlt, unlabeled, nameless, skipLink, reducedMotionRule,
     sections, totalWords: copyWords(document.body), prices, genre, urgency, uiHues,
-    longBlocks: longBlocks.slice(0, 6), glassCaptions: { sections: glassSecs.size, text: glassText }, filmHeadline, phoneGate,
+    longBlocks: longBlocks.slice(0, 6), glassCaptions: { sections: glassSecs.size, text: glassText }, filmHeadline, phoneGate, slop,
     disclosureFound: disclosure ? norm(bodyText).includes(norm(disclosure)) : null,
     overflow: document.documentElement.scrollWidth - innerWidth,
     overflowCulprits: (() => {
@@ -613,6 +748,43 @@ const toLab = ([r, g, b]) => {
 export const deltaE = (a, b) => { const [p, q] = [toLab(a), toLab(b)]; return Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - q[2]); };
 const hex = (c) => '#' + c.map((v) => v.toString(16).padStart(2, '0')).join('');
 
+// Generated-design tells (references/tells.md), held as strictly as Hallmark where that is the right design call.
+// Floor (high, cannot be kept): placeholder copy, unsourced proof, reflex CSS motion. Strong tells (high, the bible may
+// keep them with a reason): the purple-blue ramp, emoji icons, drawn browser windows. Reflexes (medium from the first
+// one, keepable): gradient text, card stripes, eyebrows, template punctuation, an accent word outside the hero, stock
+// labels from the second. Three or more kinds on one page: slop-count high. Kept tells ("keepTells") report as info.
+const FLOOR_TELLS = new Set(['placeholder', 'proof', 'css-motion']);
+function tellFindings(desk, s, add) {
+  const t = desk.slop; if (!t) return;
+  const kept = new Set((Array.isArray(s.keepTells) ? s.keepTells : []).map(String).filter((k) => !FLOOR_TELLS.has(k)));
+  const seen = new Set();
+  const tell = (sev, id, msg, data) => {
+    if (kept.has(id)) return add('info', id, `kept on purpose (bible keepTells): ${msg}`, data);
+    seen.add(id); add(sev, id, msg, data);
+  };
+  const eg = (a) => [...new Set(a)].slice(0, 3).map((x) => `"${x}"`).join(', ');
+  if (t.placeholder.length) tell('high', 'placeholder', `placeholder text left live: ${eg(t.placeholder)}. Real copy, or a marked TEMP slot named in the handoff`, t.placeholder);
+  if (t.staleYear) add('low', 'placeholder', `copyright year ${t.staleYear}: nobody updated the footer`);
+  if (t.proof.length) tell('high', 'proof', `proof with no source on the page: ${eg(t.proof)}. Invented numbers, logos and quotes never ship. A real one from the brief gets its source in the markup (data-source="...", a cite, or a link) and then passes`, t.proof);
+  if (t.cssMotion?.length) tell('high', 'css-motion', `${t.cssMotion.length} reflex animation rule(s): ${t.cssMotion.slice(0, 3).join('; ')}. List the properties; move with transform and opacity (layout animation stutters on phones)`, t.cssMotion);
+  if (t.aiGradient.length) tell('high', 'ai-gradient', `purple-to-blue / pink-to-violet gradient on ${eg(t.aiGradient)}: the default "AI" ramp, the most recognised generated look. Take the colour from the subject, or one hue with depth from lightness. Only a brand whose own colours these are keeps it (keepTells, with the reason)`, t.aiGradient);
+  if (t.emoji.length) tell('high', 'emoji-icon', `${t.emoji.length} emoji used as icons (${eg(t.emoji)}): one icon set, custom SVG, or type. Only a page whose voice is emoji (a toy, a kids brand that asks for it) keeps them`, t.emoji);
+  if (t.fakeChrome) tell('high', 'fake-chrome', `${t.fakeChrome} drawn browser / OS window (red, yellow and green dots): show the real screenshot in a plain frame, or no chrome`);
+  if (t.gradientText.length) tell('medium', 'gradient-text', `${t.gradientText.length} gradient-filled text run(s), e.g. ${eg(t.gradientText)}: set it in solid ink and let weight, size or the face carry it`, t.gradientText);
+  if (t.cardStripe.length) tell('medium', 'card-stripe', `${t.cardStripe.length} card(s) with one thick coloured side stripe, e.g. ${eg(t.cardStripe)}: the most specific generated tell. Hairline or no border; vary the cards by size and content`, t.cardStripe);
+  if (t.eyebrow.length) tell('medium', 'eyebrow', `${t.eyebrow.length} heading(s) with a small capitals / tracked / pill label above (${eg(t.eyebrow)}${t.pillOverH1 ? '; a pill badge over the h1' : ''}): it names what comes next instead of adding a fact. Delete it and open the section another way (references/tells.md, "Instead of the eyebrow"); a label with a date, price or place passes`, t.eyebrow);
+  const aw = t.accentWord.map((a) => (typeof a === 'string' ? { h1: false, text: a } : a));
+  if (aw.length >= 2 || aw.some((a) => !a.h1)) tell('medium', 'accent-word', `${aw.length} heading(s) set one word apart (italic, another face or colour): ${eg(aw.map((a) => a.text))}. A heading is one style and one colour; the only exception is one such word in the hero headline`, aw.map((a) => a.text));
+  else if (aw.length) add('low', 'accent-word', `one word set apart in the hero headline: ${eg(aw.map((a) => a.text))}. Allowed once, as the page's voice; never repeat it below the hero`, aw.map((a) => a.text));
+  if (t.punct.length) tell('medium', 'template-punct', `${t.punct.length} template punctuation string(s) (${eg(t.punct)}): meta joined by dots, arrows glued to labels. Use line breaks, columns, or a verb as the label`, t.punct);
+  if (t.stockCta.length >= 2) tell('medium', 'stock-cta', `${t.stockCta.length} action labels that name no action (${eg(t.stockCta)}): say what happens ("Book a table", "See the menu")`, t.stockCta);
+  else if (t.stockCta.length) add('low', 'stock-cta', `a stock action label: ${eg(t.stockCta)}. Better: say what happens`, t.stockCta);
+  if (desk.glassCaptions?.sections >= 3) seen.add('glass-caption');
+  if (desk.genre?.length) seen.add('copy');
+  if (seen.size >= 3) add('high', 'slop-count', `${seen.size} generated-design tells on one page (${[...seen].join(', ')}): together they read as "nobody chose this". Fix them, or, for a style tell the design truly chose, list it in the bible's keepTells with the reason; replace what goes with something owned: the subject's own picture, type, colour or layout (references/tells.md)`, [...seen]);
+  else if (seen.size) add('info', 'slop-count', `${seen.size} tell(s): ${[...seen].join(', ')} (3 or more together is high)`);
+}
+
 export function findings({ desk, mob, colour, motion, keyboard, contrast, ctx }) {
   const F = [];
   const add = (sev, check, msg, data, extra = {}) => F.push({ sev, check, basis: CHECKS.find((c) => c.id === check)?.basis ?? 'measured', msg, ...extra, ...(data ? { data } : {}) });
@@ -743,6 +915,7 @@ export function findings({ desk, mob, colour, motion, keyboard, contrast, ctx })
   }
   if (desk.glassCaptions?.sections >= 3) add('medium', 'glass-caption', `the same frosted caption card (e.g. "${desk.glassCaptions.text}") repeats in ${desk.glassCaptions.sections} sections: it reads as a template. Vary the text treatment by chapter, or keep one fixed card as a reading anchor`, desk.glassCaptions);
   if (mob.phoneGate) add('high', 'phone-gate', `the phone view shows a gate ("${mob.phoneGate}") instead of the page: build the phone version (stacked chapters, stills instead of heavy scenes)`);
+  tellFindings(desk, s, add);
   for (const [label, d, floor] of [['desktop', desk, 48], ['mobile', mob, 32]]) {
     if (d.filmHeadline && d.filmHeadline.size < floor) add('medium', 'film-headline', `${label}: the first-screen h1 "${d.filmHeadline.text}" is ${d.filmHeadline.size} px over full-screen ${d.filmHeadline.over}: below the ${floor} px floor it loses to the picture. Later chapters may use smaller text`, d.filmHeadline, { viewport: label });
   }

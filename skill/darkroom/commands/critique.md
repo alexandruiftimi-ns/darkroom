@@ -12,8 +12,10 @@ Method: `references/critique-method.md`. In short:
    - *Craft*: hierarchy, type, spacing rhythm, crop and subject scale, image quality, identity consistency, section rhythm and transitions, phone composition, motion quality (does it serve the claim; reversible; calm).
 3. **Defect records**, not adjectives: State / Observed / Impact / Change / Re-check. Top 3–5 by impact.
 4. **Keep list**: 3 things that work and must survive edits.
-5. **Slop and sameness check**: read the hero aloud; if it fits a competitor unchanged, rewrite it. Scan `references/tells.md` (gradient text, card stripes, badge over h1, emoji icons, placeholder strings, generic headlines are not caught by the audit).
+5. **Slop and sameness check**: the audit now names the visible reflexes (`gradient-text`, `ai-gradient`, `card-stripe`, `eyebrow`, `accent-word`, `emoji-icon`, `fake-chrome`, `template-punct`, `stock-cta`, `css-motion`, `proof`, `placeholder`) and counts them (`slop-count`, high at 3 or more kinds). Every `proof` item is either removed (invented) or given its source in the markup (real, from the brief). Then judge what it cannot see (`references/tells.md`, "What audit measures vs what needs eyes"): read the hero aloud, and if it fits a competitor unchanged, rewrite it; check the anatomy against the visitor's job (`references/anatomy.md`) and the mirror test; look for the fake product, the stock close, the echo, decoration text; submit every form and watch the network: a "Thanks" with no request behind it is a floor failure. A reflex the design keeps goes into the bible's `keepTells` with its reason.
 6. **Distinctiveness question**: what is the one thing a visitor will remember? If you cannot name it, the page is not done.
+
+Before the final handoff the critique ends with the finish review by a fresh-context reviewer (`references/fresh-review.md`): you are the weakest judge of what you built.
 
 Load `library/LESSONS.md` and the matching entries; a fix that echoes a `bad/` entry cites its slug. Apply fixes yourself through the QA loop. Only ask the user for a taste decision between two concrete alternatives.
 

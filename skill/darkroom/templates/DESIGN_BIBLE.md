@@ -4,7 +4,7 @@ Status: draft | approved <YYYY-MM-DD> · Packs: <primary> + <modifiers>
 
 ```darkroom
 { "surface": "landing", "fontBudget": 3, "colorMode": "disciplined", "markets": ["EU"], "disclosure": "", "currency": "EUR",
-  "wordBudgets": { "hero": 30, "feature": 45, "proof": 60, "closing": 30 }, "maxZones": 3 }
+  "wordBudgets": { "hero": 30, "feature": 45, "proof": 60, "closing": 30 }, "maxZones": 3, "keepTells": [] }
 ```
 
 ## 1. Thesis
