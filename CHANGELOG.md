@@ -4,6 +4,19 @@ Darkroom uses [semantic versioning](https://semver.org): **major.minor.patch**.
 A **major** change breaks how projects or commands worked before, a **minor** one adds features, a **patch** fixes things.
 The installed version: `node ~/.claude/skills/darkroom/scripts/darkroom.mjs version` (or the `VERSION` file in the skill).
 
+## 1.12.0 · Smooth on Phones · 2026-11-06
+
+Scroll films could lag on phones, even on an iPhone 14 Pro Max, because phones decoded the same big frames as desktop. Phones and tablets now get their own frames, every time, and desktop stays exactly as sharp as before.
+
+- **Every frame set now comes with phone and tablet versions.** No flag to remember. An upright screen only ever shows the middle of a wide film, so its frames are cut to that part: about a third of the pixels, no loss of sharpness. Tablets and phones held sideways get a 1440 px set.
+- **The player picks by the real shape of the stage**, and swaps when the device rotates, staying on the same frame.
+- **Tablets are covered**, including large iPads, which used to load desktop frames.
+- **Sites that already exist can be upgraded** from their finished frames, no video needed.
+- **Off-centre subjects and square phone stages** are handled: the crop can follow the subject and match the shape of the stage.
+- **The canvas is never bigger than the frame can fill**, which saves work on every draw. Desktop pixels compared before and after: no visible change.
+- **A new audit check** catches heavy frames on a phone before you ship them, and `media check` warns when a set has no phone version.
+- **Measured in Chromium with a phone-sized view and the CPU slowed 6x, not on a real phone:** on 241 real frames, dropped animation frames went from 115 of 207 to 0 of 362, downloads from 333 MB to 20 MB.
+
 ## 1.11.0 · Shot List · 2026-11-06
 
 Scroll frames used to come down to one generic prompt and a line saying "use start and end frames". Now Darkroom walks you through the whole shot, or runs it for you.

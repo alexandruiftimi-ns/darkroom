@@ -22,6 +22,7 @@ export const CHECKS = [
   { id: 'video-playback', sev: 'high', basis: 'measured', what: 'autoplay <video> not playing after load: error, readyState < 2 or paused; codec gaps of the test browser reported as info', limits: 'videos with the autoplay attribute, or inside a [data-video-layer] (recipes/video-layer.js); other JS-started videos are not checked' },
   { id: 'loop-seam', sev: 'medium', basis: 'heuristic', what: 'a video that loops natively (loop attribute) whose first and last frames differ by more than 6 % (mean absolute difference): a visible jump on every loop', limits: 'needs ffmpeg; compares one frame at each end at 96×54; videos with data-video-loop (fade loop) are skipped' },
   { id: 'frame-blend', sev: 'high', basis: 'measured', what: 'while scrolling with default motion, a full-size image is drawn on a canvas at partial opacity (globalAlpha between 0.03 and 0.97): one frame shows through another (ghosting)', limits: '2D canvas drawImage only (not WebGL, OffscreenCanvas or stacked <img> layers); one scroll pass from top to bottom; canvases inside [data-frame-blend="allow"] are skipped; a canvas drawn onto a canvas (trails, feedback buffers) is not a film frame and is not counted' },
+  { id: 'phone-frames', sev: 'high', basis: 'measured', what: 'phone view: film frames drawn to a canvas are over 1.5 megapixels, or average over 300 KB each: phones then decode more than they can show and the scroll lags', limits: 'frames are identified by the number at the end of the file name, as in scrub-fling; a player that does not go through fetch and createImageBitmap reports no size. Real phones are not measured' },
   { id: 'scrub-fling', sev: 'high', basis: 'measured', what: 'phone view, CPU slowed 4x: fast flings down a canvas frame scene, back up, down and up again; the painted film changes direction 6+ times while the scroll does 3 times: far-away frames flash on fast scrolls and when scrolling back up', limits: 'frames are identified by the number in their file URL (fetch + createImageBitmap or <img> drawn on a 2D canvas); the scene is the nearest ancestor of the canvas that painted the frames at least 1.5 viewports tall; Chromium only (CPU throttling)' },
   { id: 'scroll-glide', sev: 'high', basis: 'measured', what: 'in a canvas frame scene, the page moves its own scroll more than 30 px within 1.5 s after the user stops (snapping or gliding to a stop): it fights touch momentum and reads as a glitch', limits: 'one rest position at 37 % of the scene; CSS scroll-snap counts too' },
   { id: 'display-font', sev: 'high', basis: 'measured', what: "the h1's first font-family is declared (@font-face) but no face of it loaded: the headline shows in a fallback", limits: 'undeclared system fonts are reported as info' },
@@ -966,6 +967,11 @@ export function findings({ desk, mob, colour, motion, keyboard, contrast, ctx })
   }
   if (ex?.blend?.partial) add('high', 'frame-blend', `${ex.blend.partial} of ${ex.blend.draws} full-size image draws on ${ex.blend.canvases.join(', ')} were see-through: one frame shows through another (ghosting). Draw one frame at a time at full opacity; for smoother motion extract more frames, never blend neighbours or fade a still over the film`, ex.blend);
   else if (ex?.blend?.draws) add('info', 'frame-blend', `${ex.blend.draws} full-size canvas image draws while scrolling, all at full opacity`);
+  const ps = ex?.fling?.size;
+  if (ps?.w) {
+    const heavy = [ps.w * ps.h > 1.5e6 ? `${ps.w}x${ps.h} frames` : '', ps.kb > 300 ? `${ps.kb} KB a frame` : ''].filter(Boolean);
+    add(heavy.length ? 'high' : 'info', 'phone-frames', heavy.length ? `a phone loads ${heavy.join(' and ')}: the scroll film will lag. Use the device sets from \`darkroom media frames\`, or add them to this folder with \`darkroom media phone\`, and the current recipes/scrub-frames.js` : `a phone loads ${ps.w}x${ps.h} frames, ${ps.kb} KB each`, ps);
+  }
   if (ex?.fling?.flips >= 6) add('high', 'scrub-fling', `fast fling on a phone (CPU x4): the film on ${ex.fling.canvas} changed direction ${ex.fling.flips} times while the scroll changed 3 times (${ex.fling.jumps} jumps of more than 12 frames): far-away frames flash. Show the closest decoded frame between the one on screen and the wanted one, keep fetched frames in memory, decode ahead in the direction of travel, cap the speed (recipes/scrub-frames.js, recipes/README.md rules 6 and 6a)`, ex.fling);
   else if (ex?.fling?.draws) add('info', 'scrub-fling', `fast fling on a phone (CPU x4): the film on ${ex.fling.canvas} followed the scroll (${ex.fling.flips} direction changes for the scroll's 3, ${ex.fling.draws} frame draws)`);
   if (ex?.fling?.glide > 30) add('high', 'scroll-glide', `the page moved its own scroll by ${ex.fling.glide} px after the scroll came to rest in the frame scene (snapping or gliding to a stop). Remove it; for breaking points hold the film on chosen frames instead (holdAt in recipes/scrub-frames.js, recipes/README.md rule 2)`, ex.fling);
@@ -1161,11 +1167,11 @@ function blendProbe() {
 // Init script for the fling pass: which film frame the largest canvas paints. A frame is the number at the end of the
 // file name it came from (seq_0042.webp → 42), followed through fetch → blob → createImageBitmap, or an <img>'s src.
 function flingTagProbe() {
-  const rec = window.__drFling = { last: null, draws: 0, canvas: null };
+  const rec = window.__drFling = { last: null, draws: 0, canvas: null, w: 0, h: 0, bytes: 0, files: 0 };
   const num = (u) => { try { const m = /(?:^|[^\d.])(\d+)\.\w+$/.exec(new URL(u, location.href).pathname); return m ? +m[1] : null; } catch { return null; } };
   const tag = new WeakMap();
   const blob = Response.prototype.blob;
-  Response.prototype.blob = async function () { const b = await blob.call(this); const n = num(this.url); if (n !== null) tag.set(b, n); return b; };
+  Response.prototype.blob = async function () { const b = await blob.call(this); const n = num(this.url); if (n !== null) { tag.set(b, n); rec.bytes += b.size; rec.files++; } return b; };
   const cib = window.createImageBitmap;
   window.createImageBitmap = async function (src, ...a) {
     const bmp = await cib.call(this, src, ...a);
@@ -1178,7 +1184,7 @@ function flingTagProbe() {
       const c = this.canvas;
       if (c instanceof HTMLCanvasElement && this.globalAlpha >= 0.5 && c.clientWidth * c.clientHeight >= 0.15 * innerWidth * innerHeight) {
         const n = tag.get(img) ?? (img instanceof HTMLImageElement ? num(img.currentSrc || img.src) : null);
-        if (n !== null && n !== undefined) { rec.last = n; rec.draws++; rec.el = c; rec.canvas = c.id ? `canvas#${c.id}` : c.classList.length ? `canvas.${[...c.classList].join('.')}` : 'canvas'; }
+        if (n !== null && n !== undefined) { rec.last = n; rec.draws++; rec.el = c; rec.w = Math.max(rec.w, img.naturalWidth || img.width); rec.h = Math.max(rec.h, img.naturalHeight || img.height); rec.canvas = c.id ? `canvas#${c.id}` : c.classList.length ? `canvas.${[...c.classList].join('.')}` : 'canvas'; }
       }
     } catch { /* never break the page */ }
     return di.call(this, img, ...a);
@@ -1199,11 +1205,12 @@ async function flingPass(browser, url) {
     await page.waitForTimeout(2500); // frame files arrive
     try { const cdp = await ctx.newCDPSession(page); await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 }); } catch { /* not Chromium: unthrottled */ }
     return await page.evaluate(async () => {
-      const c = window.__drFling.el; // the canvas that painted film frames
+      const rec = window.__drFling, c = rec.el; // the canvas that painted film frames
       if (!c) return null;
+      const size = { w: rec.w, h: rec.h, kb: rec.files ? Math.round(rec.bytes / rec.files / 1024) : 0 };
       let scene = c.parentElement;
       while (scene && scene !== document.body && scene.offsetHeight < 1.5 * innerHeight) scene = scene.parentElement;
-      if (!scene || scene === document.body) return null;
+      if (!scene || scene === document.body) return { size };
       const top = scene.getBoundingClientRect().top + scrollY, end = top + scene.offsetHeight - innerHeight;
       const raf = () => new Promise((r) => requestAnimationFrame(r));
       const to = (y) => scrollTo({ top: y, behavior: 'instant' });
@@ -1227,7 +1234,7 @@ async function flingPass(browser, url) {
       }
       const rest = Math.round(top + (end - top) * 0.37);
       to(rest); await new Promise((r) => setTimeout(r, 1500));
-      return { canvas: window.__drFling.canvas, draws: window.__drFling.draws - before, flips, jumps, glide: Math.round(Math.abs(scrollY - rest)) };
+      return { size, canvas: window.__drFling.canvas, draws: window.__drFling.draws - before, flips, jumps, glide: Math.round(Math.abs(scrollY - rest)) };
     });
   } catch (e) { if (process.env.DARKROOM_DEBUG) console.error('fling pass:', e.message); return null; } finally { await ctx.close(); }
 }

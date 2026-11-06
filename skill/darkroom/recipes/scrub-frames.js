@@ -16,27 +16,43 @@
 // fails it). Smoother = more frames. Progress uses the sticky stage's own height, not innerHeight: on phones innerHeight
 // changes whenever the address bar shows or hides, which moved the frame every time the scroll direction flipped.
 // Paused off-screen and in hidden tabs; DPR is capped; reduced motion shows one still frame and never scrubs.
-// Phones: when the manifest names a `mobile` set (`darkroom media frames --mobile-width`) and `mobileQuery` matches, that
-// set is used instead. Frames are never scaled down here: large ones (4K) shrink the decode window to fit `memoryMB`.
+// Phones and tablets (`mobileQuery`): picks a set from the manifest by the stage's real shape: a stage no wider than the `tall` crop
+// takes it (only if it was cut for the same `focus`), anything else `mobile`. Rotating swaps the set at the same spot.
+// Desktop keeps the full frames. Frames are never scaled down here: large ones (4K) shrink the decode window to fit `memoryMB`.
+// The canvas is never larger than the frame can fill: extra canvas pixels add cost and no sharpness, CSS stretches it to the stage.
+// `focus` (0 left, 1 right; pass what `media frames --focus` got) is where a cover crop sits; match it with the poster's object-position.
 // A few `anchors` spread coarse-to-fine stay decoded once the window has room.
 // Breaking points: pass `mapFrame: holdAt([...frames], 0.04)` to make the film rest on chosen frames for a stretch of
 // scroll. Never snap or glide the page's scroll to a stop: it fights touch momentum and reads as a glitch.
 
 export async function createFrameScrubber({
-  canvas, scene, manifestUrl, window: R = 12, dprCap = 2, ease = 0.3, maxSpeed = 4, concurrency = 4, anchors: anchorCount = 9, memoryMB = 600,
-  mobileQuery = '(max-width: 1023px)', mapFrame,
+  canvas, scene, manifestUrl, window: windowSize = 12, dprCap = 2, ease = 0.3, maxSpeed = 4, concurrency = 4, anchors: anchorCount = 9, memoryMB,
+  mobileQuery = '(max-width: 1023px), (pointer: coarse) and (max-width: 1400px)', focus = 0.5, mapFrame,
   restFrame = 'last', reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches, onFrame,
 }) {
-  let manifest = await (await fetch(manifestUrl)).json();
-  if (manifest.mobile && matchMedia(mobileQuery).matches) {
-    manifestUrl = new URL(manifest.mobile, new URL(manifestUrl, location.href)).href;
-    manifest = await (await fetch(manifestUrl)).json();
-  }
-  const base = manifestUrl.slice(0, manifestUrl.lastIndexOf('/') + 1);
+  const rootUrl = new URL(manifestUrl, location.href).href;
+  const root = await (await fetch(rootUrl)).json();
+  const sets = root.sets ?? (root.mobile ? [{ name: 'mobile', path: root.mobile }] : []);
+  const setFor = () => { // null = the full frames
+    if (!matchMedia(mobileQuery).matches) return null;
+    const shape = (canvas.clientWidth || innerWidth) / (canvas.clientHeight || innerHeight);
+    const tall = sets.find((s) => s.name === 'tall' && Math.abs((s.focus ?? 0.5) - focus) < 0.02);
+    return (tall && shape < (tall.width / tall.height) * 1.2 && tall) || sets.find((s) => s.name === 'mobile') || null;
+  };
+  const readSet = async (set) => {
+    if (!set) return { m: root, url: rootUrl };
+    const url = new URL(set.path, rootUrl).href;
+    return { m: await (await fetch(url)).json(), url };
+  };
+  let set = setFor(), manifest, base, R;
   // big frames (4K is ~32 MB decoded each) keep fewer decoded at once instead of being shrunk: full sharpness, bounded memory.
   // The window holds 3R + 1 frames plus the anchors; `memoryMB` caps them (1080p keeps R = 12, 4K drops to R = 3).
-  const perFrameMB = (manifest.width * manifest.height * 4) / 1048576 || 8;
-  R = Math.max(3, Math.min(R, Math.floor((memoryMB / perFrameMB - anchorCount - 1) / 3)));
+  const applySet = ({ m, url }) => {
+    manifest = m; base = url.slice(0, url.lastIndexOf('/') + 1);
+    const perFrameMB = (m.width * m.height * 4) / 1048576 || 8;
+    R = Math.max(3, Math.min(windowSize, Math.floor(((memoryMB ?? (matchMedia(mobileQuery).matches ? 240 : 600)) / perFrameMB - anchorCount - 1) / 3)));
+  };
+  applySet(await readSet(set));
   const n = manifest.count;
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   const toPos = mapFrame ? (p) => clamp(mapFrame(p, n), 0, n - 1) : (p) => p * (n - 1);
@@ -46,7 +62,7 @@ export async function createFrameScrubber({
   const blobs = new Array(n).fill(null);
   const bitmaps = new Array(n).fill(null);
   const decoding = new Set();
-  const fetchAc = new AbortController();
+  let fetchAc = new AbortController(), generation = 0, lastWidth = 0;
   let cur = 0, target = 0, dir = 1, shown = -1, raf = 0, last = 0, running = false, destroyed = false, active = true, wantW = 0, wantH = 0;
 
   const progress = () => {
@@ -56,7 +72,8 @@ export async function createFrameScrubber({
 
   function sizeCanvas() {
     const dpr = Math.min(devicePixelRatio || 1, dprCap);
-    const w = Math.round(canvas.clientWidth * dpr), h = Math.round(canvas.clientHeight * dpr);
+    const over = Math.max(1, canvas.clientWidth * dpr / manifest.width, canvas.clientHeight * dpr / manifest.height);
+    const w = Math.round(canvas.clientWidth * dpr / over), h = Math.round(canvas.clientHeight * dpr / over);
     if (w !== wantW || h !== wantH) { canvas.width = wantW = w; canvas.height = wantH = h; shown = -1; } // resizing clears the canvas
   }
 
@@ -66,7 +83,7 @@ export async function createFrameScrubber({
     sizeCanvas();
     const s = Math.max(canvas.width / bmp.width, canvas.height / bmp.height); // cover
     const w = bmp.width * s, h = bmp.height * s;
-    ctx.drawImage(bmp, (canvas.width - w) / 2, (canvas.height - h) / 2, w, h);
+    ctx.drawImage(bmp, (canvas.width - w) * focus, (canvas.height - h) / 2, w, h);
     shown = i; onFrame?.(i, n);
     return true;
   }
@@ -94,16 +111,23 @@ export async function createFrameScrubber({
   async function fetchAll(start) {
     const byDistance = Array.from({ length: n }, (_, i) => i).sort((x, y) => Math.abs(x - start) - Math.abs(y - start));
     const order = [...new Set([...anchors, ...byDistance])];
-    let k = 0;
-    const worker = async () => { while (k < order.length && !destroyed) { await fetchOne(order[k++]); kick(); } };
+    let k = 0; const g = generation;
+    const worker = async () => { while (k < order.length && !destroyed && g === generation) { await fetchOne(order[k++]); kick(); } };
     await Promise.all(Array.from({ length: 6 }, worker));
   }
-  const decodeNow = async (i) => { await fetchOne(i); if (blobs[i] && !bitmaps[i]) bitmaps[i] = await createImageBitmap(blobs[i]); };
+  const decodeNow = async (i) => {
+    const g = generation;
+    await fetchOne(i);
+    if (!blobs[i] || bitmaps[i]) return;
+    const bmp = await createImageBitmap(blobs[i]);
+    if (destroyed || g !== generation) bmp.close(); else bitmaps[i] = bmp;
+  };
 
   function decode(i) {
     if (i < 0 || i >= n || bitmaps[i] || decoding.has(i) || !blobs[i]) return;
     decoding.add(i);
-    createImageBitmap(blobs[i]).then((bmp) => { if (destroyed) bmp.close(); else bitmaps[i] = bmp; }, () => {})
+    const g = generation;
+    createImageBitmap(blobs[i]).then((bmp) => { if (destroyed || g !== generation) bmp.close(); else bitmaps[i] = bmp; }, () => {})
       .finally(() => { decoding.delete(i); kick(); });
   }
 
@@ -139,10 +163,31 @@ export async function createFrameScrubber({
     if (cur !== target || decoding.size) raf = requestAnimationFrame(tick); else running = false;
   }
   function kick() { if (!running && !destroyed && !reducedMotion) { running = true; last = 0; raf = requestAnimationFrame(tick); } }
-  const onResize = () => { shown = -1; kick(); };
+  // a rotation can change which set fits. Same frame count, so the film stays at the same spot; the old frame stays on screen meanwhile.
+  async function swapSet(next) {
+    const g = ++generation;
+    const read = await readSet(next).catch(() => null);
+    if (!read || read.m.count !== n || destroyed || g !== generation) return;
+    fetchAc.abort(); fetchAc = new AbortController();
+    bitmaps.forEach((b, i) => { b?.close(); bitmaps[i] = null; }); blobs.fill(null);
+    set = next; applySet(read); wantW = wantH = 0;
+    const at = Math.round(cur);
+    await decodeNow(at);
+    if (g !== generation) return;
+    draw(at); fetchAll(at); kick();
+  }
+  const onResize = () => {
+    shown = -1;
+    if (canvas.clientWidth !== lastWidth) { // a width change, not the address bar
+      lastWidth = canvas.clientWidth;
+      const next = setFor();
+      if (next !== set && !reducedMotion) { swapSet(next); return; }
+    }
+    kick();
+  };
 
   const scrubber = {
-    io: null, manifest, get frame() { return shown; },
+    io: null, get manifest() { return manifest; }, get set() { return set?.name ?? 'full'; }, get frame() { return shown; },
     destroy() {
       destroyed = true; cancelAnimationFrame(raf); scrubber.io?.disconnect(); fetchAc.abort();
       removeEventListener('scroll', kick); removeEventListener('resize', onResize); document.removeEventListener('visibilitychange', kick);
@@ -154,6 +199,7 @@ export async function createFrameScrubber({
     const rest = restFrame === 'last' ? n - 1 : restFrame === 'first' ? 0 : Math.round((n - 1) / 2);
     await decodeNow(rest); draw(bitmaps[rest] ? rest : 0);
   } else {
+    lastWidth = canvas.clientWidth;
     cur = target = toPos(progress());
     const first = Math.round(cur);
     await decodeNow(first); // the frame for where the page opened, immediately

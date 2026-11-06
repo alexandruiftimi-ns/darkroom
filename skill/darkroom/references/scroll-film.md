@@ -16,13 +16,14 @@ The look of the "AI websites": generated clips, chained end to start, played for
 4. **Test the hardest clip once** on the cheapest setting the tool has; inspect it frame by frame (`darkroom media inspect`, `media frames`) before ordering the rest.
 5. **Connectors from extracted frames.** Clip N+1 starts from the **last frame extracted from clip N's file** (`darkroom media lastframe`), not from the original still (a re-rendered still differs in colour and grain, and the seam pops). Never "clean" that frame in an image tool; at most a light upscale.
 6. **Check, even out, join:** `darkroom media clipcheck` each clip, `media finish --even` for constant speed, then `darkroom media chain ch1.mp4 ch2.mp4 ch3.mp4 --out film.mp4` scores every seam (last frame → next first frame) and joins the clips. A seam over the threshold is a visible jump: remake the clip from the extracted frame, or crossfade 6 to 8 frames across it.
-7. **Frames or video:** `media frames film.mp4 --mobile-width 900` for `recipes/scrub-frames.js` (recommended: deterministic paint, smooth on phones), or chapter videos marked `data-chain` for `recipes/scrub-video.js` (the audit's `chain-seam` check scores those seams on the page).
+7. **Frames or video:** `media frames film.mp4` for `recipes/scrub-frames.js` (it also writes the phone and tablet sets) (recommended: deterministic paint, smooth on phones), or chapter videos marked `data-chain` for `recipes/scrub-video.js` (the audit's `chain-seam` check scores those seams on the page).
 8. **Posters** are extracted from the encoded clips (`media web` / `media frames` make them), never the source stills.
 
 ## Budget and phones
 
 - **Before the first scroll: ~4 MB** (the first chapter's frames or clip, fonts, CSS, JS). Load later chapters as the visitor approaches them. The audit's `first-scroll-weight` check measures it.
-- 16:9 on a phone shows only the centre: keep the subject centred, or make 9:16 versions of the key chapters.
+- 16:9 on a phone shows only the centre: keep the subject centred, or make 9:16 versions of the key chapters. Subject off-centre: `media frames --focus 0.7` and the same `focus` in the player. Phone stage not a full tall screen (square, 4:5): `--mobile-aspect 1:1`.
+- **Never hand-roll frames with ffmpeg.** `media frames` writes the device sets; a hand-made folder has none and phones decode the full frames (real case: 241 lossless 1916 × 1080 frames, 333 MB, lagged on an iPhone 14 Pro Max). Frames already made: `darkroom media phone <dir>`. Lossless is a desktop choice only, never for phones or tablets.
 - Phone tier by the screen's short side (≤ 600 CSS px), never by user agent. `saveData` or a refused video play (iOS Low Power Mode) → stills with crossfades.
 - Ignore height-only resizes on touch (the URL bar), as `scrub-frames.js` does.
 - No smooth-scroll library on touch screens (`references/motion-toolkit.md`).

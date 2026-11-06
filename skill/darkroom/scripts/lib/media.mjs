@@ -169,13 +169,71 @@ export async function derive(source, opt) {
   return manifest;
 }
 
+// ---- device sets: what phones and tablets load instead of the full frames ----
+// Measured on 24 real 1916x1080 frames (ms to decode one, desktop engines): lossless WebP 38 Chromium / 63 WebKit, WebP q76 18 / 46,
+// a 720x1080 crop as WebP 7 / 28, as JPEG 3 / 14. A portrait screen only ever shows that crop of a wide film, so cutting the sides costs
+// no sharpness. Desktop frames are never touched. Same frame count in every set, so scroll progress maps 1:1.
+const SET_DIRS = ['mobile', 'tall'];
+const WIDE_SET_WIDTH = 1440; // tablets and phones held sideways
+const TALL_ASPECT = 2 / 3; // wider than any phone, close to a tablet held upright: one set for both
+const TALL_MAX_HEIGHT = 1280;
+const ratio = (v) => { const [a, b] = String(v).split(':').map(Number); return b ? a / b : a; }; // "1:1" or 0.8
+const even = (v) => Math.round(v / 2) * 2;
+
+async function deviceSets(input, outDir, manifest, opt) {
+  if (opt['no-mobile'] || manifest.width <= 640) return; // tiny sequences need no lighter copy
+  const { width: w, height: h } = manifest;
+  // a lossless desktop set still gets lossy device frames
+  const quality = opt['mobile-quality'] ?? (manifest.format === 'avif' ? undefined : 76);
+  // JPEG decodes about twice as fast as WebP. A film that can hold alpha (anything but an .mp4) keeps its format.
+  const noAlpha = /\.(mp4|m4v)$/i.test(String(manifest.source ?? input));
+  const format = opt['mobile-format'] ?? (noAlpha ? 'jpg' : manifest.format);
+  const base = { ...opt, format, quality, isMobileSet: true, crop: undefined, pattern: manifest.pattern, fps: manifest.fps ?? opt.fps };
+  const sets = [];
+  const make = async (name, extra) => {
+    const m = await frames(input, { ...base, ...extra, out: path.join(outDir, name) });
+    if (m.count !== manifest.count) throw new Error(`the ${name} set has ${m.count} frames, the full set ${manifest.count}`);
+    const set = { name, path: `${name}/manifest.json`, count: m.count, width: m.width, height: m.height, format: m.format, totalBytes: m.totalBytes };
+    if (extra.crop) set.focus = extra.focus;
+    sets.push(set);
+  };
+  const mobileWidth = Number(opt['mobile-width'] ?? (w > h ? WIDE_SET_WIDTH : 864));
+  if (w > mobileWidth) await make('mobile', { width: mobileWidth });
+  const aspect = opt['mobile-aspect'] ? ratio(opt['mobile-aspect']) : TALL_ASPECT; // a square or 4:5 phone stage: crop to that shape instead
+  if (!(aspect > 0)) throw new Error(`--mobile-aspect ${opt['mobile-aspect']}: use a shape like 1:1 or 4:5`);
+  if (w / h > aspect * 1.1) {
+    const focus = Math.min(1, Math.max(0, Number(opt.focus ?? 0.5)));
+    const cw = even(h * aspect);
+    await make('tall', { crop: { w: cw, h, x: even((w - cw) * focus) }, width: even(Math.min(h, TALL_MAX_HEIGHT) * aspect), focus });
+  }
+  if (!sets.length) return;
+  manifest.sets = sets;
+  const wide = sets.find((s) => s.name === 'mobile');
+  if (wide) { manifest.mobile = wide.path; manifest.mobileWidth = wide.width; } // read by players from before 1.12
+  console.log(`device sets: ${sets.map((s) => `${s.name} ${s.width}x${s.height} ${s.format} ${(s.totalBytes / 1048576).toFixed(1)} MB`).join(', ')}`);
+}
+
+// Adds device sets to a frame folder that has none (a hand-made set, or one from before 1.12). Works from the frames; no video needed.
+export async function phone(dir, opt) {
+  const d = path.resolve(dir); const mf = path.join(d, 'manifest.json');
+  if (!fs.existsSync(mf)) throw new Error(`no manifest.json in ${d}`);
+  if (!engines().ffmpeg) throw new Error('media phone needs ffmpeg');
+  const manifest = JSON.parse(fs.readFileSync(mf, 'utf8'));
+  for (const name of SET_DIRS) fs.rmSync(path.join(d, name), { recursive: true, force: true });
+  delete manifest.sets; delete manifest.mobile; delete manifest.mobileWidth;
+  await deviceSets(d, d, manifest, opt);
+  fs.writeFileSync(mf, JSON.stringify(manifest, null, 2));
+  return manifest;
+}
+
 // ---- frames: video -> numbered sequence + manifest ----
 export async function frames(source, opt) {
   const src = path.resolve(source);
   const outDir = path.resolve(opt.out ?? path.join(path.dirname(src), `${path.basename(src, path.extname(src))}-frames`));
   mkdirp(outDir);
+  const fromFrames = fs.statSync(src).isDirectory(); // `media phone`: the input is a finished frame folder, not a video
   // a re-run must not mix with an earlier sequence (12 fps then 3 fps used to leave 36 frames, not 9)
-  for (const dir of [outDir, path.join(outDir, 'mobile')]) if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir)) if (/^seq_\d{4}\.\w+$/.test(f)) fs.rmSync(path.join(dir, f));
+  for (const dir of [outDir, ...SET_DIRS.map((d) => path.join(outDir, d))]) if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir)) if (/^seq_\d{4}\.\w+$/.test(f)) fs.rmSync(path.join(dir, f));
   // no --width: the source's own size. Shrinking a 1920 film to save bytes makes the canvas stretch it on big screens.
   const fps = Number(opt.fps ?? 24); const width = opt.width ? Number(opt.width) : Infinity; const quality = Number(opt.quality ?? 76);
   const format = String(opt.format ?? 'webp'); const ext = format === 'jpeg' ? 'jpg' : format;
@@ -184,13 +242,16 @@ export async function frames(source, opt) {
   const want = opt.engine ?? 'auto';
   const useFfmpeg = want !== 'chromium' && eng.ffmpeg && (format === 'webp' ? eng.ffmpeg.encoders.libwebp : format === 'jpg' || format === 'jpeg' ? eng.ffmpeg.encoders.mjpeg : format === 'png');
   const start = opt.start ? Number(opt.start) : 0;
+  const crop = opt.crop; // { w, h, x }: the tall set; cut before scaling
   let engine; let width_ = width; let height_; let duration;
   if (useFfmpeg) {
     engine = 'ffmpeg';
     const enc = format === 'webp' ? ['-c:v', 'libwebp', '-quality', String(quality)] : format === 'png' ? ['-c:v', 'png'] : ['-c:v', 'mjpeg', '-q:v', String(Math.max(2, Math.round((100 - quality) / 4)))];
     const range = [...(start ? ['-ss', String(start)] : []), ...(opt.end ? ['-to', String(opt.end)] : [])];
-    sh(eng.ffmpeg.bin, ['-y', '-v', 'error', ...range, '-i', src, '-an', '-vf', `fps=${fps}${Number.isFinite(width) ? `,scale='min(${width},iw)':-2:flags=lanczos` : ''}${opt.sharpen ? `,unsharp=5:5:${Number(opt.sharpen)}:5:5:0` : ''}`, ...enc, path.join(outDir, `seq_%04d.${ext}`)]);
+    const input = fromFrames ? ['-framerate', String(fps), '-i', path.join(src, opt.pattern)] : [...range, '-i', src, '-an'];
+    sh(eng.ffmpeg.bin, ['-y', '-v', 'error', ...input, '-vf', `${fromFrames ? 'null' : `fps=${fps}`}${crop ? `,crop=${crop.w}:${crop.h}:${crop.x}:0` : ''}${Number.isFinite(width) ? `,scale='min(${width},iw)':-2:flags=lanczos` : ''}${opt.sharpen ? `,unsharp=5:5:${Number(opt.sharpen)}:5:5:0` : ''}`, ...enc, path.join(outDir, `seq_%04d.${ext}`)]);
   } else {
+    if (fromFrames) throw new Error('making device sets from existing frames needs ffmpeg');
     if (!['webp', 'jpg', 'jpeg', 'png'].includes(format)) throw new Error(`format ${format} is not available without ffmpeg`);
     engine = 'chromium';
     await withBrowserOnDir(path.dirname(src), async (page) => {
@@ -201,19 +262,20 @@ export async function frames(source, opt) {
       }, { name: encodeURIComponent(path.basename(src)) });
       duration = info.d;
       const end = opt.end ? Math.min(Number(opt.end), info.d) : info.d;
-      const w = Math.min(width, info.w); const h = Math.round(info.h * w / info.w) & ~1;
+      const cut = crop ?? { w: info.w, h: info.h, x: 0 };
+      const w = Math.min(width, cut.w); const h = Math.round(cut.h * w / cut.w) & ~1;
       const n = Math.max(1, Math.floor((end - start) * fps));
       for (let i = 0; i < n; i++) {
-        const b64 = await page.evaluate(async ({ t, w, h, mime, q }) => {
+        const b64 = await page.evaluate(async ({ t, w, h, cut, mime, q }) => {
           const v = document.getElementById('v');
           await new Promise((r) => { v.onseeked = r; v.currentTime = t; });
           const c = document.createElement('canvas'); c.width = w; c.height = h;
-          c.getContext('2d').drawImage(v, 0, 0, w, h);
+          c.getContext('2d').drawImage(v, cut.x, 0, cut.w, cut.h, 0, 0, w, h);
           const blob = await new Promise((r) => c.toBlob(r, mime, q));
           const buf = new Uint8Array(await blob.arrayBuffer()); let s = '';
           for (let k = 0; k < buf.length; k += 0x8000) s += String.fromCharCode(...buf.subarray(k, k + 0x8000));
           return btoa(s);
-        }, { t: Math.min(end - 0.001, start + i / fps), w, h, mime: format === 'png' ? 'image/png' : format === 'webp' ? 'image/webp' : 'image/jpeg', q: quality / 100 });
+        }, { t: Math.min(end - 0.001, start + i / fps), w, h, cut, mime: format === 'png' ? 'image/png' : format === 'webp' ? 'image/webp' : 'image/jpeg', q: quality / 100 });
         fs.writeFileSync(path.join(outDir, `seq_${String(i + 1).padStart(4, '0')}.${ext}`), Buffer.from(b64, 'base64'));
       }
     });
@@ -222,22 +284,18 @@ export async function frames(source, opt) {
   if (!files.length) throw new Error('no frames were produced');
   const dims = (await probeInBrowser([path.join(outDir, files[0])]))[path.join(outDir, files[0])];
   width_ = dims.width; height_ = dims.height;
-  if (!duration) { try { duration = (await probeInBrowser([src]))[src].duration; } catch { /* unknown */ } }
+  if (!duration && !fromFrames) { try { duration = (await probeInBrowser([src]))[src].duration; } catch { /* unknown */ } }
   const list = files.map((f) => ({ file: f, bytes: fs.statSync(path.join(outDir, f)).size, sha256: sha256(path.join(outDir, f)) }));
   fs.copyFileSync(path.join(outDir, files[0]), path.join(outDir, `poster.${ext}`));
   const total = list.reduce((s, x) => s + x.bytes, 0);
   const decodedMiB = +(width_ * height_ * 4 / 1048576).toFixed(1);
   const manifest = {
-    schema: 'darkroom-frames-v1', source: path.relative(outDir, src).split(path.sep).join('/'), sourceSha256: sha256(src), engine, fps, duration, start,
+    schema: 'darkroom-frames-v1', source: path.relative(outDir, src).split(path.sep).join('/'), sourceSha256: fromFrames ? undefined : sha256(src), engine, fps, duration, start,
     count: list.length, width: width_, height: height_, format: ext, pattern: `seq_%04d.${ext}`, poster: `poster.${ext}`, totalBytes: total,
     decodedMiBPerFrame: decodedMiB, decodedMiBAllFrames: +(decodedMiB * list.length).toFixed(0), suggestedWindow: 'keep about +/-12 frames decoded around the target; cancel stale decodes; close ImageBitmaps',
     frames: list,
   };
-  if (opt['mobile-width'] && !opt.isMobileSet) {
-    // A second, smaller set for phones (same frame count, so scroll progress maps 1:1). recipes/scrub-frames.js picks it below 1024 px.
-    const mob = await frames(source, { ...opt, out: path.join(outDir, 'mobile'), width: Number(opt['mobile-width']), isMobileSet: true });
-    manifest.mobile = 'mobile/manifest.json'; manifest.mobileWidth = mob.width;
-  }
+  if (!opt.isMobileSet) await deviceSets(source, outDir, manifest, opt);
   fs.writeFileSync(path.join(outDir, 'manifest.json'), JSON.stringify(manifest, null, 2));
   if (!opt.isMobileSet && width_ < 1920) console.log(`note: ${width_} px frames will be stretched on screens wider than that${Number.isFinite(width) ? ' (drop --width to keep the source size)' : ' (the source itself is that wide)'}`);
   console.log(`${list.length} frames (${engine}) ${width_}x${height_} ${ext}, ${(total / 1048576).toFixed(1)} MB on the wire, ${decodedMiB} MiB decoded per frame (${manifest.decodedMiBAllFrames} MiB if all were held) → ${path.join(outDir, 'manifest.json')}`);
@@ -251,7 +309,7 @@ async function framesAvif(src, outDir, opt, eng) {
     : eng.ffmpeg?.encoders.libsvtav1 ? ['-c:v', 'libsvtav1', '-crf', String(Math.round((100 - quality) * 0.63))] : null;
   if (!eng.sharp && !(eng.ffmpeg && av1)) throw new Error('AVIF frames need sharp or ffmpeg with an AV1 encoder (libaom-av1 or libsvtav1); use --format webp');
   const tmp = path.join(outDir, '.png-frames'); mkdirp(tmp);
-  await frames(src, { ...opt, out: tmp, format: 'png', 'mobile-width': undefined, isMobileSet: true });
+  await frames(src, { ...opt, out: tmp, format: 'png', isMobileSet: true });
   const sharp = eng.sharp ? createRequire(path.join(process.cwd(), 'noop.js'))('sharp') : null;
   for (const f of fs.readdirSync(outDir).filter((x) => /^seq_\d{4}\.avif$/.test(x))) fs.rmSync(path.join(outDir, f));
   const pngs = fs.readdirSync(tmp).filter((f) => /^seq_\d{4}\.png$/.test(f)).sort();
@@ -266,10 +324,7 @@ async function framesAvif(src, outDir, opt, eng) {
   fs.copyFileSync(path.join(outDir, list[0].file), path.join(outDir, 'poster.avif'));
   const total = list.reduce((s, x) => s + x.bytes, 0);
   const manifest = { ...src0, engine: `${src0.engine}+${sharp ? 'sharp' : 'ffmpeg-av1'}`, format: 'avif', pattern: 'seq_%04d.avif', poster: 'poster.avif', totalBytes: total, frames: list };
-  if (opt['mobile-width'] && !opt.isMobileSet) {
-    const mob = await framesAvif(src, path.join(outDir, 'mobile'), { ...opt, width: Number(opt['mobile-width']), isMobileSet: true }, eng);
-    manifest.mobile = 'mobile/manifest.json'; manifest.mobileWidth = mob.width;
-  }
+  if (!opt.isMobileSet) await deviceSets(src, outDir, manifest, opt);
   fs.writeFileSync(path.join(outDir, 'manifest.json'), JSON.stringify(manifest, null, 2));
   console.log(`${list.length} frames (${manifest.engine}) ${manifest.width}x${manifest.height} avif, ${(total / 1048576).toFixed(1)} MB on the wire → ${path.join(outDir, 'manifest.json')}`);
   return manifest;
@@ -286,7 +341,7 @@ export async function check(dir) {
   m.frames.forEach((f, i) => {
     const p = path.join(d, f.file);
     if (!fs.existsSync(p)) { problems.push(`missing ${f.file}`); return; }
-    if (sha256(p) !== f.sha256) problems.push(`checksum mismatch ${f.file}`);
+    if (f.sha256 && sha256(p) !== f.sha256) problems.push(`checksum mismatch ${f.file}`);
     if (f.file !== `seq_${String(i + 1).padStart(4, '0')}.${m.format}`) problems.push(`gap or misorder at index ${i}: ${f.file}`);
   });
   if (m.count !== m.frames.length) problems.push(`count ${m.count} != ${m.frames.length} listed`);
@@ -303,6 +358,15 @@ export async function check(dir) {
   console.log(`${problems.length ? 'FAIL' : 'OK'}  ${m.count} frames ${m.width}x${m.height} ${m.format}, ${mb} MB on the wire, ${m.decodedMiBPerFrame} MiB decoded per frame (${m.decodedMiBAllFrames} MiB if all held)`);
   if (m.decodedMiBAllFrames > 300) console.log(`warn  holding every frame decoded would need ~${m.decodedMiBAllFrames} MiB: use a sliding window or fewer/smaller frames`);
   if (m.count > 120) console.log('warn  more than 120 frames: check that a smaller count still scrubs smoothly');
+  if (!m.sets && !m.mobile) console.log(`warn  no phone or tablet set: phones decode ${m.width}x${m.height} frames and scrub badly. Run: darkroom media phone ${dir}`);
+  for (const s of m.sets ?? []) {
+    const sub = path.join(d, s.path);
+    if (!fs.existsSync(sub)) { problems.push(`${s.name} set missing`); continue; }
+    const sm = JSON.parse(fs.readFileSync(sub, 'utf8'));
+    if (sm.count !== m.count) problems.push(`${s.name} set has ${sm.count} frames, the full set ${m.count}: scroll position would not match`);
+    const missing = sm.frames.filter((f) => !fs.existsSync(path.join(path.dirname(sub), f.file))).length;
+    if (missing) problems.push(`${s.name} set: ${missing} files missing`);
+  }
   problems.forEach((p) => console.log(`  - ${p}`));
   if (problems.length) process.exitCode = 1;
 }
@@ -316,7 +380,12 @@ export async function media(pos, opt) {
   inspect <file|dir>                  dimensions, duration, codec, alpha, rotation, decoded memory per frame, checksums
   derive <image> [--out dir] [--widths 640,1280,1920] [--formats webp,jpg,avif] [--quality 78]
   frames <video> [--out dir] [--fps 24] [--width px, default: the video's own width] [--format webp|jpg|png|avif] [--quality 76] [--start s --end s] [--sharpen 0.6] [--engine ffmpeg|chromium]
-         [--mobile-width 900]         also write a smaller phone set to <out>/mobile/ (same frame count); avif needs sharp or ffmpeg with AV1
+         [--focus 0.5]                device sets are always written: tall/ (2:3 crop, portrait phones and tablets) and mobile/ (1440 px wide, tablets and phones held sideways)
+                                      --focus: where the tall crop sits across the film, 0 left to 1 right; pass the same to the player
+         [--mobile-aspect 1:1]        crop tall/ to the phone stage's shape when it is not a full tall screen (default 2:3)
+         [--mobile-width px] [--mobile-format jpg|webp|avif] [--mobile-quality 76] [--no-mobile]
+  phone <frames dir> [--focus 0.5] [--mobile-aspect 1:1] [--mobile-width px] [--mobile-format jpg|webp|avif] [--mobile-quality 76]
+                                      add device sets to a finished frame folder (hand-made, or from before 1.12), no video needed; needs ffmpeg
   check <frames dir>                  validate manifest, files, order, checksums, sizes; warn on memory
   web <clip> [--out dir] [--name hero] [--width 1920] [--mobile-width 960] [--fps 24] [--crf 23] [--loop crossfade|boomerang] [--cutout]
                                       H.264 web copy + phone copy (faststart, no audio) + poster; reports MB, edge colour, loop seam, calm zone
@@ -340,6 +409,7 @@ export async function media(pos, opt) {
   if (sub === 'inspect') await inspect(target, opt);
   else if (sub === 'derive') await derive(target, opt);
   else if (sub === 'frames') await frames(target, opt);
+  else if (sub === 'phone') await phone(target, opt);
   else if (sub === 'check') await check(target);
   else if (['web', 'boomerang', 'sheet', 'make', 'measure', 'chain', 'keys', 'clipcheck', 'lastframe', 'finish'].includes(sub)) {
     const kit = await import('./mediakit.mjs');

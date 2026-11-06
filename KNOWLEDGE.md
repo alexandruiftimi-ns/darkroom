@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/knowledge.svg" alt="228 real site designs that inspired it (131 good, 97 bad), 32 cross-site lessons with 13 promoted to rules, 29 research sources, 8 design tools, 100 example prompts with their specs, 35 tested recipes, 141 automated checks, one human art director" width="100%"></p>
+<p align="center"><img src="assets/knowledge.svg" alt="228 real site designs kept as lessons (131 good, 97 bad), 32 cross-site lessons with 13 promoted to rules, 29 research sources, 8 design tools, 100 example prompts with their specs, 35 tested recipes, 160 automated checks, one human art director" width="100%"></p>
 
 # Where Darkroom's knowledge comes from
 
@@ -11,7 +11,7 @@
 | [Research](#3-research-and-standards) | 29 sources: usability research, accessibility standards, EU law, award criteria | `references/sources.md` |
 | [Other tools](#4-other-design-tools-studied) | 7 open design skills and tools, read for principles only | `references/provenance.md` |
 | [Examples and recipes](#5-examples-and-recipes) | 100 example prompts, each with the full build spec it leads to; 35 motion and media recipes tested in a real browser; Values tables for type, motion, spacing and colour | `examples/`, `recipes/`, `references/` |
-| [Test pages](#6-test-pages-built-with-it) | 4 pages built end to end to find what broke | the test suite (156 checks) |
+| [Test pages](#6-test-pages-built-with-it) | 4 pages built end to end to find what broke | the test suite (160 checks) |
 | [Human input](#7-human-input) | the author's taste calls, dislikes, approvals and assets | everywhere |
 
 ---

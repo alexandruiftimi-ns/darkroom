@@ -14,7 +14,7 @@
 Overhead flies RTK drones over construction and solar sites in the Netherlands and delivers orthophotos, contour maps and volume reports within 48 h. Visitors are site managers and surveyors. Feeling: exact, fast, grounded. **Signature:** a 60-frame scrubbed transition over 200vh from a real aerial photo of a site to the delivered point-cloud render of the same site (same camera), with contour lines drawing on top in SVG and three measurements appearing ("Stockpile B · 1,240 m³", "Slope 3.2 %", "Accuracy ± 2 cm"). **Supporting:** a sober grid, mono measurements, a quote form with site size.
 
 ### Stack & files
-Next.js; `components/SurveyScene.tsx` with `recipes/scrub-frames.js` (frames rendered by the client's photogrammetry software as a crossfade-with-reveal sequence, `darkroom media frames … --format avif --mobile-width 900`), `components/Contours.tsx` (SVG paths with dash offsets tied to progress), `reveal.js`.
+Next.js; `components/SurveyScene.tsx` with `recipes/scrub-frames.js` (frames rendered by the client's photogrammetry software as a crossfade-with-reveal sequence, `darkroom media frames … --format avif`), `components/Contours.tsx` (SVG paths with dash offsets tied to progress), `reveal.js`.
 
 ### Fonts
 | Role | Family | Weights | Notes |

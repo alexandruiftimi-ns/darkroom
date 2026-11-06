@@ -96,7 +96,7 @@ Generate **the hardest clip once** at the tool's cheapest setting. Check it with
 ```bash
 darkroom media finish clip-01.mp4 --even --out clip-01-even.mp4            # no sound, constant speed, from the clip's real frames
 darkroom media chain clip-01-even.mp4 clip-02-even.mp4 --out film.mp4      # scores every seam, then joins
-darkroom media frames film.mp4 --out public/frames/hero --mobile-width 900 # desktop frames at the clip's own size, plus a phone set
+darkroom media frames film.mp4 --out public/frames/hero # desktop frames at the clip's own size, plus phone and tablet sets
 darkroom media check public/frames/hero
 ```
 

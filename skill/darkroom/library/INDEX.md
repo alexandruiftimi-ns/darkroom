@@ -245,7 +245,7 @@ Look here first when the project's motion level is `hero-effect` or `story`, or 
 
 | Technique | What it is | Good examples | Build with | Watch for |
 |---|---|---|---|---|
-| `frame-scrub` | a rendered camera move (product flight, assembly, dive) played frame by frame by scroll | seasats, lunarwheel (as frames, not live 3D), royal-pop (35 MB of frames: heavy) | `recipes/scrub-frames.js` + `darkroom media frames --format avif --mobile-width 900` | a phone frame set and coarse-to-fine loading; live claims in HTML over the canvas |
+| `frame-scrub` | a rendered camera move (product flight, assembly, dive) played frame by frame by scroll | seasats, lunarwheel (as frames, not live 3D), royal-pop (35 MB of frames: heavy) | `recipes/scrub-frames.js` + `darkroom media frames --format avif` | a phone frame set and coarse-to-fine loading; live claims in HTML over the canvas |
 | `video-scrub` | the same move as one seekable video | apple-airpods-pro, icomat, outpost-dayemadnan (chained clips) | `recipes/scrub-video.js` (all-intra or short-GOP encode) | try this first; switch to frames only when reverse stutters |
 | `sprite-clips` | short image-sequence clips per character or object: idle, enter, leave | ribbit, unseen-studio-2025, stuff-my-dog-loves | `recipes/sprite-clips.js` | still first frame for reduced motion; skip frames on phones |
 | `pinned-chapters` | one element stays pinned (product, headline) while chapters scroll past | mana-yerba-mate, seasats, petralithe, inversa, shopify-editions-winter-26, rivian-r2, capitals-elen, royal-pop | `recipes/scene-progress.js` (`--p`) + `position: sticky` | the page must still read top to bottom with JS off |
