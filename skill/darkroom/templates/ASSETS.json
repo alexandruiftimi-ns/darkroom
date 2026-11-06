@@ -6,7 +6,7 @@
       "section": "",
       "role": "reference-only | runtime | TEMP",
       "bakedUI": false,
-      "source": "photographer | client | ChatGPT image | Kling | found: <source> | built in code",
+      "source": "photographer | client | ChatGPT image | Kling | connected: <tool> | found: <source> | built in code",
       "sourceUrl": "",
       "creator": "",
       "licence": "",
@@ -20,6 +20,6 @@
     }
   ],
   "log": [
-    { "date": "", "asset": "", "tool": "", "prompt": ".darkroom/prompts/…", "cost": "", "result": "accepted | rejected", "reason": "" }
+    { "date": "", "asset": "", "tool": "", "plan": "", "prompt": ".darkroom/SHOTS.md#…", "cost": "", "result": "accepted | rejected", "reason": "" }
   ]
 }

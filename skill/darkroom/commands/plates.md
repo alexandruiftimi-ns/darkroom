@@ -7,7 +7,7 @@ Mockups show the goal; they are not runtime assets. Production imagery is what l
 1. **Supplied** by the user (photography, footage, renders, logo): inspect with `darkroom media inspect <dir>`.
 2. **Built in code**: real UI fragments, SVG diagrams, typographic compositions, CSS/SVG textures, drawn objects in one consistent graphic language. Strongest for software, data, process, maps, timetables.
 3. **Found, openly licensed, of the subject's world** (its street, materials, trade, archive, a museum object of its kind): `darkroom assets search "<query>"` then `assets get <ref>` (provenance recorded in `ASSETS.json`, credits in `assets/found/CREDITS.md`). Look at each image first. A found picture shows the world around the client; it is never presented as the client's own product, room, dish, people or team. A free licence is not blanket permission: confirm the intended use, the credit and any share-alike duty.
-4. **Generated** by the user from your prompts (image model, video model): the highest ceiling and the biggest handoff. Use it for hero plates, product masters, turntables and clips that no other rung can supply. Give the user a folder to save them in (`assets/incoming/<what>/`), then start `darkroom wait --files` on it in the background before your turn ends, so you pick the files up and carry on the moment they land (`commands/wait.md`, SKILL.md law 11).
+4. **Generated** from your prompts (image model, video model), by the user or by you through a connector (`references/asset-connect.md`): the highest ceiling and the biggest handoff. Use it for hero plates, product masters, turntables and clips that no other rung can supply. Read `references/asset-craft.md` first. Give the user a folder to save them in (`assets/incoming/<what>/`), then start `darkroom wait --files` on it in the background before your turn ends, so you pick the files up and carry on the moment they land (`commands/wait.md`, SKILL.md law 11).
 5. **Type and colour alone**: a legitimate result for some briefs; do it well rather than faking imagery.
 
 State the consequence of the rung you can reach ("without a hero clip the dive becomes a still reveal"), not only the fallback.
@@ -31,7 +31,7 @@ Ask for the smallest useful batch (≤ 5 hero-critical items first) as one messa
 | name / location | `assets/raw/<id>.<ext>` |
 | fallback | what ships if it never arrives |
 
-Prompt templates: `prompts/clean-plate.md`, `product-master.md`, `video-clip.md`, `section-frame.md`, `mobile-frame.md`. A negative prompt is a request, not a guarantee; inspect contact sheets and several frames before accepting, and give the user a short rejection reason, not "generate better images".
+Prompts: `prompts/per-tool.md` for each tool, `prompts/frame-sequence.md` for anything that plays with the scroll, plus `prompts/clean-plate.md`, `product-master.md`, `video-clip.md`, `section-frame.md`, `mobile-frame.md`. Write them into `.darkroom/SHOTS.md` (`templates/SHOTS.md`) and run `darkroom shots lint [SHOTS.md] [--json out.json]`: it flags hype words, camera words in the main prompt, two camera moves, settings in the words, a missing "no text" line, Veo without an audio line, a grade line or lock list not repeated, and unfilled slots. Fix every high before the user sees the prompt. A negative prompt is a request, not a guarantee; inspect contact sheets and several frames before accepting, and give the user a short rejection reason, not "generate better images".
 
 **Identity.** Prompt wording ("identical geometry") does not hold a product's identity across independent generations. Approve one canonical master, reuse the same cut-out or render in several compositions where you can, and obtain a real model or controlled renders for exact multi-view behaviour. **Test the hardest transition first** (the dive between two scenes, the turntable end-points) before ordering the whole set; if two failed attempts show a technique cannot work, change the technique, not the number of attempts. Spending credits or money needs the user's yes.
 
@@ -49,6 +49,10 @@ darkroom media frames soft.mp4 --out public/frames/soft --sharpen 0.6           
 darkroom media frames flight.mp4 --out public/frames/flight --format avif --mobile-width 900      # long product flight: AVIF + a phone set in mobile/
 darkroom media check public/frames/dive                    # order, checksums, sizes, memory warning (check mobile/ too)
 darkroom media chain ch1.mp4 ch2.mp4 ch3.mp4 --out film.mp4 # chained clips: seam score per join, one joined clip (--width 1920 --fps 24 --crf 20)
+darkroom media keys a.png b.png c.png                      # neighbouring frames before paying for video: change, grade, framing
+darkroom media clipcheck clip.mp4 --calm left --out dir     # frozen frames, jumps, uneven speed, flicker, camera shift, calm side; frames to look at
+darkroom media lastframe clip.mp4 --out next-start.png      # the true last frame, lossless, as the next clip's start
+darkroom media finish clip.mp4 --even --out out.mp4         # no sound, constant speed from real frames; also --trim-start s --trim-end s --crf 18, and --fps 48 for in-between frames (slow motion only: it ghosts fast subjects)
 ```
 
 `media chain` takes the clips in playing order, scores each seam (the last frame of one clip against the first frame of the next) and joins them; a clean seam drops the repeated frame. A seam over the threshold is reported with the fix (remake the clip from the extracted last frame, one model per chain, or crossfade). The route and its rules: `references/scroll-film.md`.

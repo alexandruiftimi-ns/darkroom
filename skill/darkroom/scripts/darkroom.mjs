@@ -48,6 +48,8 @@ const USAGE = `darkroom <command>   (Darkroom ${VERSION})
                                WordPress content (paste files + content.xml for Tools → Import) from content/content.json
   spec <BUILD_SPEC.md|folder> [--json out.json]
                                lint a build spec: required sections, signature, "Do not" list, bare adjectives, placeholders, hotlinks
+  shots lint [SHOTS.md] [--json out.json]
+                               check image and video prompts before credits are spent: hype words, camera words, one move, settings, slots
   media inspect|derive|frames|check …   probe, derive, frame sequences (see: darkroom media)
   assets search|get|credits|intake …    openly licensed images with provenance; intake = check what the user dropped in
 viewports: ${Object.keys(VIEWPORTS).join(', ')}
@@ -102,6 +104,7 @@ try {
   else if (cmd === 'preview') { const { preview } = await import('./lib/preview.mjs'); await preview(pos[0], opt); }
   else if (cmd === 'platform') { const { platform } = await import('./lib/platforms.mjs'); await platform(pos, opt, SKILL_DIR); }
   else if (cmd === 'spec') { const { spec } = await import('./lib/spec.mjs'); await spec(pos, opt); }
+  else if (cmd === 'shots') { const { shots } = await import('./lib/shots.mjs'); await shots(pos, opt); }
   else if (cmd === 'media') { const { media } = await import('./lib/media.mjs'); await media(pos, opt); }
   else { console.log(USAGE); process.exitCode = cmd ? 1 : 0; }
 } catch (e) {

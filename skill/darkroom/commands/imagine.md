@@ -17,9 +17,11 @@ If the user has no image tool, none of this is required: use the ladder in `comm
 
 ## How to write the prompt
 
+For production imagery (`plates`) and anything that plays with the scroll, the rules are `references/asset-craft.md`, the forms `prompts/per-tool.md`, the path `prompts/frame-sequence.md`, and `darkroom shots lint` runs before a prompt reaches the user. The steps below are for pictures of a whole page.
+
 1. Fill the template from the bible: palette roles, a description of the letterforms (image models cannot load fonts: "light extended geometric sans, double-storey a"), the grid ("headline in the left 36 %"), the focal object, light, lens, grade, and what is forbidden.
 2. Include the real (short) copy so composition reflects true text length.
-3. State the frame: `1672×941 desktop` or `1170×2532 mobile`; for plates, the aspect ratio and the resolution you need.
+3. State the frame in words (wide 16:9 desktop, tall phone screen). Pixel sizes in a prompt do nothing in ChatGPT: set the ratio, then measure the download.
 4. For section/mobile frames prefix the **continuity lock**: "Same website as the attached anchor image: identical product, typeface, nav, grid, colour grade and lighting. Only the section content changes."
 5. Tell the user to **attach the anchor** in the same conversation, and to start a fresh chat with the anchor every ~5 images (long sessions drift).
 

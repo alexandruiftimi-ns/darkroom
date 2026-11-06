@@ -101,7 +101,8 @@ function probe(file) {
   const bin = eng.ffprobe || 'ffprobe';
   const j = JSON.parse(run(bin, ['-v', 'error', '-show_streams', '-show_format', '-of', 'json', file]).toString());
   const v = j.streams.find((s) => s.codec_type === 'video');
-  return { width: v?.width, height: v?.height, duration: Number(j.format.duration) || 0 };
+  const [n, d] = String(v?.avg_frame_rate ?? '0/1').split('/').map(Number);
+  return { width: v?.width, height: v?.height, duration: Number(j.format.duration) || 0, fps: d ? +(n / d).toFixed(3) : 0, audio: j.streams.some((s) => s.codec_type === 'audio') };
 }
 
 function x264(bin, input, out, { width, fps = 24, crf = 23, filter = null, loop = null, duration = 0 }) {
@@ -212,6 +213,164 @@ export async function chain(sources, opt = {}) {
     if (s.seam === null) console.log(`note  ${s.from} → ${s.to}: seam not measured`);
     else if (!s.clean) console.log(`warn  ${s.from} → ${s.to}: seam ${s.seam} (> ${SEAM_THRESHOLD}): the picture jumps here. Make the next clip from the extracted last frame of ${s.from} (not the original still), keep one model for the whole chain, or crossfade 6–8 frames across the seam`);
   }
+  return result;
+}
+
+// ---- generated frames and clips: score before paying, check after, finish for scrubbing (prompts/frame-sequence.md) ----
+export const KEY_LIMITS = { change: 0.2, colour: 0.04, offset: 2 }; // heuristics on 96×54: suggestions, never rejections
+const luma = (px) => { const L = new Float32Array(px.length / 3); for (let i = 0; i < L.length; i++) L[i] = 0.2126 * px[i * 3] + 0.7152 * px[i * 3 + 1] + 0.0722 * px[i * 3 + 2]; return L; };
+
+/** How far b has slid against a, as % of the frame: a small search, reported only when it clearly beats no shift. */
+export function frameOffset(a, b) {
+  const A = luma(a); const B = luma(b); const RX = 12; const RY = 7;
+  const err = (dx, dy) => { let s = 0; let n = 0; for (let y = RY; y < H - RY; y++) for (let x = RX; x < W - RX; x++) { s += Math.abs(A[y * W + x] - B[(y + dy) * W + x + dx]); n++; } return s / n; }; // a fixed middle area, so a slide cannot crop a difference away
+  const zero = err(0, 0); let best = { dx: 0, dy: 0, e: zero };
+  for (let dy = -RY; dy <= RY; dy++) for (let dx = -RX; dx <= RX; dx++) { const e = err(dx, dy); if (e < best.e) best = { dx, dy, e }; }
+  if (best.e > zero * 0.5) best = { dx: 0, dy: 0, e: zero }; // a moving subject also lowers the error a little: only a real shift explains most of it
+  return { x: +(best.dx / W * 100).toFixed(1), y: +(best.dy / H * 100).toFixed(1) };
+}
+
+/** Two neighbouring frames: how much changes, whether the grade moved, whether the camera moved. */
+export function keyScore(a, b) {
+  const mean = (px) => { const m = [0, 0, 0]; for (let i = 0; i < px.length; i++) m[i % 3] += px[i]; return m.map((v) => v / (px.length / 3)); };
+  const [ma, mb2] = [mean(a), mean(b)];
+  const colour = +(Math.max(...ma.map((v, i) => Math.abs(v - mb2[i]))) / 255).toFixed(3);
+  return { change: seamScore(a, b), colour, offset: frameOffset(a, b) };
+}
+
+/** media keys <frame> <frame> [...]: score neighbouring frames in order, before any video is paid for. */
+export async function keys(sources) {
+  ffmpegOrThrow();
+  const files = sources.map((s) => path.resolve(s));
+  if (files.length < 2) throw new Error('media keys needs two or more frames, in playing order');
+  for (const f of files) if (!fs.existsSync(f)) throw new Error(`not found: ${f}`);
+  const pairs = [];
+  for (let i = 0; i < files.length - 1; i++) {
+    const a = grab(files[i]); const b = grab(files[i + 1]);
+    if (!a || !b) { pairs.push({ from: path.basename(files[i]), to: path.basename(files[i + 1]), measured: false }); continue; }
+    const s = keyScore(a, b); const moved = Math.max(Math.abs(s.offset.x), Math.abs(s.offset.y));
+    const notes = [];
+    if (s.change > KEY_LIMITS.change) notes.push(`big gap (${s.change}): the model will morph through the middle; add a middle frame unless this change is the point`);
+    if (s.colour > KEY_LIMITS.colour) notes.push(`grade moved (${s.colour}): if the light is not meant to change, edit this frame from its neighbour with the grade line`);
+    if (moved > KEY_LIMITS.offset) notes.push(`framing moved (${s.offset.x} % / ${s.offset.y} %): fine for a camera move, wrong for a locked shot`);
+    pairs.push({ from: path.basename(files[i]), to: path.basename(files[i + 1]), measured: true, ...s, notes });
+  }
+  console.log(JSON.stringify({ limits: KEY_LIMITS, pairs }, null, 2));
+  return { pairs };
+}
+
+/** Every frame of a clip as 96×54 RGB, optionally trimmed. */
+function allFrames(file, { start = 0, end = 0 } = {}) {
+  const eng = ffmpegOrThrow();
+  const buf = run(eng.ffmpeg.bin, ['-v', 'error', ...(start ? ['-ss', String(start)] : []), ...(end ? ['-to', String(end)] : []), '-i', file, '-vf', `scale=${W}:${H}:flags=area`, '-fps_mode', 'passthrough', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-']);
+  const size = W * H * 3; const frames = [];
+  for (let i = 0; i + size <= buf.length; i += size) frames.push(buf.subarray(i, i + size));
+  return frames;
+}
+const mad = (a, b) => { let s = 0; for (let i = 0; i < a.length; i++) s += Math.abs(a[i] - b[i]); return s / a.length / 255; };
+const median = (v) => { const s = [...v].sort((x, y) => x - y); return s[Math.floor(s.length / 2)] ?? 0; };
+const avg = (v) => { let s = 0; for (const x of v) s += x; return v.length ? s / v.length : 0; };
+
+/** The motion of a clip, frame by frame. Pure, so it can be tested on made-up numbers. */
+export function clipMotion(d, fps = 24) {
+  const m = median(d); const still = m < 0.0008; const time = (i) => +(i / fps).toFixed(2);
+  const frozen = []; const jumps = [];
+  if (!still) {
+    const low = Math.max(0.0004, m * 0.05);
+    for (let i = 0; i < d.length; i++) { if (d[i] >= low) continue; let j = i; while (j + 1 < d.length && d[j + 1] < low) j++; if (j - i >= 3 && i > d.length * 0.1 && j < d.length * 0.9) frozen.push({ at: time(i), frames: j - i + 2 }); i = j; }
+    const high = Math.max(0.04, m * 5); // neighbouring spikes are one event: one frame is a cut, several are a burst of fast motion
+    for (let i = 0; i < d.length; i++) { if (d[i] <= high) continue; let j = i; let top = d[i]; while (j + 1 < d.length && d[j + 1] > high) top = Math.max(top, d[++j]); jumps.push({ at: time(i), size: +top.toFixed(3), frames: j - i + 1, kind: j === i ? 'cut' : 'burst' }); i = j; }
+  }
+  const n = Math.max(1, Math.round(d.length * 0.15));
+  const [head, mid, tail] = [avg(d.slice(0, n)), avg(d.slice(n, -n)) || 1e-6, avg(d.slice(-n))];
+  const speed = { start: +(head / mid).toFixed(2), end: +(tail / mid).toFixed(2) };
+  speed.even = !still && [speed.start, speed.end].every((r) => r >= 0.6 && r <= 1.6);
+  return { typical: +m.toFixed(4), nearlyStill: still, frozen, jumps, speed };
+}
+
+/** media clipcheck <clip> [--calm left|right|top|bottom] [--out dir]: measure a generated clip and pull frames to look at. */
+export async function clipcheck(source, opt = {}) {
+  const eng = ffmpegOrThrow(); const file = path.resolve(source);
+  if (!fs.existsSync(file)) throw new Error(`not found: ${file}`);
+  const frames = allFrames(file); if (frames.length < 3) throw new Error('too few frames to check');
+  const p = probe(file) ?? {}; const fps = p.fps || 24;
+  const d = frames.slice(1).map((f, i) => mad(frames[i], f));
+  const motion = clipMotion(d, fps);
+  const lumas = frames.map((f) => median(luma(f)) / 255); // the median: a moving subject shifts the mean, only a change of light moves this
+  const steps = lumas.slice(1).map((l, i) => l - lumas[i]); const flips = steps.slice(1).filter((v, i) => v * steps[i] < 0).length / Math.max(1, steps.length - 1); // flicker goes up and down; a passing cloud goes one way
+  const flicker = flips > 0.5 ? +avg(lumas.slice(1, -1).map((l, i) => Math.abs(lumas[i] - 2 * l + lumas[i + 2]))).toFixed(4) : 0;
+  const z = { left: [0, 0.45, 0, 1], right: [0.55, 1, 0, 1], top: [0, 1, 0, 0.4], bottom: [0, 1, 0.6, 1] };
+  const zoneMotion = Object.fromEntries(Object.entries(z).map(([k, [x0, x1, y0, y1]]) => {
+    const xa = Math.round(W * x0); const xb = Math.round(W * x1); const ya = Math.round(H * y0); const yb = Math.round(H * y1); let s = 0; let c = 0;
+    for (let f = 1; f < frames.length; f++) for (let y = ya; y < yb; y++) for (let x = xa; x < xb; x++) { const i = (y * W + x) * 3; for (let k2 = 0; k2 < 3; k2++) s += Math.abs(frames[f][i + k2] - frames[f - 1][i + k2]); c += 3; }
+    return [k, +(s / c / 255).toFixed(4)];
+  }));
+  const calmest = Object.entries(zoneMotion).sort((a, b) => a[1] - b[1])[0][0];
+  const whole = avg(d); const calm = opt.calm && opt.calm !== true ? String(opt.calm) : null;
+  if (calm && !(calm in z)) throw new Error('--calm must be left, right, top or bottom');
+  const calmHolds = calm ? zoneMotion[calm] < Math.max(0.002, whole * 0.7) : null;
+  const ends = keyScore(frames[0], frames[frames.length - 1]);
+  const out = path.resolve(opt.out && opt.out !== true ? String(opt.out) : path.join('.darkroom', 'clips', path.basename(file).replace(/\.\w+$/, '')));
+  mkdirp(out);
+  const duration = p.duration || frames.length / fps;
+  const looks = [0, 0.25, 0.5, 0.75, 1].map((r) => ({ name: `at-${String(Math.round(r * 100)).padStart(3, '0')}.jpg`, t: Math.max(0, Math.min(duration - 0.1, duration * r)) }));
+  motion.jumps.slice(0, 3).forEach((j, i) => looks.push({ name: `jump-${i + 1}.jpg`, t: j.at }));
+  for (const l of looks) run(eng.ffmpeg.bin, ['-y', '-v', 'error', '-ss', String(l.t), '-i', file, '-frames:v', '1', '-q:v', '3', path.join(out, l.name)]);
+  const suggestions = [];
+  if (motion.nearlyStill) suggestions.push('almost nothing moves: the model may have done nothing; try a stronger action line');
+  motion.frozen.forEach((f) => suggestions.push(`frozen for ${f.frames} frames at ${f.at} s: a known glitch; regenerate, or finish it with even speed, which closes the gap`));
+  motion.jumps.forEach((j) => suggestions.push(j.kind === 'cut' ? `cut at ${j.at} s (${j.size}): look at that frame` : `very fast motion at ${j.at} s for ${j.frames} frames: fine if it is the shot; on a scrub it passes in a blink`));
+  if (!motion.nearlyStill && !motion.speed.even) suggestions.push(`speed is uneven (start ${motion.speed.start}×, end ${motion.speed.end}× the middle): models ease in and out; even it for scrubbing`);
+  if (flicker > 0.006) suggestions.push(`light flickers frame to frame (${flicker})`);
+  if (calm && !calmHolds) suggestions.push(`the ${calm} side is not calm (${zoneMotion[calm]}): the words need a scrim or another clip; calmest side is ${calmest}`);
+  if (p.width && p.width < 1900) suggestions.push(`${p.width} px wide: under 1920; it works, a higher setting would be sharper`);
+  const result = { file, width: p.width, height: p.height, fps, duration: +(+duration).toFixed(2), frames: frames.length, audio: !!p.audio, motion, flicker, cameraFirstToLast: ends.offset, changeFirstToLast: ends.change, zoneMotion, calmest, calmHolds, look: out, suggestions };
+  console.log(JSON.stringify(result, null, 2));
+  return result;
+}
+
+/** media lastframe <clip> [--out file.png]: the clip's true last frame, lossless and at its own size: the next clip's start frame. */
+export async function lastframe(source, opt = {}) {
+  const eng = ffmpegOrThrow(); const file = path.resolve(source);
+  if (!fs.existsSync(file)) throw new Error(`not found: ${file}`);
+  const out = path.resolve(opt.out && opt.out !== true ? String(opt.out) : file.replace(/\.\w+$/, '-last.png'));
+  mkdirp(path.dirname(out));
+  run(eng.ffmpeg.bin, ['-y', '-v', 'error', '-sseof', '-1', '-i', file, '-update', '1', '-fps_mode', 'passthrough', out]);
+  console.log(out);
+  return out;
+}
+
+/** media finish <clip> [--even] [--fps 48] [--trim-start s] [--trim-end s] [--crf 18] [--out file.mp4]: no sound, even speed, more frames. Native size. */
+export async function finish(source, opt = {}) {
+  const eng = ffmpegOrThrow(true); const bin = eng.ffmpeg.bin; const file = path.resolve(source);
+  if (!fs.existsSync(file)) throw new Error(`not found: ${file}`);
+  const p = probe(file) ?? {}; const fps = opt.fps && opt.fps !== true ? Number(opt.fps) : 0; const crf = Number(opt.crf ?? 18);
+  const start = Number(opt['trim-start'] ?? 0) || 0; const trimEnd = Number(opt['trim-end'] ?? 0) || 0;
+  const end = trimEnd && p.duration ? p.duration - trimEnd : 0;
+  const out = path.resolve(opt.out && opt.out !== true ? String(opt.out) : file.replace(/\.\w+$/, '-finished.mp4'));
+  if (out === file) throw new Error('the output would overwrite the source clip; pass --out');
+  mkdirp(path.dirname(out));
+  const smooth = (rate) => `minterpolate=fps=${rate}:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1`;
+  const encode = ['-an', '-c:v', 'libx264', '-preset', 'slow', '-crf', String(crf), '-profile:v', 'high', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', out];
+  const trim = [...(start ? ['-ss', String(start)] : []), ...(end ? ['-to', String(end)] : [])];
+  if (opt.even) {
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'darkroom-finish-'));
+    try {
+      run(bin, ['-y', '-v', 'error', ...trim, '-i', file, '-fps_mode', 'passthrough', path.join(tmp, 'f%05d.png')]);
+      const names = fs.readdirSync(tmp).filter((f) => f.endsWith('.png')).sort();
+      const thumbs = allFrames(file, { start, end });
+      const n = Math.min(names.length, thumbs.length); if (n < 3) throw new Error('too few frames to even out');
+      const d = thumbs.slice(1, n).map((f, i) => mad(thumbs[i], f)); const m = median(d) || 1e-6;
+      const share = d.map((v) => Math.min(m * 5, Math.max(m * 0.2, v))); const sum = share.reduce((a, b) => a + b, 0);
+      const total = n / (p.fps || 24);
+      const list = names.slice(0, n - 1).map((f, i) => `file '${f}'\nduration ${(total * share[i] / sum).toFixed(5)}`).join('\n') + `\nfile '${names[n - 1]}'\n`;
+      const lf = path.join(tmp, 'list.txt'); fs.writeFileSync(lf, list);
+      run(bin, ['-y', '-v', 'error', '-f', 'concat', '-safe', '0', '-i', lf, '-vf', fps ? smooth(fps) : `fps=${Math.round(p.fps || 24)}`, ...encode]); // real frames by default: interpolation ghosts fast subjects
+    } finally { fs.rmSync(tmp, { recursive: true, force: true }); }
+  } else run(bin, ['-y', '-v', 'error', ...trim, '-i', file, ...(fps ? ['-vf', smooth(fps)] : []), ...encode]);
+  const a = probe(out) ?? {};
+  const result = { file: out, mb: mb(fs.statSync(out).size), width: a.width, height: a.height, fps: a.fps, duration: a.duration, even: !!opt.even, audio: false };
+  console.log(JSON.stringify(result, null, 2));
   return result;
 }
 

@@ -1,17 +1,21 @@
-# Prompt template — short clip for scroll scrubbing (Kling, Runway, Veo, etc.)
+# Prompt template: one short clip
 
-Use start/end keyframes from the product master or clean plates when the tool supports them. State whether it does; don't assume.
+Forms for each tool: `prompts/per-tool.md`. Scroll frames: `prompts/frame-sequence.md`. Rules: `references/asset-craft.md`. Use this generic form only for a tool without its own section.
+
+Duration, size, sound and any start or end frame go in the tool's settings, not here. State whether the tool has start and end frames; do not assume.
 
 ```
-<3–5>-second ultra-photoreal shot. <Subject> in <environment>, lighting <…>, grade <…>.
-Motion: <ONE motion: "the object rotates around its vertical axis from rear three-quarter to front" | "the camera moves slowly forward into the visor until the reflected city fills the frame">.
-Camera: <locked | slow dolly forward>, no zoom, no cuts, no shake.
-Keep geometry, materials and logo placement identical throughout. Constant speed, smooth.
-No text, captions, UI, hands, extra objects, people, flashes, morphing.
-Edges fall off to flat <ground hex> on all sides. Empty negative space in the <left 45 % | top 40 %> for the full clip.
-Single continuous shot, nothing enters or leaves the frame. <For a background loop: the last frame matches the first.>
+<Static | slow dolly forward | slow orbit, about 20 degrees>, single continuous shot.
+<Subject> in <environment>. Light: <source, direction>. Grade: <grade line>.
+<ONE motion, at a steady speed: "the object turns about its vertical axis from rear three-quarter to front">.
+The <subject> keeps its exact shape, materials and details: <lock list>.
+The camera stays <still | on one smooth path>; nothing enters or leaves the frame; the <left 45 % | top 40 %> stays calm and empty for the whole clip.
+No text, captions, interface or watermarks anywhere.
+<Objects on a ground: edges fall off to flat <ground hex> on all sides.>
 ```
 
-The edge, empty-zone and no-cuts lines are required for any hero or background clip (`references/hero-media.md`).
+Negative field, where the tool has one: `prompts/per-tool.md`. Words like "zoom" go there, never in the prompt.
 
-After: extract frames (`commands/plates.md` pipeline), inspect adjacent frames for drift, log the attempt (tool, cost, accepted/rejected + reason). Two failures → switch to a coded transition.
+The empty-zone and no-cuts lines are required for any hero or background clip (`references/hero-media.md`).
+
+After: check it (`darkroom media clipcheck`), log the attempt (tool, cost, kept or not, and why). Two failures: change the approach (`references/asset-craft.md`, fix ladder).

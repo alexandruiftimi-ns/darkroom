@@ -5,7 +5,7 @@ For the person who knows what they want to *see* but not how it is built. When t
 Rules for using this file:
 - Offer **at most three routes**, the recommended one first, each in one sentence plus its main trade-off.
 - **Recommend what delivers what they asked to see, for their kind of site** (the table under "A scroll story that looks 3D" shows the pattern). The words they used ("3D", "realistic", "cinematic", "like Apple") and the subject decide the recommendation; what they own today decides only what they must provide. Never recommend a route that cannot produce the asked look because it is cheaper or needs no files: offer it last, as the no-cost option, and say what it loses ("flat and drawn, it will not look 3D").
-- When they asked for prompts (`references/asset-tools.md`), the generated-media route is in reach: recommend it when it fits, write the prompts for their tools, and name the cost class (paid credits) once. Spending stays their call.
+- When they asked for prompts (`references/asset-tools.md`), the generated-media route is in reach: recommend it when it fits, write the prompts for their tools (`prompts/frame-sequence.md`, `prompts/per-tool.md`), and name the cost class (paid credits) once. Spending stays their call.
 - Always state what the user must provide **before** they say yes, and what ships if they never provide it.
 - Say plainly what a route cannot do (a video cannot be turned by the mouse; a photo cannot rotate).
 - Costs of generating assets (credits, subscriptions) are the user's decision. Name the cost class, never assume a tool.
@@ -128,7 +128,7 @@ What the visitor sees: an ordinary page, but each heading rises into place, text
 What the visitor sees: they scroll and the camera moves through a scene, an object turns in space or comes apart, chapters change as if filmed. "Looks 3D" is the brief: a flat drawing does not answer it.
 
 ### Route A: Cinematic frames from generated video (recommended for photoreal: products, places, food, fashion, cars, architecture)
-- You provide: the prompts I write, run in your tools: one still per chapter (ChatGPT image, or edits of your own photos), then a short clip between each pair of stills in a first-and-last-frame video tool (Kling, Veo, Seedance). I turn the clips into a flip-book that plays with the scroll, forwards and back.
+- You provide: the prompts I write, run in your tools: one still per chapter (ChatGPT image, or edits of your own photos), then a short clip between each pair of stills in a first-and-last-frame video tool (Kling, Veo, Seedance). I give you one step at a time with exact settings, or run it all myself if you connect a tool (`references/asset-connect.md`). I turn the clips into a flip-book that plays with the scroll, forwards and back.
 - Pros: the richest, most "filmed" 3D look; any material (glass, metal, food, fabric); smooth on phones once cut into frames.
 - Cons: paid credits in your tools; each clip may need a few tries; one fixed camera path.
 - Effort for you: medium (copy prompts, download clips; I check every clip frame by frame before you make the rest).

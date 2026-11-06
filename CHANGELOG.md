@@ -4,6 +4,20 @@ Darkroom uses [semantic versioning](https://semver.org): **major.minor.patch**.
 A **major** change breaks how projects or commands worked before, a **minor** one adds features, a **patch** fixes things.
 The installed version: `node ~/.claude/skills/darkroom/scripts/darkroom.mjs version` (or the `VERSION` file in the skill).
 
+## 1.11.0 · Shot List · 2026-11-06
+
+Scroll frames used to come down to one generic prompt and a line saying "use start and end frames". Now Darkroom walks you through the whole shot, or runs it for you.
+
+- **A full path for scroll frames.** Reference frame, start, middle and end frames, a cheap test, clips, checks, finishing. Darkroom gives you one step at a time with the exact settings, what to attach, what good looks like and where to save it, then carries on as soon as the file lands.
+- **Prompts written for your tool.** Darkroom asks which image and video tools you use, and the answer now changes the prompt, the settings and how your frames are used: ChatGPT Images, Kling 3.0 and 4.0, Veo, Seedance, Gemini Omni Flash, and more. The tool notes are dated and re-checked when they go stale, because models move monthly. Veo 3.1 is being retired, for example, and Darkroom says so.
+- **Anti-slop for images and video.** What slop is, the test that catches it, the words that give you the average result, light, lens and grade that hold up, casting real-looking people, what AI video can and can't do today in green, amber and red, and an honest warning with a safer version before you spend credits on a shot that usually fails.
+- **Prompts are checked before you see them.** Hype words, two camera moves in one clip, the words that invite a shake or a zoom, settings written into the prompt, a missing "no text" line, a grade that isn't repeated across a series.
+- **Neighbouring frames are scored before you pay for video.** Darkroom measures how much changes between two frames, whether the grade slipped and whether the framing moved, and tells you when a middle frame is needed.
+- **Every clip gets measured.** Frozen frames, cuts, uneven speed, flicker, a camera that drifted, words that lost their calm side. Darkroom then pulls the frames to look at for what numbers can't see.
+- **Clips finished for scrubbing.** Models ease in and out, so a scrubbed clip stalls at both ends. Darkroom can even the speed and strip the sound at the clip's own resolution, and add in-between frames to slow shots (fast subjects stay on their real frames, because added ones ghost). It also extracts the exact last frame as the next clip's start.
+- **Connect Artlist or Higgsfield and Darkroom runs the shots.** It's optional and pasting prompts stays a full route. You pick the look; Darkroom generates, checks, retries, finishes and builds, using your credits as it goes. There is no spending limit unless you ask for one. Kling has no official connector we could find, but both reach it. Not tried end to end yet.
+- **Fixed:** old prompt templates used words the new rules ban, wrote "no zoom, no shake" where it can invite both, and advised boomerang loops for motion that looks wrong backwards.
+
 ## 1.10.0 · Fresh Ideas · 2026-11-06
 
 Ten prompts should give ten different websites. Darkroom used to pick a style first and then refine it, so "premium" kept leading to one look.

@@ -19,6 +19,6 @@ When you drop files in, just say so ("I added the photos"). I check each one, te
 - <e.g. building the rest of the page with a marked placeholder in the hero>
 
 ## Quality checks for what you send (so you can tell it is good before sending)
-- Video: locked camera, nothing text-like or logo-like in the frame, the first and last frame are clean, 1080p or higher.
+- Video: locked camera or one slow move, nothing text-like or logo-like in the frame, the first and last frame are clean, 1080p or higher, sound off if your tool has the switch.
 - Pictures: no text baked in, subject not touching the edge, at least 2000 px on the long side.
 - 3D model: GLB or glTF, textures included, a licence that allows web use.

@@ -42,7 +42,7 @@ Rules for any library: respect `prefers-reduced-motion` in the same pass; never 
 
 ## Making the assets (the user's side)
 
-The user chooses and pays; Darkroom writes the prompts (`prompts/`), sets acceptance criteria and checks what comes back (`commands/refs.md`, `darkroom media inspect`). Products, prices and terms change monthly: name the **class and cost** first, give examples, and tell the user to check current pricing and licence terms. Examples as of 2026:
+The user chooses and pays; Darkroom writes the prompts (`prompts/`, `references/asset-craft.md`), sets acceptance criteria and checks what comes back (`commands/refs.md`, `darkroom media clipcheck`). Products, prices and terms change monthly: name the **class and cost** first, give examples, and tell the user to check current pricing and licence terms. Examples as of 2026:
 
 | Need | Free route | Paid / credit route (examples) | Watch out for |
 |---|---|---|---|

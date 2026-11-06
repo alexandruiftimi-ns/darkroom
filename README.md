@@ -8,11 +8,11 @@
 
 <p align="center">
   <a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/"><img alt="Live showcase: 8 demos" src="https://img.shields.io/badge/%E2%96%B6%20live%20showcase-8%20demos-ff7a3d?style=for-the-badge&labelColor=ff7a3d&color=121110"></a>
-  <a href="CHANGELOG.md"><img alt="Version 1.10.0, Fresh Ideas" src="https://img.shields.io/badge/version-1.10.0%20·%20Fresh%20Ideas-ff7a3d?style=for-the-badge&labelColor=121110"></a>
+  <a href="CHANGELOG.md"><img alt="Version 1.11.0, Shot List" src="https://img.shields.io/badge/version-1.11.0%20·%20Shot%20List-ff7a3d?style=for-the-badge&labelColor=121110"></a>
   <a href="LICENSE"><img alt="MIT licence" src="https://img.shields.io/badge/licence-MIT-ff7a3d?style=for-the-badge&labelColor=121110"></a>
   <img alt="Claude Code skill" src="https://img.shields.io/badge/Claude%20Code-skill-ece6dc?style=for-the-badge&logo=anthropic&logoColor=ece6dc&labelColor=121110">
   <img alt="10 platforms" src="https://img.shields.io/badge/platforms-10-ff7a3d?style=for-the-badge&labelColor=121110">
-  <img alt="150 automated checks" src="https://img.shields.io/badge/tests-150%20passing-7ab55c?style=for-the-badge&labelColor=121110">
+  <img alt="156 automated checks" src="https://img.shields.io/badge/tests-156%20passing-7ab55c?style=for-the-badge&labelColor=121110">
   <img alt="Node 18+" src="https://img.shields.io/badge/node-18%2B-ece6dc?style=for-the-badge&logo=nodedotjs&logoColor=ece6dc&labelColor=121110">
 </p>
 
@@ -216,9 +216,14 @@ Have your own pictures and video? Darkroom designs around them. Don't? It writes
 |---|---|---|
 | 🖼️ Text to image | hero plates, atmosphere, textures | ChatGPT image generation, Midjourney, Gemini / Imagen, Flux, Firefly |
 | 🪄 Image edit | cleaning your real product photo, new background | ChatGPT, Gemini |
-| 🎞️ Image to video | your product turning, a camera move into a still | Kling, Veo 3, Seedance, Runway, Luma |
-| 🎬 Text to video | a mood loop, a place, a background film | Veo 3, Kling, Seedance, Sora |
-| 🧷 First and last frame | a transition that must start and end exactly (scroll scrubs) | Kling, Veo 3 |
+| 🎞️ Image to video | your product turning, a camera move into a still | Kling, Veo, Seedance, Runway, Luma |
+| 🎬 Text to video | a mood loop, a place, a background film | Veo, Kling, Seedance, Gemini Omni Flash |
+| 🧷 First and last frame | a transition that must start and end exactly (scroll scrubs) | Kling, Veo, Seedance |
+| 🎚️ Keyframes | several states inside one clip, so a big change doesn't morph | Kling 4.0 |
+
+**Scroll frames, step by step.** Darkroom takes you from a reference frame through start, middle and end frames to finished clips, one step at a time, with the settings for your tool. Every prompt follows its anti-slop rules and is checked before you see it. It warns you when a shot usually fails, scores neighbouring frames before you pay for video, and measures every clip that comes back.
+
+**Or let it run the shots.** Connect Artlist or Higgsfield (optional, your own account and credits) and Darkroom generates, checks, retries and builds, while you pick the look. There is no spending limit unless you ask for one.
 
 ---
 
@@ -532,7 +537,7 @@ Every starter theme was run through **the platform's own tools**, not just Darkr
 | <picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/ghost-light.svg"><img src="assets/icons/ghost.svg" width="16" alt=""></picture> Ghost | gscan | **compatible with Ghost 6.x** |
 | <img src="assets/icons/wordpress.svg" width="16" alt=""> WordPress | a real WordPress (Playground), Site Editor block validation | **renders; 0 invalid blocks** in every template |
 | <img src="assets/icons/woocommerce.svg" width="30" alt=""> WooCommerce | WordPress + WooCommerce from wordpress.org, sample products | **shop and product pages render; 0 invalid blocks** |
-| All ten | Darkroom's structure check + **150 automated tests** | passing locally; run before every release |
+| All ten | Darkroom's structure check + **156 automated tests** | passing locally; run before every release |
 
 That run found real problems before you could: WooCommerce blocks that look self-closing but save HTML (the editor would have called them broken), missing side padding on phones, and new WooCommerce stores hiding behind "Coming soon". All fixed, and the checks now catch them.
 
@@ -552,7 +557,7 @@ That run found real problems before you could: WooCommerce blocks that look self
 | 🔎 **Audits** | Every build runs a quick check of the hard rules: AI-slop tells, spacing on one scale, aligned edges, skeletons while loading, no repeated designs. Type `/darkroom audit` for all 73 checks, each marked measured, heuristic or manual: accessibility, contrast from real pixels, clutter, word budgets, type scale, colour, keyboard, reduced motion, white flash on load, hidden headlines, videos that don't play or jump on loop, fonts that didn't load, see-through frames in scroll films, films that jump on a fast phone flick, pages that scroll by themselves, dead stretches of scroll, the same frosted caption box in every chapter, "best viewed on desktop" screens, a small headline lost over full-screen film, too much weight before the first scroll, chained clips that jump at the join, too many things moving at once, and the marks of a page nobody designed (gradient text, the purple-blue "AI" gradient, a coloured stripe on every card, a small label over every heading, emoji as icons, drawn browser windows, leftover lorem ipsum, made-up numbers and quotes), held as strictly as the Hallmark design skill where that is the right call: made-up proof, leftover placeholders and janky animation never ship, and three different tells on one page are flagged as slop. |
 | ⚖️ **Compliance checklist** | EU and US checklists for cookies, prices, disclosures and AI-image labelling. A checklist, not legal advice. |
 | 🎞️ **Media** | probes media, makes responsive images, turns video into a frame sequence, makes videos web-ready (desktop, phone, still frame), measures edge colour and loop jumps, joins chained AI clips into one film and scores every join, and draws free moving backdrops in your colours (8 styles + 3 textures). |
-| ✍️ **Image and video prompts** | for ChatGPT, Midjourney, Kling, Seedance, Veo and others, with acceptance criteria. |
+| ✍️ **Image and video prompts** | written for your tool (ChatGPT, Kling, Veo, Seedance and others) with anti-slop rules, risk warnings and a step-by-step path for scroll frames; checked before you see them. |
 
 </details>
 

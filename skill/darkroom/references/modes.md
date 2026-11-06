@@ -64,13 +64,13 @@ If two readings are plausible, recommend one and name the other in a line ("I'd 
 | Chapter needs | Best source | Tool class (cost) | Fallback if it never arrives |
 |---|---|---|---|
 | Looks 3D (camera through a scene, object in space) | route by site type: `references/effects.md`, "A scroll story that looks 3D" | generated stills + first-and-last-frame clips (paid credits) · real 3D from code (free) · layered depth (free/paid) | layered depth from one image per chapter; never call a flat drawing 3D |
-| Product turning / opening | a filmed or rendered clip, locked camera, 5–10 s | phone on tripod (free) · 3D render in Blender (free, skill needed) · AI video from a product still (paid credits) | 3–5 stills crossfaded, or a drawn-in-code object |
+| Product turning / opening | a filmed or rendered clip, locked camera, 4–6 s | phone on tripod (free) · 3D render in Blender (free, skill needed) · AI video from a product still (paid credits) | 3–5 stills crossfaded, or a drawn-in-code object |
 | Camera moving into a place | a clip of the move | drone or gimbal footage (free if owned) · AI video (paid) | mask zoom between two stills |
 | Layers with depth | 2–5 separated picture layers | an image tool with background removal (free/paid) · AI image (paid) | one image with a slow drift |
 | Diagram, numbers, process | nothing | drawn in code (free) | — |
 | Mood between chapters | one strong still per chapter | own photography · licensed stock · AI image (paid) · openly licensed archive (`darkroom assets`) | type and colour fields |
 
-Name the tool class and cost before any spend; the user chooses the tool. Specific products and their trade-offs: `references/motion-toolkit.md` ("Making the assets").
+Name the tool class and cost before any spend; the user chooses the tool. Specific products and their trade-offs: `references/motion-toolkit.md` ("Making the assets"). Any chapter with generated frames or clips follows `prompts/frame-sequence.md`.
 
 ## One signature per page (every motion level)
 

@@ -7,11 +7,11 @@ A hero clip "needs no overlay and never flashes" when it was chosen or ordered f
 1. **Edge colour = page ground.** The media's edges fall off to one flat colour, and that colour becomes `--ground` (`references/color.md`, Values). No seam where the media ends, no overlay, no flash while it loads (the poster and the ground match).
 2. **An empty zone.** A calm area where copy sits for the **whole** loop: the left 40–45 %, the top 35–40 % or a bottom band. Nothing bright or busy crosses it. The spec's assets table records it (`templates/BUILD_SPEC.md` §6).
 3. **One subject, one continuous shot, no cuts.** Slow motion only: an orbit, a drift, a float, a push-in. Nothing enters or leaves the frame.
-4. **Loopable.** The last frame matches the first, or the loop is masked: a rAF opacity fade near the end, a boomerang (played forward then backward), or a crossfade between two clips.
+4. **Loopable.** Best: crossfade the last 0.5 to 1 s over the first (ambient scenes: water, mist, clouds, light), or a rAF opacity fade near the end. The same image as first and last frame is amber: models often do almost nothing or drift out and back. A boomerang only for motion that reads backwards, never gravity, liquids, smoke or walking.
 5. **Restrained palette:** 2–3 hues plus one luminous highlight; one grade across all clips of the page.
 6. **No text, logos, UI or watermarks** in the footage. Baked text is rebuilt as DOM (SKILL.md, Safety).
 7. **Paired stills are pixel-aligned:** the two images of a cursor reveal, the layers of a parallax, the day and night of a switch come from one camera position.
-8. **Length and weight:** 6–12 s, 24 fps, no audio track, H.264 MP4 ≲ 8 MB at 1080p, a phone version at 720–960 px, a poster that equals the first frame.
+8. **Length and weight:** generate 4 to 6 s, 8 to 10 s only when the shot needs it (longer drifts more and costs more); a crossfaded loop can run 6–12 s on the page. 24 fps, no audio track, H.264 MP4 ≲ 8 MB at 1080p, a phone version at 720–960 px, a poster that equals the first frame.
 
 ## Archetypes that work
 
@@ -40,7 +40,6 @@ Every image or video prompt Darkroom writes for a hero carries these lines (fill
 Edges fall off to flat <ground hex> on all sides; no vignette colour other than <ground hex>.
 Empty negative space in the <left 45 %> for the full clip: nothing bright or detailed there.
 Single continuous shot, <locked | slow orbit | slow push-in> camera, no cuts, nothing enters or leaves the frame.
-Loopable: the last frame matches the first.
 Palette: <2–3 hues> plus one highlight of <accent>. No text, no logos, no UI, no watermark.
 ```
 

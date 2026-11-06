@@ -10,12 +10,12 @@ The look of the "AI websites": generated clips, chained end to start, played for
 
 ## The chain, step by step
 
-1. **One anchor still first.** Write the look in one approved still (`prompts/anchor-hero.md`); every other still is made from it, style-locked. Never start clips before the anchor is approved.
-2. **One still per chapter**, edited from the anchor in the same image tool (same light, lens, grade).
+1. **One reference frame first.** Write the look in one approved still (`prompts/frame-sequence.md`); every other still is made from it, style-locked. Never start clips before it is picked.
+2. **One still per chapter**, each edited from its neighbour in the same image tool (same light, lens, grade), scored with `darkroom media keys` before any clip is paid for. Prompts, tools and risk: `prompts/frame-sequence.md`, `prompts/per-tool.md`.
 3. **Plan the path as one forward take.** The camera never reverses direction between chapters (in, then back out, reads as a rewind). One model for the whole chain: switching models mid-chain makes the seam pop.
 4. **Test the hardest clip once** on the cheapest setting the tool has; inspect it frame by frame (`darkroom media inspect`, `media frames`) before ordering the rest.
-5. **Connectors from extracted frames.** Clip N+1 starts from the **last frame extracted from clip N's file**, not from the original still (a re-rendered still differs in colour and grain, and the seam pops). Never "clean" that frame in an image tool; at most a light upscale.
-6. **Join and score:** `darkroom media chain ch1.mp4 ch2.mp4 ch3.mp4 --out film.mp4` scores every seam (last frame → next first frame) and joins the clips. A seam over the threshold is a visible jump: remake the clip from the extracted frame, or crossfade 6 to 8 frames across it.
+5. **Connectors from extracted frames.** Clip N+1 starts from the **last frame extracted from clip N's file** (`darkroom media lastframe`), not from the original still (a re-rendered still differs in colour and grain, and the seam pops). Never "clean" that frame in an image tool; at most a light upscale.
+6. **Check, even out, join:** `darkroom media clipcheck` each clip, `media finish --even` for constant speed, then `darkroom media chain ch1.mp4 ch2.mp4 ch3.mp4 --out film.mp4` scores every seam (last frame → next first frame) and joins the clips. A seam over the threshold is a visible jump: remake the clip from the extracted frame, or crossfade 6 to 8 frames across it.
 7. **Frames or video:** `media frames film.mp4 --mobile-width 900` for `recipes/scrub-frames.js` (recommended: deterministic paint, smooth on phones), or chapter videos marked `data-chain` for `recipes/scrub-video.js` (the audit's `chain-seam` check scores those seams on the page).
 8. **Posters** are extracted from the encoded clips (`media web` / `media frames` make them), never the source stills.
 

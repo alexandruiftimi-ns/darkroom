@@ -1,5 +1,7 @@
 # Prompt template — anchor hero (the truth image)
 
+This is a picture of a whole page, with type and navigation, for a reference-led project. For frames that will play on the page, use a clean reference frame instead (`prompts/frame-sequence.md`).
+
 The anchor fixes product, type rhythm, grid and grade for every later image. Spend iterations here, nowhere else. Fill every bracket from `DESIGN_BIBLE.md`.
 
 ```

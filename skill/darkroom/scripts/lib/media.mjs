@@ -324,6 +324,12 @@ export async function media(pos, opt) {
                                       one ping-pong copy (forward then backward) that loops with no seam
   chain <clip> <clip> [...] [--out chain.mp4] [--width 1920] [--fps 24] [--crf 20]
                                       score every seam between chained clips (last frame → next first frame), then join them into one clip
+  keys <frame> <frame> [...]          score neighbouring frames in order before paying for video: how much changes, grade drift, framing shift
+  clipcheck <clip> [--calm left|right|top|bottom] [--out dir]
+                                      measure a generated clip (frozen frames, jumps, uneven speed, flicker, camera shift, calm side) and pull frames to look at
+  lastframe <clip> [--out file.png]   the clip's true last frame, lossless, at its own size: the next clip's start frame
+  finish <clip> [--even] [--fps 48] [--trim-start s] [--trim-end s] [--crf 18] [--out file.mp4]
+                                      no sound; --even: constant speed from the clip's real frames; --fps adds in-between frames (slow motion only: it ghosts fast subjects; minutes at 1080p: run it in the background)
   sheet <folder> [--out sheet.jpg] [--cols 4] [--tile 320]
                                       numbered contact sheet of every image and video first frame (+ JSON index): look, then pick by number
   measure <file>                      edge colour, loop seam (video), calmest zone for the words (heuristics)
@@ -335,10 +341,11 @@ export async function media(pos, opt) {
   else if (sub === 'derive') await derive(target, opt);
   else if (sub === 'frames') await frames(target, opt);
   else if (sub === 'check') await check(target);
-  else if (['web', 'boomerang', 'sheet', 'make', 'measure', 'chain'].includes(sub)) {
+  else if (['web', 'boomerang', 'sheet', 'make', 'measure', 'chain', 'keys', 'clipcheck', 'lastframe', 'finish'].includes(sub)) {
     const kit = await import('./mediakit.mjs');
     if (sub === 'measure') console.log(JSON.stringify({ file: target, ...kit.analyse(path.resolve(target)) }, null, 2));
     else if (sub === 'chain') await kit.chain(pos.slice(1), opt);
+    else if (sub === 'keys') await kit.keys(pos.slice(1));
     else await kit[sub](target, opt);
   }
   else throw new Error(`unknown media command ${sub}`);

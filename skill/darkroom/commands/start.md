@@ -17,7 +17,7 @@ Goal: a confirmed `.darkroom/BRIEF.md` in **at most two question rounds**, then 
 - **Surface:** `landing` (default), `catalog` (shops), `editorial` (blogs, publications) or several (a shop has a landing home page and catalog templates); say which rules change (`references/surfaces.md`). Set `surface` in `project.json` and the bible's `darkroom` block.
 - **Meaning:** turn adjectives into the promise behind them (`references/design-reasoning.md`, step 1) and say it back in one line. Never map "luxury" straight to a pack.
 - **Colour choice** (`references/color.md`, "Asking about colour"): own palette, suggested, 60-30-10, creative or monochrome. `--set palette=…`.
-- **Assets: own or prompts** (`references/asset-tools.md`), and which tools the user has.
+- **Assets: own or prompts** (`references/asset-tools.md`), which tools the user has, and who runs them: the user, or Darkroom through a connector (`references/asset-connect.md`).
 - **Build scope:** `home` (build and approve the home page, then the rest), `page:/<path>` (one named page first) or `all` (the whole site now). Multi-page sites only; a one-page site is `all`. The user decides; it is their usage. `--set scope=…`.
 - **Check depth:** `quick` (home page + the page that earns money, desktop + phone) or `full` (every template, every viewport, motion on and off). It limits the checking, never the building. The user decides; it is their usage. `--set verify=…`.
 - **Asset tier** (what is actually available, which sets the achievable visual ceiling):
