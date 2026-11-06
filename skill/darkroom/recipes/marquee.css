@@ -1,7 +1,7 @@
 /* Seamless marquee for logo strips and word bands (pairs with marquee.js, which duplicates the track and adds the pause
    button). Without JS it is a static row that wraps. Speed 40–60 px/s; marquee.js sets --marquee-dur from the width.
    WCAG 2.2.2: anything that moves for more than 5 s needs a pause control; the script adds one. */
-.marquee { --marquee-gap: 56px; --marquee-fade: 72px; position: relative; overflow: hidden;
+.marquee { --marquee-gap: 64px; --marquee-fade: 72px; position: relative; overflow: hidden;
   mask-image: linear-gradient(to right, transparent, #000 var(--marquee-fade), #000 calc(100% - var(--marquee-fade)), transparent);
   -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--marquee-fade), #000 calc(100% - var(--marquee-fade)), transparent); }
 .marquee-track { display: flex; flex-wrap: wrap; gap: var(--marquee-gap); list-style: none; margin: 0; padding: 0; align-items: center; justify-content: center; }

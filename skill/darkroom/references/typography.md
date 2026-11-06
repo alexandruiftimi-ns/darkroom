@@ -12,7 +12,7 @@
 - 5–6 sizes, far apart (ratio ≥ 1.25 at body, larger jumps at display). Nine similar sizes = noise.
 - Fluid: `clamp(min, vw-based, max)` for display; body 16–20 px; never below 16 px for inputs on mobile (iOS zoom).
 - Display: line-height 0.9–1.05, tracking slightly negative (−0.01 to −0.03em; never tighter than −0.04em for headings). **Scoped exception:** vw-sized mega words and wordmarks (14–28vw) may go to −0.04 to −0.07em, because tracking that looks right at 60 px leaves holes at 300 px (good/lando-norris, good/almada-label wordmark closers). Body: 1.4–1.6 (serifs a little more), measure 45–75ch.
-- Tracked uppercase only for short labels (≤ 4 words), tracking 0.08–0.4em, and only if the pack switches labels on.
+- No tracked capitals and no small caps on labels, captions, table heads, tags or nav links: they are the body face, a step smaller, sentence case, untracked (hard rule, audit `tracked-caps`). Only a wordmark stays in capitals.
 - One emphasis device per page family: colour on one word, *or* italic, *or* weight. Never gradient text.
 
 ## Values (defaults for packs that say nothing; the pack wins)
@@ -24,7 +24,7 @@
 | H2 / section | `clamp(32px, 4.5vw, 64px)` | 1.0–1.1 | −0.01 to −0.03em | 400–600 |
 | Lede / sub | 18–22 px | 1.4–1.5 | 0 to −0.01em | 300–400 |
 | Body | 16–20 px | 1.5–1.6 | 0 to −0.01em | 300–400 |
-| Labels | 10–13 px | 1–1.3 | +0.15 to +0.3em when tracked caps are on, else 0 | 500–600 |
+| Labels | 13–15 px | 1–1.3 | 0 | 500–600 |
 | Buttons | 14–16 px | 1 | 0 to +0.02em | 500 |
 
 - H1 is about **5–6× the body** at desktop (the audit's `type-scale` check reads the ratio; a pack may ask for more).

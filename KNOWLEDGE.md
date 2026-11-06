@@ -11,7 +11,7 @@
 | [Research](#3-research-and-standards) | 29 sources: usability research, accessibility standards, EU law, award criteria | `references/sources.md` |
 | [Other tools](#4-other-design-tools-studied) | 7 open design skills and tools, read for principles only | `references/provenance.md` |
 | [Examples and recipes](#5-examples-and-recipes) | 100 example prompts, each with the full build spec it leads to; 35 motion and media recipes tested in a real browser; Values tables for type, motion, spacing and colour | `examples/`, `recipes/`, `references/` |
-| [Test pages](#6-test-pages-built-with-it) | 4 pages built end to end to find what broke | the test suite (141 checks) |
+| [Test pages](#6-test-pages-built-with-it) | 4 pages built end to end to find what broke | the test suite (148 checks) |
 | [Human input](#7-human-input) | the author's taste calls, dislikes, approvals and assets | everywhere |
 
 ---
@@ -347,7 +347,7 @@ Read for principles, then rewritten in Darkroom's own words and code; **no code 
 | UI UX Pro Max | design knowledge as queryable data |
 | REA (reverse-engineer-anything) | observed vs inferred; keep the evidence |
 | Anthropic `frontend-design` | the idea comes from the subject; spend the boldness in one place |
-| Hallmark | tiers for generated-design tells (never ships / a reflex kept only with a reason / craft detail); the eyebrow, card stripe, drawn browser window and unsourced proof as automatic checks; the page built around what the visitor came to do; a reviewer who did not build the page (MIT; the job anatomy and the section-opening list follow its structure closely, credited in place) |
+| Hallmark | hard rules for generated-design tells, lifted only by the user's own words, with the exceptions listed in `references/tells.md`; the spacing, alignment and control gates (rebuilt on rendered gaps); the eyebrow, card stripe, drawn browser window and unsourced proof as automatic checks; the page built around what the visitor came to do; a reviewer who did not build the page (MIT; the job anatomy and the section-opening list follow its structure closely, credited in place) |
 | MotionSites Web Builder | write every value before the code; read close examples to match their precision; hero media whose edges match the page; a clear finish line for reviews (its example prompts were studied privately; Darkroom's 100 examples are its own) |
 
 ## 5. Examples and recipes

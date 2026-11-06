@@ -3,7 +3,7 @@
    Use: live counters: orders, downloads, trees planted
    Markup: put the snippet in demo.html#odometer inside <div data-dm="odometer">…</div>.
    Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
-[data-dm="odometer"] .od{display:flex;font:700 52px/1 ui-monospace,Consolas,monospace;background:#141417;border:1px solid #ffffff1a;border-radius:10px;padding:8px 10px;gap:2px}
+[data-dm="odometer"] .od{display:flex;font:700 52px/1 ui-monospace,Consolas,monospace;background:#141417;border:1px solid #ffffff1a;border-radius:10px;padding:8px 12px;gap:2px}
 [data-dm="odometer"] .dg{height:1em;overflow:hidden;width:.65em;text-align:center;border-radius:4px;background:#1c1c21}
 [data-dm="odometer"] .dg span{display:flex;flex-direction:column;transition:transform calc(.5s*var(--dm-dur,1)) cubic-bezier(.4,1.4,.5,1)}
 [data-dm="odometer"]{align-content:center}

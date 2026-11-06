@@ -65,5 +65,5 @@ Reduced motion: tap toggles worn/ivory without growth animation.
 | Hero piece | 32 vh | 36 vh | 40 vh | 32 vh |
 
 ### Acceptance
-**First viewport:** at 1440 × 900 a warm white page with small tracked serif caps for the name and menu; a quiet centred line, a sub and a thin-bordered button; one gold ring on ivory below, which shows itself worn on a hand when pointed at. At 390 × 844 the same centred column, tap to see it worn.
+**First viewport:** at 1440 × 900 a warm white page with the name in small serif capitals as a wordmark, the menu in sentence case; a quiet centred line, a sub and a thin-bordered button; one gold ring on ivory below, which shows itself worn on a hand when pointed at. At 390 × 844 the same centred column, tap to see it worn.
 **Do not:** copy a reference brand's red, logo, packaging or iconic forms; claim "ethical" without the gold source; let worn and ivory photos differ in position; use more than one accent (gold).

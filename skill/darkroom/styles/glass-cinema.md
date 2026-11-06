@@ -19,7 +19,7 @@ One continuous slow shot per section: an object in a void, a surreal calm scene 
 Signature: the film itself. Supporting: a blur-rise entrance (nav → badge → H1 → sub → CTA, done by 1.5 s), video fade-in on `loadeddata` (500 ms) with a 1.06 → 1 settle (1.8 s), a manual loop with opacity fades near the end. Nothing else moves.
 
 ## Switches
-eyebrow ON (badge with an inner chip, one only) · tracked-caps OFF · index-numerals OFF · hairlines SPARING · cards SPARING · glass ON (one material, reused) · gradients OFF (scrims only) · mono-labels OFF · centred-layout ON · marquee SPARING · custom-cursor OFF · full-bleed-imagery ON · script-lettering OFF
+eyebrow OFF · tracked-caps OFF · index-numerals OFF · hairlines SPARING · cards SPARING · glass ON (one material, reused) · gradients OFF (scrims only) · mono-labels OFF · centred-layout ON · marquee SPARING · custom-cursor OFF · full-bleed-imagery ON · script-lettering OFF
 
 ## Material (verbatim)
 ```css

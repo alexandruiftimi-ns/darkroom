@@ -36,7 +36,7 @@ If two readings are plausible, recommend one and name the other in a line ("I'd 
 - Visitor sees: a still, composed page; hover and focus states, a smooth menu, nothing moves by itself.
 - You need from the user: nothing extra.
 - Build with: CSS transitions only (150–300 ms). No library.
-- Checks: the usual audit; focus states in `capture --states`.
+- Checks: `audit --quick`; focus states in `capture --states`.
 - Choose when: trust, legal, medical, finance, long-form reading, or a deadline.
 
 ### animated (on-scroll reveals, not a story)
@@ -44,20 +44,20 @@ If two readings are plausible, recommend one and name the other in a line ("I'd 
 - You need from the user: nothing extra; better photos make it richer.
 - Build with: `recipes/reveal.js` + `reveal.css` (no dependencies). Add GSAP/Motion only if the project already uses them (`references/motion-toolkit.md`).
 - Rules: one reveal family per page (two at most); reveal **groups**, not every paragraph; headings rise, body fades, images mask; word-split only for display headlines; stagger ≤ 100 ms and ≤ 6 items; nothing above the fold waits. Tune duration and travel to the pack (`reveal.css` header).
-- Checks: `capture --film --both` (no blank bands, no late pop-in), audit (it scrolls the page first, so hidden text is measured), reduced motion shows everything at once.
+- Checks: `capture --film --both` (no blank bands, no late pop-in), `audit --quick` (it scrolls the page first), reduced motion shows everything at once.
 
 ### hero-effect (one moment, the rest animated or calm)
 - Visitor sees: one memorable effect at the top or at one key section (a product that turns, a lens dive, a mask zoom, a loop), then a normal page.
 - You need from the user: what that one effect needs (`references/effects.md`), usually one clip or one strong image.
 - Build with: the matching recipe (`scrub-frames.js`, `scrub-video.js`, `scene-progress.js`, `pointer-tilt.js`) + `reveal.js` for the rest.
-- Checks: `capture --scene "#hero" --steps 10 --both`, `media check`, the audit.
+- Checks: `capture --scene "#hero" --steps 10 --both`, `media check`, `audit --quick`.
 
 ### story (scroll storytelling)
 - Visitor sees: the page is told in chapters; sections pin while scenes change, text arrives in step with the pictures, a progress indicator shows where they are. Scrolling back replays it backwards.
 - You need from the user: the story in a few sentences per chapter, and the media each chapter needs: see the asset plan below. This is the mode that most depends on assets.
 - Build with: `scene-progress.js` for pinned CSS scenes, `scrub-frames.js` / `scrub-video.js` for filmed scenes, `reveal.js` between chapters. GSAP ScrollTrigger only when the timeline is complex (many overlapping tweens per scene); Lenis only if tested with keyboard and back/forward (`references/motion-toolkit.md`).
 - Rules: 3–6 chapters; one claim per chapter (word budget per scene, not per section); every pinned scene ≤ 300vh; mobile gets shorter scenes or a stacked version; reduced motion = one calm frame per chapter with the same copy; a skip-the-story link.
-- Checks: `capture --scene` per chapter, `capture --film --both`, audit, a phone check at 390.
+- Checks: `capture --scene` per chapter, `capture --film --both`, `audit --quick`, a phone check at 390.
 
 #### Story asset plan (hand this over as `NEEDS.md`, one row per chapter)
 

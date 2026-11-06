@@ -3,7 +3,7 @@
    Use: portfolio tiles, camera / film products, selection state · Visitor: hover
    Markup: put the snippet in demo.html#corner-brackets inside <div data-dm="corner-brackets">…</div>.
    Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
-[data-dm="corner-brackets"] .cd{position:relative;width:230px;height:150px;border-radius:16px;background:#141417;padding:20px;display:flex;flex-direction:column;justify-content:flex-end;gap:4px;color:var(--dm-ink)}
+[data-dm="corner-brackets"] .cd{position:relative;width:230px;height:150px;border-radius:16px;background:#141417;padding:24px;display:flex;flex-direction:column;justify-content:flex-end;gap:4px;color:var(--dm-ink)}
 [data-dm="corner-brackets"] .cd b{font-size:17px}[data-dm="corner-brackets"] .cd span{font-size:13px;color:var(--dm-muted)}[data-dm="corner-brackets"] .vf{background:transparent;transition:background .4s}
 [data-dm="corner-brackets"] .vf::before,[data-dm="corner-brackets"] .vf::after,[data-dm="corner-brackets"] .vf b::before,[data-dm="corner-brackets"] .vf b::after{content:"";position:absolute;width:18px;height:18px;border:2px solid var(--dm-ink);transition:transform calc(.45s*var(--dm-dur,1)) cubic-bezier(.3,1.4,.5,1),border-color .3s}
 [data-dm="corner-brackets"] .vf::before{top:0;left:0;border-right:0;border-bottom:0}[data-dm="corner-brackets"] .vf::after{top:0;right:0;border-left:0;border-bottom:0}

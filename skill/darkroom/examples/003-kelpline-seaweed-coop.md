@@ -51,7 +51,6 @@ Height 72 px, transparent. Left "Kelpline" Figtree 600 18 px. Links: Harvest · 
 ### Hero
 | Element | Copy | Font / size | Leading / tracking | Colour | Position | Motion |
 |---|---|---|---|---|---|---|
-| Eyebrow | Rade de Brest · harvest from March | Text 600, 12 px, +0.16em caps | 1 | ink-60 | above H1 | fade 600 ms |
 | H1 | Grown by the tide. Cut by hand. | Display 400, clamp(44px, 7vw, 108px) | 0.95 / −0.025em | ink-100 | `bottom: clamp(48px, 9vh, 96px); left: var(--gutter)`, max 12ch | rises 28 px, 900 ms, delay 120 ms |
 | Sub | Fourteen fishing families farm sugar kelp in clean Breton water and sell each harvest in shares. | Text 400, 18 px | 1.5 | ink-80 | right column, bottom aligned with H1 baseline, max 380 px | fade, delay 300 ms |
 | CTA | Buy a share | nav CTA at 16 px | — | — | under sub | fade, delay 400 ms |

@@ -4,6 +4,20 @@ Darkroom uses [semantic versioning](https://semver.org): **major.minor.patch**.
 A **major** change breaks how projects or commands worked before, a **minor** one adds features, a **patch** fixes things.
 The installed version: `node ~/.claude/skills/darkroom/scripts/darkroom.mjs version` (or the `VERSION` file in the skill).
 
+## 1.9.0 · Hard Rules · 2026-11-06
+
+Two sites for two different businesses should never look alike, and the anti-slop rules are no longer suggestions.
+
+- **Hallmark's rules are hard rules now.** Labels above headings, small tracked capitals, an italic word in a heading, gradient text, card stripes, template punctuation and stock wording all block a page from the first one. No style pack can switch them on, and Darkroom can't excuse itself: a rule is lifted only by your own words, quoted in the design bible. A few rules stay softer on purpose; `references/tells.md` lists each one and why.
+- **Spacing has one scale.** Every padding, margin and gap comes from it. 24 px here and 28 px there now fails, even when both values look fine on their own, because Darkroom compares the gaps a page really renders: heading to line, line to button, button to button, section padding, button heights.
+- **Edges line up.** Text, pictures, nav and footer that miss each other by 2 to 8 px are flagged, and so are items in a row that start at different heights. Fields and their buttons share a height; button labels stay on one line; headings keep more space above than below.
+- **Skeletons.** Darkroom loads each page with pictures, frames and data held back and looks at what stands in. A hole, a blank film, a video with no poster or a page that jumps on arrival fails. New recipe: `skeleton.css`, in your site's own colours, still under reduced motion.
+- **No more same design twice.** Darkroom remembers your recent builds on this computer and picks a direction that differs in palette and composition. "Premium" and "luxurious" no longer decide colour: near-black with ivory and gold, or cream with terracotta and a serif, are flagged unless the colours are yours, and each palette must come from the subject.
+- **No email sign-up unless it belongs.** An email field closing a page is now caught, including in the footer, unless the page's job is subscribing, joining, attending, listening or visiting, or you asked for one. Shops included.
+- **A fake "Thanks!" is caught automatically.** So are cards inside cards, two sticky bars fighting, a headline or button below the fold at 1280 × 800, and text running to the edge at 1920.
+- **`/darkroom audit` is the full audit, and only runs when you type it.** A normal `/darkroom` build now runs a quick check of about 10 seconds with the rules above. Contrast, keyboard, motion, weight, scroll and the reviews run when you ask, and you get a ranked report before anything changes. This saves usage on every build.
+- **Fixed:** design-bible exceptions written with a reason were silently ignored; the label check missed spans inside labels and numbered labels such as "01 / 05".
+
 ## 1.8.0 · Anti-Slop · 2026-10-31
 
 Darkroom now catches the marks of a page nobody designed, on its own, and still lets a design keep the ones it chose.

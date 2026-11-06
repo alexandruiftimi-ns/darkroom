@@ -26,7 +26,7 @@ A pack is a set of **defaults and switches**, not a template. It tells Darkroom 
 ## Switches vocabulary (every pack sets these)
 
 `eyebrow` (label above headings) · `tracked-caps` · `index-numerals` (01/02) · `hairlines` · `cards` · `glass` · `gradients` · `mono-labels` · `centred-layout` · `marquee` · `custom-cursor` · `full-bleed-imagery` · `script-lettering`
-Values: **ON** (part of the look) · **SPARING** (≤ 1–2 uses, with a reason) · **OFF**.
+Values: **ON** (part of the look) · **SPARING** (≤ 1–2 uses, with a reason) · **OFF**. `eyebrow` and `tracked-caps` are OFF in every pack and no pack can switch them on: they are hard rules (`references/tells.md`); only the user's own words lift them.
 
 ## Adding a pack
 

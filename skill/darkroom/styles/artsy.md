@@ -20,7 +20,7 @@ Illustration, collage, 3D toys, hand-made textures, the artist's own work.
 Signature: playful cursor interaction, draggable objects (with keyboard alternative — WCAG 2.5.7), colour-field shifts, variable-font axes on hover. Springy easing allowed.
 
 ## Switches
-eyebrow SPARING · tracked-caps SPARING · index-numerals SPARING · hairlines SPARING · cards SPARING · glass SPARING · gradients ON (chosen, not default violet) · mono-labels SPARING · centred-layout ON · marquee ON (one) · custom-cursor ON (with normal cursor fallback) · full-bleed-imagery ON · script-lettering ON (hand lettering as art)
+eyebrow OFF · tracked-caps OFF · index-numerals SPARING · hairlines SPARING · cards SPARING · glass SPARING · gradients ON (chosen, not default violet) · mono-labels SPARING · centred-layout ON · marquee ON (one) · custom-cursor ON (with normal cursor fallback) · full-bleed-imagery ON · script-lettering ON (hand lettering as art)
 
 ## Must-have
 Reduced-motion version; keyboard alternative for every drag/cursor game; content readable without the toys.

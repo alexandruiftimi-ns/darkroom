@@ -1,0 +1,27 @@
+/* Skeleton: what stands in while pictures, film frames and data arrive. The box is the real size from the first paint,
+   so nothing jumps. Colours come from the site: set --sk-base and --sk-glow from the palette, never grey by default.
+   Markup: <figure class="sk" style="aspect-ratio:4/3"><img src="…" width="1200" height="900" alt="…" onload="this.parentElement.classList.add('is-ready')"></figure>
+   Text and data: <div class="sk sk-text" aria-hidden="true"></div> inside a region with aria-busy="true"; remove both when it arrives.
+   Film: a .sk behind the canvas, shaped like the frame; add .is-ready once the first frame is drawn. */
+.sk {
+  --sk-base: color-mix(in oklab, currentColor 9%, transparent);
+  --sk-glow: color-mix(in oklab, currentColor 16%, transparent);
+  position: relative; overflow: hidden; background: var(--sk-base); border-radius: inherit;
+}
+.sk::after {
+  content: ""; position: absolute; inset: 0; transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, var(--sk-glow), transparent);
+  animation: sk-sweep 1.6s ease-in-out infinite;
+}
+.sk > img, .sk > video, .sk > canvas { display: block; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .3s ease; }
+.sk.is-ready { background: none; }
+.sk.is-ready::after { content: none; }
+.sk.is-ready > img, .sk.is-ready > video, .sk.is-ready > canvas { opacity: 1; }
+.sk-text { height: 1em; margin-block: .4em; border-radius: 4px; }
+.sk-text:nth-child(3n) { width: 72%; }
+
+@keyframes sk-sweep { to { transform: translateX(100%); } }
+/* The sweep stops with reduced motion; the shape stays. */
+@media (prefers-reduced-motion: reduce) { .sk::after { animation: none; content: none; } .sk > img, .sk > video, .sk > canvas { transition: none; } }
+/* Without JavaScript nothing would mark the box ready: show the picture. */
+html:not(.js) .sk > img { opacity: 1; }

@@ -20,7 +20,7 @@ Accurate colour, correct crops (never crop artworks without the artist's consent
 Signature: work enlarges into full bleed / view transition from grid to single. Keyboard arrows between works.
 
 ## Switches
-eyebrow OFF · tracked-caps SPARING (wall-label style) · index-numerals SPARING (catalogue numbers if real) · hairlines SPARING · cards OFF · glass OFF · gradients OFF · mono-labels SPARING (catalogue data) · centred-layout ON · marquee OFF · custom-cursor SPARING · full-bleed-imagery ON · script-lettering OFF
+eyebrow OFF · tracked-caps OFF · index-numerals SPARING (catalogue numbers if real) · hairlines SPARING · cards OFF · glass OFF · gradients OFF · mono-labels SPARING (catalogue data) · centred-layout ON · marquee OFF · custom-cursor SPARING · full-bleed-imagery ON · script-lettering OFF
 
 ## Must-have
 Alt text that describes the work; credits and rights; enquiry path; image protection policy stated (not right-click hacks).

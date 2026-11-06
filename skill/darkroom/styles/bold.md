@@ -20,7 +20,7 @@ High-contrast photography, cut-outs, duotones in the palette, motion blur used d
 Signature: hard cuts between colour fields, scroll-scaled type, marquee (one, meaningful). Fast, decisive (200–400 ms), no floaty easing.
 
 ## Switches
-eyebrow OFF · tracked-caps SPARING · index-numerals SPARING · hairlines OFF · cards OFF · glass OFF · gradients OFF (flat fields) · mono-labels OFF · centred-layout ON (allowed) · marquee SPARING (one) · custom-cursor SPARING · full-bleed-imagery ON · script-lettering SPARING
+eyebrow OFF · tracked-caps OFF · index-numerals SPARING · hairlines OFF · cards OFF · glass OFF · gradients OFF (flat fields) · mono-labels OFF · centred-layout ON (allowed) · marquee SPARING (one) · custom-cursor SPARING · full-bleed-imagery ON · script-lettering SPARING
 
 ## Must-have
 Readable body at normal size beneath the shouting; reduced motion stops marquees; contrast checked per colour field.

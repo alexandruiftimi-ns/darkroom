@@ -4,10 +4,10 @@
 **Use for:** fashion, jewellery, watches, hotels, private real estate, fine spirits. **Not for:** discount retail, urgency-driven sales.
 
 ## Colour — disciplined or monochrome
-Achromatic or near-achromatic UI (ink, stone, paper, graphite); photography carries colour. One accent at most, often none (links = underline). Avoid the cream + terracotta default unless the house's own colours are that.
+Achromatic or near-achromatic UI (ink, stone, paper, graphite); photography carries colour. One accent at most, often none (links = underline). Near-black + ivory + gold and cream + terracotta are the two defaults every "premium" page reaches for: never use them unless they are the house's own colours. Take the palette from the subject (`commands/style.md`).
 
 ## Type
-Option A serif display + neutral sans: Cormorant Garamond, Bodoni Moda, Marcellus, Italiana + Jost, Hanken Grotesk, Inter. Option B one refined sans (Jost, Hanken Grotesk) in two weights. Display large, light, generous tracking only on short caps labels; body small-ish (16–17 px) with wide margins.
+Option A serif display + neutral sans: Cormorant Garamond, Bodoni Moda, Marcellus, Italiana + Jost, Hanken Grotesk, Inter. Option B one refined sans (Jost, Hanken Grotesk) in two weights. Display large, light; labels in the body face, sentence case, untracked (only the wordmark may be capitals); body small-ish (16–17 px) with wide margins.
 Never: playful or rounded faces, heavy bold display, more than three families, mixing two serifs.
 
 ## Layout
@@ -20,7 +20,7 @@ Studio or location photography with soft, directional light; material close-ups 
 Signature: slow mask/clip reveal of product, long crossfades (600–1200 ms), subtle image scale on enter (≤ 1.05). Nothing bouncy, nothing fast.
 
 ## Switches
-eyebrow SPARING · tracked-caps ON (short labels) · index-numerals OFF · hairlines SPARING · cards OFF · glass OFF · gradients OFF · mono-labels OFF · centred-layout SPARING · marquee OFF · custom-cursor OFF · full-bleed-imagery ON · script-lettering OFF (unless it is the house's logotype)
+eyebrow OFF · tracked-caps OFF · index-numerals OFF · hairlines SPARING · cards OFF · glass OFF · gradients OFF · mono-labels OFF · centred-layout SPARING · marquee OFF · custom-cursor OFF · full-bleed-imagery ON · script-lettering OFF (unless it is the house's logotype)
 
 ## Must-have
 Excellent image compression (quality is the product), clear price policy where commerce exists (EU: incl. VAT), appointment/contact path.

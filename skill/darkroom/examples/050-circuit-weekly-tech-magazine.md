@@ -36,7 +36,7 @@ Ghost accent colour → `--signal` for section labels and the subscribe button o
 | feature images | each post's own (editors) | `{{img_url feature_image size="l"}}` with Ghost image sizes | 3:2 | static | no image: headline-only layout | — |
 
 ### Nav
-Masthead: date line (UI 500 12 px caps) · "Circuit Weekly" Headlines 600 clamp(36px, 5vw, 64px) centred · "Subscribe" signal button; section bar below on a 1 px rule: Chips · Energy · Policy · Software · Briefing; search icon (Ghost search).
+Masthead: date line (UI 500 13 px) · "Circuit Weekly" Headlines 600 clamp(36px, 5vw, 64px) centred · "Subscribe" signal button; section bar below on a 1 px rule: Chips · Energy · Policy · Software · Briefing; search icon (Ghost search).
 
 ### Hero
 | Element | Copy | Font / size | Leading / tracking | Colour | Position | Motion |
@@ -49,7 +49,7 @@ Masthead: date line (UI 500 12 px caps) · "Circuit Weekly" Headlines 600 clamp(
 Column rules: 1 px `--rule` between column groups.
 
 ### Sections
-Section blocks (one per tag): label in UI 600 13 px caps signal, 4 stories in a row; the newsletter box after the second section (one field, visible label, Ghost Portal); footer with masthead credits and corrections policy.
+Section blocks (one per tag): linked section name in UI 600 15 px signal, 4 stories in a row; the newsletter box after the second section (one field, visible label, Ghost Portal); footer with masthead credits and corrections policy.
 **Article:** headline 48 px, dek, byline, date; body 20 px/1.6 at 66ch; pull quotes italic 30 px with a top rule; sidenotes in the right margin ≥ 1280 px, numbered footnotes below that; the paid briefing block replaced by a sign-up box for non-members.
 
 ### Motion

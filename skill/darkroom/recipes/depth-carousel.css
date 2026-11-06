@@ -1,6 +1,6 @@
 /* Pairs with depth-carousel.js. Without JS (no .dc-ready): a plain horizontal scroll row. With JS: slots in depth. */
 .dc { --dc-stage: #e9e6df; --dc-dur: 700ms; --dc-ease: cubic-bezier(.22, 1, .36, 1); position: relative; background: var(--dc-stage);
-  transition: background-color 900ms ease; overflow: hidden; padding: 48px 0 88px; }
+  transition: background-color 900ms ease; overflow: hidden; padding: 48px 0 96px; }
 .dc-track { display: flex; gap: 24px; overflow-x: auto; list-style: none; margin: 0; padding: 0 24px; scroll-snap-type: x mandatory; }
 .dc-item { flex: 0 0 min(70vw, 420px); scroll-snap-align: center; margin: 0; text-align: center; }
 .dc-item img { width: 100%; height: auto; display: block; }

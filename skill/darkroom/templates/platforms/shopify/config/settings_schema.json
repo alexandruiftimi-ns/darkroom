@@ -10,13 +10,13 @@
   {
     "name": "Colours",
     "settings": [
-      { "type": "color", "id": "color_ground", "label": "Background (about 60 %)", "default": "#f4f1ec" },
-      { "type": "color", "id": "color_surface", "label": "Surface", "default": "#ebe6de" },
-      { "type": "color", "id": "color_ink", "label": "Text (about 30 %)", "default": "#1b1a18" },
-      { "type": "color", "id": "color_ink_2", "label": "Secondary text", "default": "#5d5850" },
-      { "type": "color", "id": "color_accent", "label": "Accent: buttons only (about 10 %)", "default": "#8a3b12" },
+      { "type": "color", "id": "color_ground", "label": "Background (about 60 %)", "default": "#f1f3f5" },
+      { "type": "color", "id": "color_surface", "label": "Surface", "default": "#e3e7ea" },
+      { "type": "color", "id": "color_ink", "label": "Text (about 30 %)", "default": "#15191d" },
+      { "type": "color", "id": "color_ink_2", "label": "Secondary text", "default": "#4d5862" },
+      { "type": "color", "id": "color_accent", "label": "Accent: buttons only (about 10 %)", "default": "#1f5a8a" },
       { "type": "color", "id": "color_accent_ink", "label": "Text on accent", "default": "#ffffff" },
-      { "type": "color", "id": "color_line", "label": "Lines", "default": "#d6cfc4" }
+      { "type": "color", "id": "color_line", "label": "Lines", "default": "#cbd2d8" }
     ]
   },
   {

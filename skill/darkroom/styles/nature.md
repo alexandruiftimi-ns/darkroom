@@ -20,7 +20,7 @@ Location photography at a named time of day and season; textures (wood, stone, w
 Signature: slow multi-layer parallax of landscape (foreground/mid/sky, 4–16 px), gentle crossfades between seasons. Nothing fast.
 
 ## Switches
-eyebrow SPARING · tracked-caps SPARING · index-numerals OFF · hairlines OFF · cards SPARING · glass OFF · gradients SPARING (sky only) · mono-labels SPARING (coordinates/altitudes if real) · centred-layout SPARING · marquee OFF · custom-cursor OFF · full-bleed-imagery ON · script-lettering OFF
+eyebrow OFF · tracked-caps OFF · index-numerals OFF · hairlines OFF · cards SPARING · glass OFF · gradients SPARING (sky only) · mono-labels SPARING (coordinates/altitudes if real) · centred-layout SPARING · marquee OFF · custom-cursor OFF · full-bleed-imagery ON · script-lettering OFF
 
 ## Must-have
 Real sustainability claims only (EU EmpCo rules on green claims); accessibility of maps; heavy image optimisation.

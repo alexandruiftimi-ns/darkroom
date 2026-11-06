@@ -40,7 +40,7 @@ Ask only when it changes the user's effort (e.g. they must create a Shopify deve
 |---|---|---|
 | Structure | `darkroom platform check` | `darkroom platform check` + the platform's own validator (Theme Check, gscan, `php -l`, a Playground run) |
 | Captures | home page + the page that earns money (product for shops; pricing, booking or contact for services): desktop-1440 + mobile-390, reduced motion | every template: desktop-1440, tablet-1024, mobile-390, motion + reduced motion |
-| Audit | those two pages | every template |
+| Hard rules | `audit --quick` on those two pages | `audit --quick` on every template |
 | States | none | hover/focus on the main action, menu open on phone, cart with an item (shops) |
 
 Say which one ran in the handoff. A full check on a large site costs real time and tokens: that is why the user picks it. Never claim a template is checked when only the quick pages were captured. Quick limits the checking, not the building: every page in scope is built either way.

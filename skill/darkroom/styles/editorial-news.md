@@ -20,7 +20,7 @@ Real photojournalism with captions and credits; charts that state one finding (o
 Almost none. Sticky headers, progress bars on long reads; scrollytelling only for special features.
 
 ## Switches
-eyebrow ON (section kickers carry information) · tracked-caps SPARING · index-numerals SPARING (lists, rankings) · hairlines ON (column rules) · cards SPARING · glass OFF · gradients OFF · mono-labels OFF · centred-layout OFF · marquee OFF (tickers only for real live data) · custom-cursor OFF · full-bleed-imagery SPARING · script-lettering OFF
+eyebrow OFF · tracked-caps OFF · index-numerals SPARING (lists, rankings) · hairlines ON (column rules) · cards SPARING · glass OFF · gradients OFF · mono-labels OFF · centred-layout OFF · marquee OFF (tickers only for real live data) · custom-cursor OFF · full-bleed-imagery SPARING · script-lettering OFF
 
 ## Must-have
 Dates, bylines, corrections policy, accessible tables, ad slots that don't shift layout (CLS), AI-generated images labelled.

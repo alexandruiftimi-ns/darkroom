@@ -20,7 +20,7 @@ Night cities, rain, reflections, practical neon, haze, palm/skyline silhouettes,
 Signature: light sweep, route/path drawing, HUD element appear tied to scene; glitch/chromatic aberration only on media, briefly. No constant flicker (WCAG 2.3.1).
 
 ## Switches
-eyebrow ON (title-card) · tracked-caps ON (short) · index-numerals ON (chapter/progress) · hairlines ON · cards SPARING (HUD panels only) · glass SPARING (one HUD style) · gradients SPARING (inside media) · mono-labels SPARING (real data) · centred-layout SPARING · marquee OFF · custom-cursor SPARING · full-bleed-imagery ON · script-lettering SPARING (neon signage inside art only)
+eyebrow OFF · tracked-caps OFF · index-numerals ON (chapter/progress) · hairlines ON · cards SPARING (HUD panels only) · glass SPARING (one HUD style) · gradients SPARING (inside media) · mono-labels SPARING (real data) · centred-layout SPARING · marquee OFF · custom-cursor SPARING · full-bleed-imagery ON · script-lettering SPARING (neon signage inside art only)
 
 ## Must-have
 Contrast of small text over glowing media; reduced-motion removes flicker/glitch; HUD readable on mobile or removed.

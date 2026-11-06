@@ -4,7 +4,7 @@ Not legal advice; a design-and-build checklist that catches what websites most o
 
 ## Run
 
-1. `node <skill>/scripts/darkroom.mjs audit <url>` — reuse its a11y, third-party-request and price findings.
+1. Reuse the findings of the last full audit if the user ran one (`/darkroom audit`); otherwise read the page for third-party requests and prices, and say the full audit was not run.
 2. Walk the checklist below against the built pages; mark each PASS / FAIL / N/A with evidence (selector, screenshot, URL).
 
 ## Checklist

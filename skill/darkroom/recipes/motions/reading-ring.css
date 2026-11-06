@@ -3,8 +3,8 @@
    Use: articles, case studies, long product stories · Visitor: scroll inside
    Markup: put the snippet in demo.html#reading-ring inside <div data-dm="reading-ring">…</div>.
    Tokens: --dm-a, --dm-b, --dm-c (accents), --dm-ink, --dm-bg, --dm-muted, --dm-dur (1 = normal speed). Set them from the bible. */
-[data-dm="reading-ring"] .sc{position:absolute;inset:0;overflow:auto;padding:24px 70px 24px 24px;scrollbar-width:thin}
-[data-dm="reading-ring"] p{color:#cfcbc2;font-size:14px;line-height:1.6;margin:0 0 14px}
+[data-dm="reading-ring"] .sc{position:absolute;inset:0;overflow:auto;padding:24px 64px 24px 24px;scrollbar-width:thin}
+[data-dm="reading-ring"] p{color:#cfcbc2;font-size:14px;line-height:1.6;margin:0 0 16px}
 [data-dm="reading-ring"] .ring{position:absolute;bottom:12px;right:14px;width:46px;height:46px;display:grid;place-items:center}
 [data-dm="reading-ring"] svg{position:absolute;inset:0;transform:rotate(-90deg)}
 [data-dm="reading-ring"] circle{fill:none;stroke-width:3}[data-dm="reading-ring"] .bg{stroke:#ffffff1a}[data-dm="reading-ring"] .fg{stroke:var(--dm-a);stroke-dasharray:1;stroke-dashoffset:calc(1 - var(--p,0));stroke-linecap:round}

@@ -8,6 +8,7 @@ import { VIEWPORTS, contextFor, launch, settle, mkdirp, toolVersions } from './b
 import { dismissConsent } from './consent.mjs';
 import { resolveTarget } from './serve.mjs';
 import { grabAsync, seamScore, SEAM_THRESHOLD } from './mediakit.mjs';
+import { SPACE_SCALE, probeHard, loadingPass, logBuild, sameAs } from './hardrules.mjs';
 
 // ---------- check registry (docs and tests read this; keep it the single source of severity) ----------
 export const CHECKS = [
@@ -32,23 +33,41 @@ export const CHECKS = [
   { id: 'motion-budget', sev: 'high', basis: 'heuristic', what: 'default motion, desktop: the page scrolled a screen at a time; at each rest, the things that move by themselves in view (looping CSS or Web animations grouped per component, playing videos, canvases whose pixels change at rest): more than 3 in one screen medium, more than 5 high', limits: 'hover, cursor and scroll-linked effects are not counted (they move only when the visitor acts), nor entrances that finish; loops are grouped by [data-motion], the outermost svg, or the animation name; motion inside [data-motion-allow] (asked for by the user) is reported as info' },
   { id: 'glass-caption', sev: 'medium', basis: 'heuristic', what: 'the same frosted caption card (backdrop blur, 3+ words) repeated in 3 or more sections: an AI-film tell; one fixed card as a reading anchor is fine', limits: 'backdrop-filter blur only; cards inside one section (a grid) count once' },
   { id: 'phone-gate', sev: 'high', basis: 'heuristic', what: 'phone view (390 px) shows a gate instead of the page ("best viewed on desktop", "rotate your device", "not available on mobile")', limits: 'English, German, French and Spanish phrases; a gate drawn as an image is not detected' },
-  { id: 'gradient-text', sev: 'medium', basis: 'measured', what: 'text filled with a gradient (background-clip: text), from the first run', limits: 'computed styles only; gradient text drawn in SVG or canvas is not seen' },
+  { id: 'gradient-text', sev: 'high', basis: 'measured', what: 'text filled with a gradient (background-clip: text), from the first run', limits: 'computed styles only; gradient text drawn in SVG or canvas is not seen' },
   { id: 'ai-gradient', sev: 'high', basis: 'heuristic', what: 'the purple-to-blue / pink-to-violet ramp on text or on a surface of 2 % of the viewport or more (two saturated stops between 190° and 345°, 35° apart, one of them purple); keepable only for a brand whose own colours these are', limits: 'CSS gradients only; gradients inside images or video are not seen' },
-  { id: 'card-stripe', sev: 'medium', basis: 'heuristic', what: 'a card (fill, shadow or radius, 3+ words) with one thick (3 px+) saturated border side and hairline or no others, from the first card', limits: 'blockquote, aside and list items are exempt; a stripe drawn with a pseudo-element or box-shadow is not seen' },
-  { id: 'eyebrow', sev: 'medium', basis: 'heuristic', what: 'small (≤ 15.5 px) 1–6 word label in capitals, tracked (≥ 0.06 em) or a pill, right above an h1–h3, from the first one', limits: 'the label must be the previous sibling of the heading or of its wrapper; time, figcaption, label, links and labels holding a number (a fact) are exempt' },
-  { id: 'accent-word', sev: 'medium', basis: 'heuristic', what: 'one word or phrase in an h1/h2 set apart by italic, another face, another colour or gradient: once in the hero h1 low, in any other heading or twice medium', limits: 'span, em, i, strong, b and mark children covering under 60 % of the heading' },
+  { id: 'card-stripe', sev: 'high', basis: 'heuristic', what: 'a card (fill, shadow or radius, 3+ words) with one thick (3 px+) saturated border side and hairline or no others, from the first card', limits: 'blockquote, aside and list items are exempt; a stripe drawn with a pseudo-element or box-shadow is not seen' },
+  { id: 'eyebrow', sev: 'high', basis: 'heuristic', what: 'small (≤ 15.5 px) 1–6 word label in capitals, tracked (over 0.03 em) or a pill, right above an h1–h3, from the first one', limits: 'the label must be the previous sibling of the heading or of its wrapper; time, figcaption, label and links are exempt; a number passes only as a fact (a date, a year, a price, a time, a unit), never as a count such as 01 / 05' },
+  { id: 'accent-word', sev: 'high', basis: 'heuristic', what: 'one word or phrase in an h1/h2 set apart by italic, another face, another colour or gradient: high from the first italic word anywhere, and for any other treatment outside the hero; one coloured word in the hero h1 is low', limits: 'span, em, i, strong, b and mark children covering under 60 % of the heading' },
   { id: 'emoji-icon', sev: 'high', basis: 'heuristic', what: 'emoji used as icons (a short leaf that is an emoji, or one opening a heading, list item, link or button), from the first one', limits: 'emoji-presentation characters only; ©, ® and arrows are not counted' },
   { id: 'fake-chrome', sev: 'high', basis: 'heuristic', what: 'a drawn browser or OS window: three small round dots in a row, red then yellow then green', limits: 'dots must be sibling elements with a background colour; an image of a window is not seen' },
   { id: 'placeholder', sev: 'high', basis: 'heuristic', what: 'placeholder copy left live (lorem ipsum, John/Jane Doe, Acme Corp, Your Company, Logo Ipsum, [Headline]); a © year older than last year is low', limits: 'English placeholders only' },
-  { id: 'template-punct', sev: 'medium', basis: 'heuristic', what: 'meta strings joined by 2+ middle dots or bullets, and link or button labels with an arrow glued on (→ ↗ › »), from the first one', limits: 'marquees and tickers are exempt; one dot in a byline is not counted' },
-  { id: 'stock-cta', sev: 'medium', basis: 'heuristic', what: 'link or button labels that name no action (Learn more, Get started, Read more, Discover more, Book a demo, Explore, Click here): one low, two or more medium', limits: 'English only; exact label match' },
+  { id: 'template-punct', sev: 'high', basis: 'heuristic', what: 'meta strings joined by 2+ middle dots or bullets, and link or button labels with an arrow glued on (→ ↗ › »), from the first one', limits: 'marquees and tickers are exempt; one dot in a byline is not counted' },
+  { id: 'stock-cta', sev: 'high', basis: 'heuristic', what: 'link or button labels that name no action (Learn more, Get started, Read more, Discover more, Book a demo, Explore, Click here): one low, two or more high', limits: 'English only; exact label match' },
   { id: 'css-motion', sev: 'high', basis: 'measured', what: 'same-origin CSS with a transition on "all" (with a duration) or @keyframes that animate width, height, top, left, right, bottom or margins; cannot be kept', limits: 'cross-origin stylesheets and inline style attributes are not read; JS-driven layout animation is not seen' },
   { id: 'proof', sev: 'high', basis: 'manual', what: 'proof-shaped claims with no source in the markup ("10,000+ teams", "99.9 % uptime", "3× faster", "Trusted by", star rows, "— Sarah K." quotes): an invented one is removed, a real one from the brief gets data-source, a cite or a link; cannot be kept', limits: 'English patterns; text inside [data-source], cite, or a blockquote/figure with a cite is treated as sourced' },
+  { id: 'tracked-caps', sev: 'high', basis: 'heuristic', what: 'small text (≤ 15.5 px) in capitals or small caps anywhere: labels, captions, table heads, tags and nav links are the body face, sentence case, untracked', limits: 'wordmarks (a class naming logo, brand or wordmark, data-wordmark, or the home link in the header) are exempt; a control on a page whose h1 is itself uppercase is exempt; acronyms typed in capitals are not counted' },
+  { id: 'card-nest', sev: 'high', basis: 'heuristic', what: 'a card inside a card: two nested rounded boxes with a fill, border or shadow, the inner one holding 3+ words', limits: 'boxes under 120×60 px, full-width bands, links and buttons are not counted' },
+  { id: 'fake-send', sev: 'high', basis: 'heuristic', what: 'a form with no action whose script stops the submit and shows a success message with no request behind it; cannot be kept', limits: 'reads inline and same-origin scripts; a page that calls fetch for something else passes' },
+  { id: 'email-close', sev: 'high', basis: 'heuristic', what: 'an email sign-up in the footer or last section of a page whose job is not subscribe, join, attend, listen or visit', limits: 'needs "job" in the bible; a form with 3+ fields, a message box, or a button that books, orders, enquires or starts is not a sign-up; a shop counts: footer email only when the user asked' },
+  { id: 'stock-palette', sev: 'high', basis: 'heuristic', what: 'the default "premium" looks: near-black + ivory + gold, or cream + terracotta + a serif', limits: 'reads the body colours, the first coloured button or link, and the h1 face; a page painted section by section may read as white' },
+  { id: 'stock-font', sev: 'high', basis: 'heuristic', what: 'the h1 set in Inter, Roboto, Open Sans, Poppins, Lato, Arial, Helvetica or a system face', limits: 'first family of the h1 only; such a face as quiet text under a chosen display face is fine' },
+  { id: 'sameness', sev: 'high', basis: 'heuristic', what: 'the page matches one of your last 3 Darkroom projects on palette, or on 4 of 7 axes (palette, display face, text face, hero composition, ending, section count, style pack)', limits: 'compares finished audits on this computer (~/.darkroom/builds.json), never the same project; projects never audited since 1.9 are unknown to it' },
+  { id: 'spacing-scale', sev: 'high', basis: 'measured', what: "padding, margin and gap in the stylesheets written off the scale (2, 4, 8, 12, 16, 24, 32, 40, 48, 64, 80, 96, 120, 144, 176 px, or the page's own --space-* tokens). Up to 3 small nudges of 6 px or less are low; a raw value where a token exists is medium", limits: 'same-origin stylesheets, px and rem; values through var(), em, % and vw are not read; WordPress core and plugin styles are skipped' },
+  { id: 'spacing-drift', sev: 'high', basis: 'measured', what: 'the same kind of gap rendered at nearly the same size (3 to 6 px apart): heading to line, line to button, button to button, section padding, repeated items, button heights', limits: 'siblings in normal flow at rest; a difference over 6 px is taken as a decision; desktop and phone' },
+  { id: 'align-edge', sev: 'high', basis: 'measured', what: 'a near miss: text and pictures in one section, section headings, nav and footer, or items in a row that start 2 to 8 px apart', limits: 'left-aligned, untransformed blocks at rest; a larger offset is taken as a decision; optical alignment of letter shapes is not judged' },
+  { id: 'control-height', sev: 'high', basis: 'measured', what: 'a field and the button beside it differ in height by more than 1 px', limits: 'inputs and selects with a button at the same height in the form or parent' },
+  { id: 'label-wrap', sev: 'high', basis: 'measured', what: 'a button label or nav link breaks onto two lines', limits: 'desktop, the 1280 pass and phone' },
+  { id: 'crowded-head', sev: 'high', basis: 'heuristic', what: 'a heading closer to what comes before it than to what it heads (space above under 0.75× the space below, and 12 px or more short)', limits: 'h2 to h4 in flow, with siblings on both sides; heads in a box under 200 px tall are exempt' },
+  { id: 'cramped-box', sev: 'high', basis: 'heuristic', what: 'text in a filled or side-bordered box closer than max(8 px, 0.5 em) to its side or max(4 px, 0.3 em) to its top, or running text within 8 px of the phone edge', limits: 'boxes over 100×30 px whose own text node is measured; links and buttons are not counted' },
+  { id: 'sticky-clash', sev: 'high', basis: 'measured', what: 'two sticky bars at the top of the page: they cover each other', limits: 'sticky elements under 200 px tall at top 0' },
+  { id: 'hero-fit', sev: 'high', basis: 'measured', what: 'the headline, its line or the action falls below the fold at 1280 × 800', limits: 'the section holding the h1; a hero with no paragraph or button is judged on what it has' },
+  { id: 'wide-cap', sev: 'high', basis: 'measured', what: 'at 1920 px, text within 120 px of the screen edge (no capped container) or a paragraph over about 85 characters a line', limits: 'left-aligned h1, h2 and p in flow; pictures may bleed; about 0.5 em per character' },
+  { id: 'skeleton', sev: 'high', basis: 'measured', what: 'while pictures, film frames and data are held back: a picture with no box or nothing standing in its place, a film canvas blank, data that arrives into a hole, or text that jumps (shift over 0.1). Also a video with no poster, a first-screen picture on lazy load, pictures with no width and height', limits: 'one desktop load with every image, media and fetch request held about 1 s; a colour field, a picture or [data-skeleton] counts as standing in; a shift of 0.1 is this worst case, not a field vital' },
   { id: 'slop-count', sev: 'high', basis: 'heuristic', what: '3 or more different generated-design tells on one page (the tell checks above, plus glass-caption and copy); tells listed in the bible keepTells are not counted', limits: 'counts kinds of tell, not how bad each is; fewer than 4 is reported as info' },
   { id: 'film-headline', sev: 'medium', basis: 'heuristic', what: 'first screen only: the h1 sits over full-bleed media (video, canvas or an image covering half the screen) and is smaller than 48 px desktop / 32 px phone', limits: 'later chapters may use subtitle-size text by design; media is found by size and overlap, not by looking at the picture' },
   { id: 'first-scroll-weight', sev: 'high', basis: 'measured', what: 'bytes on the wire before the visitor scrolls (desktop, default motion, ~2 s after load, empty cache): > 4 MB medium, > 8 MB high', limits: 'Chromium network counters; media still streaming after 2 s is counted only up to then; a page served locally has no compression from a CDN' },
   { id: 'chain-seam', sev: 'medium', basis: 'measured', what: 'chained clips (<video data-chain="name">, in page order): the last frame of one clip and the first frame of the next differ by more than 6 % (mean absolute difference): the film jumps at the join', limits: 'needs ffmpeg; one frame at each end compared at 96×54; frame sequences are checked when joined (darkroom media chain), not here' },
-  { id: 'copy', sev: 'medium', basis: 'heuristic', what: 'genre words (unlock, seamless, ...)', limits: 'English only' },
+  { id: 'copy', sev: 'high', basis: 'heuristic', what: 'genre words (unlock, seamless, robust, empower, ...)', limits: 'English only' },
   { id: 'urgency', sev: 'high', basis: 'heuristic', what: 'urgency / pressure copy', limits: 'English only; a real dated deadline is legitimate' },
   { id: 'page-length', sev: 'high', basis: 'heuristic', what: '> 1200 visible words; skipped for surface "read"', limits: '' },
   { id: 'colour', sev: 'medium', basis: 'heuristic', what: 'UI hue families / accent share vs colour mode', limits: 'imagery is hidden before measuring; computed colours only' },
@@ -67,6 +86,9 @@ export const CHECKS = [
   { id: 'console', sev: 'high', basis: 'measured', what: 'console errors / page errors / failed requests', limits: '' },
   { id: 'config', sev: 'medium', basis: 'measured', what: 'settings document missing, unreadable, or without a darkroom block', limits: '' },
 ];
+
+// What every /darkroom build checks while it works (audit --quick). The rest runs when the user types /darkroom audit.
+export const QUICK = new Set(['gradient-text', 'ai-gradient', 'card-stripe', 'eyebrow', 'accent-word', 'emoji-icon', 'fake-chrome', 'placeholder', 'template-punct', 'stock-cta', 'css-motion', 'proof', 'copy', 'tracked-caps', 'card-nest', 'fake-send', 'email-close', 'stock-palette', 'stock-font', 'sameness', 'spacing-scale', 'spacing-drift', 'align-edge', 'control-height', 'label-wrap', 'crowded-head', 'cramped-box', 'sticky-clash', 'hero-fit', 'wide-cap', 'skeleton', 'slop-count', 'overflow', 'headings', 'console']);
 
 // ---------- in-page probe (must stay self-contained: it is serialised into the page) ----------
 function probeDom({ maxZones, wordBudgets, disclosure, surface }) {
@@ -296,7 +318,7 @@ function probeDom({ maxZones, wordBudgets, disclosure, surface }) {
   const phoneGate = (bodyText.match(/(best (viewed|experienced|enjoyed) on (a )?(desktop|computer|laptop|larger screen)|(please )?(rotate|turn) your (device|phone|screen)|(only|not) available on (mobile|desktop)|desktop only|open (this|it) on (a )?(desktop|computer)|switch to (a )?desktop|auf dem desktop|sur (un )?ordinateur|en (un )?ordenador)/i) ?? [null])[0];
   const norm = (t) => t.replace(/\s+/g, ' ').trim().toLowerCase();
   const prices = bodyText.match(/(?:[€$£]\s?\d[\d.,]*|\d[\d.,]*\s?(?:€|EUR|USD|GBP|\$|£))/g) ?? [];
-  const genre = [...new Set((bodyText.match(/\b(unlock|seamless(ly)?|supercharge|elevate|effortless(ly)?|cutting[- ]edge|next[- ]gen|synergy|revolutioni[sz]e|game[- ]chang(er|ing)|world[- ]class|all[- ]in[- ]one)\b/gi) ?? []).map((w) => w.toLowerCase()))];
+  const genre = [...new Set((bodyText.match(/\b(unlock|seamless(ly)?|supercharge|elevate|effortless(ly)?|cutting[- ]edge|next[- ]gen|synergy|revolutioni[sz]e|robust|empower(s|ing)?|game[- ]chang(er|ing)|world[- ]class|all[- ]in[- ]one)\b/gi) ?? []).map((w) => w.toLowerCase()))];
   const urgency = bodyText.match(/(limited (time )?offer|ends (soon|today|tonight)|only \d+ left|hurry|last chance|act now|!!+)/gi) ?? [];
 
   // generated-design tells (references/tells.md): each alone can be a choice; four or more together read as nobody chose
@@ -358,12 +380,13 @@ function probeDom({ maxZones, wordBudgets, disclosure, surface }) {
       let p = h.previousElementSibling ?? (h.parentElement && h.parentElement.firstElementChild === h ? h.parentElement.previousElementSibling : null);
       if (!p || !vis(p) || /^(TIME|FIGCAPTION|LABEL|LEGEND|NAV|IMG|PICTURE|VIDEO|SVG|BUTTON|INPUT|FORM)$/.test(p.tagName) || p.querySelector('h1,h2,h3,img,svg,video,input,a[href]:not([href^="#"])')) continue;
       const t = (p.innerText || '').replace(/\s+/g, ' ').trim(); const n = count(t);
-      if (n < 1 || n > 6 || /\d/.test(t)) continue; // a label with a number (a date, a price, a step that is real) carries a fact
-      const ps = getComputedStyle(p); const fs = parseFloat(ps.fontSize);
+      if (n < 1 || n > 6 || /\b(19|20)\d{2}\b|[€$£]\s?\d|\d\s?(€|lei|ron|am|pm|h|min|km|m²|kg|g|ml|l|°c?|%)\b|\d{1,2}[:.]\d{2}|\b\d{1,2}\s+(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\b|\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+\d{1,2}\b/i.test(t)) continue; // a real fact (a year, a price, a time, a unit) passes; 01 / 05 does not
+      const leaf = [...p.querySelectorAll('*')].find((x) => !x.children.length && (x.textContent || '').trim()) ?? p; // the label's own type, also when spans carry it
+      const ps = getComputedStyle(leaf); const fs = parseFloat(ps.fontSize);
       const caps = ps.textTransform === 'uppercase' || ps.fontVariantCaps.includes('small-caps') || (/[A-Z]{3}/.test(t) && t === t.toUpperCase());
-      const tracked = parseFloat(ps.letterSpacing) / fs >= 0.06;
+      const tracked = parseFloat(ps.letterSpacing) / fs > 0.03;
       const pr = p.getBoundingClientRect();
-      const pill = parseFloat(ps.borderTopLeftRadius) >= pr.height / 2 - 1 && (rgbOf(ps.backgroundColor) || parseFloat(ps.borderTopWidth) > 0) && pr.width < 0.5 * innerWidth;
+      const bs0 = getComputedStyle(p); const pill = parseFloat(bs0.borderTopLeftRadius) >= pr.height / 2 - 1 && (rgbOf(bs0.backgroundColor) || parseFloat(bs0.borderTopWidth) > 0) && pr.width < 0.5 * innerWidth;
       if (fs <= 15.5 && (caps || tracked || pill)) { out.eyebrow.push(t.slice(0, 30)); if (h.tagName === 'H1' && pill) out.pillOverH1 = t.slice(0, 30); }
     }
     // the accent word: one italic, recoloured or other-face word inside an otherwise plain heading
@@ -376,7 +399,7 @@ function probeDom({ maxZones, wordBudgets, disclosure, surface }) {
         const xc = rgbOf(xs.color);
         return xs.fontStyle !== hs.fontStyle || xs.fontFamily !== hs.fontFamily || (hc && xc && Math.hypot(hc[0] - xc[0], hc[1] - xc[1], hc[2] - xc[2]) > 60) || (xs.backgroundImage.includes('gradient') && xs.backgroundClip === 'text');
       });
-      if (odd) out.accentWord.push({ h1: h.tagName === 'H1', text: `${(odd.innerText || '').trim().slice(0, 20)} in "${short(h)}"` });
+      if (odd) out.accentWord.push({ h1: h.tagName === 'H1', italic: getComputedStyle(odd).fontStyle !== hs.fontStyle, text: `${(odd.innerText || '').trim().slice(0, 20)} in "${short(h)}"` });
     }
     // fake browser or OS window: three small round dots in red, yellow and green
     for (const el of els) {
@@ -748,41 +771,88 @@ const toLab = ([r, g, b]) => {
 export const deltaE = (a, b) => { const [p, q] = [toLab(a), toLab(b)]; return Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - q[2]); };
 const hex = (c) => '#' + c.map((v) => v.toString(16).padStart(2, '0')).join('');
 
-// Generated-design tells (references/tells.md), held as strictly as Hallmark where that is the right design call.
-// Floor (high, cannot be kept): placeholder copy, unsourced proof, reflex CSS motion. Strong tells (high, the bible may
-// keep them with a reason): the purple-blue ramp, emoji icons, drawn browser windows. Reflexes (medium from the first
-// one, keepable): gradient text, card stripes, eyebrows, template punctuation, an accent word outside the hero, stock
-// labels from the second. Three or more kinds on one page: slop-count high. Kept tells ("keepTells") report as info.
-const FLOOR_TELLS = new Set(['placeholder', 'proof', 'css-motion']);
-function tellFindings(desk, s, add) {
+// Hard rules (references/tells.md). Every tell is high. Floor rules can never be lifted; the rest only by the user's own
+// words, on the record as "id: user: <what they said>" in the bible's keepTells. A bare id, or Claude's own reason, keeps nothing.
+const FLOOR_TELLS = new Set(['placeholder', 'proof', 'css-motion', 'fake-send']);
+export function keptByUser(list) {
+  const kept = new Map(); const refused = [];
+  for (const e of Array.isArray(list) ? list : []) {
+    const m = /^([a-z-]+)\s*:\s*user\s*:\s*(\S.*)$/is.exec(String(e).trim());
+    const id = String(e).split(':')[0].trim();
+    if (m && !FLOOR_TELLS.has(m[1])) kept.set(m[1], m[2].trim()); else refused.push(id);
+  }
+  return { kept, refused };
+}
+function tellFindings(desk, mob, wide, lap, loading, s, add, fp) {
   const t = desk.slop; if (!t) return;
-  const kept = new Set((Array.isArray(s.keepTells) ? s.keepTells : []).map(String).filter((k) => !FLOOR_TELLS.has(k)));
+  const { kept, refused } = keptByUser(s.keepTells);
+  if (refused.length) add('info', 'slop-count', `keepTells ignored for: ${[...new Set(refused)].join(', ')}. A rule is lifted only by the user's own words ("eyebrow: user: <what they said>"); floor rules never`);
   const seen = new Set();
   const tell = (sev, id, msg, data) => {
-    if (kept.has(id)) return add('info', id, `kept on purpose (bible keepTells): ${msg}`, data);
-    seen.add(id); add(sev, id, msg, data);
+    if (kept.has(id)) return add('info', id, `kept, the user said "${kept.get(id).slice(0, 80)}": ${msg}`, data);
+    if (sev === 'high') seen.add(id);
+    add(sev, id, msg, data);
   };
   const eg = (a) => [...new Set(a)].slice(0, 3).map((x) => `"${x}"`).join(', ');
   if (t.placeholder.length) tell('high', 'placeholder', `placeholder text left live: ${eg(t.placeholder)}. Real copy, or a marked TEMP slot named in the handoff`, t.placeholder);
   if (t.staleYear) add('low', 'placeholder', `copyright year ${t.staleYear}: nobody updated the footer`);
   if (t.proof.length) tell('high', 'proof', `proof with no source on the page: ${eg(t.proof)}. Invented numbers, logos and quotes never ship. A real one from the brief gets its source in the markup (data-source="...", a cite, or a link) and then passes`, t.proof);
   if (t.cssMotion?.length) tell('high', 'css-motion', `${t.cssMotion.length} reflex animation rule(s): ${t.cssMotion.slice(0, 3).join('; ')}. List the properties; move with transform and opacity (layout animation stutters on phones)`, t.cssMotion);
-  if (t.aiGradient.length) tell('high', 'ai-gradient', `purple-to-blue / pink-to-violet gradient on ${eg(t.aiGradient)}: the default "AI" ramp, the most recognised generated look. Take the colour from the subject, or one hue with depth from lightness. Only a brand whose own colours these are keeps it (keepTells, with the reason)`, t.aiGradient);
-  if (t.emoji.length) tell('high', 'emoji-icon', `${t.emoji.length} emoji used as icons (${eg(t.emoji)}): one icon set, custom SVG, or type. Only a page whose voice is emoji (a toy, a kids brand that asks for it) keeps them`, t.emoji);
+  if (t.aiGradient.length) tell('high', 'ai-gradient', `purple-to-blue / pink-to-violet gradient on ${eg(t.aiGradient)}: the default "AI" ramp, the most recognised generated look. Take the colour from the subject, or one hue with depth from lightness`, t.aiGradient);
+  if (t.emoji.length) tell('high', 'emoji-icon', `${t.emoji.length} emoji used as icons (${eg(t.emoji)}): one icon set, custom SVG, or type`, t.emoji);
   if (t.fakeChrome) tell('high', 'fake-chrome', `${t.fakeChrome} drawn browser / OS window (red, yellow and green dots): show the real screenshot in a plain frame, or no chrome`);
-  if (t.gradientText.length) tell('medium', 'gradient-text', `${t.gradientText.length} gradient-filled text run(s), e.g. ${eg(t.gradientText)}: set it in solid ink and let weight, size or the face carry it`, t.gradientText);
-  if (t.cardStripe.length) tell('medium', 'card-stripe', `${t.cardStripe.length} card(s) with one thick coloured side stripe, e.g. ${eg(t.cardStripe)}: the most specific generated tell. Hairline or no border; vary the cards by size and content`, t.cardStripe);
-  if (t.eyebrow.length) tell('medium', 'eyebrow', `${t.eyebrow.length} heading(s) with a small capitals / tracked / pill label above (${eg(t.eyebrow)}${t.pillOverH1 ? '; a pill badge over the h1' : ''}): it names what comes next instead of adding a fact. Delete it and open the section another way (references/tells.md, "Instead of the eyebrow"); a label with a date, price or place passes`, t.eyebrow);
+  if (t.gradientText.length) tell('high', 'gradient-text', `${t.gradientText.length} gradient-filled text run(s), e.g. ${eg(t.gradientText)}: set it in solid ink and let weight, size or the face carry it`, t.gradientText);
+  if (t.cardStripe.length) tell('high', 'card-stripe', `${t.cardStripe.length} card(s) with one thick coloured side stripe, e.g. ${eg(t.cardStripe)}: the most specific generated tell. Hairline or no border; vary the cards by size and content`, t.cardStripe);
+  if (t.eyebrow.length) tell('high', 'eyebrow', `${t.eyebrow.length} heading(s) with a small capitals / tracked / pill label above (${eg(t.eyebrow)}${t.pillOverH1 ? '; a pill badge over the h1' : ''}): it names what comes next instead of adding a fact. Delete it and open the section another way (references/tells.md, "Instead of the eyebrow")`, t.eyebrow);
   const aw = t.accentWord.map((a) => (typeof a === 'string' ? { h1: false, text: a } : a));
-  if (aw.length >= 2 || aw.some((a) => !a.h1)) tell('medium', 'accent-word', `${aw.length} heading(s) set one word apart (italic, another face or colour): ${eg(aw.map((a) => a.text))}. A heading is one style and one colour; the only exception is one such word in the hero headline`, aw.map((a) => a.text));
-  else if (aw.length) add('low', 'accent-word', `one word set apart in the hero headline: ${eg(aw.map((a) => a.text))}. Allowed once, as the page's voice; never repeat it below the hero`, aw.map((a) => a.text));
-  if (t.punct.length) tell('medium', 'template-punct', `${t.punct.length} template punctuation string(s) (${eg(t.punct)}): meta joined by dots, arrows glued to labels. Use line breaks, columns, or a verb as the label`, t.punct);
-  if (t.stockCta.length >= 2) tell('medium', 'stock-cta', `${t.stockCta.length} action labels that name no action (${eg(t.stockCta)}): say what happens ("Book a table", "See the menu")`, t.stockCta);
+  if (aw.length >= 2 || aw.some((a) => !a.h1 || a.italic)) tell('high', 'accent-word', `${aw.length} heading(s) set one word apart (italic, another face or colour): ${eg(aw.map((a) => a.text))}. A heading is one style and one colour; the only exception is one coloured word in the hero headline, never an italic one`, aw.map((a) => a.text));
+  else if (aw.length) add('low', 'accent-word', `one coloured word in the hero headline: ${eg(aw.map((a) => a.text))}. Allowed once; never repeat it below the hero`, aw.map((a) => a.text));
+  if (t.punct.length) tell('high', 'template-punct', `${t.punct.length} template punctuation string(s) (${eg(t.punct)}): meta joined by dots, arrows glued to labels. Use line breaks, columns, or a verb as the label`, t.punct);
+  if (t.stockCta.length >= 2) tell('high', 'stock-cta', `${t.stockCta.length} action labels that name no action (${eg(t.stockCta)}): say what happens ("Book a table", "See the menu")`, t.stockCta);
   else if (t.stockCta.length) add('low', 'stock-cta', `a stock action label: ${eg(t.stockCta)}. Better: say what happens`, t.stockCta);
-  if (desk.glassCaptions?.sections >= 3) seen.add('glass-caption');
-  if (desk.genre?.length) seen.add('copy');
-  if (seen.size >= 3) add('high', 'slop-count', `${seen.size} generated-design tells on one page (${[...seen].join(', ')}): together they read as "nobody chose this". Fix them, or, for a style tell the design truly chose, list it in the bible's keepTells with the reason; replace what goes with something owned: the subject's own picture, type, colour or layout (references/tells.md)`, [...seen]);
-  else if (seen.size) add('info', 'slop-count', `${seen.size} tell(s): ${[...seen].join(', ')} (3 or more together is high)`);
+  if (desk.genre?.length) tell('high', 'copy', `genre words: ${desk.genre.join(', ')}. Replace with a concrete fact`);
+  const hard = desk.hard; if (!hard) return;
+  const both = (pick) => [...new Set([...pick(hard), ...(mob.hard ? pick(mob.hard) : [])])];
+  const tracked = both((h) => h.tracked);
+  if (tracked.length) tell('high', 'tracked-caps', `${tracked.length} small label(s) in capitals (${eg(tracked)}): set them in the body face, sentence case, untracked, a step smaller. Only a wordmark stays in capitals`, tracked);
+  if (hard.nest.length) tell('high', 'card-nest', `${hard.nest.length} card(s) inside a card (${eg(hard.nest)}): lose one box; a hairline or space separates them`, hard.nest);
+  if (hard.fakeSend) tell('high', 'fake-send', 'a form stops its submit and shows a success message, and nothing sends it. Until it is wired, say "Nothing was sent; this form is not connected yet"');
+  if (hard.email) tell('high', 'email-close', `an email sign-up closes the page in ${hard.email.where} ("${hard.email.label}"), and the job${s.job ? ` is "${s.job}"` : " isn't set in the bible"}. End on what the visitor came to do (references/anatomy.md). Asked for by the user: keep it with their words`, hard.email);
+  if (hard.palette) tell('high', 'stock-palette', `${hard.palette}: the default "premium" look. Take the palette from the subject (its materials, place, printed things), or keep it with the user's words if the colours are theirs`, hard.palette);
+  if (hard.display) tell('high', 'stock-font', `the h1 is set in ${hard.display}: choose a display face that commits to this subject (Inter-class faces stay as quiet text only)`, hard.display);
+  const hits = fp ? sameAs(fp, { pack: s.pack }) : [];
+  if (hits.length) tell('high', 'sameness', `this page repeats your recent build ${hits.map((h) => `${h.name} (${h.axes.join(', ')})`).join('; ')}. Change at least the palette or the composition; two clients should never get one design`, hits);
+  const off = both((h) => h.scale.off), nudges = both((h) => h.scale.nudges), raw = both((h) => h.scale.raw);
+  if (off.length || nudges.length > 3) tell('high', 'spacing-scale', `${off.length + nudges.length} spacing value(s) off the scale, e.g. ${[...off, ...nudges].slice(0, 4).join('; ')}. Use a token: 4, 8, 12, 16, 24, 32, 40, 48, 64, 80, 96, 120, 144, 176 (references/craft.md, Spacing)`, [...off, ...nudges]);
+  else if (nudges.length) add('low', 'spacing-scale', `${nudges.length} optical nudge(s), under the limit of 3: ${nudges.join('; ')}`);
+  if (raw.length) add('medium', 'spacing-scale', `${raw.length} raw value(s) where a --space token exists, e.g. ${raw.slice(0, 3).join('; ')}: use var(--space-*)`, raw);
+  const drift = [...hard.drift, ...(mob.hard?.drift ?? [])];
+  if (drift.length) tell('high', 'spacing-drift', `${drift.length} near-identical gap(s) that should match: ${drift.slice(0, 4).map((d) => `${d.kind} ${d.a} and ${d.b} px${d.at ? ` (near "${d.at}")` : ''}`).join('; ')}. Pick one token per kind of gap`, drift);
+  const edges = [...hard.edges, ...(mob.hard?.edges ?? [])];
+  if (edges.length) tell('high', 'align-edge', `${edges.length} near-miss edge(s): ${edges.slice(0, 4).map((e) => `${e.where}: ${e.a} vs ${e.b}`).join('; ')}. Put them on one line`, edges);
+  const ctl = both((h) => h.controls); if (ctl.length) tell('high', 'control-height', `${ctl.join('; ')}: one shared height`, ctl);
+  const wrap = both((h) => h.wrap); if (lap?.wrap?.length) wrap.push(...lap.wrap);
+  if (wrap.length) tell('high', 'label-wrap', `${[...new Set(wrap)].length} button or nav label(s) on two lines (${eg(wrap)}): white-space: nowrap, or a shorter label`, wrap);
+  const crowd = both((h) => h.crowded); if (crowd.length) tell('high', 'crowded-head', `${crowd.length} heading(s) nearer what comes before them: ${crowd.slice(0, 3).join('; ')}. At least twice the space above a head as below it`, crowd);
+  const cramp = both((h) => h.cramped); if (cramp.length) tell('high', 'cramped-box', `${cramp.length} text box(es) too tight: ${cramp.slice(0, 3).join('; ')}`, cramp);
+  if (hard.sticky.length >= 2) tell('high', 'sticky-clash', `${hard.sticky.length} sticky bars at top 0 (${hard.sticky.slice(0, 3).join(', ')}): the second takes top: var(--bar-height)`, hard.sticky);
+  if (lap?.fit?.miss.length) tell('high', 'hero-fit', `at 1280 × 800 ${lap.fit.miss.join(', ')} fall(s) below the fold: pull the clamp down, tighten the leading`, lap.fit);
+  if (wide?.wide?.near.length || wide?.wide?.long.length) tell('high', 'wide-cap', `at 1920 px: ${[wide.wide.near.length ? `text near the edge (${wide.wide.near.join('; ')})` : '', wide.wide.long.length ? `lines too long (${wide.wide.long.join('; ')})` : ''].filter(Boolean).join(', ')}. Cap the container at 1360 to 1520 px and centre it; pictures may bleed`, wide.wide);
+  const l = hard.loading; const load = [];
+  if (l.lazyFirst.length) load.push(`first-screen picture on lazy load (${l.lazyFirst.join(', ')})`);
+  if (l.noSize.length) load.push(`pictures with no width and height (${l.noSize.join(', ')})`);
+  if (l.noPoster.length) load.push(`video with no poster (${l.noPoster.join(', ')})`);
+  if (loading) {
+    if (loading.collapsed.length) load.push(`pictures hold no box while loading (${loading.collapsed.slice(0, 3).join(', ')})`);
+    if (loading.holes.length) load.push(`${loading.holes.length} picture(s) show a hole while loading (${loading.holes.slice(0, 3).join(', ')}): tint the box or use a skeleton`);
+    if (loading.blankFilm.length) load.push(`the film stays blank until its frames arrive (${loading.blankFilm.join(', ')}): show the first frame or a skeleton`);
+    if (loading.heldData && loading.lateWords >= 20 && !loading.skeletons) load.push(`${loading.lateWords} words arrive by request with ${loading.spinner ? 'only a spinner' : 'nothing'} in their place: a skeleton in the shape of what is coming`);
+    if (loading.shift > 0.1) load.push(`the page jumps as things arrive (shift ${loading.shift}): reserve their space`);
+  }
+  if (load.length) tell('high', 'skeleton', `${load.join('; ')} (recipes/skeleton.css)`, { load, loading });
+  else if (loading) add('info', 'skeleton', `${loading.heldMedia} media and ${loading.heldData} data requests held back: nothing left a hole; shift ${loading.shift}`);
+  if (seen.size >= 3) add('high', 'slop-count', `${seen.size} hard rules broken on one page (${[...seen].join(', ')}): together they read as "nobody chose this". Replace what goes with something owned: the subject's own picture, type, colour or layout (references/tells.md)`, [...seen]);
+  else if (seen.size) add('info', 'slop-count', `${seen.size} hard rule(s) broken: ${[...seen].join(', ')} (3 or more together is flagged)`);
 }
 
 export function findings({ desk, mob, colour, motion, keyboard, contrast, ctx }) {
@@ -818,7 +888,6 @@ export function findings({ desk, mob, colour, motion, keyboard, contrast, ctx })
     if (desk.totalWords > 1200) add('high', 'page-length', `${desk.totalWords} words on page — brochure territory (landing ≤ ~900)`);
     else add('info', 'page-length', `${desk.totalWords} words on page`);
   } else add('info', 'page-length', `${desk.totalWords} words (surface "read": word budgets not applied)`);
-  if (desk.genre.length) add('medium', 'copy', `genre words: ${desk.genre.join(', ')} — replace with a concrete fact`);
   if (desk.urgency.length) add('high', 'urgency', `urgency/pressure copy: ${[...new Set(desk.urgency)].join(', ')} — only real, verifiable deadlines (UCPD, DSA Art. 25)`);
 
   const mode = ctx.mode ?? s.colorMode ?? 'disciplined';
@@ -915,7 +984,7 @@ export function findings({ desk, mob, colour, motion, keyboard, contrast, ctx })
   }
   if (desk.glassCaptions?.sections >= 3) add('medium', 'glass-caption', `the same frosted caption card (e.g. "${desk.glassCaptions.text}") repeats in ${desk.glassCaptions.sections} sections: it reads as a template. Vary the text treatment by chapter, or keep one fixed card as a reading anchor`, desk.glassCaptions);
   if (mob.phoneGate) add('high', 'phone-gate', `the phone view shows a gate ("${mob.phoneGate}") instead of the page: build the phone version (stacked chapters, stills instead of heavy scenes)`);
-  tellFindings(desk, s, add);
+  tellFindings(desk, mob, ctx.wide, ctx.lap, ctx.loading, s, add, desk.hard?.fp);
   for (const [label, d, floor] of [['desktop', desk, 48], ['mobile', mob, 32]]) {
     if (d.filmHeadline && d.filmHeadline.size < floor) add('medium', 'film-headline', `${label}: the first-screen h1 "${d.filmHeadline.text}" is ${d.filmHeadline.size} px over full-screen ${d.filmHeadline.over}: below the ${floor} px floor it loses to the picture. Later chapters may use smaller text`, d.filmHeadline, { viewport: label });
   }
@@ -950,7 +1019,7 @@ export function findings({ desk, mob, colour, motion, keyboard, contrast, ctx })
   if (errs.length) add('high', 'console', `${errs.length} console/page errors or failed requests`, errs.slice(0, 10));
   if (fav.length || (ctx.errors.length && !errs.length)) add('medium', 'console', 'no favicon (the browser requested one and got an error): add <link rel="icon"> and an apple-touch-icon');
   const order = { high: 0, medium: 1, low: 2, info: 3 };
-  return F.sort((a, b) => order[a.sev] - order[b.sev]);
+  return (ctx.quick ? F.filter((f) => QUICK.has(f.check)) : F).sort((a, b) => order[a.sev] - order[b.sev]);
 }
 
 // Scroll-triggered reveals (IntersectionObserver, ScrollTrigger) keep text at opacity 0 until it has been on screen.
@@ -1171,6 +1240,8 @@ export async function audit(target, opt, { resolveSettings, study = false } = {}
     wordBudgets: { hero: 30, feature: 45, proof: 60, closing: 30, ...(settings.wordBudgets ?? {}) },
     disclosure: settings.disclosure || '', surface: settings.surface ?? 'landing',
   };
+  const quick = !!opt.quick && !study;
+  const hardArgs = { scale: SPACE_SCALE, job: settings.job ?? null };
   const served = await resolveTarget(target);
   const url = served.url;
   const browser = await launch();
@@ -1230,6 +1301,8 @@ export async function audit(target, opt, { resolveSettings, study = false } = {}
     if (early) { try { extra.dead = await deadScrollPass(page, browser); } catch (e) { if (process.env.DARKROOM_DEBUG) console.error('dead-scroll pass:', e.message); } }
     if (!full) { await ctx.close(); return { motion: motionNow, extra }; }
     const dom = await page.evaluate(probeDom, probeArgs);
+    dom.hard = await page.evaluate(probeHard, hardArgs);
+    if (quick) { await ctx.close(); return { dom, colour: null, contrast: null, keyboard: null, font: null, motion: null }; }
     const contrast = await pixelContrast(page, vp);
     const colour = vp.width >= 1024 ? await uiColourShare(page) : null;
     const keyboard = vp.width >= 1024 ? await keyboardProbe(page) : null;
@@ -1237,14 +1310,22 @@ export async function audit(target, opt, { resolveSettings, study = false } = {}
     await ctx.close();
     return { dom, colour, contrast, keyboard, font, motion: motionNow };
   };
-  let d; let m; let normal; let noJs; let frames = null; let fling = null;
+  let d; let m; let normal = { motion: null, extra: {} }; let noJs = {}; let frames = null; let fling = null; let lap = null; let wide = null; let loading = null;
+  // one look at each extra width, for the rules that are about those widths
+  const glance = async (vp) => {
+    const ctx = await browser.newContext({ ...contextFor(vp), reducedMotion: 'reduce' });
+    try { const page = await ctx.newPage(); await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 }); await settle(page); return await page.evaluate(probeHard, hardArgs); } catch { return null; } finally { await ctx.close(); }
+  };
   try {
     d = await run(VIEWPORTS['desktop-1440']);
     m = await run(VIEWPORTS['mobile-390']);
-    normal = await run(VIEWPORTS['desktop-1440'], { motion: 'no-preference', full: false, early: true });
-    noJs = await run(VIEWPORTS['desktop-1440'], { js: false });
-    fling = await flingPass(browser, url);
-    if (normal.extra.earlyShot && normal.extra.settledShot) frames = await frameStats(browser, [normal.extra.earlyShot, normal.extra.settledShot]);
+    if (!study) { lap = await glance(VIEWPORTS['laptop-1280']); wide = await glance(VIEWPORTS['desktop-1920']); loading = await loadingPass(browser, url, contextFor(VIEWPORTS['desktop-1440'])); }
+    if (!quick) {
+      normal = await run(VIEWPORTS['desktop-1440'], { motion: 'no-preference', full: false, early: true });
+      noJs = await run(VIEWPORTS['desktop-1440'], { js: false });
+      fling = await flingPass(browser, url);
+      if (normal.extra.earlyShot && normal.extra.settledShot) frames = await frameStats(browser, [normal.extra.earlyShot, normal.extra.settledShot]);
+    }
   } finally { await browser.close(); await served.close(); }
   const scriptLibs = {
     gsap: urls.some((u) => /gsap|scrolltrigger/i.test(u)), lenis: urls.some((u) => /lenis/i.test(u)),
@@ -1253,21 +1334,22 @@ export async function audit(target, opt, { resolveSettings, study = false } = {}
   for (const k of Object.keys(scriptLibs)) if (scriptLibs[k]) d.dom.libs[k] = true;
   const result = {
     url, date: new Date().toISOString(),
-    capture: { mode: 'prefers-reduced-motion: reduce (plus one default-motion pass for the motion comparison)', viewports: ['desktop-1440', 'mobile-390'], consent, tools: toolVersions(null) },
+    quick, capture: { mode: quick ? 'quick check: hard rules only, reduced motion' : 'prefers-reduced-motion: reduce (plus one default-motion pass for the motion comparison)', viewports: ['desktop-1440', 'mobile-390', 'laptop-1280', 'desktop-1920'], consent, tools: toolVersions(null) },
     config: { source, problem }, settings,
-    findings: findings({ desk: d.dom, mob: m.dom, colour: d.colour, motion: { reduce: d.motion, normal: normal.motion }, keyboard: d.keyboard, contrast: { desktop: d.contrast, mobile: m.contrast }, ctx: { settings, fonts: opt.fonts, mode: opt.mode, hosts, host, errors, problem, extra: { frames, h1At1500: normal.extra.h1At1500, video: normal.extra.video, restJs: normal.extra.restJs, restNoJs: noJs.restNoJs, font: d.font, blend: normal.extra.blend, fling, weight: normal.extra.weight, chains: normal.extra.chains, dead: normal.extra.dead, budget: normal.extra.budget } } }),
+    findings: findings({ desk: d.dom, mob: m.dom, colour: d.colour, motion: quick ? null : { reduce: d.motion, normal: normal.motion }, keyboard: d.keyboard, contrast: quick ? {} : { desktop: d.contrast, mobile: m.contrast }, ctx: { settings, fonts: opt.fonts, mode: opt.mode, hosts, host, errors, problem, quick, lap, wide, loading, extra: { frames, h1At1500: normal.extra.h1At1500, video: normal.extra.video, restJs: normal.extra.restJs, restNoJs: noJs.restNoJs, font: d.font, blend: normal.extra.blend, fling, weight: normal.extra.weight, chains: normal.extra.chains, dead: normal.extra.dead, budget: normal.extra.budget } } }),
     desktop: d.dom, mobile: { zones: m.dom.zones, travel: m.dom.travel, smallTargets: m.dom.smallTargets, overflow: m.dom.overflow, nameless: m.dom.nameless, unlabeled: m.dom.unlabeled },
     colour: d.colour, contrast: { desktop: d.contrast, mobile: m.contrast }, keyboard: d.keyboard, motion: { reduce: d.motion, normal: normal.motion },
   };
   if (study) return result;
-  const out = opt.json ?? '.darkroom/qa/audit.json';
+  if (d.dom.hard?.fp) logBuild(d.dom.hard.fp, { pack: settings.pack, job: settings.job });
+  const out = opt.json ?? (quick ? '.darkroom/qa/quick.json' : '.darkroom/qa/audit.json');
   mkdirp(path.dirname(out));
   fs.writeFileSync(out, JSON.stringify(result, null, 2));
   const icon = { high: '✖', medium: '▲', low: '·', info: 'i' };
   console.log(`config: ${source ?? 'none'}${problem ? ` (${problem})` : ''}`);
   for (const f of result.findings) console.log(`${icon[f.sev]} ${f.sev.padEnd(6)} ${f.check.padEnd(15)} ${f.msg}`);
   const highs = result.findings.filter((f) => f.sev === 'high').length;
-  console.log(`\n${highs} high · ${result.findings.filter((f) => f.sev === 'medium').length} medium → ${out}`);
+  console.log(`\n${highs} high · ${result.findings.filter((f) => f.sev === 'medium').length} medium → ${out}${quick ? ' (quick check: the hard rules only; contrast, keyboard, motion and the rest run when the user types /darkroom audit)' : ''}`);
   process.exitCode = highs ? 1 : 0;
   return result;
 }

@@ -2,22 +2,35 @@
 
 Patterns that make a page read as model-made **when used by default**. One tell proves little; **four or more together** read as "nobody chose this" (a scan of 1,590 Show HN landing pages found 22 % heavy slop with ≥ 4 tells, 32 % mild, 46 % clean). A style pack may switch one on with a reason; the bible's exceptions log records it. Slop pages aren't broken — they're undifferentiated; the cost is that nobody remembers them. Bad patterns confirmed by real sites live in `library/bad/` and `library/LESSONS.md`.
 
-## Three tiers (how a tell binds)
-Darkroom holds these as strictly as Hallmark wherever that is the right design call, and no stricter: a ban that would also sink pages the library judged good is a reflex, not a floor.
+## How these rules bind
+Hallmark's rules are hard rules here. A tell is not a suggestion and Claude cannot excuse it.
 
-- **Floor: never ships, cannot be kept.** Honesty and function, not taste: invented proof (numbers, logos, quotes, reviews nobody gave; a real one carries its source in the markup), placeholders left live, `transition: all` and layout animation, a form that says "Thanks" while nothing is sent, content hidden until a script runs, a gate or loader instead of the first frame, a phone gate. Audit: `placeholder`, `proof`, `css-motion`, `motion-rest`, `first-paint`, `phone-gate`; the fake send is checked by hand (submit it and watch the network).
-- **Strong tell: high, kept only with a real reason.** The purple-to-blue ramp (kept only when those are the brand's own colours), emoji as icons (kept only when emoji are the page's voice), a drawn browser window. Audit `ai-gradient`, `emoji-icon`, `fake-chrome`.
-- **Reflex: medium from the first one.** Everything else on this page: gradient text, card stripes, the eyebrow, template punctuation, an accent word outside the hero, stock action labels from the second. Fix it, or keep it with a one-line reason in the bible's exceptions log and its audit id in `keepTells` (`commands/bible.md`). Two allowances, because the library has good pages with them: one accent word in the hero headline, and a single stock label (both low). Three different tells on one page is `slop-count` (high).
-- **Finish: craft detail.** Straight quotes, a widow, an untinted scrollbar. Mention once, never block a ship, never trade a strong idea for one (critique: design first).
+- **Floor: never ships, nobody can lift it.** Invented proof (numbers, logos, quotes, reviews nobody gave; a real one carries its source in the markup), placeholders left live, `transition: all` and layout animation, a form that says "Thanks" while nothing is sent. Audit `proof`, `placeholder`, `css-motion`, `fake-send`.
+- **Hard rule: high, blocks the handoff, lifted only by the user's own words.** Every other check below: labels and capitals, the accent word, gradients, card stripes, cards in cards, template punctuation, emoji, drawn windows, genre words, stock palettes and faces, the email close, spacing, alignment, skeletons. To lift one, the user must have asked for that thing; quote them in the bible's `keepTells` as `"eyebrow: user: <what they said>"`. Claude's own reason keeps nothing, a bare id keeps nothing, and "luxury + editorial" is not a request for labels. A style pack cannot switch a hard rule on.
+- **Judged: a reviewer's call, not a script's.** See "Not hard rules" below.
+- **Finish: craft detail.** Straight quotes, a widow, an untinted scrollbar. Mention once, never block a ship.
 
-The audit names each reflex it can see (`gradient-text`, `ai-gradient`, `card-stripe`, `eyebrow`, `accent-word`, `emoji-icon`, `fake-chrome`, `template-punct`, `stock-cta`, `css-motion`, `glass-caption`, `copy`); the rest are judged at the critique pass (`commands/critique.md`). Not adopted from Hallmark: a ban on all tracked capitals, on em dashes and an 80-word screen cap (Darkroom's word budgets and zones already govern density).
+One allowance stays, because Hallmark's gates allow it too: a single stock label alone ("Get started", low; two are a hard rule). One coloured word in the hero headline is low; an italic word never passes.
+
+## Not hard rules (Hallmark has them; Darkroom keeps them softer, on purpose)
+| Hallmark rule | Here | Why |
+|---|---|---|
+| No `vh` heroes, no `100vw` | not checked | scroll films and pinned stories are built on full-height scenes; `svh`/`dvh` and overflow checks cover the real faults |
+| About 80 words a screen | word budgets per pack and surface (`word-budget`) | a menu, a price list or a news front is meant to be dense; the page type sets the budget |
+| 120 px between sections, never the same gap | judged | scroll stories run chapter into chapter with no gap at all |
+| Photos under a third of the page; no drawn illustration past icon size | not adopted | Darkroom pages are led by photographs and film; Dark Motions has drawn 2D characters |
+| No em or en dashes | judged | Romanian, French and other languages use them in normal typography, and a date range needs one |
+| Every colour and font through a token | `commands/build.md`, not a check | a Shopify or WordPress theme inherits literals from the platform |
+| Generated copy cadence, hero posture, composition rules, three equal tiles | judged by the fresh reviewer (`references/fresh-review.md`) | a script can't read taste; a false alarm here would fight good design |
+| The stamp in the CSS, the 50 themes, static HTML only | not adopted | Hallmark's own machinery; Darkroom has style packs and ten platforms |
+| Floor rules can never be waived by anyone | the user's words lift a hard rule | law 4: the user's explicit word wins. "All caps, it's a climbing gym" is a real brief |
 
 ## Type
 - Inter (or the framework's default sans) everywhere, especially a **centred Inter hero headline**. Inter as a quiet text face under a chosen display face is fine; Inter as the whole identity is the tell.
 - Stock "designed" pairings reached for by default: Space Grotesk, Instrument Serif, Geist + Inter. Judge by use, not name: a face is a tell when nothing else on the page commits to it.
 - One **serif italic accent word** inside an otherwise sans headline.
 - All-caps headings and tracked-caps section labels scattered as "voice".
-- **The eyebrow:** a small capitals or pill label above every heading ("FEATURES", "HOW IT WORKS", "TRUSTED BY"). It names what comes next instead of adding a fact. Audit `eyebrow`.
+- **The eyebrow:** a small capitals or pill label above a heading ("FEATURES", "HOW IT WORKS", "TRUSTED BY", "01 / 05"). It names what comes next instead of adding a fact. Hard rule from the first one; a number passes only as a fact (a year, a price, a time, a unit). Audit `eyebrow`. **Tracked capitals anywhere** on small text: audit `tracked-caps`.
 - **Mono as costume:** monospace on labels, captions and meta rows when the page is not about code or measurements.
 - Full-sentence headlines at display size running 3+ lines.
 
@@ -26,7 +39,7 @@ The audit names each reflex it can see (`gradient-text`, `ai-gradient`, `card-st
 - Permanent dark mode with medium-grey body text that barely passes (or fails) contrast.
 - Large coloured glows, coloured box-shadows, glowing buttons; soft grey shadow on every card.
 - Glass cards everywhere; unmodified component-kit defaults (one 12–16 px radius, 24 px padding, same shadow) on everything.
-- Cream + terracotta + serif as automatic "premium"; near-black + single neon + glow as automatic "tech".
+- **The stock premium:** near-black + ivory + gold, or cream + terracotta + serif, as automatic "premium"; near-black + single neon + glow as automatic "tech". Audit `stock-palette`.
 - Colour named for looks (`gradient-start`) instead of job (`action-primary`, `feedback-success`).
 - A framework's stock swatch as the brand (Tailwind indigo-500, violet-600, slate-900) when nobody picked it.
 - Pure `#000` / `#fff` everywhere where a tinted ink and paper would carry the palette.
@@ -42,7 +55,10 @@ The audit names each reflex it can see (`gradient-text`, `ai-gradient`, `card-st
 - **A drawn browser or OS window** (red, yellow, green dots, a fake URL pill) around a screenshot or, worse, around styled divs. Audit `fake-chrome`.
 - **A card inside a card**; two filled buttons side by side as equals.
 - **The fake product:** a mock interface of styled divs when the real product exists and could be captured. Capture it (`commands/shoot.md`); build a sample only for a product that does not run yet, and say so in the handoff.
-- **The stock close:** an email sign-up as the last section of a page whose visitor came to book, buy, visit or hire. End on what the visitor came to do (`references/anatomy.md`).
+- **The stock close:** an email sign-up in the last section or the footer of a page whose job is not a mailing list (`job` in the bible). End on what the visitor came to do (`references/anatomy.md`). Audit `email-close`.
+- **Spacing by feel:** 24 px here, 28 px there. Every gap comes from the scale, and one kind of gap has one size. Audit `spacing-scale`, `spacing-drift`; alignment near misses `align-edge`; `references/craft.md`, Spacing.
+- **Holes while loading:** a picture that pops in, a blank film, data landing in nothing. Audit `skeleton`; `recipes/skeleton.css`.
+- **The same design twice:** two clients, one look. Audit `sameness`; `commands/style.md`.
 - **The wireframe page:** rows of empty frames (six blank portraits, four grey bottles). Set the set in type; keep one or two slots, each holding a real or library picture.
 - **Drawn stand-ins:** an SVG illustration of the product, a plant or a person where a photograph belongs; a coloured box where the picture should be; a row of identical marks counting what one number could say.
 - **Decoration text:** rotated vertical labels, scroll cues, a version pill in the hero, a city-and-weather strip, `01 / 04` counters on tiles. A fact stays; a decoration goes.

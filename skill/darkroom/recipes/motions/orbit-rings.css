@@ -7,7 +7,7 @@
 [data-dm="orbit-rings"] .orb{position:absolute;inset:0;margin:auto;border:1px solid #ffffff1f;border-radius:50%;animation:dm-orbit-rings linear infinite}
 [data-dm="orbit-rings"] .o1{width:230px;height:230px;animation-duration:calc(20s*var(--dm-dur,1))}
 [data-dm="orbit-rings"] .o2{width:130px;height:130px;animation-duration:calc(12s*var(--dm-dur,1));animation-direction:reverse}
-[data-dm="orbit-rings"] .orb span{position:absolute;left:50%;top:0;width:30px;height:30px;margin:-15px;display:grid;place-items:center;border-radius:50%;background:#18181c;border:1px solid #ffffff2a;color:var(--dm-a);font-size:13px;transform-origin:15px calc(var(--rad) + 15px);transform:rotate(var(--ang)) ;}
+[data-dm="orbit-rings"] .orb span{position:absolute;left:50%;top:0;width:30px;height:30px;margin:-16px;display:grid;place-items:center;border-radius:50%;background:#18181c;border:1px solid #ffffff2a;color:var(--dm-a);font-size:13px;transform-origin:15px calc(var(--rad) + 15px);transform:rotate(var(--ang)) ;}
 [data-dm="orbit-rings"] .o1 span{--rad:115px}[data-dm="orbit-rings"] .o2 span{--rad:65px}
 [data-dm="orbit-rings"] .orb span:nth-child(1){--ang:0deg}[data-dm="orbit-rings"] .o1 span:nth-child(2){--ang:120deg}[data-dm="orbit-rings"] .o1 span:nth-child(3){--ang:240deg}[data-dm="orbit-rings"] .o2 span:nth-child(2){--ang:180deg}
 [data-dm="orbit-rings"] b{position:absolute;inset:0;margin:auto;width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:var(--dm-a);color:#111;box-shadow:0 0 40px color-mix(in srgb,var(--dm-a) 50%,transparent)}

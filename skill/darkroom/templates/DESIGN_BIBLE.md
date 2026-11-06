@@ -3,7 +3,7 @@
 Status: draft | approved <YYYY-MM-DD> · Packs: <primary> + <modifiers>
 
 ```darkroom
-{ "surface": "landing", "fontBudget": 3, "colorMode": "disciplined", "markets": ["EU"], "disclosure": "", "currency": "EUR",
+{ "surface": "landing", "job": "", "fontBudget": 3, "colorMode": "disciplined", "markets": ["EU"], "disclosure": "", "currency": "EUR",
   "wordBudgets": { "hero": 30, "feature": 45, "proof": 60, "closing": 30 }, "maxZones": 3, "keepTells": [] }
 ```
 
@@ -35,6 +35,7 @@ Media palette (imagery only): <…>
 Emphasis device (one): <…> · Measure: <…>ch · Losers & why: <…>
 
 ## 5. Grid & spacing
+Spacing tokens (`references/craft.md`): `--space-2xs 4 · xs 8 · sm 12 · md 16 · lg 24 · xl 40 · 2xl 64 · 3xl 96 · 4xl 144`. One size per kind of gap: head to line <…> · head to content <…> · line to button <…> · card padding <…>
 Columns / gutters per breakpoint · spacing scale · **copy anchor:** <where headlines live> · safe zones
 
 ## 6. Reading-path rules
@@ -43,8 +44,8 @@ Max zones per viewport: <3> · zone order · CTA placement
 ## 7. Convention switches
 | Switch | Value | Reason |
 |---|---|---|
-| eyebrow | | |
-| tracked-caps | | |
+| eyebrow | OFF | hard rule |
+| tracked-caps | OFF | hard rule |
 | index-numerals | | |
 | hairlines | | |
 | cards | | |

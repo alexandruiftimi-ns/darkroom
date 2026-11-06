@@ -15,27 +15,27 @@
         {
           "slug": "ground",
           "name": "Background (about 60 %)",
-          "color": "#f4f1ec"
+          "color": "#f1f3f5"
         },
         {
           "slug": "surface",
           "name": "Surface",
-          "color": "#ebe6de"
+          "color": "#e3e7ea"
         },
         {
           "slug": "ink",
           "name": "Text (about 30 %)",
-          "color": "#1b1a18"
+          "color": "#15191d"
         },
         {
           "slug": "ink-2",
           "name": "Secondary text",
-          "color": "#5d5850"
+          "color": "#4d5862"
         },
         {
           "slug": "accent",
           "name": "Accent: buttons only (about 10 %)",
-          "color": "#8a3b12"
+          "color": "#1f5a8a"
         },
         {
           "slug": "accent-ink",
@@ -45,7 +45,7 @@
         {
           "slug": "line",
           "name": "Lines",
-          "color": "#d6cfc4"
+          "color": "#cbd2d8"
         }
       ]
     },

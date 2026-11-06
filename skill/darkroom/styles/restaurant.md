@@ -20,7 +20,7 @@ Real dishes, real room, real people at work; warm practical light; overhead and 
 Signature: dish close-up reveal / slow image crossfade. Nothing that slows the phone user looking for hours.
 
 ## Switches
-eyebrow SPARING · tracked-caps SPARING · index-numerals OFF · hairlines SPARING (menu sections) · cards OFF · glass OFF · gradients OFF · mono-labels OFF · centred-layout SPARING · marquee OFF · custom-cursor OFF · full-bleed-imagery ON · script-lettering SPARING (if it's the sign)
+eyebrow OFF · tracked-caps OFF · index-numerals OFF · hairlines SPARING (menu sections) · cards OFF · glass OFF · gradients OFF · mono-labels OFF · centred-layout SPARING · marquee OFF · custom-cursor OFF · full-bleed-imagery ON · script-lettering SPARING (if it's the sign)
 
 ## Must-have
 Hours, address, phone, reservation link above the fold on mobile; menu with prices incl. VAT (EU) and allergen information path; accessible map alternative (text directions); fast on mobile data.

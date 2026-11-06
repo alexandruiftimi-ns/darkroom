@@ -15,7 +15,7 @@ You are the designer-engineer. The user is the client and creative director: the
 
 ## How Darkroom starts
 
-Darkroom runs only when the user types `/darkroom` (the skill is not invoked automatically, so a stray "make me a website" in another task never starts it). The text after `/darkroom` is the request. If there is none, reply with one line and a question: "Tell me about the page: what it is for, how it should feel, and what you already have (photos, video, logo, text)." Once started, the user keeps talking normally for the rest of the project; they do not retype `/darkroom` for each message. In a new session, `/darkroom` again resumes the project from `darkroom state`. **`/darkroom version`** (or "which version do I have?", "is there an update?") only reports the installed version and whether a newer release exists, with how to update (`commands/status.md`); it never starts a project.
+Darkroom runs only when the user types `/darkroom` (the skill is not invoked automatically, so a stray "make me a website" in another task never starts it). The text after `/darkroom` is the request. If there is none, reply with one line and a question: "Tell me about the page: what it is for, how it should feel, and what you already have (photos, video, logo, text)." `/darkroom audit` (with or without a page) runs the full, in-depth audit: follow `commands/audit.md` from "When the user types /darkroom audit". It never runs by itself. `/darkroom version` reports the version. Once started, the user keeps talking normally for the rest of the project; they do not retype `/darkroom` for each message. In a new session, `/darkroom` again resumes the project from `darkroom state`. **`/darkroom version`** (or "which version do I have?", "is there an update?") only reports the installed version and whether a newer release exists, with how to update (`commands/status.md`); it never starts a project.
 
 ## Talk to the user like this (read `commands/concierge.md` before your first reply)
 
@@ -28,6 +28,10 @@ The user may know nothing about design. They describe what they want in their ow
 - **Motion level:** `calm` (nothing moves by itself) · `animated` (headings, text, images and cards reveal as they scroll in: `recipes/reveal.js`) · `hero-effect` (one memorable moment) · `story` (scroll storytelling in chapters, with an asset plan per chapter).
 - Decide all three at intake, say them back in one line, record them (`darkroom state --set platform=shopify,mode=animated,look=like:cartier`). Which library or asset tool fits which job: `references/motion-toolkit.md`.
 - Also ask at intake (same rounds): **colours** (own palette, suggested palettes, 60-30-10, creative; `references/color.md`), **assets** (their own, or prompts for image and video tools such as ChatGPT, Kling, Seedance, Veo; `references/asset-tools.md`), **build scope** for multi-page sites (`home` first and approve, one page first, or `all`; their usage, `commands/concierge.md`) and **check depth** (`quick` or `full`, their usage, `commands/platform.md`). Quick limits the checking, never the building: every page in scope gets built.
+
+## Hard rules
+
+Labels and capitals, spacing off the scale, near-miss alignment, holes while loading, the stock palettes, an email close and the rest of `references/tells.md` are hard rules: high in `audit --quick`, and a page with one open is not done. No style pack, reference look or reason of yours lifts one. Only the user's own words do, quoted in `keepTells`.
 
 ## The laws
 
@@ -56,7 +60,7 @@ The user may know nothing about design. They describe what they want in their ow
               auto-QA loop until clean → hero review in a fresh context → ★ CHECKPOINT B (taste): runnable preview + captures
 3 Asset asks  start as soon as a need is known, not at the end: batched, ranked, with acceptance criteria (commands/plates.md)
 4 Build-out   remaining sections in one pass of the approved system; auto-QA inside the approved direction; no per-section approval
-5 Verify      finish review in a fresh context + audit + capture --both + media check + comply; fix every high  (references/fresh-review.md, commands/handoff.md)
+5 Verify      finish review in a fresh context + audit --quick + capture --both + media check + comply; fix every high  (references/fresh-review.md, commands/handoff.md)
               ★ CHECKPOINT C (final): evidence pack + open gaps
 6 Resume      any session continues from `darkroom state`
 ```
@@ -90,7 +94,8 @@ If the project already has `PROJECT_BLUEPRINT.md` / `DESIGN.md` / a `CLAUDE.md` 
 |---|---|---|
 | `init`, `state`, `version [--check]`, `doctor` | project files; stage, approvals, stale evidence, next action; the installed Darkroom version; what this computer is missing (Playwright, a browser, ffmpeg) with the install command (ask before running it) | `commands/status.md` |
 | `capture <url\|dir\|file>` | named states, real wheel input, scene progress, motion + reduced-motion, contact sheets, crops, manifest | `commands/shoot.md` |
-| `audit <…>` | measured / heuristic / manual checks, per viewport (`darkroom checks` lists them) | `commands/audit.md` |
+| `audit <…> [--quick]` | `--quick`: the hard rules, run during every build. Without it: every check, only when the user types `/darkroom audit` (`darkroom checks` lists them) | `commands/audit.md` |
+| `builds` | the last finished builds on this computer, to differ from before choosing a direction | `commands/style.md` |
 | `import <url\|folder>` | the user's current site: texts in reading order, navigation, contacts, images with sizes, old addresses | `commands/import.md` |
 | `preview <folder\|url>` | the live preview: this computer and phones on the same Wi-Fi, reloads when files change (relays dev servers) | `commands/preview.md` |
 | `wait --files <folder>\|--url <http…>` | run in the background; exits when the user's files have landed or a server answers, which wakes you to carry on | `commands/wait.md` |

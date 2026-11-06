@@ -10,6 +10,7 @@ export const VIEWPORTS = {
   'mobile-390': { width: 390, height: 844 },
   'mobile-375': { width: 375, height: 812 },
   'desktop-1920': { width: 1920, height: 1080 },
+  'laptop-1280': { width: 1280, height: 800 },
 };
 
 // Phone widths render as a phone: the page's meta viewport, touch and no hover apply, as on a real device.

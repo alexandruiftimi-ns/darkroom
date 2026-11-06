@@ -19,7 +19,7 @@ Consistent background, lighting and crop across all products; one lifestyle imag
 Signature: image swap on hover (desktop), quick filter feedback, add-to-cart confirmation. No decorative motion on the grid.
 
 ## Switches
-eyebrow OFF · tracked-caps SPARING · index-numerals OFF · hairlines SPARING · cards ON (product tiles, uniform by design) · glass OFF · gradients OFF · mono-labels OFF · centred-layout OFF · marquee SPARING (shipping notice) · custom-cursor OFF · full-bleed-imagery SPARING · script-lettering OFF
+eyebrow OFF · tracked-caps OFF · index-numerals OFF · hairlines SPARING · cards ON (product tiles, uniform by design) · glass OFF · gradients OFF · mono-labels OFF · centred-layout OFF · marquee SPARING (shipping notice) · custom-cursor OFF · full-bleed-imagery SPARING · script-lettering OFF
 
 ## Must-have (EU)
 Final price incl. VAT; unit price where required; delivery costs before checkout; "was" price = lowest of last 30 days; returns/withdrawal info; accessible checkout (EAA); no pre-ticked add-ons; cookie consent with equal reject.

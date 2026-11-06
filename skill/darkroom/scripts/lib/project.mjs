@@ -42,6 +42,7 @@ export function resolveSettings(file) {
   const found = findSettings(file);
   const pack = /^pack:([\w.-]+)$/.exec(readJson(PROJECT)?.look ?? '')?.[1];
   const base = PACK_AUDIT[pack];
+  if (pack) found.settings.pack = pack;
   if (!base) return found;
   const s = found.settings;
   return { ...found, settings: { ...base, ...s, wordBudgets: { ...base.wordBudgets, ...s.wordBudgets } }, source: `${found.source ?? 'defaults'} + pack ${pack}` };
@@ -151,7 +152,7 @@ export function state(opt) {
     : specNewer ? 'BUILD_SPEC.md changed after the latest capture: build what it says, then re-capture'
     : p.stage === 'slice' ? 'auto-QA the slice, then show it and record approval of "slice"'
     : p.stage === 'build' ? (p.scope && p.scope !== 'all' ? `finish the ${p.scope === 'home' ? 'home page' : p.scope.slice(5)} only, then show it and ask whether to build the other pages (scope=all)` : 'build every page in the page list (bible; .darkroom/import/url-map.json when imported), then run audit and capture --both')
-    : p.stage === 'verify' ? 'run audit + capture --both + media check; fix highs; then stage=review'
+    : p.stage === 'verify' ? 'run audit --quick + capture --both + media check; fix highs; then stage=review (the full audit runs only on /darkroom audit)'
     : p.stage === 'review' ? (p.scope && p.scope !== 'all' ? `present the ${p.scope === 'home' ? 'home page' : p.scope.slice(5)}; ask whether to build the other pages in this look (--set scope=all,stage=build)` : 'present evidence, the list of pages built and any not built, and open gaps; wait for the final approval') : 'nothing pending';
   const out = { name: p.name, surface: p.surface, autonomy: p.autonomy, stage: p.stage, look: p.look ?? null, mode: p.mode ?? null, platform: p.platform ?? null, verify: p.verify ?? null, scope: p.scope ?? null, palette: p.palette ?? null, intake: p.intake ?? 'full', design_doc: p.design_doc, config: p.config, root, currentRevision: revision, spec: specAt ? { file: SPEC, changedAt: specAt, newerThanLatestCapture: specNewer } : null,
     lastApproval: lastApproval ?? null, approvalIsStale: !!approvalStale, captures: runs.length, latestCapture: latest, staleCaptures: stale, open: p.open, next };

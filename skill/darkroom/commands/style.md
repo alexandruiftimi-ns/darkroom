@@ -10,11 +10,13 @@ Write: **"On this page, [something that belongs to the subject] becomes [the lay
 
 ## 2. Shortlist packs and read the library
 
+**Look at what you already made.** Run `darkroom builds` first. The new direction must differ from the last three on palette and on hero composition, unless the user asked for that look. "Premium", "luxurious", "elegant" are adjectives, not a palette: they never decide colour or type. Colour comes from the subject inventory: name the material or place each main colour is taken from, in the direction's 8 lines ("ground from wet asphalt, accent from pink wash foam"). A car wash and a car-audio shop share nothing, so their pages can't either.
+
 `styles/README.md`: choose one primary pack (owns layout and type) + up to two modifiers (palette, imagery, motion only). Offer the user's named pack plus one adjacent alternative and one deliberate contrast. Read `library/INDEX.md` and `library/LESSONS.md`; load ≤ 4 good + ≤ 2 bad matching entries, matched first by the **technique** the motion level calls for (INDEX **By technique**; "like ScrollTide" or "scroll animation with frames" means `frame-scrub` or `pinned-chapters`), then by category, then by pack. A good entry's minor flaws don't disqualify it; borrow its idea and avoid only its medium-or-worse failures. Entries are evidence, not templates; only lessons marked **promoted** are rules, **candidate** ones are prompts to think.
 
 ## 3. Build two comps in code
 
-Two genuinely different directions (different idea and composition, not different colours), built where `commands/platform.md` §3 says (HTML comps in `.darkroom/comps/` only when the table says HTML; otherwise two front-page variants in the theme or project): the real hero with real copy, real fonts (self-hosted OFL), the palette, the first-frame composition, the CTA, at 1440 and 390 (`darkroom capture .darkroom/comps/a.html --viewports desktop-1440,mobile-390 --reduce`). Placeholders for missing imagery are flat fields with the focal object's position marked `TEMP`. A coded comp tests type, spacing, responsiveness and legibility, which a generated mockup cannot.
+Two genuinely different directions (different idea, composition, palette family and display face), built where `commands/platform.md` §3 says (HTML comps in `.darkroom/comps/` only when the table says HTML; otherwise two front-page variants in the theme or project): the real hero with real copy, real fonts (self-hosted OFL), the palette, the first-frame composition, the CTA, at 1440 and 390 (`darkroom capture .darkroom/comps/a.html --viewports desktop-1440,mobile-390 --reduce`). Placeholders for missing imagery are flat fields with the focal object's position marked `TEMP`. A coded comp tests type, spacing, responsiveness and legibility, which a generated mockup cannot.
 
 Use a generated image only to settle imagery you cannot code: write one prompt (`commands/imagine.md`), ask the user to generate it, and continue with the rest meanwhile.
 
@@ -26,7 +28,7 @@ For each direction write ≤ 8 lines: name + idea + **signature in one line** a 
 
 ## Rules
 
-- Never deal two dark-neon options because the category "is tech", or cream + terracotta + serif because "premium" (`references/tells.md`).
+- Never deal two dark-neon options because the category "is tech", or near-black + gold or cream + terracotta + serif because "premium" (`references/tells.md`, audit `stock-palette` and `sameness`).
 - If the user says "colourful", set colour mode `expressive`; do not fall back to dark minimal.
 - A direction that needs assets that cannot exist at this tier is not a direction; say so and substitute.
 - When the user dislikes a motion pick: "Want different ones? Describe what you'd like, or say shuffle and I'll pick another set that fits." Shuffle stays within the pack and the budget.

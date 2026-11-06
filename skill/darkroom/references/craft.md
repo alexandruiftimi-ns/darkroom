@@ -18,6 +18,20 @@ A checklist to sweep before a checkpoint. Items are things a visitor feels witho
 - Media boxes reserve space (`aspect-ratio`, width/height) and a poster colour: no layout shift, no blank bands when media fails.
 - Focal point preserved on every crop (`object-position` per breakpoint, or art-directed `<picture>`).
 
+## Spacing and alignment (hard rules)
+- **One scale.** Define it as tokens first, in the bible: `--space-3xs: 2px; --space-2xs: 4px; --space-xs: 8px; --space-sm: 12px; --space-md: 16px; --space-lg: 24px; --space-xl: 40px; --space-2xl: 64px; --space-3xl: 96px; --space-4xl: 144px`, plus 32, 48, 80, 120 and 176 when the page needs them. Every padding, margin and gap uses a token. Audit `spacing-scale`: at most three optical nudges of 6 px or less, each with a comment.
+- **One kind of gap, one size.** Write these once and reuse them: head to its line 16–24 px; head block to content 48–64 px; line to button 24 px; button beside button 12 or 16 px; card padding 32–40 px; grid items 48–64 px apart. 24 px here and 28 px there is a fault, 24 and 64 is a decision. Audit `spacing-drift`.
+- **At least twice the space above a head as below it** (`crowded-head`). Text in a box keeps its padding (`cramped-box`).
+- **Left edges line up from the nav to the footer.** Twelve columns, one container, one copy anchor. A near miss of 2–8 px is a fault; a clear offset is a decision. Items in a row start at one height. Audit `align-edge`.
+- **Controls:** 44–52 px tall on a marketing page; a field and the button beside it share a height (`control-height`); a button label stays on one line (`label-wrap`). The outer section owns background and block padding; the inner container takes only inline padding.
+
+## Loading (hard rule, audit `skeleton`)
+- Every picture keeps its real box from the first paint (`width` and `height`, or `aspect-ratio`), with a tint or `recipes/skeleton.css` standing in. Nothing pops in, nothing jumps.
+- The first-screen picture is never `loading="lazy"` and takes `fetchpriority="high"`. Every video has a `poster`.
+- A film canvas shows its first frame or a skeleton until the frames arrive, never a blank band.
+- Anything fetched (a menu, products, a feed) shows a skeleton in the shape of what is coming, in `aria-busy="true"`. A spinner alone is not enough; use one only for an action the visitor started (after 150–300 ms, shown at least 300 ms, beside the label).
+- Skeletons take the page's colours and stop sweeping under reduced motion. Empty state: what is empty, why it matters, one action. Error state: what happened, what to do; no "Oops".
+
 ## Interaction states (every control, not just the primary button)
 - Hover (pointer devices only: `@media (hover: hover)`), `:focus-visible` with a 3:1 ring and an offset, `:active`, disabled, loading. Press feedback is immediate (≤ 100 ms); tap targets ≥ 44 px on touch (24 px is the floor).
 - Links look like links; nothing clickable is a bare `div`; anchors scroll with `scroll-margin-top` under a sticky header; skip link works.
@@ -42,7 +56,7 @@ A checklist to sweep before a checkpoint. Items are things a visitor feels witho
 
 ## Spacing values (defaults)
 - Content max-width 64–80rem; lede and sub 440–540 px wide; body measure 45–75ch.
-- Gutters 20–24 px phone, 48–64 px desktop (`clamp(20px, 4vw, 64px)`).
+- Gutters 16–24 px phone, 48–64 px desktop (`clamp(16px, 4vw, 64px)`), inside a container capped at 1360–1520 px and centred: at 1920 text sits at least 120 px from the screen edge; pictures may bleed.
 - Section padding 128–176 px desktop, 80–112 px phone (`clamp(80px, 12vw, 176px)`).
 - **Sheet transition** between sections: the next section rises over the last with `border-radius: 40–60px 40–60px 0 0; margin-top: -40…-56px` and its own ground.
 - Single-frame heroes get height rules: `@media (max-height: 850px)` and `(max-height: 720px)` shrink the H1 one step and pull the CTA up, so a laptop never cuts the button off.

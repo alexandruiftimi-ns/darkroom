@@ -26,7 +26,9 @@ const USAGE = `darkroom <command>   (Darkroom ${VERSION})
                                desktop motion runs start with an \`early\` shot at ~350 ms (white flash, blank band, hidden h1)
   shoot <url|dir|file> …       legacy alias of capture (reduced motion unless --motion)
   compare <reference.png> <shot.png> [--out sheet.png]
-  audit <url|dir|file> [--bible file] [--fonts 3] [--mode disciplined|expressive|monochrome] [--json out.json] [--dismiss]
+  audit <url|dir|file> [--quick] [--bible file] [--fonts 3] [--mode disciplined|expressive|monochrome] [--json out.json] [--dismiss]
+                               --quick: the hard rules only (slop, spacing, alignment, skeletons), used during a build; the whole audit runs on /darkroom audit
+  builds                       the last finished builds on this computer: palette, faces, hero, ending (read before choosing a direction)
   study <url> [--out dir]      capture + audit of someone else's page (rejects cookies only inside a recognised consent dialog)
   checks [--md]                the audit's check registry: id, severity, basis, limits
   import <url|folder> [--list] [--pages /,/about] [--take text,images] [--max 40] [--ignore-robots] [--out .darkroom/import]
@@ -86,6 +88,7 @@ try {
   else if (cmd === 'shoot') { if (!pos[0]) { console.error(USAGE); process.exit(1); } await capture(pos[0], { ...opt, label: opt.label ?? 'shoot', out: opt.out ?? path.join('.darkroom', 'qa', 'shots', new Date().toISOString().replace(/[-:]/g, '').replace(/\..*/, '').replace('T', '-')), 'no-sheet': true }, { defaultModes: opt.motion ? ['no-preference'] : ['reduce'] }); }
   else if (cmd === 'compare') { if (pos.length < 2) { console.error(USAGE); process.exit(1); } await compare(pos[0], pos[1], opt); }
   else if (cmd === 'audit') { if (!pos[0]) { console.error(USAGE); process.exit(1); } await audit(pos[0], opt, { resolveSettings }); }
+  else if (cmd === 'builds') { const { builds } = await import('./lib/hardrules.mjs'); builds(); }
   else if (cmd === 'study') { if (!pos[0]) { console.error(USAGE); process.exit(1); } await study(pos[0]); }
   else if (cmd === 'checks') {
     if (opt.md) { console.log('| Check | Severity | Basis | What | Limits |\n|---|---|---|---|---|'); CHECKS.forEach((c) => console.log(`| \`${c.id}\` | ${c.sev} | ${c.basis} | ${c.what} | ${c.limits || '—'} |`)); }

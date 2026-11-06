@@ -20,7 +20,7 @@ Controlled light direction, depth layers (fore/mid/back), consistent grade acros
 Signature: scrubbed object rotation, lens/portal dive, light sweep. Scroll scrubs linear, everything reversible. One motion per shot.
 
 ## Switches
-eyebrow SPARING (title-card style) · tracked-caps SPARING · index-numerals SPARING (only as chapter progress) · hairlines SPARING · cards OFF · glass OFF · gradients OFF (light gradients only inside imagery) · mono-labels OFF · centred-layout SPARING · marquee OFF · custom-cursor OFF · full-bleed-imagery ON · script-lettering OFF
+eyebrow OFF · tracked-caps OFF · index-numerals SPARING (only as chapter progress) · hairlines SPARING · cards OFF · glass OFF · gradients OFF (light gradients only inside imagery) · mono-labels OFF · centred-layout SPARING · marquee OFF · custom-cursor OFF · full-bleed-imagery ON · script-lettering OFF
 
 ## Must-have
 Poster frame visible before heavy media; reduced-motion poster per scene; real DOM text over imagery with local scrims.
