@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/knowledge.svg" alt="228 real site designs kept as lessons (131 good, 97 bad), 32 cross-site lessons with 13 promoted to rules, 29 research sources, 8 design tools, 100 example prompts with their specs, 35 tested recipes, 160 automated checks, one human art director" width="100%"></p>
+<p align="center"><img src="assets/knowledge.svg" alt="1,100+ website designs reviewed for inspiration, 228 kept as written lessons (131 good, 97 bad), 32 cross-site lessons with 13 promoted to rules, 29 research sources, 8 design tools, 100 example prompts with their specs, 36 motion and media recipes plus 98 motion pieces, 160 automated tests plus 74 audit checks on your pages, one human art director" width="100%"></p>
 
 # Where Darkroom's knowledge comes from
 
@@ -6,11 +6,11 @@
 
 | | What | Where it lives in the skill |
 |---|---|---|
-| [Real websites](#1-real-websites-that-inspired-it) | 228 site designs: 131 good examples, 97 bad ones, searchable by technique; the newest 89 also judged on design, build and technique separately | `library/` (one short written entry per site) |
+| [Real websites](#1-real-websites-that-inspired-it) | 1,100+ designs reviewed for inspiration; 228 kept as lessons: 131 good examples, 97 bad ones, searchable by technique; the newest 89 also judged on design, build and technique separately | `library/` (one short written entry per site) |
 | [Lessons](#2-lessons-drawn-from-them) | 32 patterns seen across several sites; 13 promoted to rules | `library/LESSONS.md`, then `references/` |
 | [Research](#3-research-and-standards) | 29 sources: usability research, accessibility standards, EU law, award criteria | `references/sources.md` |
-| [Other tools](#4-other-design-tools-studied) | 7 open design skills and tools, read for principles only | `references/provenance.md` |
-| [Examples and recipes](#5-examples-and-recipes) | 100 example prompts, each with the full build spec it leads to; 35 motion and media recipes tested in a real browser; Values tables for type, motion, spacing and colour | `examples/`, `recipes/`, `references/` |
+| [Other tools](#4-other-design-tools-studied) | 8 open design skills and tools, read for principles only | `references/provenance.md` |
+| [Examples and recipes](#5-examples-and-recipes) | 100 example prompts, each with the full build spec it leads to; 36 motion and media recipes tested in a real browser; Values tables for type, motion, spacing and colour | `examples/`, `recipes/`, `references/` |
 | [Test pages](#6-test-pages-built-with-it) | 4 pages built end to end to find what broke | the test suite (160 checks) |
 | [Human input](#7-human-input) | the author's taste calls, dislikes, approvals and assets | everywhere |
 
@@ -353,7 +353,7 @@ Read for principles, then rewritten in Darkroom's own words and code; **no code 
 ## 5. Examples and recipes
 
 - **[100 example prompts](skill/darkroom/examples/INDEX.md)** (prompts and specs, not finished sites) for shops, restaurants, clinics, schools, portfolios, festivals, publications, a redesign and an "apple.com-like" product page, on all ten platforms. Each is a request you could type after `/darkroom` plus the full build spec Darkroom would write: every font, size, colour, timing and media placement, a signature, and a "do not" list. Darkroom reads the two closest before writing a spec, to match their precision, never their copy. No site files are included: Darkroom builds a site when you ask, and the values are starting points.
-- **[35 recipes](skill/darkroom/recipes/README.md)**: framework-free motion, media and interface code (video layers, entrances, scroll-scrubbed frames and video, pinned scenes, menus, carousels and more). Every one runs in a real browser in the test suite, works without JavaScript, and has a reduced-motion path (the 3D model hero is tested for its fallback only).
+- **[36 recipes](skill/darkroom/recipes/README.md)**: framework-free motion, media and interface code (video layers, entrances, scroll-scrubbed frames and video, pinned scenes, menus, carousels and more). Every one runs in a real browser in the test suite, works without JavaScript, and has a reduced-motion path (the 3D model hero is tested for its fallback only).
 - **Values tables** in `references/typography.md`, `motion-craft.md`, `craft.md` and `color.md`: the numbers for type, motion, spacing and colour, so specs never guess.
 
 ## 6. Test pages built with it

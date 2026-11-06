@@ -7,7 +7,7 @@
 <h3 align="center">Type <code>/darkroom</code>. Say what you want.<br>Get a designed website, built on the platform you need.</h3>
 
 <p align="center">
-  <a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/"><img alt="Live showcase: 8 demos" src="https://img.shields.io/badge/%E2%96%B6%20live%20showcase-8%20demos-ff7a3d?style=for-the-badge&labelColor=ff7a3d&color=121110"></a>
+  <a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/"><img alt="Live showcase: 11 demos" src="https://img.shields.io/badge/%E2%96%B6%20live%20showcase-11%20demos-ff7a3d?style=for-the-badge&labelColor=ff7a3d&color=121110"></a>
   <a href="https://github.com/alexandruiftimi-ns/darkroom/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/alexandruiftimi-ns/darkroom?style=for-the-badge&logo=github&logoColor=ece6dc&labelColor=121110&color=ff7a3d"></a>
   <a href="CHANGELOG.md"><img alt="Version 1.12.0, Smooth on Phones" src="https://img.shields.io/badge/version-1.12.0%20·%20Smooth%20on%20Phones-ff7a3d?style=for-the-badge&labelColor=121110"></a>
   <a href="LICENSE"><img alt="Free and open source, MIT licence" src="https://img.shields.io/badge/free%20%26%20open%20source-MIT-ff7a3d?style=for-the-badge&labelColor=121110"></a>
@@ -124,14 +124,14 @@ If Darkroom helps you, **[a star on GitHub](https://github.com/alexandruiftimi-n
 ## 🌐 Live demos you can scroll
 
 <p align="center">
-  <a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/"><img src="assets/showcase/showcase-preview.jpg" alt="The Darkroom showcase: eight website templates, each with a live demo and its build prompt" width="100%"></a>
+  <a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/"><img src="assets/showcase/showcase-preview.jpg" alt="The Darkroom showcase: eleven website templates with live demos" width="100%"></a>
 </p>
 
 <p align="center">
   <a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/"><img alt="Open the live showcase" src="https://img.shields.io/badge/%E2%96%B6%20%20Open%20the%20live%20showcase-ff7a3d?style=for-the-badge&labelColor=ff7a3d"  height="44"></a>
 </p>
 
-<p align="center"><b>Eight templates built with Darkroom, all live on free GitHub Pages hosting.</b><br><sub>No screenshots to trust: open any of them and scroll it yourself.</sub></p>
+<p align="center"><b>Eleven templates built with Darkroom, all live on free GitHub Pages hosting.</b><br><sub>No screenshots to trust: open any of them and scroll it yourself.</sub></p>
 
 <table>
   <tr>
@@ -146,10 +146,16 @@ If Darkroom helps you, **[a star on GitHub](https://github.com/alexandruiftimi-n
     <td width="25%" align="center"><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/little-gills/"><img src="assets/showcase/little-gills.jpg" alt="Little Gills live demo"></a><br><sub><b><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/little-gills/">Little Gills</a></b><br>Storefront · aquariums</sub></td>
     <td width="25%" align="center"><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/little-chaos/"><img src="assets/showcase/little-chaos.jpg" alt="Little Chaos live demo"></a><br><sub><b><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/little-chaos/">Little Chaos</a></b><br>Cinematic · procrastination</sub></td>
   </tr>
+  <tr>
+    <td width="25%" align="center"><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/ardent/"><img src="assets/showcase/ardent.jpg" alt="Ardent live demo"></a><br><sub><b><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/ardent/">Ardent</a></b><br>Cinematic · construction</sub></td>
+    <td width="25%" align="center"><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/lustre/"><img src="assets/showcase/lustre.jpg" alt="Lustre live demo"></a><br><sub><b><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/lustre/">Lustre</a></b><br>Storefront · car wash</sub></td>
+    <td width="25%" align="center"><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/navi-audio/"><img src="assets/showcase/navi-audio.jpg" alt="Navi Audio live demo"></a><br><sub><b><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/navi-audio/">Navi Audio</a></b><br>Storefront · car audio</sub></td>
+    <td width="25%" align="center"><a href="https://alexandruiftimi-ns.github.io/darkroom-showcase/"><b>See them all →</b></a><br><sub>Open any demo and scroll it yourself.</sub></td>
+  </tr>
 </table>
 
 > [!TIP]
-> **Take the prompt behind a demo.** Each card on the showcase has a **Copy prompt** button. It copies the full build prompt for that template: the slots for your own photos and video, every design value, the copy and the checks to run. Paste it into your coding agent and swap in your own media. Six templates have one so far (Style Up, Coffee Shop, Maison Solène, IRIS/09, Little Gills, Little Chaos); on the others the button says the prompt is not available yet.
+> **Take the prompt behind a demo.** Each card on the showcase has a **Copy prompt** button. It copies the full build prompt for that template: the slots for your own photos and video, every design value, the copy and the checks to run. Paste it into your coding agent and swap in your own media. Eight templates have one so far (Style Up, Coffee Shop, Maison Solène, IRIS/09, Little Gills, Little Chaos, Lustre, Ardent); on the others the button says the prompt is not available yet.
 >
 > **Assets are still in progress.** The **Assets** button will hand you the media for each template. It is not ready yet, so for now it tells you the files are on the way.
 
@@ -614,7 +620,7 @@ That run found real problems before you could: WooCommerce blocks that look self
 | 📱 **Phone preview** | your site on your phone over the same Wi-Fi, or a shareable link when you say yes. |
 | 📥 **Asset check** | measures what you drop in, suggests improvements, never rejects. |
 | 🧱 **Ten platforms** | dated profiles with the official docs to re-check, starters, a structure check, deploy steps. Building in Lovable, v0, Bolt or Cursor? Darkroom writes the prompt for that tool and checks the builder's preview. |
-| 🌊 **Scroll and motion** | 35 tested building blocks: background video that never flashes, seamless loops, readable text over video, headline entrances, menus, buttons, grain, marquees, count-ups, word-by-word reveals, stacking cards, typewriter and rotating words, full-width wordmarks, phone swipe rails, magnetic buttons, parallax layers, spotlights, a depth carousel, frosted glass, mood-clip switchers, shader backdrops, a draggable 3D model, reveals, scroll-scrubbed video, frame sequences that stay smooth on a fast phone flick (with their own frames for phones and tablets), pinned scenes, characters that come alive per section, and an image that reveals another under your cursor. Every one has a reduced-motion fallback. |
+| 🌊 **Scroll and motion** | 36 tested building blocks: background video that never flashes, seamless loops, readable text over video, headline entrances, menus, buttons, grain, marquees, count-ups, word-by-word reveals, stacking cards, typewriter and rotating words, full-width wordmarks, phone swipe rails, magnetic buttons, parallax layers, spotlights, a depth carousel, frosted glass, mood-clip switchers, shader backdrops, a draggable 3D model, reveals, scroll-scrubbed video, frame sequences that stay smooth on a fast phone flick (with their own frames for phones and tablets), pinned scenes, characters that come alive per section, and an image that reveals another under your cursor. Every one has a reduced-motion fallback. |
 | 🎞️ **Dark Motions** | 98 small motion pieces written for Darkroom: text effects, ambient backgrounds, card borders, button feedback, reveals, cursor pieces, number counters and small animated 2D characters. Plain CSS, SVG and JavaScript, no library, on every platform. Each takes its colours and speed from your design; Darkroom picks one signature and at most two accents that fit, and you can say *shuffle* for another set. |
 | 📷 **Real-browser QA** | Playwright captures at several screen sizes, contact sheets and crops, motion on and off (also pages that scroll inside their own box or only on the mouse wheel); each run records the build it was taken from. A live preview that reloads by itself while Darkroom works. |
 | 🔎 **Audits** | Every build runs a quick check of the hard rules: AI-slop tells, spacing on one scale, aligned edges, skeletons while loading, no repeated designs. Type `/darkroom audit` for all 74 checks, each marked measured, heuristic or manual: accessibility, contrast from real pixels, clutter, word budgets, type scale, colour, keyboard, reduced motion, white flash on load, hidden headlines, videos that don't play or jump on loop, fonts that didn't load, see-through frames in scroll films, films that jump on a fast phone flick, frames too heavy for a phone, pages that scroll by themselves, dead stretches of scroll, the same frosted caption box in every chapter, "best viewed on desktop" screens, a small headline lost over full-screen film, too much weight before the first scroll, chained clips that jump at the join, too many things moving at once, and the marks of a page nobody designed (gradient text, the purple-blue "AI" gradient, a coloured stripe on every card, a small label over every heading, emoji as icons, drawn browser windows, leftover lorem ipsum, made-up numbers and quotes), held as strictly as the Hallmark design skill where that is the right call: made-up proof, leftover placeholders and janky animation never ship, and three different tells on one page are flagged as slop. |
@@ -630,9 +636,9 @@ That run found real problems before you could: WooCommerce blocks that look self
 
 ## 📚 Where the knowledge comes from
 
-<p align="center"><img src="assets/knowledge.svg" alt="228 real site designs kept as lessons (131 good, 97 bad), 32 cross-site lessons with 13 promoted to rules, 29 research sources, 8 design tools, 100 example prompts with their specs, 35 tested recipes, 160 automated checks, one human art director" width="100%"></p>
+<p align="center"><img src="assets/knowledge.svg" alt="1,100+ website designs reviewed for inspiration, 228 kept as written lessons (131 good, 97 bad), 32 cross-site lessons with 13 promoted to rules, 29 research sources, 8 design tools, 100 example prompts with their specs, 36 motion and media recipes plus 98 motion pieces, 160 automated tests plus 74 audit checks on your pages, one human art director" width="100%"></p>
 
-Darkroom is **not a trained model**. It is written knowledge that Claude reads while it works, in plain files you can check. More than **1,100 website designs were reviewed for inspiration**. **228 of them, the clearest good and bad examples, are kept as written lessons** (never screenshots or copied code; the newest 89 are AI-made and AI-motion sites, each judged on design, build and technique separately), and the rest shaped how Darkroom picks an idea and a device before a style. On top of that: **32 lessons** of which **13 became rules** after the author approved them, **29 research sources** (Nielsen Norman Group, WCAG 2.2, the European Accessibility Act, EU cookie and price rules, the AI Act), the **official docs of all ten platforms**, **100 example prompts**, each with the full build spec it leads to (every font, size, colour and timing), which Darkroom reads before designing yours, **35 motion and media recipes** each tested in a real browser, **Values tables** for type, motion, spacing and colour, and the author's own taste calls. **160 automated tests** run on every change, so a rule that stops working gets noticed.
+Darkroom is **not a trained model**. It is written knowledge that Claude reads while it works, in plain files you can check. More than **1,100 website designs were reviewed for inspiration**. **228 of them, the clearest good and bad examples, are kept as written lessons** (never screenshots or copied code; the newest 89 are AI-made and AI-motion sites, each judged on design, build and technique separately), and the rest shaped how Darkroom picks an idea and a device before a style. On top of that: **32 lessons** of which **13 became rules** after the author approved them, **29 research sources** (Nielsen Norman Group, WCAG 2.2, the European Accessibility Act, EU cookie and price rules, the AI Act), the **official docs of all ten platforms**, **100 example prompts**, each with the full build spec it leads to (every font, size, colour and timing), which Darkroom reads before designing yours, **36 motion and media recipes**, **98 small motion pieces**, **Values tables** for type, motion, spacing and colour, and the author's own taste calls. **160 automated tests** run on every change, so a rule that stops working gets noticed.
 
 **[→ The full list: every site, source and human decision](KNOWLEDGE.md)**
 
