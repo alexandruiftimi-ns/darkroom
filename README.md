@@ -754,7 +754,7 @@ Your project stays on your computer. Darkroom has no account and no analytics. I
 <details>
 <summary><b>Does it run on Mac, Windows and Linux?</b></summary>
 
-It is plain Node scripts and Markdown with no build step. It is developed and tested on Windows; on macOS and Linux it is expected to work but gets less testing. If something breaks, please [open an issue](https://github.com/alexandruiftimi-ns/darkroom/issues).
+It is plain Node scripts and Markdown with no build step. It is tested on Windows and macOS. Linux should work too, but has not been tested yet. If something breaks, please [open an issue](https://github.com/alexandruiftimi-ns/darkroom/issues).
 
 </details>
 
