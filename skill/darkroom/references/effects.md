@@ -244,4 +244,4 @@ Not for the user. When a route above or the build spec needs one of these moment
 | A few products in depth · cards that swipe on phones · a product window in code | `depth-carousel.js` · `snap-rail.css` · `ui-mockup.css` | medium · light · light |
 | Turning a product with the mouse · switching mood clips | `cursor-scrub-video.js` · `scene-switcher.js` | medium |
 | A living shader backdrop · a draggable 3D model | `shader-backdrop.js` · `model-hero.js` | heavy |
-| Frosted glass (glass-cinema pack) | `liquid-glass.css` | medium |
+| Frosted glass, dark or light | `liquid-glass.css` (`.glass--light` over bright pictures) | medium |

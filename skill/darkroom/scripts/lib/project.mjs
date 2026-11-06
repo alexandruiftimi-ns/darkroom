@@ -26,6 +26,7 @@ const writeJson = (f, o) => { mkdirp(path.dirname(f)); fs.writeFileSync(f, JSON.
 // .darkroom/settings.json, DESIGN_BIBLE.md, PROJECT_BLUEPRINT.md, DESIGN.md. Returns { settings, source, problem }.
 // Audit defaults per style pack (law 4: thresholds are landing-page defaults, switched per pack). They sit under the
 // bible's own ```darkroom block: anything the bible or the user sets wins.
+const DEVICE_IDS = () => { try { return JSON.parse(fs.readFileSync(new URL('../../library/devices.json', import.meta.url), 'utf8')).devices.map((d) => d.id); } catch { return []; } };
 export const PACK_AUDIT = {
   'editorial-news': { maxZones: 5, wordBudgets: { hero: 45, feature: 90, proof: 90 } },
   catalog: { maxZones: 5, wordBudgets: { feature: 60 } },
@@ -43,6 +44,7 @@ export function resolveSettings(file) {
   const pack = /^pack:([\w.-]+)$/.exec(readJson(PROJECT)?.look ?? '')?.[1];
   const base = PACK_AUDIT[pack];
   if (pack) found.settings.pack = pack;
+  const device = readJson(PROJECT)?.device; if (device) found.settings.device = device;
   if (!base) return found;
   const s = found.settings;
   return { ...found, settings: { ...base, ...s, wordBudgets: { ...base.wordBudgets, ...s.wordBudgets } }, source: `${found.source ?? 'defaults'} + pack ${pack}` };
@@ -119,6 +121,7 @@ export function state(opt) {
       if (k === 'scope' && !SCOPE.test(val)) { console.error('scope must be home, page:/<path> (e.g. page:/pricing) or all'); process.exit(1); }
       if (k === 'palette' && !PALETTE.includes(val)) { console.error(`palette must be one of ${PALETTE.join(', ')}`); process.exit(1); }
       if (k === 'intake' && !INTAKE.includes(val)) { console.error('intake must be full or fast'); process.exit(1); }
+      if (k === 'device' && !DEVICE_IDS().includes(val)) { console.error(`device must be one of ${DEVICE_IDS().join(', ')} (darkroom deal --list)`); process.exit(1); }
       // page:pricing → page:/pricing; Git Bash may turn "/pricing" into "C:/Program Files/Git/pricing": undo it
       p[k] = k === 'scope' && val.startsWith('page:') ? 'page:/' + val.slice(5).replace(/^[A-Za-z]:[\\/].*?[\\/]Git(?=[\\/]|$)/i, '').replace(/\\/g, '/').replace(/^\/+/, '') : val; changed = true;
     }

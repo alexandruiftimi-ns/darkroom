@@ -51,7 +51,7 @@ export const CHECKS = [
   { id: 'email-close', sev: 'high', basis: 'heuristic', what: 'an email sign-up in the footer or last section of a page whose job is not subscribe, join, attend, listen or visit', limits: 'needs "job" in the bible; a form with 3+ fields, a message box, or a button that books, orders, enquires or starts is not a sign-up; a shop counts: footer email only when the user asked' },
   { id: 'stock-palette', sev: 'high', basis: 'heuristic', what: 'the default "premium" looks: near-black + ivory + gold, or cream + terracotta + a serif', limits: 'reads the body colours, the first coloured button or link, and the h1 face; a page painted section by section may read as white' },
   { id: 'stock-font', sev: 'high', basis: 'heuristic', what: 'the h1 set in Inter, Roboto, Open Sans, Poppins, Lato, Arial, Helvetica or a system face', limits: 'first family of the h1 only; such a face as quiet text under a chosen display face is fine' },
-  { id: 'sameness', sev: 'high', basis: 'heuristic', what: 'the page matches one of your last 3 Darkroom projects on palette, or on 4 of 7 axes (palette, display face, text face, hero composition, ending, section count, style pack)', limits: 'compares finished audits on this computer (~/.darkroom/builds.json), never the same project; projects never audited since 1.9 are unknown to it' },
+  { id: 'sameness', sev: 'high', basis: 'heuristic', what: 'the page matches one of your last 3 Darkroom projects on palette, or on 4 of 8 axes (palette, display face, text face, hero composition, ending, section count, style pack, device)', limits: 'compares finished audits on this computer (~/.darkroom/builds.json), never the same project; projects never audited since 1.9 are unknown to it' },
   { id: 'spacing-scale', sev: 'high', basis: 'measured', what: "padding, margin and gap in the stylesheets written off the scale (2, 4, 8, 12, 16, 24, 32, 40, 48, 64, 80, 96, 120, 144, 176 px, or the page's own --space-* tokens). Up to 3 small nudges of 6 px or less are low; a raw value where a token exists is medium", limits: 'same-origin stylesheets, px and rem; values through var(), em, % and vw are not read; WordPress core and plugin styles are skipped' },
   { id: 'spacing-drift', sev: 'high', basis: 'measured', what: 'the same kind of gap rendered at nearly the same size (3 to 6 px apart): heading to line, line to button, button to button, section padding, repeated items, button heights', limits: 'siblings in normal flow at rest; a difference over 6 px is taken as a decision; desktop and phone' },
   { id: 'align-edge', sev: 'high', basis: 'measured', what: 'a near miss: text and pictures in one section, section headings, nav and footer, or items in a row that start 2 to 8 px apart', limits: 'left-aligned, untransformed blocks at rest; a larger offset is taken as a decision; optical alignment of letter shapes is not judged' },
@@ -820,7 +820,7 @@ function tellFindings(desk, mob, wide, lap, loading, s, add, fp) {
   if (hard.email) tell('high', 'email-close', `an email sign-up closes the page in ${hard.email.where} ("${hard.email.label}"), and the job${s.job ? ` is "${s.job}"` : " isn't set in the bible"}. End on what the visitor came to do (references/anatomy.md). Asked for by the user: keep it with their words`, hard.email);
   if (hard.palette) tell('high', 'stock-palette', `${hard.palette}: the default "premium" look. Take the palette from the subject (its materials, place, printed things), or keep it with the user's words if the colours are theirs`, hard.palette);
   if (hard.display) tell('high', 'stock-font', `the h1 is set in ${hard.display}: choose a display face that commits to this subject (Inter-class faces stay as quiet text only)`, hard.display);
-  const hits = fp ? sameAs(fp, { pack: s.pack }) : [];
+  const hits = fp ? sameAs(fp, { pack: s.pack, device: s.device }) : [];
   if (hits.length) tell('high', 'sameness', `this page repeats your recent build ${hits.map((h) => `${h.name} (${h.axes.join(', ')})`).join('; ')}. Change at least the palette or the composition; two clients should never get one design`, hits);
   const off = both((h) => h.scale.off), nudges = both((h) => h.scale.nudges), raw = both((h) => h.scale.raw);
   if (off.length || nudges.length > 3) tell('high', 'spacing-scale', `${off.length + nudges.length} spacing value(s) off the scale, e.g. ${[...off, ...nudges].slice(0, 4).join('; ')}. Use a token: 4, 8, 12, 16, 24, 32, 40, 48, 64, 80, 96, 120, 144, 176 (references/craft.md, Spacing)`, [...off, ...nudges]);
@@ -1341,7 +1341,7 @@ export async function audit(target, opt, { resolveSettings, study = false } = {}
     colour: d.colour, contrast: { desktop: d.contrast, mobile: m.contrast }, keyboard: d.keyboard, motion: { reduce: d.motion, normal: normal.motion },
   };
   if (study) return result;
-  if (d.dom.hard?.fp) logBuild(d.dom.hard.fp, { pack: settings.pack, job: settings.job });
+  if (d.dom.hard?.fp) logBuild(d.dom.hard.fp, { pack: settings.pack, job: settings.job, device: settings.device });
   const out = opt.json ?? (quick ? '.darkroom/qa/quick.json' : '.darkroom/qa/audit.json');
   mkdirp(path.dirname(out));
   fs.writeFileSync(out, JSON.stringify(result, null, 2));

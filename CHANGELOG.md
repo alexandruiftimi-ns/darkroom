@@ -4,6 +4,17 @@ Darkroom uses [semantic versioning](https://semver.org): **major.minor.patch**.
 A **major** change breaks how projects or commands worked before, a **minor** one adds features, a **patch** fixes things.
 The installed version: `node ~/.claude/skills/darkroom/scripts/darkroom.mjs version` (or the `VERSION` file in the skill).
 
+## 1.10.0 · Fresh Ideas · 2026-11-06
+
+Ten prompts should give ten different websites. Darkroom used to pick a style first and then refine it, so "premium" kept leading to one look.
+
+- **A new order for every design.** Darkroom now works out what you mean, then studies the subject, then picks an idea, then colour, and chooses the style last. "Luxurious" no longer picks a look by itself: it might mean rare material, craft, status or calm, and each leads somewhere different.
+- **23 design ideas to start from.** Drawn from a study of about 850 current motion-led designs and written in our own words: the unveil, the one-take journey, the portal dive, subject over a huge word, a character that reacts, the form as the hero, and more. Each says what it suits and what it needs.
+- **Options are dealt, not picked from habit.** A new step deals three different starting points, leaves out what your last builds used and what your assets can't support, and adds some chance on purpose. The third is always the less obvious one.
+- **Better reasons.** Before showing options, Darkroom tells you what it thinks you mean, what it took from your subject, and why it passed on the obvious answer.
+- **Light glass.** The frosted glass recipe gains a light version for bright photographs and Apple-style pages, and glass is now allowed sparingly in the modern, luxury, cinematic and trust styles. Glass on everything is still flagged.
+- **Fixed:** the glass-cinema style still asked for a serif accent word, which the 1.9 rules ban.
+
 ## 1.9.0 · Hard Rules · 2026-11-06
 
 Two sites for two different businesses should never look alike, and the anti-slop rules are no longer suggestions.

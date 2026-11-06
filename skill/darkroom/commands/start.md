@@ -15,6 +15,7 @@ Goal: a confirmed `.darkroom/BRIEF.md` in **at most two question rounds**, then 
 
 - **Platform:** where the site will live (`platforms/README.md`): static, php, astro, nextjs, hugo, jekyll, wordpress, woocommerce, shopify or ghost. Read its profile, run the live-docs check and add its "Ask before building" questions to the question round (`commands/platform.md`). `darkroom state --set platform=<id>`. Closed builders (Wix, Squarespace, Webflow, Framer) get a design kit (`platforms/builders.md`).
 - **Surface:** `landing` (default), `catalog` (shops), `editorial` (blogs, publications) or several (a shop has a landing home page and catalog templates); say which rules change (`references/surfaces.md`). Set `surface` in `project.json` and the bible's `darkroom` block.
+- **Meaning:** turn adjectives into the promise behind them (`references/design-reasoning.md`, step 1) and say it back in one line. Never map "luxury" straight to a pack.
 - **Colour choice** (`references/color.md`, "Asking about colour"): own palette, suggested, 60-30-10, creative or monochrome. `--set palette=…`.
 - **Assets: own or prompts** (`references/asset-tools.md`), and which tools the user has.
 - **Build scope:** `home` (build and approve the home page, then the rest), `page:/<path>` (one named page first) or `all` (the whole site now). Multi-page sites only; a one-page site is `all`. The user decides; it is their usage. `--set scope=…`.

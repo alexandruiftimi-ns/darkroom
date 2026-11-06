@@ -29,6 +29,10 @@ The user may know nothing about design. They describe what they want in their ow
 - Decide all three at intake, say them back in one line, record them (`darkroom state --set platform=shopify,mode=animated,look=like:cartier`). Which library or asset tool fits which job: `references/motion-toolkit.md`.
 - Also ask at intake (same rounds): **colours** (own palette, suggested palettes, 60-30-10, creative; `references/color.md`), **assets** (their own, or prompts for image and video tools such as ChatGPT, Kling, Seedance, Veo; `references/asset-tools.md`), **build scope** for multi-page sites (`home` first and approve, one page first, or `all`; their usage, `commands/concierge.md`) and **check depth** (`quick` or `full`, their usage, `commands/platform.md`). Quick limits the checking, never the building: every page in scope gets built.
 
+## How a design is chosen
+
+Meaning first, then the subject's world, then a device dealt by `darkroom deal`, then material, and the style pack last. An adjective never picks a style (`references/design-reasoning.md`).
+
 ## Hard rules
 
 Labels and capitals, spacing off the scale, near-miss alignment, holes while loading, the stock palettes, an email close and the rest of `references/tells.md` are hard rules: high in `audit --quick`, and a page with one open is not done. No style pack, reference look or reason of yours lifts one. Only the user's own words do, quoted in `keepTells`.
@@ -52,7 +56,7 @@ Labels and capitals, spacing off the scale, near-miss alignment, holes while loa
 ```
 0 Intake      brief, existing project, assets folder, references → platform + surface + asset tier + look + motion level
               + colours + own assets or prompts + check depth + brief; live docs check for the platform  (commands/start.md, commands/platform.md)
-1 Direction   subject inventory → the idea → two coded comps of the hero (real copy, 1440 + 390)  (commands/style.md)
+1 Direction   meaning → subject inventory → darkroom deal → the idea → pack → two coded comps of the hero (real copy, 1440 + 390)  (references/design-reasoning.md, commands/style.md)
               ★ CHECKPOINT A (taste): user picks / steers. Skipped if the brief already fixes the look.
 2 Slice       bible (concise) → BUILD_SPEC.md (every value, matched to 2 examples) → build hero + its one key interaction + transition to the next section, with
               desktop / phone / reduced-motion paths, real copy, placeholder assets marked TEMP     (commands/build.md)
@@ -96,6 +100,7 @@ If the project already has `PROJECT_BLUEPRINT.md` / `DESIGN.md` / a `CLAUDE.md` 
 | `capture <url\|dir\|file>` | named states, real wheel input, scene progress, motion + reduced-motion, contact sheets, crops, manifest | `commands/shoot.md` |
 | `audit <…> [--quick]` | `--quick`: the hard rules, run during every build. Without it: every check, only when the user types `/darkroom audit` (`darkroom checks` lists them) | `commands/audit.md` |
 | `builds` | the last finished builds on this computer, to differ from before choosing a direction | `commands/style.md` |
+| `deal` | three different starting points from `library/devices.json`, leaving out recent builds, random on purpose | `references/design-reasoning.md` |
 | `import <url\|folder>` | the user's current site: texts in reading order, navigation, contacts, images with sizes, old addresses | `commands/import.md` |
 | `preview <folder\|url>` | the live preview: this computer and phones on the same Wi-Fi, reloads when files change (relays dev servers) | `commands/preview.md` |
 | `wait --files <folder>\|--url <http…>` | run in the background; exits when the user's files have landed or a server answers, which wakes you to carry on | `commands/wait.md` |

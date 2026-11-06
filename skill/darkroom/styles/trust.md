@@ -20,7 +20,7 @@ Real team and places, documentary style; diagrams that explain; no stock handsha
 Minimal: state feedback, disclosure animations ≤ 200 ms.
 
 ## Switches
-eyebrow OFF · tracked-caps OFF · index-numerals SPARING (processes) · hairlines SPARING · cards SPARING · glass OFF · gradients OFF · mono-labels OFF · centred-layout OFF · marquee OFF · custom-cursor OFF · full-bleed-imagery SPARING · script-lettering OFF
+eyebrow OFF · tracked-caps OFF · index-numerals SPARING (processes) · hairlines SPARING · cards SPARING · glass SPARING (one frosted panel over something worth blurring; recipes/liquid-glass.css) · gradients OFF · mono-labels OFF · centred-layout OFF · marquee OFF · custom-cursor OFF · full-bleed-imagery SPARING · script-lettering OFF
 
 ## Must-have
 Regulatory disclosures, licence numbers, risk warnings where required, accessible authentication (WCAG 3.3.8), consistent help (3.2.6), accessibility statement (EU).

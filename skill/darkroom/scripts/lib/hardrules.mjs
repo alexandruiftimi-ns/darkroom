@@ -354,21 +354,21 @@ export async function loadingPass(browser, url, contextOpts) {
 const home = () => process.env.DARKROOM_HOME ?? path.join(os.homedir(), '.darkroom');
 const logFile = () => path.join(home(), 'builds.json');
 export function readBuilds() { try { return JSON.parse(fs.readFileSync(logFile(), 'utf8')); } catch { return []; } }
-export function logBuild(fp, { pack, job } = {}) {
+export function logBuild(fp, { pack, job, device } = {}) {
   if (!fs.existsSync('.darkroom/project.json')) return; // only real projects, never a one-off page
   const dir = process.cwd();
   const rest = readBuilds().filter((b) => b.dir !== dir);
-  const entry = { dir, name: path.basename(dir), date: new Date().toISOString().slice(0, 10), pack: pack ?? null, job: job ?? null, ...fp };
+  const entry = { dir, name: path.basename(dir), date: new Date().toISOString().slice(0, 10), pack: pack ?? null, job: job ?? null, device: device ?? null, ...fp };
   try { fs.mkdirSync(home(), { recursive: true }); fs.writeFileSync(logFile(), JSON.stringify([entry, ...rest].slice(0, 30), null, 2)); } catch { /* the log is a help, never a blocker */ }
 }
-// Six axes, as Hallmark's fingerprint: palette, display face, text face, hero composition, ending, section count.
-export function sameAs(fp, { pack } = {}) {
+// Hallmark's six axes (palette, display face, text face, hero composition, ending, section count), plus pack and device.
+export function sameAs(fp, { pack, device } = {}) {
   const dir = process.cwd();
   const hits = [];
   for (const b of readBuilds().filter((x) => x.dir !== dir).slice(0, 3)) {
     const close = b.ground && deltaE(fp.ground, b.ground) < 8 && deltaE(fp.ink, b.ink) < 8;
     const hue = fp.accentHue !== null && b.accentHue !== null && Math.min(Math.abs(fp.accentHue - b.accentHue), 360 - Math.abs(fp.accentHue - b.accentHue)) < 24;
-    const axes = [close && hue && 'palette', fp.display === b.display && 'display face', fp.text === b.text && 'text face', fp.hero === b.hero && 'hero composition', fp.ending === b.ending && 'ending', fp.sections === b.sections && 'section count', pack && pack === b.pack && 'style pack'].filter(Boolean);
+    const axes = [close && hue && 'palette', fp.display === b.display && 'display face', fp.text === b.text && 'text face', fp.hero === b.hero && 'hero composition', fp.ending === b.ending && 'ending', fp.sections === b.sections && 'section count', pack && pack === b.pack && 'style pack', device && device === b.device && 'device'].filter(Boolean);
     if (axes.includes('palette') || axes.length >= 4) hits.push({ name: b.name, axes });
   }
   return hits;
@@ -377,5 +377,5 @@ export function builds() {
   const list = readBuilds().slice(0, 6);
   if (!list.length) { console.log('no finished builds on record yet'); return; }
   const hex = (c) => '#' + c.map((v) => v.toString(16).padStart(2, '0')).join('');
-  for (const b of list) console.log(`${b.date}  ${b.name}\n  ground ${hex(b.ground)}, ink ${hex(b.ink)}, accent hue ${b.accentHue ?? 'none'}\n  ${b.display} / ${b.text}; pack ${b.pack ?? 'none'}; hero ${b.hero}; ends with ${b.ending}; ${b.sections} sections`);
+  for (const b of list) console.log(`${b.date}  ${b.name}\n  ground ${hex(b.ground)}, ink ${hex(b.ink)}, accent hue ${b.accentHue ?? 'none'}\n  ${b.display} / ${b.text}; pack ${b.pack ?? 'none'}; hero ${b.hero}; device ${b.device ?? 'none recorded'}; ends with ${b.ending}; ${b.sections} sections`);
 }

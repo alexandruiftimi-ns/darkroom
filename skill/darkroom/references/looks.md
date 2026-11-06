@@ -11,6 +11,7 @@ Font substitutes are OFL unless stated. Colour values are approximations to name
 - Take: centred stacked hero (headline, one-line subhead, two text links or pill buttons), full-width tiles in alternating light and dark grounds, generous section padding, large numeric stats, sticky translucent navigation with blur, a sticky product sub-navigation with one "Buy"-type action.
 - Type: a neutral grotesk at large sizes with tight tracking on display, regular body. Substitutes: Inter / Inter Display, Geist, Manrope; or `system-ui` (shows the device's own font, never shipped).
 - Palette: near-white and light grey grounds, near-black ink, one link/button blue. Ours: keep the neutrals, pick the client's accent instead of the blue.
+- Material: soft frosted glass on nav and floating panels over bright pictures (`recipes/liquid-glass.css`, `.glass--light`); one material, used lightly.
 - Motion: fades and rises on scroll (mode `animated`); product pages use pinned scroll scenes, scrubbed video or frame sequences (mode `story` / `hero-effect`).
 - Copy voice: 2–6 word headlines, often a play on words; one claim per tile.
 - Do not take: the apple logo, product names, product photos, the San Francisco font files, their headlines.

@@ -7,6 +7,9 @@ Status: draft | approved <YYYY-MM-DD> · Packs: <primary> + <modifiers>
   "wordBudgets": { "hero": 30, "feature": 45, "proof": 60, "closing": 30 }, "maxZones": 3, "keepTells": [] }
 ```
 
+## 0. Reasoning
+Meaning: <…> · Device: <id> · Why this and not the obvious: <…> · Colour taken from: <material or place>
+
 ## 1. Thesis
 <one sentence the whole site proves>
 

@@ -20,7 +20,7 @@ Studio or location photography with soft, directional light; material close-ups 
 Signature: slow mask/clip reveal of product, long crossfades (600–1200 ms), subtle image scale on enter (≤ 1.05). Nothing bouncy, nothing fast.
 
 ## Switches
-eyebrow OFF · tracked-caps OFF · index-numerals OFF · hairlines SPARING · cards OFF · glass OFF · gradients OFF · mono-labels OFF · centred-layout SPARING · marquee OFF · custom-cursor OFF · full-bleed-imagery ON · script-lettering OFF (unless it is the house's logotype)
+eyebrow OFF · tracked-caps OFF · index-numerals OFF · hairlines SPARING · cards OFF · glass SPARING (one frosted panel over something worth blurring; recipes/liquid-glass.css) · gradients OFF · mono-labels OFF · centred-layout SPARING · marquee OFF · custom-cursor OFF · full-bleed-imagery ON · script-lettering OFF (unless it is the house's logotype)
 
 ## Must-have
 Excellent image compression (quality is the product), clear price policy where commerce exists (EU: incl. VAT), appointment/contact path.

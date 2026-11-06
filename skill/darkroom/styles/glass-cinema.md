@@ -7,7 +7,7 @@
 Ground = the footage's edge colour (`references/hero-media.md`), usually a near-black `#050505–#0c0c0c` or a deep tinted dark. Ink off-white `#f4f4f2` with opacity steps 100 / 80 / 60 / 40. No accent colour in the chrome; the one bright thing is the footage's highlight. Primary button = ink fill, ground text.
 
 ## Type
-Display: a neutral grotesk at regular or light weight (Manrope, Hanken Grotesk, Figtree, Onest), `clamp(44px, 7.5vw, 120px)`, leading 0.95, tracking −0.03em. **Serif accent:** 1–3 words in an editorial serif (Newsreader, Fraunces, Literata) **muted to ink-60**, never brighter than the sans words. Text: the same grotesk at 16–18 px, ink-60. Never Inter as the whole identity.
+Display: a neutral grotesk at regular or light weight (Manrope, Hanken Grotesk, Figtree, Onest), `clamp(44px, 7.5vw, 120px)`, leading 0.95, tracking −0.03em. Text: the same grotesk at 16–18 px, ink-60. Never Inter as the whole identity.
 
 ## Layout
 Centred stack or bottom-anchored over a full-bleed loop; floating pill nav 12–16 px from the top. One material class reused on the nav, the badge and secondary buttons, nowhere else.
@@ -36,7 +36,7 @@ Footage with edge colour = ground and an empty zone; text protected by shadow (`
 Purple or indigo gradients · glow orbs · invented avatars, logos or stats (proof stays `TEMP` until the user supplies real numbers) · Inter as the whole identity · glass on body text containers · more than one badge.
 
 ## Exceptions log (write it automatically)
-`pack glass-cinema switches on badge, glass, serif accent and centred layout at the user's request` (these are tells in `references/tells.md` when used by default).
+`pack glass-cinema switches on glass and centred layout at the user's request` (these are tells in `references/tells.md` when used by default). A badge or an accent word still needs the user's own words.
 
 ## Image prompt seed
 "single continuous slow <orbit | drift | push-in> shot of <one object or calm surreal scene>, edges falling off to flat <ground hex>, empty dark negative space in the <centre-top | left 45 %>, one soft rim light, 2–3 hues, loopable, no text, no logos, no UI"

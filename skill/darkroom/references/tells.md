@@ -38,7 +38,7 @@ One allowance stays, because Hallmark's gates allow it too: a single stock label
 - Purple→blue / pink→violet gradients, gradient headline text, "vibe-code purple" (lavender) accents.
 - Permanent dark mode with medium-grey body text that barely passes (or fails) contrast.
 - Large coloured glows, coloured box-shadows, glowing buttons; soft grey shadow on every card.
-- Glass cards everywhere; unmodified component-kit defaults (one 12–16 px radius, 24 px padding, same shadow) on everything.
+- Glass cards on everything, or glass over nothing worth blurring (one frosted material over a real picture is fine); unmodified component-kit defaults (one 12–16 px radius, 24 px padding, same shadow) on everything.
 - **The stock premium:** near-black + ivory + gold, or cream + terracotta + serif, as automatic "premium"; near-black + single neon + glow as automatic "tech". Audit `stock-palette`.
 - Colour named for looks (`gradient-start`) instead of job (`action-primary`, `feedback-success`).
 - A framework's stock swatch as the brand (Tailwind indigo-500, violet-600, slate-900) when nobody picked it.

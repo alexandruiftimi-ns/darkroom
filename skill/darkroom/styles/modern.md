@@ -20,7 +20,7 @@ Real UI with real data, crisp diagrams, product photography if hardware. No fake
 Signature: UI that responds (instant hover, state transitions 150–250 ms), one product demo sequence. No fade-up on every block.
 
 ## Switches
-eyebrow OFF · tracked-caps OFF · index-numerals SPARING (real steps only) · hairlines SPARING · cards SPARING (varied, purposeful) · glass OFF · gradients OFF · mono-labels OFF (mono for code only) · centred-layout SPARING (one moment) · marquee OFF · custom-cursor OFF · full-bleed-imagery SPARING · script-lettering OFF
+eyebrow OFF · tracked-caps OFF · index-numerals SPARING (real steps only) · hairlines SPARING · cards SPARING (varied, purposeful) · glass SPARING (one frosted panel over something worth blurring; recipes/liquid-glass.css) · gradients OFF · mono-labels OFF (mono for code only) · centred-layout SPARING (one moment) · marquee OFF · custom-cursor OFF · full-bleed-imagery SPARING · script-lettering OFF
 
 ## Must-have
 Pricing clarity, docs/login paths, keyboard-perfect, fast (< 2.5 s LCP measured).

@@ -1,6 +1,6 @@
 # Style packs
 
-A pack is a set of **defaults and switches**, not a template. It tells Darkroom which rules apply. Blend: one **primary** pack (owns layout + type) + up to two **modifiers** (may adjust palette, imagery, motion only). The user's explicit instruction overrides any pack line.
+A pack is a set of **defaults and switches**, not a template and not a decision about the design. It dresses a device chosen earlier (`references/design-reasoning.md`) and tells Darkroom which rules apply. Blend: one **primary** pack (owns layout + type) + up to two **modifiers** (may adjust palette, imagery, motion only). The user's explicit instruction overrides any pack line.
 
 | Pack | Feeling | Colour mode | Density | Motion | Typical use |
 |---|---|---|---|---|---|
